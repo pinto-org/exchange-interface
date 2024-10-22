@@ -61,7 +61,7 @@
             "position": "before"
           },
           {
-            "pattern": "@*/sdk*",
+            "pattern": "@beanstalk/sdk*",
             "group": "external",
             "position": "after"
           },
@@ -70,6 +70,7 @@
             "group": "internal"
           }
         ],
+        "pathGroupsExcludedImportTypes": ["react", "@beanstalk/sdk*"],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
