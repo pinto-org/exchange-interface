@@ -108,7 +108,9 @@ export abstract class Token {
    * @param other the other currency
    */
   public equals(other: Token): boolean {
-    return this.address === other.address && this.chainId === other.chainId;
+    return (
+      this.address.toLowerCase() === other.address.toLowerCase() && this.chainId === other.chainId
+    );
   }
 
   public toString(): string {
