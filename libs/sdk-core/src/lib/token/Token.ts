@@ -54,17 +54,17 @@ export abstract class Token {
     signerOrProvider?: providers.Provider | Signer
   ) {
     this.chainId = chainId;
-    this.address = address?.toLowerCase() ?? "";
+    this.address = address?.toLowerCase() ?? '';
 
     this.decimals = decimals ?? 0;
-    this.symbol = symbol ?? "UNKNOWN";
+    this.symbol = symbol ?? 'UNKNOWN';
 
     // make this.provider not enumerable (ie, hide it from console.log output)
-    Object.defineProperty(this, "providerOrSigner", {
+    Object.defineProperty(this, 'providerOrSigner', {
       value: signerOrProvider,
       writable: true,
       configurable: false,
-      enumerable: false
+      enumerable: false,
     });
 
     this.name = metadata?.name ?? this.symbol;
@@ -81,7 +81,11 @@ export abstract class Token {
 
   abstract getAllowance(account: string, spender: string): Promise<TokenValue | undefined>;
 
-  abstract hasEnoughAllowance(account: string, spender: string, amount: TokenValue | ethers.BigNumber): boolean | Promise<boolean>;
+  abstract hasEnoughAllowance(
+    account: string,
+    spender: string,
+    amount: TokenValue | ethers.BigNumber
+  ): boolean | Promise<boolean>;
 
   abstract getTotalSupply(): Promise<TokenValue> | undefined;
 
@@ -95,7 +99,7 @@ export abstract class Token {
   }
 
   getSignerOrProvider(): providers.Provider | Signer {
-    if (!this.providerOrSigner) throw new Error("Signer or Provider not set");
+    if (!this.providerOrSigner) throw new Error('Signer or Provider not set');
     return this.providerOrSigner;
   }
 
@@ -119,7 +123,7 @@ export abstract class Token {
   /**
    * Converts from a blockchain amount to a TokenValue with this token's decimals set
    *
-   * Ex: BEAN.fromBlockchain("3140000") => TokenValue holding value "3140000" and 6 decimals
+   * Ex: PINTO.fromBlockchain("3140000") => TokenValue holding value "3140000" and 6 decimals
    *
    * @param amount A string value in blockchain format
    * @returns TokenValue
@@ -131,7 +135,7 @@ export abstract class Token {
   /**
    * Converts from a human amount to a TokenAmount with this token's decimals set
    *
-   * Ex: BEAN.fromHuman("3.14") => TokenValue holding value "3140000" and 6 decimals
+   * Ex: PINTO.fromHuman("3.14") => TokenValue holding value "3140000" and 6 decimals
    *
    * @param amount human readable amout, ex: "3.14" ether
    * @returns TokenValue
@@ -145,7 +149,7 @@ export abstract class Token {
    *
    * Converts from a human amount to a TokenAmount with this token's decimals set
    *
-   * Ex: BEAN.fromHuman("3.14") => TokenValue holding value "3140000" and 6 decimals
+   * Ex: PINTO.fromHuman("3.14") => TokenValue holding value "3140000" and 6 decimals
    *
    * @param amount human readable amout, ex: "3.14" ether
    * @returns TokenValue
@@ -157,8 +161,8 @@ export abstract class Token {
   /**
    * Converts from a blockchain value to a human readable form
    *
-   * Ex: BEAN.toHuman(BigNumber.from('3140000)) => "3.14"
-   * @param value A BigNumber with a value of this token, for ex: 1000000 would be 1 BEAN
+   * Ex: PINTO.toHuman(BigNumber.from('3140000)) => "3.14"
+   * @param value A BigNumber with a value of this token, for ex: 1000000 would be 1 PINTO
    * @param format Optional format string, "short" is the only allowed option. A human readable string that is abbreviated
    * @returns string
    */
@@ -171,7 +175,10 @@ export abstract class Token {
     return TokenValue.fromBlockchain(value, this.decimals);
   }
 
-  public approve(spenderContract: PromiseOrValue<string>, amount: TokenValue | BigNumber): Promise<ContractTransaction> {
+  public approve(
+    spenderContract: PromiseOrValue<string>,
+    amount: TokenValue | BigNumber
+  ): Promise<ContractTransaction> {
     // @ts-ignore
     return;
   }

@@ -11,7 +11,8 @@
     "libs/*"
   ],
   "scripts": {
-    "sdk-core:build": "yarn workspace @basen/sdk-core build",
-    "sdks:build": "yarn sdk-core:build"
+    "sdk-core:build": "yarn core:build",
+    "sdk-wells:build": "yarn wells:build",
+    "sdks:build": "yarn sdk-core:build && yarn sdk-wells:build"
   }
 }
