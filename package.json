@@ -4,10 +4,14 @@
   "license": "MIT",
   "packageManager": "yarn@4.1.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=18"
   },
   "workspaces": [
     "app",
-    "packages/*"
-  ]
+    "libs/*"
+  ],
+  "scripts": {
+    "sdk-core:build": "yarn workspace @basen/sdk-core build",
+    "sdks:build": "yarn sdk-core:build"
+  }
 }

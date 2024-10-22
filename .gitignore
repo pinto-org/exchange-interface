@@ -1,11 +1,12 @@
 node_modules
 
 cache
+/coverage
+/dist
 .yarn/*
 yarn-error.log
 temp
 
-# From Monorepo
 .DS_Store
 
 # netlify
