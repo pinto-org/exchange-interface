@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Well, WellFunction } from '@beanstalk/sdk-wells';
+import { Well, WellFunction } from '@exchange/sdk-wells';
 
 import useSdk from 'src/utils/sdk/useSdk';
 

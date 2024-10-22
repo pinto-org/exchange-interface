@@ -1,7 +1,7 @@
-import { Aquifer, WellFunction, Pump, Well } from '@basen/sdk-wells';
 import { BigNumber, ethers } from 'ethers';
 
-import { BeanstalkSDK, ERC20Token, FarmFromMode, FarmToMode, TokenValue } from '@beanstalk/sdk';
+import { ERC20Token, FarmFromMode, FarmToMode, TokenValue } from '@exchange/sdk-core';
+import { Aquifer, WellFunction, Pump, Well, WellsSDK } from '@exchange/sdk-wells';
 
 import { TransactionToast } from 'src/components/TxnToast/TransactionToast';
 import { getBytesHexString } from 'src/utils/bytes';
@@ -39,7 +39,7 @@ const prepareBoreWellParameters = async (
 /**
  * Decode the result of a boreWell wrapped in a advancedPipe callto get the well address
  */
-const decodeBoreWellPipeCall = (sdk: BeanstalkSDK, aquifer: Aquifer, pipeResult: string[]) => {
+const decodeBoreWellPipeCall = (sdk: WellsSDK, aquifer: Aquifer, pipeResult: string[]) => {
   if (!pipeResult.length) return;
   const pipeDecoded = sdk.contracts.pipeline.interface.decodeFunctionResult('advancedPipe', pipeResult[0]);
 
@@ -60,13 +60,13 @@ const decodeBoreWellPipeCall = (sdk: BeanstalkSDK, aquifer: Aquifer, pipeResult:
  *
  * TODO: do this with wStETH
  */
-const prepareTokenOrderForBoreWell = (sdk: BeanstalkSDK, tokens: ERC20Token[]) => {
+const prepareTokenOrderForBoreWell = (sdk: WellsSDK, tokens: ERC20Token[]) => {
   if (tokens.length < 2) {
     throw new Error('2 Tokens are required');
   }
 
   const wethAddress = sdk.tokens.WETH.address.toLowerCase();
-  const beanAddress = sdk.tokens.BEAN.address.toLowerCase();
+  const beanAddress = sdk.tokens.PINTO.address.toLowerCase();
 
   return tokens.sort((a, b) => {
     const addressA = a.address.toLowerCase();
@@ -81,7 +81,7 @@ const prepareTokenOrderForBoreWell = (sdk: BeanstalkSDK, tokens: ERC20Token[]) =
  * function to bore well
  */
 const boreWell = async (
-  sdk: BeanstalkSDK,
+  sdk: WellsSDK,
   aquifer: Aquifer,
   account: string,
   implementation: string,
@@ -139,7 +139,7 @@ const boreWell = async (
       throw new Error('Unable to determine well address');
     }
 
-    const well = new Well(sdk.wells, wellAddress);
+    const well = new Well(sdk, wellAddress);
     Log.module('boreWell').debug('Expected Well Address: ', wellAddress);
 
     // add transfer token1 to the undeployed well address

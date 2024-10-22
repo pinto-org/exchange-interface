@@ -54,7 +54,7 @@ export const Well = () => {
 
   const [tab, setTab] = useState(0);
   const showTab = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, i: number) => {
-    (e.target as HTMLElement).blur();
+    (e.target as any).blur();
     setTab(i);
   }, []);
 

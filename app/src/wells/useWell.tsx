@@ -1,4 +1,4 @@
-import { Well } from '@beanstalk/sdk/Wells';
+import { Well } from '@exchange/sdk-wells';
 
 import { useChainScopedQuery, useGetChainScopedQueryData } from 'src/utils/query/useChainScopedQuery';
 import useSdk from 'src/utils/sdk/useSdk';

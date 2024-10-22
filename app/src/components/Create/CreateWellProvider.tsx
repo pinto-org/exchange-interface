@@ -3,8 +3,8 @@ import React, { createContext, useCallback, useMemo, useState } from 'react';
 import { DeepRequired } from 'react-hook-form';
 import { useAccount } from 'wagmi';
 
-import { ERC20Token, TokenValue } from '@beanstalk/sdk-core';
-import { Pump, WellFunction } from '@beanstalk/sdk-wells';
+import { ERC20Token, TokenValue } from '@exchange/sdk-core';
+import { Pump, WellFunction } from '@exchange/sdk-wells';
 
 import { clearWellsCache } from 'src/state/providers/WellsProvider';
 import { Log } from 'src/utils/logger';

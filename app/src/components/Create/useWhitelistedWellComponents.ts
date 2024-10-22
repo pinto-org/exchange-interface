@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { ChainId, ChainResolver } from '@beanstalk/sdk-core';
+import { ChainId } from '@exchange/sdk-core';
 
 import BeanstalkFarmsLogo from 'src/assets/images/beanstalk-farms.png';
 import BrendanTwitterPFP from 'src/assets/images/brendan-twitter-pfp.png';

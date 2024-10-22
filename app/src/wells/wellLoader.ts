@@ -3,9 +3,9 @@ import { BigNumber } from 'ethers';
 import memoize from 'lodash/memoize';
 import { Abi, ContractFunctionParameters, erc20Abi } from 'viem';
 
-import { BeanstalkSDK, ChainId } from '@beanstalk/sdk';
-import { ChainResolver, ERC20Token } from '@beanstalk/sdk-core';
-import { Aquifer, Well } from '@beanstalk/sdk-wells';
+import { ChainId } from '@exchange/sdk-core';
+import { ChainResolver, ERC20Token } from '@exchange/sdk-core';
+import { Aquifer, Well, WellsSDK } from '@exchange/sdk-wells';
 
 import { GetWellAddressesDocument } from 'src/generated/graph/graphql';
 import { Settings } from 'src/settings';
@@ -19,43 +19,10 @@ import { fetchFromSubgraphRequest } from './subgraphFetch';
 type WellAddresses = string[];
 
 const WELL_BLACKLIST: Record<number, WellAddresses> = {
-  [ChainId.ETH_MAINNET]: [
-    '0x875b1da8dcba757398db2bc35043a72b4b62195d'.toLowerCase(),
-    '0xBea0061680A2DEeBFA59076d77e0b6c769660595'.toLowerCase(), // bean:wstETH duplicate
-    '0xbEa00022Ee2F7E2eb222f75fE79eFE4871E655ca'.toLowerCase(), // bean:wstETH duplicate
-    '0xbea0009b5b96D87643DFB7392293f18af7C041F4'.toLowerCase(), // bean:wstETH duplicate
-    '0x5997111CbBAA0f4C613Ae678Ba4803e764140266'.toLowerCase() // usdc:frax duplicate
-  ],
-  [ChainId.ARBITRUM_MAINNET]: [
-    // PRE-L2-MIGRATION-WELLS
-    '0x0adf75da6980fee8f848d52a7af1f8d6f34a8169'.toLowerCase(), // BEAN:WETH duplicate,
-    '0xc22dd977c50812f754c14319de84493cc18b6cf0'.toLowerCase(), // BEAN:WETH duplicate
-    '0x15d7a96c3dbf6b267fae741d15c3a72f331418fe'.toLowerCase(), // BEAN:WETH duplicate
-    '0xd902f7bd849da907202d177fafc1bd39f6bbadc4'.toLowerCase(), // BEAN:WETH duplicate
-    '0xb968de36ce9c61371a82a78b715af660c2209d11'.toLowerCase(), // BEAN:wstETH duplicate
-    '0x430837acc8cfe4726453b09b8d782730654899e0'.toLowerCase(), // BEAN:wstETH duplicate
-    '0x4731431430e7febd8df6a4aa7d28867927e827a6'.toLowerCase(), // BEAN:wstETH duplicate
-    '0xc49b38dff421622628258683444f4977078cb96b'.toLowerCase(), // BEAN:wstETH duplicate
-    '0x8d74ff8e729b4e78898488775b619c05d1ecb5e5'.toLowerCase(), // BEAN:weETH duplicate
-    '0x65709d322f9c762f9435a326c653e7393807c0bc'.toLowerCase(), // BEAN:weETH duplicate
-    '0x8dc6400022ac4304b3236f4d073053056ac24086'.toLowerCase(), // BEAN:weETH duplicate
-    '0x45f6af24e6eb8371571dde1464a458770cbbbb65'.toLowerCase(), // BEAN:weETH duplicate
-    '0x370062BE2d6Fc8d02948fEA75fAfe471F74854CF'.toLowerCase(), // BEAN:WBTC duplicate
-    '0xee950139d7730706695a4613198ecac26e69e12d'.toLowerCase(), // BEAN:WBTC duplicate
-    '0xb147ff6e2fd05ad3db185028beb3cce4dcb12b72'.toLowerCase(), // BEAN:WBTC duplicate
-    '0xd4baa4197aa17c7f27a2465073de33690d77ec7e'.toLowerCase(), // BEAN:WBTC duplicate
-    '0x157219b5D112F2D8aaFD3c7F3bA5D4c73343cc96'.toLowerCase(), // BEAN:USDC duplicate
-    '0xdc29769db1caa5cab41835ef9a42becde80de028'.toLowerCase(), // BEAN:USDC duplicate
-    '0xde1a4b24aa46286739c1879612c5e5445382d93d'.toLowerCase(), // BEAN:USDC duplicate
-    '0xeaddd2848e962817fd565ea269a7fedb0588b3f4'.toLowerCase(), // BEAN:USDC duplicate
-    '0xF3e4FC5c53D5500989e68F81d070094525caC240'.toLowerCase(), // BEAN:USDT duplicate
-    '0xacfb4644b708043ad6eff1cc323fda374fe6d3ce'.toLowerCase(), // BEAN:USDT duplicate
-    '0x704e68281325242a60515616228c668e4865694c'.toLowerCase(), // BEAN:USDT duplicate
-    '0xde8317a2a31a1684e2e4becedec17700718630d8'.toLowerCase() //  BEAN:USDT duplicate
-  ]
+  [ChainId.BASE_MAINNET]: []
 };
 
-const loadFromChain = async (sdk: BeanstalkSDK, aquifer: Aquifer): Promise<WellAddresses> => {
+const loadFromChain = async (sdk: WellsSDK, aquifer: Aquifer): Promise<WellAddresses> => {
   try {
     const chainId = ChainResolver.resolveToMainnetChainId(sdk.chainId);
 
@@ -96,7 +63,7 @@ const loadFromGraph = async (_chainId: ChainId): Promise<WellAddresses> => {
 // ---------- Fetch Well Addresses ----------
 
 export const findWells = memoize(
-  async (sdk: BeanstalkSDK, aquifer: Aquifer): Promise<WellAddresses> => {
+  async (sdk: WellsSDK, aquifer: Aquifer): Promise<WellAddresses> => {
     const result = await Promise.any([
       loadFromChain(sdk, aquifer)
         .then((res) => {
@@ -120,9 +87,8 @@ export const findWells = memoize(
       //   })
     ]);
 
-    const wellLPAddresses = sdk.pools.getWells().map((w) => w.address.toLowerCase());
     const resultAddresses = result.map((r) => r.toLowerCase());
-    const addresses = new Set([...wellLPAddresses, ...resultAddresses]);
+    const addresses = new Set(...resultAddresses);
 
     // Remove empty string
     addresses.delete('');
@@ -142,14 +108,13 @@ export const findWells = memoize(
 
 const MAX_PER_CALL = 21;
 
-export const fetchWellsWithAddresses = async (_sdk: BeanstalkSDK, addresses: string[]) => {
-  const sdk = _sdk.wells;
+export const fetchWellsWithAddresses = async (sdk: WellsSDK, addresses: string[]) => {
   const toLower = addresses.map((a) => a.toLowerCase());
   const wellAddresses = new Set([...toLower]);
 
-  const { wellResults, tokenSet } = await fetchWellsWithMulticall(_sdk, toLower);
+  const { wellResults, tokenSet } = await fetchWellsWithMulticall(sdk, toLower);
 
-  const tokenMap = await fetchTokensWithMulticall(_sdk, [...tokenSet], wellAddresses);
+  const tokenMap = await fetchTokensWithMulticall(sdk, [...tokenSet], wellAddresses);
 
   const wells: Well[] = [];
 
@@ -214,7 +179,7 @@ type WellsMultiCallResult = [
 
 type WellContractCall = ContractFunctionParameters<typeof wellsABI>;
 
-const fetchWellsWithMulticall = async (sdk: BeanstalkSDK, wellAddresses: string[]) => {
+const fetchWellsWithMulticall = async (sdk: WellsSDK, wellAddresses: string[]) => {
   const tokensToFetch = new Set([...wellAddresses]);
   const wellCalls = makeWellContractCalls(wellAddresses);
 
@@ -233,7 +198,7 @@ const fetchWellsWithMulticall = async (sdk: BeanstalkSDK, wellAddresses: string[
       const wellDatas = data.data[1];
       // If token is not defined in WellsSDK. We need to fetch it from on Chain.
       for (const token of wellDatas[0]) {
-        if (sdk.wells.tokens.erc20Tokens.has(token.toLowerCase())) continue;
+        if (sdk.tokens.erc20Tokens.has(token.toLowerCase())) continue;
         tokensToFetch.add(token.toLowerCase());
       }
     });
@@ -288,7 +253,7 @@ type StandardERC20Call = ContractFunctionParameters<typeof standardErc20Abi>;
 type NonStandardERC20Call = ContractFunctionParameters<typeof nonStandardERC20ABI>;
 
 const fetchTokensWithMulticall = async (
-  sdk: BeanstalkSDK,
+  sdk: WellsSDK,
   tokenAddresses: string[],
   wellAddresses: Set<string>,
   refetchFailed: boolean = false

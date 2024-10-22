@@ -1,15 +1,14 @@
-import { Well } from '@beanstalk/sdk/Wells';
-
-import { BeanstalkSDK } from '@beanstalk/sdk';
-
 import { GetWellChartDataDocument, GetWellChartDataQuery } from 'src/generated/graph/graphql';
+
+import { Well, WellsSDK } from '@exchange/sdk-wells';
+
 import { Log } from 'src/utils/logger';
 
 import { fetchFromSubgraphRequest } from './subgraphFetch';
 
 export type IWellHourlySnapshot = NonNullable<GetWellChartDataQuery['well']>['hourlySnapshots'][number];
 
-const loadFromGraph = async (sdk: BeanstalkSDK, well: Well, timePeriod: string): Promise<IWellHourlySnapshot[]> => {
+const loadFromGraph = async (sdk: WellsSDK, well: Well, timePeriod: string): Promise<IWellHourlySnapshot[]> => {
   if (!well) return [];
 
   Log.module('wellChartData').debug('Loading chart data from Graph');
@@ -53,6 +52,6 @@ const loadFromGraph = async (sdk: BeanstalkSDK, well: Well, timePeriod: string):
   return results;
 };
 
-export const loadChartData = async (sdk: BeanstalkSDK, well: Well, timePeriod: string): Promise<any> => {
+export const loadChartData = async (sdk: WellsSDK, well: Well, timePeriod: string): Promise<any> => {
   return loadFromGraph(sdk, well, timePeriod);
 };

@@ -4,7 +4,10 @@
       "version": "detect"
     },
     "import/resolver": {
-      "typescript": {},
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      },
       "node": {
         "paths": ["src"],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
@@ -12,9 +15,9 @@
     }
   },
   "extends": [
-    "plugin:eslint/recommended",
+    // "plugin:eslint/recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
+    // "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript"
   ],
   "parser": "@typescript-eslint/parser",
@@ -52,7 +55,7 @@
             "position": "before"
           },
           {
-            "pattern": "@beanstalk/sdk*",
+            "pattern": "@exchange/sdk*",
             "group": "external",
             "position": "after"
           },
@@ -61,7 +64,7 @@
             "group": "internal"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react", "path"],
+        "pathGroupsExcludedImportTypes": ["react"],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true

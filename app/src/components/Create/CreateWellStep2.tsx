@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
+import { ERC20Token } from '@beanstalk/sdk';
 import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import styled from 'styled-components';
-
-import { ERC20Token } from '@beanstalk/sdk';
 
 import { images } from 'src/assets/images/tokens';
 import { Dropdown } from 'src/components/Dropdown';

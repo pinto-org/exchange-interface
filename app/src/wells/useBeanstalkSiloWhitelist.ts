@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
+import { Well } from '@exchange/sdk-wells';
 
 import useSdk from 'src/utils/sdk/useSdk';
 

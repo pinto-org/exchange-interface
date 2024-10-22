@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
-
-import { Well } from '@beanstalk/sdk/Wells';
 import { multicall } from '@wagmi/core';
 
-import { TokenValue } from '@beanstalk/sdk';
+import { Well } from '@exchange/sdk-wells';
+import { TokenValue } from '@exchange/sdk-core';
 
 import MULTI_PUMP_ABI from 'src/abi/MULTI_PUMP_ABI.json';
 import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
@@ -33,10 +32,10 @@ export const useMultiFlowPumpTWAReserves = () => {
         ...whitelistedWells.map((well) => sdk.contracts.beanstalk.wellOracleSnapshot(well.address))
       ]);
 
-      const calls: any[] = whitelistedWells.reduce<any[]>((prev, well, idx) => {
+      const calls = whitelistedWells.reduce<any[]>((prev, well: Well, idx) => {
         well.pumps?.forEach((pump) => {
           prev.push({
-            address: pump.address as `0x{string}`,
+            address: pump.address as `0x${string}`,
             abi: MULTI_PUMP_ABI,
             functionName: 'readTwaReserves',
             args: [well.address, wellOracleSnapshots[idx], seasonTimestamp.toString(), '0x']
@@ -50,7 +49,7 @@ export const useMultiFlowPumpTWAReserves = () => {
 
       const mapping: Record<string, TokenValue[]> = {};
 
-      whitelistedWells.forEach((well) => {
+      whitelistedWells.forEach((well: Well) => {
         const twa = [TokenValue.ZERO, TokenValue.ZERO];
         const numPumps = well.pumps?.length || 1;
 

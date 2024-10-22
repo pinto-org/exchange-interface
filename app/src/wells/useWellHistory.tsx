@@ -1,6 +1,5 @@
-import { Well } from '@beanstalk/sdk/Wells';
-
-import { Token, TokenValue } from '@beanstalk/sdk';
+import { Well } from '@exchange/sdk-wells';
+import { Token, TokenValue } from '@exchange/sdk-core';
 
 import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
 import useSdk from 'src/utils/sdk/useSdk';

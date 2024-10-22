@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
-
-import { ERC20Token, TokenValue } from '@beanstalk/sdk';
+import { Well } from '@exchange/sdk-wells';
+import { ERC20Token, TokenValue } from '@exchange/sdk-core';
 
 import { useTokenSupplyMany } from 'src/tokens/useTokenSupply';
 import { AddressMap } from 'src/types';

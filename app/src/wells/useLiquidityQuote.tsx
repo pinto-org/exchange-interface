@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
 import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import { REMOVE_LIQUIDITY_MODE } from 'src/components/Liquidity/types';
 import { Log } from 'src/utils/logger';
@@ -124,7 +124,7 @@ export const useLiquidityQuote = (
       }
 
       try {
-        let _amountsFilled = [];
+        const _amountsFilled = [];
         for (let i = 0; i < wellTokens.length; i++) {
           _amountsFilled[i] = !amounts[i] ? TokenValue.ZERO : amounts[i];
         }

@@ -22,6 +22,7 @@ import { LearnYield } from 'src/components/Well/LearnYield';
 import { LiquidityBox } from 'src/components/Well/LiquidityBox';
 import { Log } from 'src/utils/logger';
 import { useWellWithParams } from 'src/wells/useWellWithParams';
+import { TokenValue } from '@exchange/sdk-core';
 
 export const Liquidity = () => {
   const { well, loading, error } = useWellWithParams();
@@ -54,7 +55,7 @@ export const Liquidity = () => {
     return <Error message={error?.message} errorOnly />;
   }
 
-  const nonEmptyReserves = well && well?.reserves?.some((reserve) => reserve.gt(0));
+  const nonEmptyReserves = well && well?.reserves?.some((reserve: TokenValue) => reserve.gt(0));
 
   return (
     <Page>

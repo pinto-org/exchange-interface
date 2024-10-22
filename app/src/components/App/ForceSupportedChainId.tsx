@@ -4,7 +4,7 @@ import { ConnectKitButton, useModal } from 'connectkit';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ChainId, ChainResolver } from '@beanstalk/sdk-core';
+import { ChainId, ChainResolver } from '@exchange/sdk-core';
 
 import { ChainIdError, useChainErr, useSetChainErr } from 'src/state/atoms/chain.atoms';
 import { useSdkChainId } from 'src/utils/chain';

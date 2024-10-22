@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import { multicall } from '@wagmi/core';
 import { ContractFunctionParameters } from 'viem';
 
-import { Well, WellFunction } from '@beanstalk/sdk-wells';
+import { Well, WellFunction } from '@exchange/sdk-wells';
 
 import { chunkArray } from 'src/utils/array';
 import { queryKeys } from 'src/utils/query/queryKeys';

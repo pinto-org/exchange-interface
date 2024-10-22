@@ -1,4 +1,4 @@
-import { Well } from '@beanstalk/sdk-wells';
+import { Well } from '@exchange/sdk-wells';
 
 export const formatWellTokenSymbols = (well: Well | undefined, separator?: string) => {
   const tokenNames = well?.tokens?.map((token) => token.symbol);

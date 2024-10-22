@@ -1756,6 +1756,46 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@exchange/sdk@workspace:libs/sdk":
+  version: 0.0.0-use.local
+  resolution: "@exchange/sdk@workspace:libs/sdk"
+  dependencies:
+    "@exchange/sdk-core": "workspace:*"
+    "@graphql-codegen/cli": "npm:2.13.7"
+    "@graphql-codegen/typescript": "npm:2.8.8"
+    "@graphql-codegen/typescript-graphql-request": "npm:^4.5.6"
+    "@graphql-codegen/typescript-operations": "npm:^2.5.4"
+    "@graphql-codegen/typescript-resolvers": "npm:2.7.13"
+    "@rollup/plugin-commonjs": "npm:23.0.7"
+    "@rollup/plugin-json": "npm:5.0.2"
+    "@rollup/plugin-multi-entry": "npm:6.0.1"
+    "@rollup/plugin-node-resolve": "npm:15.2.3"
+    "@typechain/ethers-v5": "npm:^10.2.1"
+    "@types/graphlib": "npm:2.1.12"
+    "@types/jest": "npm:^29.5.12"
+    "@types/rimraf": "npm:^3.0.2"
+    dotenv: "npm:^16.4.5"
+    ethers: "npm:^5.0.0"
+    graphlib: "npm:2.1.8"
+    graphql: "npm:16.6.0"
+    graphql-request: "npm:^4"
+    graphql-tag: "npm:2.12.6"
+    jest: "npm:^29.2.0"
+    rimraf: "npm:3.0.2"
+    rollup: "npm:3.29.4"
+    rollup-plugin-alias: "npm:2.2.0"
+    rollup-plugin-exclude-dependencies-from-bundle: "npm:1.1.23"
+    rollup-plugin-sourcemaps: "npm:0.6.3"
+    rollup-plugin-typescript2: "npm:0.36.0"
+    tsc-alias: "npm:1.8.8"
+    tslib: "npm:2.6.2"
+    typechain: "npm:^8.1.0"
+    typescript: "npm:5.3.3"
+  peerDependencies:
+    ethers: ^5.0.0
+  languageName: unknown
+  linkType: soft
+
 "@fastify/busboy@npm:^2.0.0":
   version: 2.1.1
   resolution: "@fastify/busboy@npm:2.1.1"
@@ -3410,6 +3450,13 @@ __metadata:
     "@nodelib/fs.scandir": "npm:2.1.5"
     fastq: "npm:^1.6.0"
   checksum: 10/40033e33e96e97d77fba5a238e4bba4487b8284678906a9f616b5579ddaf868a18874c0054a75402c9fbaaa033a25ceae093af58c9c30278e35c23c9479e79b0
+  languageName: node
+  linkType: hard
+
+"@nolyfill/is-core-module@npm:1.0.39":
+  version: 1.0.39
+  resolution: "@nolyfill/is-core-module@npm:1.0.39"
+  checksum: 10/0d6e098b871eca71d875651288e1f0fa770a63478b0b50479c99dc760c64175a56b5b04f58d5581bbcc6b552b8191ab415eada093d8df9597ab3423c8cac1815
   languageName: node
   linkType: hard
 
@@ -5181,6 +5228,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:4.17.12":
+  version: 4.17.12
+  resolution: "@types/lodash@npm:4.17.12"
+  checksum: 10/3d829f97c0ea713135e6eb48e983feffb315f4cf228d03654ca8a328e3fecd03005bf7dd30bf411f4306967c610d96738d441588283a41456815f2ce1fd7044c
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:^5.1.2":
   version: 5.1.2
   resolution: "@types/minimatch@npm:5.1.2"
@@ -6151,6 +6205,7 @@ __metadata:
     "@tanstack/react-query": "npm:5.28.4"
     "@tanstack/react-query-devtools": "npm:5.28.4"
     "@typechain/ethers-v5": "npm:10.2.1"
+    "@types/lodash": "npm:4.17.12"
     "@types/react": "npm:^18.2.57"
     "@types/react-dom": "npm:^18.2.19"
     "@types/styled-components": "npm:^5.1.34"
@@ -6160,6 +6215,7 @@ __metadata:
     alchemy-sdk: "npm:3.3.1"
     connectkit: "npm:1.7.2"
     eslint: "npm:8.57.0"
+    eslint-import-resolver-typescript: "npm:3.6.3"
     eslint-plugin-import: "npm:2.29.1"
     eslint-plugin-jsx-a11y: "npm:6.8.0"
     eslint-plugin-react: "npm:7.34.0"
@@ -6168,6 +6224,7 @@ __metadata:
     graphql-request: "npm:5.2.0"
     jotai: "npm:2.9.3"
     lightweight-charts: "npm:4.1.3"
+    lodash: "npm:4.17.21"
     prettier: "npm:3.2.5"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -7604,7 +7661,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:~4.3.1, debug@npm:~4.3.2":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.3.5, debug@npm:~4.3.1, debug@npm:~4.3.2":
   version: 4.3.7
   resolution: "debug@npm:4.3.7"
   dependencies:
@@ -8010,6 +8067,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enhanced-resolve@npm:^5.15.0":
+  version: 5.17.1
+  resolution: "enhanced-resolve@npm:5.17.1"
+  dependencies:
+    graceful-fs: "npm:^4.2.4"
+    tapable: "npm:^2.2.0"
+  checksum: 10/e8e03cb7a4bf3c0250a89afbd29e5ec20e90ba5fcd026066232a0754864d7d0a393fa6fc0e5379314a6529165a1834b36731147080714459d98924520410d8f5
+  languageName: node
+  linkType: hard
+
 "env-paths@npm:^2.2.0":
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
@@ -8317,7 +8384,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-module-utils@npm:^2.8.0":
+"eslint-import-resolver-typescript@npm:3.6.3":
+  version: 3.6.3
+  resolution: "eslint-import-resolver-typescript@npm:3.6.3"
+  dependencies:
+    "@nolyfill/is-core-module": "npm:1.0.39"
+    debug: "npm:^4.3.5"
+    enhanced-resolve: "npm:^5.15.0"
+    eslint-module-utils: "npm:^2.8.1"
+    fast-glob: "npm:^3.3.2"
+    get-tsconfig: "npm:^4.7.5"
+    is-bun-module: "npm:^1.0.2"
+    is-glob: "npm:^4.0.3"
+  peerDependencies:
+    eslint: "*"
+    eslint-plugin-import: "*"
+    eslint-plugin-import-x: "*"
+  peerDependenciesMeta:
+    eslint-plugin-import:
+      optional: true
+    eslint-plugin-import-x:
+      optional: true
+  checksum: 10/5f9956dbbd0becc3d6c6cb945dad0e5e6f529cfd0f488d5688f3c59840cd7f4a44ab6aee0f54b5c4188134dab9a01cb63c1201767bde7fc330b7c1a14747f8ac
+  languageName: node
+  linkType: hard
+
+"eslint-module-utils@npm:^2.8.0, eslint-module-utils@npm:^2.8.1":
   version: 2.12.0
   resolution: "eslint-module-utils@npm:2.12.0"
   dependencies:
@@ -8852,7 +8944,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -9327,6 +9419,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"get-tsconfig@npm:^4.7.5":
+  version: 4.8.1
+  resolution: "get-tsconfig@npm:4.8.1"
+  dependencies:
+    resolve-pkg-maps: "npm:^1.0.0"
+  checksum: 10/3fb5a8ad57b9633eaea085d81661e9e5c9f78b35d8f8689eaf8b8b45a2a3ebf3b3422266d4d7df765e308cc1e6231648d114803ab3d018332e29916f2c1de036
+  languageName: node
+  linkType: hard
+
 "glob-parent@npm:^5.1.2, glob-parent@npm:~5.1.2":
   version: 5.1.2
   resolution: "glob-parent@npm:5.1.2"
@@ -9460,7 +9561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
+"graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10/bf152d0ed1dc159239db1ba1f74fdbc40cb02f626770dcd5815c427ce0688c2635a06ed69af364396da4636d0408fcf7d4afdf7881724c3307e46aff30ca49e2
@@ -10088,6 +10189,15 @@ __metadata:
   dependencies:
     builtin-modules: "npm:^3.3.0"
   checksum: 10/e8f0ffc19a98240bda9c7ada84d846486365af88d14616e737d280d378695c8c448a621dcafc8332dbf0fcd0a17b0763b845400709963fa9151ddffece90ae88
+  languageName: node
+  linkType: hard
+
+"is-bun-module@npm:^1.0.2":
+  version: 1.2.1
+  resolution: "is-bun-module@npm:1.2.1"
+  dependencies:
+    semver: "npm:^7.6.3"
+  checksum: 10/1c2cbcf1a76991add1b640d2d7fe09848e8697a76f96e1289dff44133a48c97f5dc601d4a66d3f3a86217a77178d72d33d10d0c9e14194e58e70ec8df3eae41a
   languageName: node
   linkType: hard
 
@@ -11582,7 +11692,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:~4.17.0":
+"lodash@npm:4.17.21, lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:~4.17.0":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10/c08619c038846ea6ac754abd6dd29d2568aa705feb69339e836dfa8d8b09abbb2f859371e86863eda41848221f9af43714491467b5b0299122431e202bb0c532
@@ -13565,6 +13675,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"resolve-pkg-maps@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "resolve-pkg-maps@npm:1.0.0"
+  checksum: 10/0763150adf303040c304009231314d1e84c6e5ebfa2d82b7d94e96a6e82bacd1dcc0b58ae257315f3c8adb89a91d8d0f12928241cba2df1680fbe6f60bf99b0e
+  languageName: node
+  linkType: hard
+
 "resolve.exports@npm:^2.0.0":
   version: 2.0.2
   resolution: "resolve.exports@npm:2.0.2"
@@ -13958,7 +14075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.5, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4":
+"semver@npm:^7.3.5, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.3":
   version: 7.6.3
   resolution: "semver@npm:7.6.3"
   bin:
@@ -14638,6 +14755,13 @@ __metadata:
     typical: "npm:^5.2.0"
     wordwrapjs: "npm:^4.0.0"
   checksum: 10/5dd12bc64ddf246f774fc51b45398dd8da900b7bb246595c84007ea292c15936264701660b80704be17da5d4066a9a250549418c40a2b635a0916c9294b103af
+  languageName: node
+  linkType: hard
+
+"tapable@npm:^2.2.0":
+  version: 2.2.1
+  resolution: "tapable@npm:2.2.1"
+  checksum: 10/1769336dd21481ae6347611ca5fca47add0962fd8e80466515032125eca0084a4f0ede11e65341b9c0018ef4e1cf1ad820adbb0fba7cc99865c6005734000b0a
   languageName: node
   linkType: hard
 

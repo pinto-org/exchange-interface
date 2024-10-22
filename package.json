@@ -11,9 +11,13 @@
     "libs/*"
   ],
   "scripts": {
-    "format:prettier": "prettier --write \"**/*.{ts,tsx,json}\"",
+    "sdks:generate": "yarn core:generate && yarn sdk-wells:generate",
+    "core:generate": "yarn workspace @exchange/sdk-core generate",
+    "wells:generate": "yarn workspace @exchange/sdk-wells generate",
+    "core:build": "yarn workspace @exchange/sdk-core build",
+    "wells:build": "yarn workspace @exchange/sdk-wells build",
     "sdks:build": "yarn core:build && yarn wells:build",
-    "generate": "yarn core:generate && yarn wells:generate"
+    "format:prettier": "prettier --write \"**/*.{ts,tsx,json}\""
   },
   "devDependencies": {
     "@types/prettier": "^2.7.3",

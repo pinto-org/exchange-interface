@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
+import { Well } from '@exchange/sdk-wells';
 
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';

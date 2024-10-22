@@ -1,7 +1,7 @@
 import { type TypedDocumentNode } from '@graphql-typed-document-node/core';
 import request from 'graphql-request';
 
-import { ChainId, ChainResolver } from '@beanstalk/sdk-core';
+import { ChainId, ChainResolver } from '@exchange/sdk-core';
 
 import { Settings, SubgraphDexSettings } from 'src/settings';
 

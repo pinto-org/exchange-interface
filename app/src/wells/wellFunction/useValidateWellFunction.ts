@@ -3,8 +3,8 @@ import { useCallback } from 'react';
 import { multicall } from '@wagmi/core';
 import { BigNumber } from 'ethers';
 
-import { BeanstalkSDK } from '@beanstalk/sdk';
-import { WellFunction } from '@beanstalk/sdk-wells';
+import { WellsSDK } from '@exchange/sdk-wells';
+import { WellFunction } from '@exchange/sdk-wells';
 
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useGetChainScopedQueryData, useSetChainScopedQueryData } from 'src/utils/query/useChainScopedQuery';
@@ -43,13 +43,9 @@ const getWellFunctionCalls = (wellFunction: WellFunction) => {
 };
 
 const validateWellFunction = async (
-  sdk: BeanstalkSDK,
+  sdk: WellsSDK,
   knownWellFunctions: WellFunction[],
-  params: {
-    address?: string;
-    data?: string;
-    wellFunction?: WellFunction;
-  }
+  params: { address?: string; data?: string; wellFunction?: WellFunction }
 ) => {
   const { address, data, wellFunction: wellFn } = params;
 
@@ -59,7 +55,7 @@ const validateWellFunction = async (
     address && knownWellFunctions.find((wf) => wf.address.toLowerCase() === address.toLowerCase());
   if (foundWellFunction) return foundWellFunction;
 
-  const wellFunction = wellFn || (data && address && new WellFunction(sdk.wells, address, data));
+  const wellFunction = wellFn || (data && address && new WellFunction(sdk, address, data));
   if (!wellFunction) return undefined;
 
   const calls = await multicall(config, { contracts: getWellFunctionCalls(wellFunction) });

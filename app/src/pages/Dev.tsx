@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
-import { BeanstalkSDK, TestUtils, Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
 
 import { Page } from 'src/components/Page';
 import { Title } from 'src/components/PageComponents/Title';
