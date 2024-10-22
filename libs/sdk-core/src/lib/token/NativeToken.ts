@@ -1,6 +1,6 @@
-import { Token } from "./Token";
-import { TokenValue } from "../TokenValue";
-import { BigNumber, Signer } from "ethers";
+import { Token } from './Token';
+import { TokenValue } from '../TokenValue';
+import { BigNumber, Signer } from 'ethers';
 
 export class NativeToken extends Token {
   public getContract() {

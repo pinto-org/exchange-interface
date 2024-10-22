@@ -1,12 +1,12 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
+import { Well } from '@beanstalk/sdk/Wells';
 
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
 
-import { loadSiloAPYData } from "./apyFetcher";
+import { loadSiloAPYData } from './apyFetcher';
 
 export const useBeanstalkSiloAPYs = () => {
   const sdk = useSdk();

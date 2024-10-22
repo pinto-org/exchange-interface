@@ -1,17 +1,17 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import styled from 'styled-components';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { mediaQuery } from "src/breakpoints";
-import { Info } from "src/components/Icons";
-import { Item, Row } from "src/components/Layout";
-import { TokenLogo } from "src/components/TokenLogo";
-import { Tooltip, TooltipProps } from "src/components/Tooltip";
-import { BodyS } from "src/components/Typography";
-import { formatNum } from "src/utils/format";
+import { mediaQuery } from 'src/breakpoints';
+import { Info } from 'src/components/Icons';
+import { Item, Row } from 'src/components/Layout';
+import { TokenLogo } from 'src/components/TokenLogo';
+import { Tooltip, TooltipProps } from 'src/components/Tooltip';
+import { BodyS } from 'src/components/Typography';
+import { formatNum } from 'src/utils/format';
 
 export const MultiFlowPumpTooltip: FC<{
   well: Well;
@@ -35,27 +35,22 @@ export const MultiFlowPumpTooltip: FC<{
       content={
         <Container>
           <TitleAndContentContainer column stretch>
-            <div className="container-title">Multi Flow Pump</div>
-            <div className="content">
+            <div className='container-title'>Multi Flow Pump</div>
+            <div className='content'>
               The&nbsp;
-              <a
-                className="content-link"
-                href="/multi-flow-pump.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a className='content-link' href='/multi-flow-pump.pdf' target='_blank' rel='noopener noreferrer'>
                 Multi Flow Pump
               </a>
-              , an inter-block MEV manipulation resistant oracle, stores reserve data from this
-              Well. In particular, Multi Flow stores reserve data in two formats:
+              , an inter-block MEV manipulation resistant oracle, stores reserve data from this Well. In particular,
+              Multi Flow stores reserve data in two formats:
             </div>
           </TitleAndContentContainer>
           <ReservesInfo column stretch>
             <ReserveData column stretch>
-              <div className="reserve-type">Instantaneous reserves</div>
+              <div className='reserve-type'>Instantaneous reserves</div>
               <StyledItem stretch>
                 <StyledRow>
-                  <div className="reserve-token-container">
+                  <div className='reserve-token-container'>
                     <TokenLogo token={token1} size={16} />
                     {token1.symbol}
                   </div>
@@ -64,7 +59,7 @@ export const MultiFlowPumpTooltip: FC<{
               </StyledItem>
               <StyledItem stretch>
                 <StyledRow>
-                  <div className="reserve-token-container">
+                  <div className='reserve-token-container'>
                     <TokenLogo token={token2} size={16} />
                     {token2.symbol}
                   </div>
@@ -74,10 +69,10 @@ export const MultiFlowPumpTooltip: FC<{
             </ReserveData>
             {twaReserves1 && twaReserves2 && (
               <ReserveData column stretch>
-                <div className="reserve-type">Time-weighted average reserves</div>
+                <div className='reserve-type'>Time-weighted average reserves</div>
                 <StyledItem stretch>
                   <StyledRow>
-                    <div className="reserve-token-container">
+                    <div className='reserve-token-container'>
                       <TokenLogo token={token1} size={16} />
                       {token1.symbol}
                     </div>
@@ -86,7 +81,7 @@ export const MultiFlowPumpTooltip: FC<{
                 </StyledItem>
                 <StyledItem stretch>
                   <StyledRow>
-                    <div className="reserve-token-container">
+                    <div className='reserve-token-container'>
                       <TokenLogo token={token2} size={16} />
                       {token2.symbol}
                     </div>
@@ -102,12 +97,12 @@ export const MultiFlowPumpTooltip: FC<{
       offsetY={0}
       arrowSize={0}
       arrowOffset={0}
-      side="top"
-      bgColor="white"
+      side='top'
+      bgColor='white'
       width={370}
       {...tooltipProps}
     >
-      {children ? children : <Info color="#9CA3AF" width={14} height={14} />}
+      {children ? children : <Info color='#9CA3AF' width={14} height={14} />}
     </Tooltip>
   );
 };
@@ -136,7 +131,7 @@ const TitleAndContentContainer = styled(Item)`
   }
 
   .content {
-    color: "#4B556";
+    color: '#4B556';
 
     .content-link {
       color: #46b955;
@@ -163,7 +158,7 @@ const ReserveData = styled(Item)`
   .reserve-type {
     ${BodyS}
     font-weight: 400;
-    color: "#4B556";
+    color: '#4B556';
   }
 
   .reserve-token-container {

@@ -1,22 +1,15 @@
-import { Well } from "@beanstalk/sdk/Wells";
-import { BigNumber } from "ethers";
-import isEqual from "lodash/isEqual";
+import { Well } from '@beanstalk/sdk/Wells';
+import { BigNumber } from 'ethers';
+import isEqual from 'lodash/isEqual';
 
-import { BeanstalkSDK } from "@beanstalk/sdk";
+import { BeanstalkSDK } from '@beanstalk/sdk';
 
-import { GetWellEventsDocument } from "src/generated/graph/graphql";
-import { Settings } from "src/settings";
-import { Log } from "src/utils/logger";
+import { GetWellEventsDocument } from 'src/generated/graph/graphql';
+import { Settings } from 'src/settings';
+import { Log } from 'src/utils/logger';
 
-import { fetchFromSubgraphRequest } from "./subgraphFetch";
-import {
-  AddEvent,
-  BaseEvent,
-  EVENT_TYPE,
-  ShiftEvent,
-  SwapEvent,
-  WellEvent
-} from "./useWellHistory";
+import { fetchFromSubgraphRequest } from './subgraphFetch';
+import { AddEvent, BaseEvent, EVENT_TYPE, ShiftEvent, SwapEvent, WellEvent } from './useWellHistory';
 
 const HISTORY_DAYS = 7;
 const HISTORY_DAYS_AGO_BLOCK_TIMESTAMP = Math.floor(
@@ -24,7 +17,7 @@ const HISTORY_DAYS_AGO_BLOCK_TIMESTAMP = Math.floor(
 );
 
 const loadFromChain = async (sdk: BeanstalkSDK, well: Well): Promise<any[]> => {
-  Log.module("history").debug("Loading history from blockchain");
+  Log.module('history').debug('Loading history from blockchain');
   const contract = well.contract;
   const swapFilter = contract.filters.Swap();
   const addFilter = contract.filters.AddLiquidity();
@@ -54,14 +47,14 @@ const loadFromChain = async (sdk: BeanstalkSDK, well: Well): Promise<any[]> => {
     if (isEqual(syncFilter.topics, topics)) return EVENT_TYPE.SYNC;
     if (isEqual(shiftFilter.topics, topics)) return EVENT_TYPE.SHIFT;
 
-    throw new Error("Unknown topics found: " + topics);
+    throw new Error('Unknown topics found: ' + topics);
   };
 
   const fromBlock = Number(Settings.WELLS_ORIGIN_BLOCK);
-  const toBlock = "latest";
+  const toBlock = 'latest';
   const events = await contract.queryFilter(combinedFilter, fromBlock, toBlock);
 
-  Log.module("history").debug("Raw event data from blockchain: ", events);
+  Log.module('history').debug('Raw event data from blockchain: ', events);
 
   return events.sort(sortEventsDescByBlock).map((e) => {
     const type = getEventType(e.topics);
@@ -72,7 +65,7 @@ const loadFromChain = async (sdk: BeanstalkSDK, well: Well): Promise<any[]> => {
     };
 
     if (type === EVENT_TYPE.SWAP) {
-      const data = contract.interface.decodeEventLog("Swap", e.data, e.topics);
+      const data = contract.interface.decodeEventLog('Swap', e.data, e.topics);
       const fromToken = well.getTokenByAddress(data.fromToken)!;
       const toToken = well.getTokenByAddress(data.toToken)!;
       const event: SwapEvent = {
@@ -85,7 +78,7 @@ const loadFromChain = async (sdk: BeanstalkSDK, well: Well): Promise<any[]> => {
       return event;
     }
     if (type === EVENT_TYPE.SHIFT) {
-      const data = contract.interface.decodeEventLog("Shift", e.data, e.topics);
+      const data = contract.interface.decodeEventLog('Shift', e.data, e.topics);
       const toToken = well.getTokenByAddress(data.toToken)!;
       const event: ShiftEvent = {
         ...base,
@@ -95,44 +88,38 @@ const loadFromChain = async (sdk: BeanstalkSDK, well: Well): Promise<any[]> => {
       return event;
     }
     if (type === EVENT_TYPE.ADD_LIQUIDITY) {
-      const data = contract.interface.decodeEventLog("AddLiquidity", e.data, e.topics);
+      const data = contract.interface.decodeEventLog('AddLiquidity', e.data, e.topics);
       const event: AddEvent = {
         ...base,
         lpAmount: well.lpToken!.fromBlockchain(data.lpAmountOut),
-        tokenAmounts: data.tokenAmountsIn.map((bn: BigNumber, i: number) =>
-          well.tokens![i].fromBlockchain(bn)
-        )
+        tokenAmounts: data.tokenAmountsIn.map((bn: BigNumber, i: number) => well.tokens![i].fromBlockchain(bn))
       };
       return event;
     }
     if (type === EVENT_TYPE.REMOVE_LIQUIDITY) {
-      const data = contract.interface.decodeEventLog("RemoveLiquidity", e.data, e.topics);
+      const data = contract.interface.decodeEventLog('RemoveLiquidity', e.data, e.topics);
       const event: AddEvent = {
         ...base,
         lpAmount: well.lpToken!.fromBlockchain(data.lpAmountIn),
-        tokenAmounts: data.tokenAmountsOut.map((bn: BigNumber, i: number) =>
-          well.tokens![i].fromBlockchain(bn)
-        )
+        tokenAmounts: data.tokenAmountsOut.map((bn: BigNumber, i: number) => well.tokens![i].fromBlockchain(bn))
       };
       return event;
     }
     if (type === EVENT_TYPE.SYNC) {
-      const data = contract.interface.decodeEventLog("Sync", e.data, e.topics);
+      const data = contract.interface.decodeEventLog('Sync', e.data, e.topics);
       const event: AddEvent = {
         ...base,
         lpAmount: well.lpToken!.fromBlockchain(data.lpAmountOut),
-        tokenAmounts: data.reserves.map((bn: BigNumber, i: number) =>
-          well.tokens![i].fromBlockchain(bn)
-        )
+        tokenAmounts: data.reserves.map((bn: BigNumber, i: number) => well.tokens![i].fromBlockchain(bn))
       };
       return event;
     }
-    throw new Error("Should never reach here. Unknown event type: " + type);
+    throw new Error('Should never reach here. Unknown event type: ' + type);
   });
 };
 
 const loadFromGraph = async (sdk: BeanstalkSDK, well: Well) => {
-  Log.module("history").debug("Loading history from Graph");
+  Log.module('history').debug('Loading history from Graph');
 
   if (!well.lpToken) await well.getLPToken();
 
@@ -146,7 +133,7 @@ const loadFromGraph = async (sdk: BeanstalkSDK, well: Well) => {
   );
 
   const results = await data();
-  Log.module("history").debug("Raw event data from subgraph: ", results);
+  Log.module('history').debug('Raw event data from subgraph: ', results);
 
   const swapEvents = ((results.well ?? {}).swaps ?? []).map((e) => {
     const fromToken = well.getTokenByAddress(e.fromToken.id)!;
@@ -213,12 +200,12 @@ export const loadHistory = async (sdk: BeanstalkSDK, well: Well): Promise<WellEv
 
   return loadFromGraph(sdk, well)
     .catch((err) => {
-      Log.module("history").error("Error loading history from subgraph", err);
-      Log.module("history").log("Trying blockchain...");
+      Log.module('history').error('Error loading history from subgraph', err);
+      Log.module('history').log('Trying blockchain...');
       return loadFromChain(sdk, well);
     })
     .catch((err) => {
-      Log.module("history").error("Failed to load history from blockchain too :(", err);
+      Log.module('history').error('Failed to load history from blockchain too :(', err);
       return [];
     });
 };

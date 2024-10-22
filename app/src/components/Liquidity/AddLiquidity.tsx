@@ -1,30 +1,30 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import styled from "styled-components";
-import { useAccount, useChainId } from "wagmi";
+import styled from 'styled-components';
+import { useAccount, useChainId } from 'wagmi';
 
-import { ERC20Token, Token, TokenValue } from "@beanstalk/sdk";
-import { AddLiquidityETH, Well } from "@beanstalk/sdk-wells";
+import { ERC20Token, Token, TokenValue } from '@beanstalk/sdk';
+import { AddLiquidityETH, Well } from '@beanstalk/sdk-wells';
 
-import { size } from "src/breakpoints";
-import { LoadingTemplate } from "src/components/LoadingTemplate";
-import { ActionWalletButtonWrapper } from "src/components/Wallet";
-import { PriceLookups } from "src/utils/price/priceLookups";
-import { useTokenPrices } from "src/utils/price/useTokenPrices";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import { useInvalidateQueries } from "src/utils/query/useInvalidateQueries";
-import useSdk from "src/utils/sdk/useSdk";
-import { useWellReserves } from "src/wells/useWellReserves";
+import { size } from 'src/breakpoints';
+import { LoadingTemplate } from 'src/components/LoadingTemplate';
+import { ActionWalletButtonWrapper } from 'src/components/Wallet';
+import { PriceLookups } from 'src/utils/price/priceLookups';
+import { useTokenPrices } from 'src/utils/price/useTokenPrices';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import { useInvalidateQueries } from 'src/utils/query/useInvalidateQueries';
+import useSdk from 'src/utils/sdk/useSdk';
+import { useWellReserves } from 'src/wells/useWellReserves';
 
-import { ensureAllowance, hasMinimumAllowance } from "./allowance";
-import QuoteDetails from "./QuoteDetails";
-import { LIQUIDITY_OPERATION_TYPE, LiquidityAmounts } from "./types";
-import { TokenInput } from "../../components/Swap/TokenInput";
-import { Log } from "../../utils/logger";
-import { Checkbox } from "../Checkbox";
-import { Button } from "../Swap/Button";
-import { TransactionToast } from "../TxnToast/TransactionToast";
+import { ensureAllowance, hasMinimumAllowance } from './allowance';
+import QuoteDetails from './QuoteDetails';
+import { LIQUIDITY_OPERATION_TYPE, LiquidityAmounts } from './types';
+import { TokenInput } from '../../components/Swap/TokenInput';
+import { Log } from '../../utils/logger';
+import { Checkbox } from '../Checkbox';
+import { Button } from '../Swap/Button';
+import { TransactionToast } from '../TxnToast/TransactionToast';
 
 type BaseAddLiquidityProps = {
   slippage: number;
@@ -79,7 +79,7 @@ const AddLiquidityContent = ({
   const { data: prices = [] } = useTokenPrices(well, {
     refetchInterval: 15 * 1000,
     staleTime: 15 * 1000,
-    refetchOnWindowFocus: "always",
+    refetchOnWindowFocus: 'always',
     select: (data) => {
       return [data[token1.symbol] || null, data[token2.symbol] || null]; // price indexed by token symbol
     }
@@ -93,15 +93,13 @@ const AddLiquidityContent = ({
   const canFetchPrice2 = !!(token2 && token2.symbol in PriceLookups);
   const canFetchPrices = Boolean(canFetchPrice1 && canFetchPrice2 && prices.length === 2);
 
-  const someWellReservesEmpty = Boolean(
-    wellReserves && wellReserves.some((reserve) => reserve.eq(0))
-  );
-  const areSomeInputsZero = Boolean(inputs.some((amt) => amt.value.eq("0")));
+  const someWellReservesEmpty = Boolean(wellReserves && wellReserves.some((reserve) => reserve.eq(0)));
+  const areSomeInputsZero = Boolean(inputs.some((amt) => amt.value.eq('0')));
 
   const atLeastOneAmountNonZero = useMemo(() => {
     if (!well.tokens || well.tokens.length === 0) return false;
 
-    const nonZeroValues = inputs.filter((amount) => amount.value.gt("0")).length;
+    const nonZeroValues = inputs.filter((amount) => amount.value.gt('0')).length;
     return nonZeroValues !== 0;
   }, [inputs, well.tokens]);
 
@@ -116,8 +114,7 @@ const AddLiquidityContent = ({
     return index >= 0 ? index : null;
   }, [hasWETH, well.tokens, WETH]);
 
-  const useNativeETH =
-    !useWETH && indexWETH && inputs[indexWETH] && inputs[indexWETH].gt(TokenValue.ZERO);
+  const useNativeETH = !useWETH && indexWETH && inputs[indexWETH] && inputs[indexWETH].gt(TokenValue.ZERO);
 
   // Check Balances
   useEffect(() => {
@@ -135,7 +132,7 @@ const AddLiquidityContent = ({
           continue;
         }
         let balance;
-        if (token.symbol === "WETH" && !useWETH) {
+        if (token.symbol === 'WETH' && !useWETH) {
           balance = await sdk.tokens.ETH.getBalance(address);
         } else {
           balance = await token.getBalance(address);
@@ -161,17 +158,12 @@ const AddLiquidityContent = ({
     for (let [index, token] of well.tokens!.entries()) {
       const targetAddress = useNativeETH ? sdk.addresses.DEPOT.get(chainId) : well.address;
       if (amounts[index]) {
-        const tokenHasMinAllowance = await hasMinimumAllowance(
-          address,
-          targetAddress,
-          token,
-          amounts[index]
-        );
-        Log.module("AddLiquidity").debug(
+        const tokenHasMinAllowance = await hasMinimumAllowance(address, targetAddress, token, amounts[index]);
+        Log.module('AddLiquidity').debug(
           `Token ${token.symbol} with amount ${amounts[index].toHuman()} has approval ${tokenHasMinAllowance}`
         );
-        if (token.symbol === "WETH" && !useWETH && hasWETH) {
-          Log.module("AddLiquidity").debug(`Using Native ETH, no approval needed!`);
+        if (token.symbol === 'WETH' && !useWETH && hasWETH) {
+          Log.module('AddLiquidity').debug(`Using Native ETH, no approval needed!`);
           _tokenAllowance.push(true);
         } else {
           _tokenAllowance.push(tokenHasMinAllowance);
@@ -181,17 +173,7 @@ const AddLiquidityContent = ({
       }
     }
     setTokenAllowance(_tokenAllowance);
-  }, [
-    address,
-    amounts,
-    useNativeETH,
-    well.address,
-    sdk.addresses.DEPOT,
-    chainId,
-    hasWETH,
-    useWETH,
-    well.tokens
-  ]);
+  }, [address, amounts, useNativeETH, well.address, sdk.addresses.DEPOT, chainId, hasWETH, useWETH, well.tokens]);
 
   // Once we have our first quote, we show the details.
   // Subsequent quote invocations shows a spinner in the Expected Output row
@@ -215,7 +197,7 @@ const AddLiquidityContent = ({
   );
 
   const { data: quote } = useChainScopedQuery({
-    queryKey: ["wells", "quote", "addliquidity", address, amounts, allTokensHaveMinAllowance],
+    queryKey: ['wells', 'quote', 'addliquidity', address, amounts, allTokensHaveMinAllowance],
 
     queryFn: async () => {
       if ((someWellReservesEmpty && areSomeInputsZero) || !atLeastOneAmountNonZero) {
@@ -244,7 +226,7 @@ const AddLiquidityContent = ({
         gas = estimate;
         return { quote, gas, estimate };
       } catch (error: any) {
-        Log.module("addliquidity").error("Error during quote: ", (error as Error).message);
+        Log.module('addliquidity').error('Error during quote: ', (error as Error).message);
         return null;
       }
     },
@@ -255,9 +237,9 @@ const AddLiquidityContent = ({
   const addLiquidityButtonClickHandler = useCallback(async () => {
     if (quote && address) {
       const toast = new TransactionToast({
-        loading: "Adding liquidity...",
-        error: "Adding liquidity failed",
-        success: "Liquidity added"
+        loading: 'Adding liquidity...',
+        error: 'Adding liquidity failed',
+        success: 'Liquidity added'
       });
       try {
         setIsSubmitting(true);
@@ -273,15 +255,9 @@ const AddLiquidityContent = ({
             quote.estimate.mul(1.2)
           );
         } else {
-          addLiquidityTxn = await well.addLiquidity(
-            inputs,
-            quoteAmountLessSlippage,
-            address,
-            undefined,
-            {
-              gasLimit: quote.estimate.mul(1.2).toBigNumber()
-            }
-          );
+          addLiquidityTxn = await well.addLiquidity(inputs, quoteAmountLessSlippage, address, undefined, {
+            gasLimit: quote.estimate.mul(1.2).toBigNumber()
+          });
         }
         toast.confirming(addLiquidityTxn);
         const receipt = await addLiquidityTxn.wait();
@@ -291,7 +267,7 @@ const AddLiquidityContent = ({
         refetchWellReserves();
         setIsSubmitting(false);
       } catch (error) {
-        Log.module("AddLiquidity").error("Error adding liquidity: ", (error as Error).message);
+        Log.module('AddLiquidity').error('Error adding liquidity: ', (error as Error).message);
         toast.error(error);
         setIsSubmitting(false);
       }
@@ -325,7 +301,7 @@ const AddLiquidityContent = ({
     (index: number) => (amount: TokenValue) => {
       if (!canFetchPrices || !prices) {
         setAmounts({ ...amounts, [index]: amount });
-        console.log("inbalanced mode...");
+        console.log('inbalanced mode...');
         return;
       }
       const amountInUSD = amount.mul(prices[index] || TokenValue.ZERO);
@@ -333,13 +309,8 @@ const AddLiquidityContent = ({
       for (let i = 0; i < prices.length; i++) {
         if (i !== index) {
           const conversion =
-            prices[i] && prices[i]?.gt(TokenValue.ZERO)
-              ? amountInUSD.div(prices[i]!)
-              : TokenValue.ZERO;
-          const conversionFormatted = TokenValue.fromHuman(
-            conversion.humanString,
-            well.tokens![i].decimals
-          );
+            prices[i] && prices[i]?.gt(TokenValue.ZERO) ? amountInUSD.div(prices[i]!) : TokenValue.ZERO;
+          const conversionFormatted = TokenValue.fromHuman(conversion.humanString, well.tokens![i].decimals);
           _amounts[i] = conversionFormatted;
         } else {
           _amounts[i] = amount;
@@ -411,18 +382,12 @@ const AddLiquidityContent = ({
   );
 
   const buttonLabel = useMemo(() => {
-    if (!address) return "Connect Wallet";
-    if (!hasEnoughBalance) return "Insufficient Balance";
-    if (!atLeastOneAmountNonZero) return "Enter Amount(s)";
-    if (someWellReservesEmpty && areSomeInputsZero) return "Both Amounts Required";
-    return "Add Liquidity";
-  }, [
-    atLeastOneAmountNonZero,
-    hasEnoughBalance,
-    address,
-    someWellReservesEmpty,
-    areSomeInputsZero
-  ]);
+    if (!address) return 'Connect Wallet';
+    if (!hasEnoughBalance) return 'Insufficient Balance';
+    if (!atLeastOneAmountNonZero) return 'Enter Amount(s)';
+    if (someWellReservesEmpty && areSomeInputsZero) return 'Both Amounts Required';
+    return 'Add Liquidity';
+  }, [atLeastOneAmountNonZero, hasEnoughBalance, address, someWellReservesEmpty, areSomeInputsZero]);
 
   return (
     <div>
@@ -434,14 +399,10 @@ const AddLiquidityContent = ({
                 key={`input${index}`}
                 id={`input${index}`}
                 label={`Input amount in ${token.symbol}`}
-                token={
-                  hasWETH && !useWETH && tokens[index].equals(WETH) ? sdk.tokens.ETH : tokens[index]
-                }
+                token={hasWETH && !useWETH && tokens[index].equals(WETH) ? sdk.tokens.ETH : tokens[index]}
                 amount={amounts[index]}
                 onAmountChange={
-                  balancedMode && canFetchPrices
-                    ? handleBalancedInputChange(index)
-                    : handleImbalancedInputChange(index)
+                  balancedMode && canFetchPrices ? handleBalancedInputChange(index) : handleImbalancedInputChange(index)
                 }
                 canChangeToken={false}
                 loading={false}
@@ -451,18 +412,12 @@ const AddLiquidityContent = ({
           <div>
             {canFetchPrices && (
               <Checkbox
-                label={"Add tokens in balanced proportion"}
+                label={'Add tokens in balanced proportion'}
                 checked={balancedMode}
                 onClick={() => toggleBalanceMode()}
               />
             )}
-            {hasWETH && (
-              <Checkbox
-                label={"Use Wrapped ETH"}
-                checked={useWETH}
-                onClick={() => setUseWETH(!useWETH)}
-              />
-            )}
+            {hasWETH && <Checkbox label={'Use Wrapped ETH'} checked={useWETH} onClick={() => setUseWETH(!useWETH)} />}
           </div>
           {showQuoteDetails && (
             <QuoteDetails
@@ -481,11 +436,7 @@ const AddLiquidityContent = ({
             {well.tokens!.length > 0 &&
               hasEnoughBalance &&
               well.tokens!.map((token: Token, index: number) => {
-                if (
-                  amounts[index] &&
-                  amounts[index].gt(TokenValue.ZERO) &&
-                  tokenAllowance[index] === false
-                ) {
+                if (amounts[index] && amounts[index].gt(TokenValue.ZERO) && tokenAllowance[index] === false) {
                   return (
                     <ButtonWrapper key={`approvebuttonwrapper${index}`} heightIndex={index + 1}>
                       <ApproveTokenButton
@@ -535,9 +486,10 @@ const AddLiquidityLoading = () => (
   </div>
 );
 
-export const AddLiquidity: React.FC<
-  BaseAddLiquidityProps & { well: Well | undefined; loading: boolean }
-> = ({ well, ...props }) => {
+export const AddLiquidity: React.FC<BaseAddLiquidityProps & { well: Well | undefined; loading: boolean }> = ({
+  well,
+  ...props
+}) => {
   if (!well || props.loading || !well.tokens || well.tokens.length < 2) {
     return <AddLiquidityLoading />;
   }
@@ -568,7 +520,7 @@ const ButtonWrapper = styled.div<{ heightIndex?: number }>`
     position: fixed;
     width: calc(100% - 24px);
     margin-bottom: 0;
-    bottom: ${({ heightIndex }) => (heightIndex ? `calc(12px + (48px * ${heightIndex}))` : "12px")};
+    bottom: ${({ heightIndex }) => (heightIndex ? `calc(12px + (48px * ${heightIndex}))` : '12px')};
   }
 `;
 

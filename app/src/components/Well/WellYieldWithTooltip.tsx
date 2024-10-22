@@ -1,33 +1,29 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import styled from 'styled-components';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import StartSparkle from "src/assets/images/start-sparkle.svg";
-import { mediaQuery } from "src/breakpoints";
-import useSdk from "src/utils/sdk/useSdk";
-import { useIsMobile } from "src/utils/ui/useIsMobile";
-import { useBeanstalkSiloAPYs } from "src/wells/useBeanstalkSiloAPYs";
+import StartSparkle from 'src/assets/images/start-sparkle.svg';
+import { mediaQuery } from 'src/breakpoints';
+import useSdk from 'src/utils/sdk/useSdk';
+import { useIsMobile } from 'src/utils/ui/useIsMobile';
+import { useBeanstalkSiloAPYs } from 'src/wells/useBeanstalkSiloAPYs';
 
-import { TokenLogo } from "../TokenLogo";
-import { Tooltip, TooltipProps } from "../Tooltip";
-import { BodyL, BodyS } from "../Typography";
+import { TokenLogo } from '../TokenLogo';
+import { Tooltip, TooltipProps } from '../Tooltip';
+import { BodyL, BodyS } from '../Typography';
 
 type Props = {
   well: Well | undefined;
   apy?: TokenValue;
   loading?: boolean;
-  tooltipProps?: Partial<Pick<TooltipProps, "offsetX" | "offsetY" | "side">>;
+  tooltipProps?: Partial<Pick<TooltipProps, 'offsetX' | 'offsetY' | 'side'>>;
   returnNullOnNoAPY?: boolean;
 };
 
-export const WellYieldWithTooltip: React.FC<Props> = ({
-  tooltipProps,
-  well,
-  returnNullOnNoAPY = false
-}) => {
+export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, returnNullOnNoAPY = false }) => {
   const sdk = useSdk();
 
   const bean = sdk.tokens.BEAN;
@@ -39,14 +35,14 @@ export const WellYieldWithTooltip: React.FC<Props> = ({
     const data = getSiloAPYWithWell(well);
 
     if (!data) return undefined;
-    return `${data.mul(100).toHuman("short")}%`;
+    return `${data.mul(100).toHuman('short')}%`;
   }, [well, getSiloAPYWithWell]);
 
   const tooltipWidth = isMobile ? 250 : 360;
 
   if (!apy) {
     if (returnNullOnNoAPY) return null;
-    return <>{"-"}</>;
+    return <>{'-'}</>;
   }
 
   return (
@@ -55,10 +51,10 @@ export const WellYieldWithTooltip: React.FC<Props> = ({
         content={
           <Container>
             <TitleContainer>
-              <div className="title">Well Yield</div>
-              <div className="label-value">
-                <div className="label">
-                  <div className="logo-wrapper">
+              <div className='title'>Well Yield</div>
+              <div className='label-value'>
+                <div className='label'>
+                  <div className='logo-wrapper'>
                     <TokenLogo token={bean} size={16} />
                   </div>
                   Bean vAPY
@@ -68,12 +64,12 @@ export const WellYieldWithTooltip: React.FC<Props> = ({
             </TitleContainer>
             <ContentContainer>
               <div>
-                The Variable Bean APY (vAPY) uses historical data of Beans earned by{" "}
+                The Variable Bean APY (vAPY) uses historical data of Beans earned by{' '}
                 <a
-                  href="https://docs.bean.money/almanac/guides/silo/understand-silo-vapy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underlined"
+                  href='https://docs.bean.money/almanac/guides/silo/understand-silo-vapy'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='underlined'
                 >
                   Silo Depositors
                 </a>
@@ -86,12 +82,12 @@ export const WellYieldWithTooltip: React.FC<Props> = ({
         offsetX={tooltipProps?.offsetX || 0}
         arrowOffset={0}
         arrowSize={0}
-        side={tooltipProps?.side || "top"}
-        bgColor="white"
+        side={tooltipProps?.side || 'top'}
+        bgColor='white'
         width={tooltipWidth}
       >
         <ChildContainer>
-          <StyledImg src={StartSparkle} alt="basin-bean-vAPY" />
+          <StyledImg src={StartSparkle} alt='basin-bean-vAPY' />
           <div>{apy} vAPY</div>
         </ChildContainer>
       </Tooltip>

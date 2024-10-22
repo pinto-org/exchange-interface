@@ -44,7 +44,7 @@ export class Router {
       tokens.slice(i + 1).map((token2) => {
         this.graph.addEdge(token1, token2, well);
         this.graph.addEdge(token2, token1, well);
-      }),
+      })
     );
 
     // Add ETH <> WETH edges

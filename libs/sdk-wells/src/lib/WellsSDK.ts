@@ -101,8 +101,7 @@ export class WellsSDK {
     throw new Error('Invalid rpcUrl');
   }
   private deriveChainId(provider?: SDKConfig['provider']) {
-    const providerChainId =
-      provider?.network?.chainId || provider?._network?.chainId || ChainResolver.defaultChainId;
+    const providerChainId = provider?.network?.chainId || provider?._network?.chainId || ChainResolver.defaultChainId;
 
     return enumFromValue(providerChainId, ChainId);
   }

@@ -1,14 +1,14 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext } from 'react';
 
-import * as Dialog from "@radix-ui/react-dialog";
-import styled, { keyframes } from "styled-components";
+import * as Dialog from '@radix-ui/react-dialog';
+import styled, { keyframes } from 'styled-components';
 
-import x from "src/assets/images/x.svg";
-import { theme } from "src/utils/ui/theme";
+import x from 'src/assets/images/x.svg';
+import { theme } from 'src/utils/ui/theme';
 
-import { ImageButton } from "./ImageButton";
-import { Divider, Flex } from "./Layout";
-import { Text, TextProps } from "./Typography";
+import { ImageButton } from './ImageButton';
+import { Divider, Flex } from './Layout';
+import { Text, TextProps } from './Typography';
 
 type ModalContextProps = {
   open: boolean;
@@ -30,7 +30,7 @@ const ModalContext = React.createContext<ModalContextProps | null>(null);
 const useModalContext = () => {
   const context = useContext(ModalContext);
   if (!context) {
-    throw new Error("useModalContext must be used within a ModalProvider");
+    throw new Error('useModalContext must be used within a ModalProvider');
   }
   return context;
 };
@@ -137,22 +137,17 @@ const ModalTitle = ({ divider = false, ...props }: TextProps & { divider?: boole
   return (
     <Flex $fullWidth>
       <Flex
-        $direction="row"
-        $justifyContent="space-between"
+        $direction='row'
+        $justifyContent='space-between'
         $fullWidth
         $px={wide ? 4 : 2}
         $py={2}
-        $boxSizing="border-box"
+        $boxSizing='border-box'
       >
-        <Text $variant="s" $weight="semi-bold" {...props} />
+        <Text $variant='s' $weight='semi-bold' {...props} />
         {allowClose && (
           <CloseWrapper>
-            <ImageButton
-              src={x}
-              alt="Close token selector modal"
-              size={10}
-              onClick={() => onOpenChange(!open)}
-            />
+            <ImageButton src={x} alt='Close token selector modal' size={10} onClick={() => onOpenChange(!open)} />
           </CloseWrapper>
         )}
       </Flex>
@@ -177,9 +172,7 @@ const ModalContent = ({ children, noTitle }: { children: React.ReactNode; noTitl
 const ModalContentItem = styled(Flex)<{ $wide?: boolean; $noTitle?: boolean }>`
   width: 100%;
   padding: ${(p) =>
-    p.$wide
-      ? theme.spacing(p.$noTitle ? 4 : 0, 4, 4, 4)
-      : theme.spacing(p.$noTitle ? 2 : 0, 2, 2, 2)};
+    p.$wide ? theme.spacing(p.$noTitle ? 4 : 0, 4, 4, 4) : theme.spacing(p.$noTitle ? 2 : 0, 2, 2, 2)};
   box-sizing: border-box;
   ${theme.media.query.sm.only} {
     padding: ${theme.spacing(2, 2, 2, 2)};

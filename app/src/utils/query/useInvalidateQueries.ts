@@ -1,4 +1,4 @@
-import { useQueryClient, QueryKey } from "@tanstack/react-query";
+import { useQueryClient, QueryKey } from '@tanstack/react-query';
 
 export function useInvalidateQueries() {
   const qc = useQueryClient();
@@ -6,7 +6,7 @@ export function useInvalidateQueries() {
   return (queryKey: QueryKey) =>
     qc.invalidateQueries({
       predicate: (query) => {
-        if (typeof queryKey === "string") {
+        if (typeof queryKey === 'string') {
           return query.queryKey.includes(queryKey);
         } else if (Array.isArray(queryKey)) {
           const [_scope, ...rest] = query.queryKey;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 
 // Define a type for the dimensions
 export type ElementDimensions = {
@@ -26,11 +26,11 @@ function useElementDimensions(): [React.RefObject<HTMLDivElement>, ElementDimens
     };
 
     // Update dimensions initially and whenever the window resizes
-    window.addEventListener("resize", updateDimensions);
+    window.addEventListener('resize', updateDimensions);
     updateDimensions(); // Initial dimensions update
 
     return () => {
-      window.removeEventListener("resize", updateDimensions);
+      window.removeEventListener('resize', updateDimensions);
     };
   }, []); // Effect runs only once on mount
 

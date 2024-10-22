@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   CreateWellStep1,
@@ -7,9 +7,9 @@ import {
   CreateWellStep4,
   CreateWellProvider,
   useCreateWell
-} from "src/components/Create";
-import { Flex } from "src/components/Layout";
-import { Page } from "src/components/Page";
+} from 'src/components/Create';
+import { Flex } from 'src/components/Layout';
+import { Page } from 'src/components/Page';
 
 export const Create = () => {
   return (
@@ -42,7 +42,7 @@ const CreateSteps = () => {
         </Flex>
       )}
       {step === 3 && (
-        <Flex $fullWidth $alignSelf="center" $maxWidth={PREVIEW_MAX_WIDTH}>
+        <Flex $fullWidth $alignSelf='center' $maxWidth={PREVIEW_MAX_WIDTH}>
           <CreateWellStep4 />
         </Flex>
       )}
@@ -50,5 +50,5 @@ const CreateSteps = () => {
   );
 };
 
-const CONTENT_MAX_WIDTH = "1234px";
-const PREVIEW_MAX_WIDTH = "710px";
+const CONTENT_MAX_WIDTH = '1234px';
+const PREVIEW_MAX_WIDTH = '710px';

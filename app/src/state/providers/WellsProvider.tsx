@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { useSetAtom } from "jotai";
+import { useSetAtom } from 'jotai';
 
-import { Well } from "@beanstalk/sdk-wells";
+import { Well } from '@beanstalk/sdk-wells';
 
-import { images } from "src/assets/images/tokens";
-import { Error } from "src/components/Error";
-import { wellsAtom } from "src/state/atoms";
-import tokenMetadataJson from "src/token-metadata.json";
-import { TokenMetadataMap } from "src/types";
-import { Log } from "src/utils/logger";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
-import { useAquifer } from "src/wells/aquifer/aquifer";
-import { fetchWellsWithAddresses, findWells } from "src/wells/wellLoader";
+import { images } from 'src/assets/images/tokens';
+import { Error } from 'src/components/Error';
+import { wellsAtom } from 'src/state/atoms';
+import tokenMetadataJson from 'src/token-metadata.json';
+import { TokenMetadataMap } from 'src/types';
+import { Log } from 'src/utils/logger';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
+import { useAquifer } from 'src/wells/aquifer/aquifer';
+import { fetchWellsWithAddresses, findWells } from 'src/wells/wellLoader';
 
 export const clearWellsCache = () => findWells.cache.clear?.();
 
@@ -29,14 +29,14 @@ export const useWellsQuery = () => {
     queryFn: async () => {
       const wellAddresses = await findWells(sdk, aquifer);
       try {
-        Log.module("wells").debug("Well addresses: ", wellAddresses);
+        Log.module('wells').debug('Well addresses: ', wellAddresses);
         const wells = await fetchWellsWithAddresses(sdk, wellAddresses);
-        Log.module("wells").debug("Wells response: ", wells);
+        Log.module('wells').debug('Wells response: ', wells);
         setTokenMetadatas(wells);
 
         return wells;
       } catch (err: any) {
-        Log.module("useWells").debug(`Error during findWells(): ${(err as Error).message}`);
+        Log.module('useWells').debug(`Error during findWells(): ${(err as Error).message}`);
         return [];
       }
     },

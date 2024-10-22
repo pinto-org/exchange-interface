@@ -1,11 +1,11 @@
-import { Well } from "@beanstalk/sdk/Wells";
+import { Well } from '@beanstalk/sdk/Wells';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
 
-import { loadHistory } from "./historyLoader";
+import { loadHistory } from './historyLoader';
 
 export enum EVENT_TYPE {
   SWAP,
@@ -46,7 +46,7 @@ const useWellHistory = (well: Well) => {
   const sdk = useSdk();
 
   return useChainScopedQuery({
-    queryKey: ["wells", "history", well.address],
+    queryKey: ['wells', 'history', well.address],
 
     queryFn: async () => {
       const data = await loadHistory(sdk, well);

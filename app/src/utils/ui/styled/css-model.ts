@@ -1,7 +1,7 @@
-import { css } from "styled-components";
+import { css } from 'styled-components';
 
-import { CssProps } from "../theme";
+import { CssProps } from '../theme';
 
 export const AdditionalCssBase = css<CssProps>`
-  ${(props) => (props.$css ? props.$css : "")}
+  ${(props) => (props.$css ? props.$css : '')}
 `;

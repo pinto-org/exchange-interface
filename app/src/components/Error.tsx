@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { Footer } from "src/components/Frame/Footer";
-import { Frame } from "src/components/Frame/Frame";
+import { Footer } from 'src/components/Frame/Footer';
+import { Frame } from 'src/components/Frame/Frame';
 
 type ErrorProps = {
   message: string;
@@ -16,7 +16,7 @@ export const Error = ({ message, errorOnly }: ErrorProps) => {
       {!errorOnly && <Frame />}
       <ErrorContainer>
         <LargeText>Oops!</LargeText>
-        <SmallText>{"Something went wrong :("}</SmallText>
+        <SmallText>{'Something went wrong :('}</SmallText>
         <ErrorBox>{message}</ErrorBox>
       </ErrorContainer>
       {!errorOnly && <Footer />}

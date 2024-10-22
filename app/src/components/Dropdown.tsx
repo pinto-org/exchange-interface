@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import styled from "styled-components";
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import styled from 'styled-components';
 
-import { theme } from "src/utils/ui/theme";
-import useElementDimensions from "src/utils/ui/useDimensions";
+import { theme } from 'src/utils/ui/theme';
+import useElementDimensions from 'src/utils/ui/useDimensions';
 
-import { Flex } from "./Layout";
+import { Flex } from './Layout';
 
 export type DropdownProps = {
   open: boolean;
@@ -31,11 +31,7 @@ const Dropdown = ({ open, children, trigger, offset, setOpen }: DropdownProps) =
         </DropdownMenu.Trigger>
       </TriggerContainer>
       <DropdownMenu.Portal>
-        <StyledContent
-          $width={dimensions.width}
-          sideOffset={offset}
-          onFocus={(e: any) => e.preventDefault()}
-        >
+        <StyledContent $width={dimensions.width} sideOffset={offset} onFocus={(e: any) => e.preventDefault()}>
           <>{children}</>
         </StyledContent>
       </DropdownMenu.Portal>
@@ -54,7 +50,7 @@ const StyledSingleSelect = styled(DropdownMenu.CheckboxItem)<{ selected: boolean
   outline: none;
   cursor: pointer;
   padding: ${theme.spacing(1, 2)};
-  background: ${(p) => (p.selected ? theme.colors.primaryLight : "white")};
+  background: ${(p) => (p.selected ? theme.colors.primaryLight : 'white')};
 
   :hover {
     background-color: ${theme.colors.primaryLight};
@@ -62,16 +58,16 @@ const StyledSingleSelect = styled(DropdownMenu.CheckboxItem)<{ selected: boolean
 `;
 
 const StyledRoot = styled(DropdownMenu.Root)`
-  position: "relative";
+  position: 'relative';
 `;
 
 const StyledContent = styled(DropdownMenu.Content)<{ $width: number }>`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  max-width: ${(p) => `${p.$width}px` || "100%"};
-  width: ${(p) => `${p.$width}px` || "100%"};
-  min-width: ${(p) => `${p.$width}px` || "100%"};
+  max-width: ${(p) => `${p.$width}px` || '100%'};
+  width: ${(p) => `${p.$width}px` || '100%'};
+  min-width: ${(p) => `${p.$width}px` || '100%'};
   background-color: white;
   border-radius: 0px;
   animation-duration: 400ms;

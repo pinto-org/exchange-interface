@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { ToastBar, Toaster } from "react-hot-toast";
+import { ToastBar, Toaster } from 'react-hot-toast';
 
-import { size } from "src/breakpoints";
+import { size } from 'src/breakpoints';
 
-import { Error, Success } from "../Icons";
+import { Error, Success } from '../Icons';
 
 function useMedia(query: string) {
   const [matches, setMatches] = useState(window.matchMedia(query).matches);
@@ -27,13 +27,13 @@ export default function CustomToaster() {
 
   return (
     <Toaster
-      containerStyle={!mobile ? { position: "fixed", top: 136, right: 24 } : {}}
+      containerStyle={!mobile ? { position: 'fixed', top: 136, right: 24 } : {}}
       toastOptions={{
         duration: 4000,
-        position: mobile ? "bottom-center" : "top-right",
+        position: mobile ? 'bottom-center' : 'top-right',
         iconTheme: {
-          primary: "white",
-          secondary: "black"
+          primary: 'white',
+          secondary: 'black'
         },
         loading: {
           duration: Infinity
@@ -42,7 +42,7 @@ export default function CustomToaster() {
           duration: 4000,
           icon: (
             <div>
-              <Success color="#46b955" width={16} height={16} />
+              <Success color='#46b955' width={16} height={16} />
             </div>
           )
         },
@@ -50,22 +50,22 @@ export default function CustomToaster() {
           duration: Infinity,
           icon: (
             <div>
-              <Error color="#ef4444" width={16} height={16} />
+              <Error color='#ef4444' width={16} height={16} />
             </div>
           )
         },
         style: {
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          minWidth: mobile ? "calc(100% - 12px)" : 300,
-          maxWidth: mobile ? "calc(100% - 12px)" : 300,
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          minWidth: mobile ? 'calc(100% - 12px)' : 300,
+          maxWidth: mobile ? 'calc(100% - 12px)' : 300,
           marginBottom: mobile ? 48 : 0,
           minHeight: 34,
           borderRadius: 0,
-          outline: "0.5px solid #000",
-          boxShadow: "none",
-          transition: "margin-right 0.4s ease-in-out"
+          outline: '0.5px solid #000',
+          boxShadow: 'none',
+          transition: 'margin-right 0.4s ease-in-out'
         }
       }}
     >

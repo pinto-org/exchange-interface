@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { ConnectKitButton, useModal } from "connectkit";
-import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { ConnectKitButton, useModal } from 'connectkit';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { ChainId, ChainResolver } from "@beanstalk/sdk-core";
+import { ChainId, ChainResolver } from '@beanstalk/sdk-core';
 
-import { ChainIdError, useChainErr, useSetChainErr } from "src/state/atoms/chain.atoms";
-import { useSdkChainId } from "src/utils/chain";
-import { theme } from "src/utils/ui/theme";
+import { ChainIdError, useChainErr, useSetChainErr } from 'src/state/atoms/chain.atoms';
+import { useSdkChainId } from 'src/utils/chain';
+import { theme } from 'src/utils/ui/theme';
 
-import { ButtonPrimary } from "../Button";
-import { Logo } from "../Icons";
-import { Flex } from "../Layout";
-import { Modal } from "../Modal";
-import { LinksNav, Text } from "../Typography";
+import { ButtonPrimary } from '../Button';
+import { Logo } from '../Icons';
+import { Flex } from '../Layout';
+import { Modal } from '../Modal';
+import { LinksNav, Text } from '../Typography';
 
 const UNSUPPORTED_CHAIN_ID = -1;
 
@@ -25,10 +25,10 @@ const UNSUPPORTED_CHAIN_ID = -1;
  * - Returns chainId if supported
  */
 function parseChainIdFromPath(location: ReturnType<typeof useLocation>) {
-  const segments = location.pathname.split("/");
+  const segments = location.pathname.split('/');
   const first = segments?.[1];
 
-  if (first?.toLowerCase() !== "wells") return;
+  if (first?.toLowerCase() !== 'wells') return;
 
   const chainId = segments?.[2];
 
@@ -44,25 +44,21 @@ function parseChainIdFromPath(location: ReturnType<typeof useLocation>) {
   return UNSUPPORTED_CHAIN_ID;
 }
 
-function getNavigateUrl(
-  toChainId: ChainId,
-  location: ReturnType<typeof useLocation>,
-  stay: boolean
-) {
-  const segments = location.pathname.split("/");
+function getNavigateUrl(toChainId: ChainId, location: ReturnType<typeof useLocation>, stay: boolean) {
+  const segments = location.pathname.split('/');
   const first = segments?.[1];
 
-  if (first?.toLowerCase() === "wells") {
+  if (first?.toLowerCase() === 'wells') {
     const address = segments?.[3];
-    const addressPortion = address && stay ? `/${address}` : "";
+    const addressPortion = address && stay ? `/${address}` : '';
     return `/wells/${toChainId}${addressPortion}`;
   }
   return `/`;
 }
 
 const CHAIN_ID_TO_NAME = {
-  [ChainId.ETH_MAINNET]: "Ethereum Mainnet",
-  [ChainId.ARBITRUM_MAINNET]: "Arbitrum Mainnet"
+  [ChainId.ETH_MAINNET]: 'Ethereum Mainnet',
+  [ChainId.ARBITRUM_MAINNET]: 'Arbitrum Mainnet'
 };
 
 export const ForceSupportedChainId = () => {
@@ -105,8 +101,7 @@ export const ForceSupportedChainId = () => {
         return;
       } else if (
         ChainId[urlChainId] &&
-        ChainResolver.resolveToMainnetChainId(urlChainId) !==
-          ChainResolver.resolveToMainnetChainId(chainId)
+        ChainResolver.resolveToMainnetChainId(urlChainId) !== ChainResolver.resolveToMainnetChainId(chainId)
       ) {
         setChainErr(ChainIdError.INCORRECT);
         return;
@@ -122,28 +117,27 @@ export const ForceSupportedChainId = () => {
     <>
       <Modal allowClose={!chainIdErr} open={!!chainIdErr} onOpenChange={() => {}}>
         <Modal.Content noTitle>
-          <ModalContentWrapper $fullWidth $alignItems="center">
+          <ModalContentWrapper $fullWidth $alignItems='center'>
             <Flex $gap={2}>
-              <Flex $direction="row" $gap={0.5} $alignItems="center">
+              <Flex $direction='row' $gap={0.5} $alignItems='center'>
                 <Logo width={24} height={24} />
                 <Brand>BASIN</Brand>
               </Flex>
-              <Flex $direction="column" $gap={1}>
+              <Flex $direction='column' $gap={1}>
                 {chainIdErr === ChainIdError.INVALID ? (
                   <>
-                    <Text $align="left">This network is not supported</Text>
-                    <Text $align="left" $variant="xs" $color="text.secondary">
+                    <Text $align='left'>This network is not supported</Text>
+                    <Text $align='left' $variant='xs' $color='text.secondary'>
                       Basin is currently only available on Ethereum and Arbitrum Mainnet.
                     </Text>
                   </>
                 ) : null}
                 {chainIdErr === ChainIdError.INCORRECT && urlChainId ? (
                   <>
-                    <Text $align="left">Looks like you&apos;re connected to the wrong network</Text>
-                    <Text $align="left" $variant="xs" $color="text.secondary">
-                      Switch to{" "}
-                      {CHAIN_ID_TO_NAME[ChainResolver.resolveToMainnetChainId(urlChainId)]} or stay
-                      on this network to continue.
+                    <Text $align='left'>Looks like you&apos;re connected to the wrong network</Text>
+                    <Text $align='left' $variant='xs' $color='text.secondary'>
+                      Switch to {CHAIN_ID_TO_NAME[ChainResolver.resolveToMainnetChainId(urlChainId)]} or stay on this
+                      network to continue.
                     </Text>
                   </>
                 ) : null}
@@ -165,7 +159,7 @@ export const ForceSupportedChainId = () => {
                   }}
                 </ConnectKitButton.Custom>
                 {chainIdErr === ChainIdError.INCORRECT ? (
-                  <ButtonPrimary $variant="outlined" onClick={handleStayOnCurrentNetwork}>
+                  <ButtonPrimary $variant='outlined' onClick={handleStayOnCurrentNetwork}>
                     Stay on {CHAIN_ID_TO_NAME[ChainResolver.resolveToMainnetChainId(chainId)]}
                   </ButtonPrimary>
                 ) : null}

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import styled from 'styled-components';
 
-import { Token } from "@beanstalk/sdk";
+import { Token } from '@beanstalk/sdk';
 
-import { size } from "src/breakpoints";
-import { FC } from "src/types";
-import { displayTokenSymbol } from "src/utils/format";
-import { useIsMultiFlowPump } from "src/wells/pump/utils";
-import { useWellImplementations } from "src/wells/useWellImplementations";
+import { size } from 'src/breakpoints';
+import { FC } from 'src/types';
+import { displayTokenSymbol } from 'src/utils/format';
+import { useIsMultiFlowPump } from 'src/wells/pump/utils';
+import { useWellImplementations } from 'src/wells/useWellImplementations';
 
-import { Row, TBody, THead, Table, Td, Th } from "./Table";
-import { useWhitelistedWellComponents } from "../Create/useWhitelistedWellComponents";
-import { Skeleton } from "../Skeleton";
+import { Row, TBody, THead, Table, Td, Th } from './Table';
+import { useWhitelistedWellComponents } from '../Create/useWhitelistedWellComponents';
+import { Skeleton } from '../Skeleton';
 
 type Props = { well: Well };
 
@@ -25,14 +25,14 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
   const { isMultiFlow } = useIsMultiFlowPump(well);
 
   const [items, setItems] = useState<{ name: string; address: string }[]>([]);
-  const [wellFunctionName, setWellFunctionName] = useState<string>("");
+  const [wellFunctionName, setWellFunctionName] = useState<string>('');
 
   const implementationAddress = implementations?.[well.address.toLowerCase()];
 
   const wellTokenDetail = well.tokens
     ?.map((token) => token.symbol)
     .filter(Boolean)
-    .join(":");
+    .join(':');
 
   useEffect(() => {
     const run = async () => {
@@ -55,27 +55,27 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
         });
       } else if (isMultiFlow) {
         data.push({
-          name: "Multi Flow Pump",
+          name: 'Multi Flow Pump',
           address: pump.address
         });
       } else {
         data.push({
-          name: "Pump",
-          address: pump.address || "--"
+          name: 'Pump',
+          address: pump.address || '--'
         });
       }
     });
     data.push({
-      name: wellFunctionName ?? "Well Function",
-      address: well.wellFunction?.address || "--"
+      name: wellFunctionName ?? 'Well Function',
+      address: well.wellFunction?.address || '--'
     });
     data.push({
-      name: "Well Implementation",
-      address: implementationAddress || "--"
+      name: 'Well Implementation',
+      address: implementationAddress || '--'
     });
     data.push({
-      name: "Aquifer",
-      address: well.aquifer?.address || "--"
+      name: 'Aquifer',
+      address: well.aquifer?.address || '--'
     });
 
     setItems(data);
@@ -83,12 +83,12 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
 
   return (
     <div>
-      <Table width="100%">
+      <Table width='100%'>
         <THead>
           <Row>
             <Th>Name</Th>
-            <DesktopTh align="right">Address</DesktopTh>
-            <MobileTh align="right">Address</MobileTh>
+            <DesktopTh align='right'>Address</DesktopTh>
+            <MobileTh align='right'>Address</MobileTh>
           </Row>
         </THead>
         <TBody>
@@ -96,12 +96,12 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
             <Td>
               <Detail>{wellTokenDetail} Well</Detail>
             </Td>
-            <DesktopTd align={"right"}>
+            <DesktopTd align={'right'}>
               <Link href={`https://arbiscan.io/address/${well.address}`}>{well.address}</Link>
             </DesktopTd>
-            <MobileTd align={"right"}>
+            <MobileTd align={'right'}>
               <Link href={`https://arbiscan.io/address/${well.address}`}>
-                {well.address.substr(0, 5) + "..." + well.address.substr(well.address.length - 5)}
+                {well.address.substr(0, 5) + '...' + well.address.substr(well.address.length - 5)}
               </Link>
             </MobileTd>
           </Row>
@@ -109,12 +109,12 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
             <Td>
               <Detail>Well LP Token - {displayTokenSymbol(well.lpToken as Token)}</Detail>
             </Td>
-            <DesktopTd align={"right"}>
+            <DesktopTd align={'right'}>
               <Link href={`https://arbiscan.io/address/${well.address}`}>{well.address}</Link>
             </DesktopTd>
-            <MobileTd align={"right"}>
+            <MobileTd align={'right'}>
               <Link href={`https://arbiscan.io/address/${well.address}`}>
-                {well.address.substr(0, 5) + "..." + well.address.substr(well.address.length - 5)}
+                {well.address.substr(0, 5) + '...' + well.address.substr(well.address.length - 5)}
               </Link>
             </MobileTd>
           </Row>
@@ -124,32 +124,22 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
                 <Td>
                   <Detail>{`Token ${index + 1} - ${token.symbol}`}</Detail>
                 </Td>
-                <DesktopTd align="right">
+                <DesktopTd align='right'>
                   <Link
-                    href={
-                      token
-                        ? `https://arbiscan.io/address/${token.address}`
-                        : `https://arbiscan.io/`
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={token ? `https://arbiscan.io/address/${token.address}` : `https://arbiscan.io/`}
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     {token.address || `-`}
                   </Link>
                 </DesktopTd>
-                <MobileTd align={"right"}>
+                <MobileTd align={'right'}>
                   <Link
-                    href={
-                      token
-                        ? `https://arbiscan.io/address/${token.address}`
-                        : `https://arbiscan.io/`
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={token ? `https://arbiscan.io/address/${token.address}` : `https://arbiscan.io/`}
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
-                    {token.address.substr(0, 5) +
-                      "..." +
-                      token.address.substr(token.address.length - 5) || `-`}
+                    {token.address.substr(0, 5) + '...' + token.address.substr(token.address.length - 5) || `-`}
                   </Link>
                 </MobileTd>
               </Row>
@@ -161,16 +151,12 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
                 <Td>
                   <Detail>{tableItem.name}</Detail>
                 </Td>
-                <DesktopTd align={"right"}>
-                  <Link href={`https://arbiscan.io/address/${tableItem.address}`}>
-                    {tableItem.address}
-                  </Link>
+                <DesktopTd align={'right'}>
+                  <Link href={`https://arbiscan.io/address/${tableItem.address}`}>{tableItem.address}</Link>
                 </DesktopTd>
-                <MobileTd align={"right"}>
+                <MobileTd align={'right'}>
                   <Link href={`https://arbiscan.io/address/${tableItem.address}`}>
-                    {tableItem.address.substr(0, 5) +
-                      "..." +
-                      tableItem.address.substr(tableItem.address.length - 5)}
+                    {tableItem.address.substr(0, 5) + '...' + tableItem.address.substr(tableItem.address.length - 5)}
                   </Link>
                 </MobileTd>
               </Row>
@@ -187,19 +173,16 @@ const loadingItemProps = {
   lg: { height: 24, width: 200 }
 };
 
-export const OtherSection: FC<{ well: Well | undefined; loading?: boolean }> = ({
-  well,
-  loading
-}) => {
+export const OtherSection: FC<{ well: Well | undefined; loading?: boolean }> = ({ well, loading }) => {
   if (!well || loading) {
     return (
       <div>
-        <Table width="100%">
+        <Table width='100%'>
           <THead>
             <Row>
-              <Th>{""}</Th>
-              <DesktopTh>{""}</DesktopTh>
-              <MobileTh align={"right"}>{""}</MobileTh>
+              <Th>{''}</Th>
+              <DesktopTh>{''}</DesktopTh>
+              <MobileTh align={'right'}>{''}</MobileTh>
             </Row>
           </THead>
           <TBody>
@@ -213,7 +196,7 @@ export const OtherSection: FC<{ well: Well | undefined; loading?: boolean }> = (
                   <DesktopTd>
                     <Skeleton {...loadingItemProps.lg} />
                   </DesktopTd>
-                  <MobileTd align={"right"}>
+                  <MobileTd align={'right'}>
                     <Skeleton {...loadingItemProps.sm} />
                   </MobileTd>
                 </LoadingRow>

@@ -1,6 +1,6 @@
 // From: https://github.com/layonez/use-request-animation-frame/blob/main/src/index.tsx
 
-import * as React from "react";
+import * as React from 'react';
 
 type Config = {
   duration?: number;

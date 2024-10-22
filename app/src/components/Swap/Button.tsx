@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { size } from "src/breakpoints";
-import { FC } from "src/types";
+import { size } from 'src/breakpoints';
+import { FC } from 'src/types';
 
-import { Spinner } from "../Spinner";
-import { BodyXS } from "../Typography";
+import { Spinner } from '../Spinner';
+import { BodyXS } from '../Typography';
 
 type Props = {
   label?: string;
@@ -19,12 +19,12 @@ type Props = {
 };
 
 export const Button: FC<Props> = ({
-  label = "Button",
+  label = 'Button',
   disabled = false,
   loading = false,
   onClick = () => {},
-  width = "100%",
-  margin = "0",
+  width = '100%',
+  margin = '0',
   secondary = false
 }) => {
   return (
@@ -52,16 +52,16 @@ type ButtonProps = {
 
 const StyledButton = styled.button<ButtonProps>`
   background: ${({ disabled, $loading, secondary }) => {
-    if (disabled || $loading) return "#D1D5DB";
-    if (secondary) return "#F9F8F6";
-    return "#000";
+    if (disabled || $loading) return '#D1D5DB';
+    if (secondary) return '#F9F8F6';
+    return '#000';
   }};
   height: 48px;
   border: none;
   outline: ${({ secondary, disabled }) =>
-    secondary ? "0.5px solid #9CA3AF" : disabled ? "0.5px solid #D1D5DB" : "0.5px solid #000"};
+    secondary ? '0.5px solid #9CA3AF' : disabled ? '0.5px solid #D1D5DB' : '0.5px solid #000'};
   outline-offset: -0.5px;
-  color: ${({ secondary }) => (secondary ? "#000" : "#FFF")};
+  color: ${({ secondary }) => (secondary ? '#000' : '#FFF')};
   width: ${({ $width }) => $width};
   margin: ${({ margin }) => margin};
   z-index: ${({ $zIndex }) => $zIndex ?? 0};
@@ -72,7 +72,7 @@ const StyledButton = styled.button<ButtonProps>`
   cursor: pointer;
 
   :hover {
-    outline: ${({ disabled }) => (disabled ? "0.5px solid #D1D5DB" : "2px solid #46b955")};
+    outline: ${({ disabled }) => (disabled ? '0.5px solid #D1D5DB' : '2px solid #46b955')};
   }
 
   :focus {

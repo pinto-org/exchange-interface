@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import styled, { css, keyframes } from "styled-components";
+import styled, { css, keyframes } from 'styled-components';
 
 type MarginProps = {
   bottom?: number;
@@ -54,9 +54,9 @@ const shimmer = () => keyframes`
 const SkeletonBase = css<SkeletonProps>`
   display: inline-block;
   ${(props) => `
-    height: ${props.height ? `${props.height}px` : "100%"};
-    width: ${props.width ? `${props.width}px` : "100%"};
-    border-radius: ${props.circle ? "50%" : props.rounded === true ? "4px" : "0px"};
+    height: ${props.height ? `${props.height}px` : '100%'};
+    width: ${props.width ? `${props.width}px` : '100%'};
+    border-radius: ${props.circle ? '50%' : props.rounded === true ? '4px' : '0px'};
     margin-top: ${props.margin?.top || 0}px;
     margin-bottom: ${props.margin?.bottom || 0}px;
     margin-right: ${props.margin?.right || 0}px;

@@ -1,19 +1,19 @@
-import React, { createContext, useCallback, useMemo, useState } from "react";
+import React, { createContext, useCallback, useMemo, useState } from 'react';
 
-import { DeepRequired } from "react-hook-form";
-import { useAccount } from "wagmi";
+import { DeepRequired } from 'react-hook-form';
+import { useAccount } from 'wagmi';
 
-import { ERC20Token, TokenValue } from "@beanstalk/sdk-core";
-import { Pump, WellFunction } from "@beanstalk/sdk-wells";
+import { ERC20Token, TokenValue } from '@beanstalk/sdk-core';
+import { Pump, WellFunction } from '@beanstalk/sdk-wells';
 
-import { clearWellsCache } from "src/state/providers/WellsProvider";
-import { Log } from "src/utils/logger";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useFetchChainScopedQueryData } from "src/utils/query/useChainScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
-import { useAquifer } from "src/wells/aquifer/aquifer";
-import BoreWellUtils from "src/wells/boreWell";
-import { usePumps } from "src/wells/pump/usePumps";
+import { clearWellsCache } from 'src/state/providers/WellsProvider';
+import { Log } from 'src/utils/logger';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useFetchChainScopedQueryData } from 'src/utils/query/useChainScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
+import { useAquifer } from 'src/wells/aquifer/aquifer';
+import BoreWellUtils from 'src/wells/boreWell';
+import { usePumps } from 'src/wells/pump/usePumps';
 
 /**
  * Architecture notes: @Space-Bean
@@ -107,18 +107,18 @@ export type CreateWellContext = {
 
 export type CreateWellStepProps = DeepRequired<{
   step1: {
-    wellImplementation: CreateWellContext["wellImplementation"];
+    wellImplementation: CreateWellContext['wellImplementation'];
   };
   step2: {
-    wellFunctionAddress: CreateWellContext["wellFunctionAddress"];
-    pumpAddress: CreateWellContext["pumpAddress"];
-    wellTokens: CreateWellContext["wellTokens"];
-    pumpData: CreateWellContext["pumpData"];
-    wellFunctionData: CreateWellContext["wellFunctionData"];
+    wellFunctionAddress: CreateWellContext['wellFunctionAddress'];
+    pumpAddress: CreateWellContext['pumpAddress'];
+    wellTokens: CreateWellContext['wellTokens'];
+    pumpData: CreateWellContext['pumpData'];
+    wellFunctionData: CreateWellContext['wellFunctionData'];
   };
-  step3: CreateWellContext["wellDetails"];
-  step4: CreateWellContext["liquidity"] & {
-    salt: CreateWellContext["salt"];
+  step3: CreateWellContext['wellDetails'];
+  step4: CreateWellContext['liquidity'] & {
+    salt: CreateWellContext['salt'];
   };
 }>;
 
@@ -178,7 +178,7 @@ export const CreateWellProvider = ({ children }: { children: React.ReactNode }) 
     };
   }, []);
 
-  const setStep1: CreateWellContext["setStep1"] = useCallback(
+  const setStep1: CreateWellContext['setStep1'] = useCallback(
     (params) => {
       setWellImplementation(params.wellImplementation);
       params.goNext && methods.goNext();
@@ -186,7 +186,7 @@ export const CreateWellProvider = ({ children }: { children: React.ReactNode }) 
     [methods]
   );
 
-  const setStep2: CreateWellContext["setStep2"] = useCallback(
+  const setStep2: CreateWellContext['setStep2'] = useCallback(
     (params) => {
       setPumpAddress(params.pumpAddress);
       setWellFunctionAddress(params.wellFunctionAddress);
@@ -202,7 +202,7 @@ export const CreateWellProvider = ({ children }: { children: React.ReactNode }) 
     [methods]
   );
 
-  const setStep3: CreateWellContext["setStep3"] = useCallback(
+  const setStep3: CreateWellContext['setStep3'] = useCallback(
     ({ goNext, ...params }) => {
       setWellDetails(params);
       goNext && methods.goNext();
@@ -210,7 +210,7 @@ export const CreateWellProvider = ({ children }: { children: React.ReactNode }) 
     [methods]
   );
 
-  const setStep4: CreateWellContext["setStep4"] = useCallback((params) => {
+  const setStep4: CreateWellContext['setStep4'] = useCallback((params) => {
     setDeploySalt(params.salt);
     setLiquidity({
       token1Amount: params.token1Amount,
@@ -221,7 +221,7 @@ export const CreateWellProvider = ({ children }: { children: React.ReactNode }) 
   /// ----- Derived State -----
 
   const pump = useMemo(() => {
-    if (!pumpAddress || pumpAddress.toLowerCase() === "none") return;
+    if (!pumpAddress || pumpAddress.toLowerCase() === 'none') return;
     const existing = pumps.find((p) => p.address.toLowerCase() === pumpAddress.toLowerCase());
     if (existing) return existing;
 
@@ -229,21 +229,21 @@ export const CreateWellProvider = ({ children }: { children: React.ReactNode }) 
   }, [sdk.wells, pumps, pumpAddress, pumpData]);
 
   /// ----- Callbacks -----
-  const deployWell: CreateWellContext["deployWell"] = useCallback(
+  const deployWell: CreateWellContext['deployWell'] = useCallback(
     async (saltValue, liquidityAmounts) => {
       setDeploying(true);
-      Log.module("wellDeployer").debug("Deploying Well...");
+      Log.module('wellDeployer').debug('Deploying Well...');
 
       try {
-        if (!walletAddress) throw new Error("Wallet not connected");
-        if (!wellImplementation) throw new Error("well implementation not set");
-        if (!wellFunction) throw new Error("Well function not set");
-        if (!wellTokens.token1) throw new Error("token 1 not set");
-        if (!wellTokens.token2) throw new Error("token 2 not set");
-        if (!wellDetails.name) throw new Error("well name not set");
-        if (!wellDetails.symbol) throw new Error("well symbol not set");
-        if (pumpAddress !== "none" && !pump) {
-          throw new Error("pump not set");
+        if (!walletAddress) throw new Error('Wallet not connected');
+        if (!wellImplementation) throw new Error('well implementation not set');
+        if (!wellFunction) throw new Error('Well function not set');
+        if (!wellTokens.token1) throw new Error('token 1 not set');
+        if (!wellTokens.token2) throw new Error('token 2 not set');
+        if (!wellDetails.name) throw new Error('well name not set');
+        if (!wellDetails.symbol) throw new Error('well symbol not set');
+        if (pumpAddress !== 'none' && !pump) {
+          throw new Error('pump not set');
         }
 
         const { wellAddress } = await BoreWellUtils.boreWell(
@@ -264,7 +264,7 @@ export const CreateWellProvider = ({ children }: { children: React.ReactNode }) 
         clearWellsCache();
         fetchScopedQueryData(queryKeys.wells(sdk));
 
-        Log.module("wellDeployer").debug("Well deployed at address: ", wellAddress || "");
+        Log.module('wellDeployer').debug('Well deployed at address: ', wellAddress || '');
         setDeploying(false);
         return { wellAddress: wellAddress };
       } catch (e: any) {
@@ -321,7 +321,7 @@ export const useCreateWell = () => {
   const context = React.useContext(Context);
 
   if (!context) {
-    throw new Error("useCreateWell must be used within a CreateWellProvider");
+    throw new Error('useCreateWell must be used within a CreateWellProvider');
   }
 
   return context;

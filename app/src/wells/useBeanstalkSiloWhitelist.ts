@@ -1,8 +1,8 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
+import { Well } from '@beanstalk/sdk/Wells';
 
-import useSdk from "src/utils/sdk/useSdk";
+import useSdk from 'src/utils/sdk/useSdk';
 
 export const useBeanstalkSiloWhitelist = () => {
   const sdk = useSdk();

@@ -1,13 +1,13 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import { useAccount } from "wagmi";
+import { Well } from '@beanstalk/sdk/Wells';
+import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
-import { REMOVE_LIQUIDITY_MODE } from "src/components/Liquidity/types";
-import { Log } from "src/utils/logger";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
+import { REMOVE_LIQUIDITY_MODE } from 'src/components/Liquidity/types';
+import { Log } from 'src/utils/logger';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
 
 export const useLiquidityQuote = (
   well: Well,
@@ -27,12 +27,12 @@ export const useLiquidityQuote = (
       return false;
     }
 
-    const nonZeroValues = amounts.filter((amount) => amount && amount.value.gt("0")).length;
+    const nonZeroValues = amounts.filter((amount) => amount && amount.value.gt('0')).length;
 
     return nonZeroValues !== 0;
   }, [amounts, well.tokens]);
 
-  Log.module("useliquidityquote").debug("Quote details:", {
+  Log.module('useliquidityquote').debug('Quote details:', {
     amounts,
     oneAmountNonZero,
     removeLiquidityMode
@@ -43,14 +43,7 @@ export const useLiquidityQuote = (
     isLoading: loadingBalancedQuote,
     isError: balanedQuoteError
   } = useChainScopedQuery({
-    queryKey: [
-      "wells",
-      "quote",
-      "removeLiquidity",
-      well.address,
-      removeLiquidityMode,
-      lpTokenAmount
-    ],
+    queryKey: ['wells', 'quote', 'removeLiquidity', well.address, removeLiquidityMode, lpTokenAmount],
 
     queryFn: async () => {
       if (!lpTokenAmount || removeLiquidityMode !== REMOVE_LIQUIDITY_MODE.Balanced) {
@@ -69,7 +62,7 @@ export const useLiquidityQuote = (
           estimate
         };
       } catch (error: any) {
-        Log.module("addliquidity").error("Error during quote: ", (error as Error).message);
+        Log.module('addliquidity').error('Error during quote: ', (error as Error).message);
         return null;
       }
     }
@@ -80,15 +73,7 @@ export const useLiquidityQuote = (
     isLoading: loadingOneTokenQuote,
     isError: oneTokenQuoteError
   } = useChainScopedQuery({
-    queryKey: [
-      "wells",
-      "quote",
-      "removeliquidity",
-      well.address,
-      removeLiquidityMode,
-      lpTokenAmount,
-      singleTokenIndex
-    ],
+    queryKey: ['wells', 'quote', 'removeliquidity', well.address, removeLiquidityMode, lpTokenAmount, singleTokenIndex],
 
     queryFn: async () => {
       if (removeLiquidityMode !== REMOVE_LIQUIDITY_MODE.OneToken) {
@@ -100,10 +85,7 @@ export const useLiquidityQuote = (
       }
 
       try {
-        const quote = await well.removeLiquidityOneTokenQuote(
-          lpTokenAmount,
-          wellTokens![singleTokenIndex]
-        );
+        const quote = await well.removeLiquidityOneTokenQuote(lpTokenAmount, wellTokens![singleTokenIndex]);
         const estimate = await well.removeLiquidityOneTokenGasEstimate(
           lpTokenAmount,
           wellTokens![singleTokenIndex],
@@ -115,7 +97,7 @@ export const useLiquidityQuote = (
           estimate
         };
       } catch (error: any) {
-        Log.module("useliquidityquote").error("Error during quote: ", (error as Error).message);
+        Log.module('useliquidityquote').error('Error during quote: ', (error as Error).message);
         return null;
       }
     },
@@ -130,7 +112,7 @@ export const useLiquidityQuote = (
     isLoading: loadingCustomRatioQuote,
     isError: customRatioQuoteError
   } = useChainScopedQuery({
-    queryKey: ["wells", "quote", "removeliquidity", well.address, removeLiquidityMode, amounts],
+    queryKey: ['wells', 'quote', 'removeliquidity', well.address, removeLiquidityMode, amounts],
 
     queryFn: async () => {
       if (removeLiquidityMode !== REMOVE_LIQUIDITY_MODE.Custom) {
@@ -147,17 +129,13 @@ export const useLiquidityQuote = (
           _amountsFilled[i] = !amounts[i] ? TokenValue.ZERO : amounts[i];
         }
         const quote = await well.removeLiquidityImbalancedQuote(_amountsFilled);
-        const estimate = await well.removeLiquidityImbalancedEstimateGas(
-          quote,
-          _amountsFilled,
-          address
-        );
+        const estimate = await well.removeLiquidityImbalancedEstimateGas(quote, _amountsFilled, address);
         return {
           quote,
           estimate
         };
       } catch (error: any) {
-        Log.module("removeliquidity").error("Error during quote: ", (error as Error).message);
+        Log.module('removeliquidity').error('Error during quote: ', (error as Error).message);
         return null;
       }
     },

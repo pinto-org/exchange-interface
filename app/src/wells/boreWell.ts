@@ -1,12 +1,12 @@
-import { Aquifer, WellFunction, Pump, Well } from "@basen/sdk-wells";
-import { BigNumber, ethers } from "ethers";
+import { Aquifer, WellFunction, Pump, Well } from '@basen/sdk-wells';
+import { BigNumber, ethers } from 'ethers';
 
-import { BeanstalkSDK, ERC20Token, FarmFromMode, FarmToMode, TokenValue } from "@beanstalk/sdk";
+import { BeanstalkSDK, ERC20Token, FarmFromMode, FarmToMode, TokenValue } from '@beanstalk/sdk';
 
-import { TransactionToast } from "src/components/TxnToast/TransactionToast";
-import { getBytesHexString } from "src/utils/bytes";
-import { Log } from "src/utils/logger";
-import { makeLocalOnlyStep } from "src/utils/workflow/steps";
+import { TransactionToast } from 'src/components/TxnToast/TransactionToast';
+import { getBytesHexString } from 'src/utils/bytes';
+import { Log } from 'src/utils/logger';
+import { makeLocalOnlyStep } from 'src/utils/workflow/steps';
 
 /**
  * Prepare the parameters for a Aquifer.boreWell call
@@ -26,18 +26,14 @@ const prepareBoreWellParameters = async (
     tokens,
     wellFunction,
     Array.isArray(pumps) ? pumps : [pumps]
-  );q
+  );
+  q;
 
   const initFunctionCall = await Aquifer.getEncodedWellInitFunctionData(name, symbol);
 
   const saltBytes32 = getBytesHexString(salt || 0, 32);
 
-  return [implementation, immutableData, initFunctionCall, saltBytes32] as [
-    string,
-    Uint8Array,
-    Uint8Array,
-    string
-  ];
+  return [implementation, immutableData, initFunctionCall, saltBytes32] as [string, Uint8Array, Uint8Array, string];
 };
 
 /**
@@ -45,16 +41,10 @@ const prepareBoreWellParameters = async (
  */
 const decodeBoreWellPipeCall = (sdk: BeanstalkSDK, aquifer: Aquifer, pipeResult: string[]) => {
   if (!pipeResult.length) return;
-  const pipeDecoded = sdk.contracts.pipeline.interface.decodeFunctionResult(
-    "advancedPipe",
-    pipeResult[0]
-  );
+  const pipeDecoded = sdk.contracts.pipeline.interface.decodeFunctionResult('advancedPipe', pipeResult[0]);
 
   if (!pipeDecoded?.length || !pipeDecoded[0]?.length) return;
-  const boreWellDecoded = aquifer.contract.interface.decodeFunctionResult(
-    "boreWell",
-    pipeDecoded[0][0]
-  );
+  const boreWellDecoded = aquifer.contract.interface.decodeFunctionResult('boreWell', pipeDecoded[0][0]);
   if (!boreWellDecoded?.length) return;
   return boreWellDecoded[0] as string;
 };
@@ -72,7 +62,7 @@ const decodeBoreWellPipeCall = (sdk: BeanstalkSDK, aquifer: Aquifer, pipeResult:
  */
 const prepareTokenOrderForBoreWell = (sdk: BeanstalkSDK, tokens: ERC20Token[]) => {
   if (tokens.length < 2) {
-    throw new Error("2 Tokens are required");
+    throw new Error('2 Tokens are required');
   }
 
   const wethAddress = sdk.tokens.WETH.address.toLowerCase();
@@ -107,10 +97,10 @@ const boreWell = async (
 ) => {
   if (liquidityAmounts) {
     if (liquidityAmounts.token1Amount?.lte(0) && liquidityAmounts.token2Amount.lte(0)) {
-      throw new Error("At least one token amount must be greater than 0 to seed liquidity");
+      throw new Error('At least one token amount must be greater than 0 to seed liquidity');
     }
     if (saltValue < 1) {
-      throw new Error("Salt value must be greater than 0 if seeding liquidity");
+      throw new Error('Salt value must be greater than 0 if seeding liquidity');
     }
   }
 
@@ -124,16 +114,16 @@ const boreWell = async (
     symbol,
     saltValue
   );
-  Log.module("boreWell").debug("boreWellParams: ", boreWellParams);
+  Log.module('boreWell').debug('boreWellParams: ', boreWellParams);
 
-  const callData = aquifer.contract.interface.encodeFunctionData("boreWell", boreWellParams);
-  Log.module("boreWell").debug("callData: ", callData);
+  const callData = aquifer.contract.interface.encodeFunctionData('boreWell', boreWellParams);
+  Log.module('boreWell').debug('callData: ', callData);
 
-  let wellAddress: string = "";
+  let wellAddress: string = '';
 
-  const staticFarm = sdk.farm.createAdvancedFarm("static-farm");
-  const advancedFarm = sdk.farm.createAdvancedFarm("adv-farm");
-  const advancedPipe = sdk.farm.createAdvancedPipe("adv-pipe");
+  const staticFarm = sdk.farm.createAdvancedFarm('static-farm');
+  const advancedFarm = sdk.farm.createAdvancedFarm('adv-farm');
+  const advancedPipe = sdk.farm.createAdvancedPipe('adv-pipe');
 
   advancedPipe.add(makeBoreWellStep(aquifer, callData));
 
@@ -143,49 +133,33 @@ const boreWell = async (
 
     wellAddress = await staticFarm
       .callStatic(BigNumber.from(0), { slippage: 0.05 })
-      .then((result) => decodeBoreWellPipeCall(sdk, aquifer, result) || "");
+      .then((result) => decodeBoreWellPipeCall(sdk, aquifer, result) || '');
 
     if (!wellAddress) {
-      throw new Error("Unable to determine well address");
+      throw new Error('Unable to determine well address');
     }
 
     const well = new Well(sdk.wells, wellAddress);
-    Log.module("boreWell").debug("Expected Well Address: ", wellAddress);
+    Log.module('boreWell').debug('Expected Well Address: ', wellAddress);
 
     // add transfer token1 to the undeployed well address
-    advancedFarm.add(makeLocalOnlyStep("token1-amount", liquidityAmounts.token1Amount), {
+    advancedFarm.add(makeLocalOnlyStep('token1-amount', liquidityAmounts.token1Amount), {
       onlyLocal: true
     });
     advancedFarm.add(
-      new sdk.farm.actions.TransferToken(
-        token1.address,
-        well.address,
-        FarmFromMode.EXTERNAL,
-        FarmToMode.EXTERNAL
-      )
+      new sdk.farm.actions.TransferToken(token1.address, well.address, FarmFromMode.EXTERNAL, FarmToMode.EXTERNAL)
     );
 
     // add transfer token2 to the undeployed well address
-    advancedFarm.add(makeLocalOnlyStep("token2-amount", liquidityAmounts.token2Amount), {
+    advancedFarm.add(makeLocalOnlyStep('token2-amount', liquidityAmounts.token2Amount), {
       onlyLocal: true
     });
     advancedFarm.add(
-      new sdk.farm.actions.TransferToken(
-        token2.address,
-        well.address,
-        FarmFromMode.EXTERNAL,
-        FarmToMode.EXTERNAL
-      )
+      new sdk.farm.actions.TransferToken(token2.address, well.address, FarmFromMode.EXTERNAL, FarmToMode.EXTERNAL)
     );
 
     advancedPipe.add(
-      makeSyncWellStep(
-        well,
-        wellFunction,
-        liquidityAmounts.token1Amount,
-        liquidityAmounts.token2Amount,
-        account
-      )
+      makeSyncWellStep(well, wellFunction, liquidityAmounts.token1Amount, liquidityAmounts.token2Amount, account)
     );
   }
 
@@ -198,13 +172,13 @@ const boreWell = async (
   });
 
   toast?.confirming(txn);
-  Log.module("wellDeployer").debug(`Well deploying... Transaction: ${txn.hash}`);
+  Log.module('wellDeployer').debug(`Well deploying... Transaction: ${txn.hash}`);
 
   const receipt = await txn.wait();
-  Log.module("wellDeployer").debug("Well deployed... txn events: ", receipt.events);
+  Log.module('wellDeployer').debug('Well deployed... txn events: ', receipt.events);
 
   if (!receipt.events?.length) {
-    throw new Error("No Bore Well events found");
+    throw new Error('No Bore Well events found');
   }
 
   toast?.success(receipt);
@@ -221,15 +195,14 @@ const boreWell = async (
 
 const makeBoreWellStep = (aquifer: Aquifer, callData: string) => {
   const boreWellStep = async (_amountInStep: ethers.BigNumber, _context: any) => ({
-    name: "boreWell",
+    name: 'boreWell',
     amountOut: _amountInStep,
     prepare: () => ({
       target: aquifer.address,
       callData
     }),
-    decode: (data: string) => aquifer.contract.interface.decodeFunctionData("boreWell", data),
-    decodeResult: (data: string) =>
-      aquifer.contract.interface.decodeFunctionResult("boreWell", data)
+    decode: (data: string) => aquifer.contract.interface.decodeFunctionData('boreWell', data),
+    decodeResult: (data: string) => aquifer.contract.interface.decodeFunctionResult('boreWell', data)
   });
 
   return boreWellStep;
@@ -253,19 +226,19 @@ const makeSyncWellStep = (
     // calculate the minimum LP supply with slippage
     const lpSupplyTV = TokenValue.fromBlockchain(calculatedLPSupply, 0);
     const lpSubSlippage = lpSupplyTV.subSlippage(context.data.slippage ?? 0.1);
-    const minLPTrimmed = lpSubSlippage.toHuman().split(".")[0];
+    const minLPTrimmed = lpSubSlippage.toHuman().split('.')[0];
     const minLP = BigNumber.from(minLPTrimmed);
 
     return {
-      name: "sync",
+      name: 'sync',
       amountOut: minLP,
       prepare: () => ({
         target: well.address,
         // this is safe b/c all wells extend the IWell interface & are required to define a 'sync' function.
-        callData: well.contract.interface.encodeFunctionData("sync", [recipient, minLP])
+        callData: well.contract.interface.encodeFunctionData('sync', [recipient, minLP])
       }),
-      decode: (data: string) => well.contract.interface.decodeFunctionData("sync", data),
-      decodeResult: (data: string) => well.contract.interface.decodeFunctionResult("sync", data)
+      decode: (data: string) => well.contract.interface.decodeFunctionData('sync', data),
+      decodeResult: (data: string) => well.contract.interface.decodeFunctionResult('sync', data)
     };
   };
 

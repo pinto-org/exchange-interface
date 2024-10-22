@@ -1,20 +1,20 @@
-import React, { InputHTMLAttributes, forwardRef } from "react";
+import React, { InputHTMLAttributes, forwardRef } from 'react';
 
-import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import styled from "styled-components";
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import styled from 'styled-components';
 
-import { LinksButtonText, Text } from "src/components/Typography";
-import { theme } from "src/utils/ui/theme";
+import { LinksButtonText, Text } from 'src/components/Typography';
+import { theme } from 'src/utils/ui/theme';
 
-import { SearchIcon } from "./Icons";
-import { Flex } from "./Layout";
-import { ToggleSwitch } from "./ToggleSwitch";
+import { SearchIcon } from './Icons';
+import { Flex } from './Layout';
+import { ToggleSwitch } from './ToggleSwitch';
 
 export const StyledForm = styled.form<{ $width: string }>`
   ${(props) => props.$width && `width: ${props.$width};`}
 `;
 
-type IconType = "search"; // add more here later
+type IconType = 'search'; // add more here later
 
 export type TextInputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   error?: string;
@@ -36,10 +36,10 @@ export const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
       <Flex>
         <Wrapper>
           <StartIcon startIcon={startIcon} />
-          <StyledTextInputField {...props} onChange={props.onChange} ref={ref} type="text" />
+          <StyledTextInputField {...props} onChange={props.onChange} ref={ref} type='text' />
         </Wrapper>
         {error ? (
-          <Text $color="error" $variant="xs" $mt={0.5}>
+          <Text $color='error' $variant='xs' $mt={0.5}>
             {error}
           </Text>
         ) : null}
@@ -86,20 +86,14 @@ type SwitchFieldProps<T extends FieldValues> = {
   disabled?: boolean;
 };
 
-export const SwitchField = <T extends FieldValues>({
-  control,
-  name,
-  disabled
-}: SwitchFieldProps<T>) => {
+export const SwitchField = <T extends FieldValues>({ control, name, disabled }: SwitchFieldProps<T>) => {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field }) => {
-        const value = typeof field.value === "boolean" ? field.value : false;
-        return (
-          <ToggleSwitch checked={value} disabled={disabled} toggle={() => field.onChange(!value)} />
-        );
+        const value = typeof field.value === 'boolean' ? field.value : false;
+        return <ToggleSwitch checked={value} disabled={disabled} toggle={() => field.onChange(!value)} />;
       }}
     />
   );

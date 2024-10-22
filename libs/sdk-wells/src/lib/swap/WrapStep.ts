@@ -7,7 +7,7 @@ import { Operation } from './Types';
 
 export enum Direction {
   FORWARD,
-  REVERSE,
+  REVERSE
 }
 
 export class WrapEthStep implements SwapStep {
@@ -48,18 +48,13 @@ export class WrapEthStep implements SwapStep {
     return { quote: amount, quoteWithSlippage: amount };
   }
 
-  swapSingle(
-    amount: TokenValue,
-    amountWithSlippage: TokenValue,
-    recipient: string,
-    deadline: number,
-  ): Operation {
+  swapSingle(amount: TokenValue, amountWithSlippage: TokenValue, recipient: string, deadline: number): Operation {
     if (!this.hasQuoted) throw new Error('Must do a quote before swapping');
 
     return {
       contract: this.weth9,
       method: 'deposit',
-      parameters: [{ value: amount.toBlockchain() }],
+      parameters: [{ value: amount.toBlockchain() }]
     };
   }
 
@@ -76,19 +71,14 @@ export class WrapEthStep implements SwapStep {
     return {
       contract: this.weth9,
       method: 'dummy',
-      parameters: [],
+      parameters: []
     };
   }
 
   /**
    * The operation to perform when the swap consists of more than one step in the route and the direction is reversed.
    */
-  swapManyReverse(
-    recipient: string,
-    maxAmountIn: TokenValue,
-    desiredAmount: TokenValue,
-    deadline: number,
-  ): Operation {
+  swapManyReverse(recipient: string, maxAmountIn: TokenValue, desiredAmount: TokenValue, deadline: number): Operation {
     if (!this.hasQuoted) throw new Error('Must do a quote before swapping');
     if (this.direction !== Direction.REVERSE)
       throw new Error('swapMany() can only be called for quotes where direction was Reverse');
@@ -97,7 +87,7 @@ export class WrapEthStep implements SwapStep {
     return {
       contract: this.weth9,
       method: 'dummy',
-      parameters: [],
+      parameters: []
     };
   }
 }

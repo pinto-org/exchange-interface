@@ -1,29 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import styled from 'styled-components';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { size } from "src/breakpoints";
-import { explorerUrl } from "src/utils/chain";
-import {
-  AddEvent,
-  EVENT_TYPE,
-  RemoveEvent,
-  ShiftEvent,
-  SwapEvent,
-  WellEvent
-} from "src/wells/useWellHistory";
+import { size } from 'src/breakpoints';
+import { explorerUrl } from 'src/utils/chain';
+import { AddEvent, EVENT_TYPE, RemoveEvent, ShiftEvent, SwapEvent, WellEvent } from 'src/wells/useWellHistory';
 
-import { Row, Td } from "../Table";
+import { Row, Td } from '../Table';
 
-export const renderEvent = (
-  event: WellEvent,
-  well: Well,
-  prices: (TokenValue | null)[],
-  lpTokenPrice: TokenValue
-) => {
+export const renderEvent = (event: WellEvent, well: Well, prices: (TokenValue | null)[], lpTokenPrice: TokenValue) => {
   let action;
   let description;
   let valueUSD;
@@ -39,70 +27,66 @@ export const renderEvent = (
     case EVENT_TYPE.SWAP:
       // typescript bug if we leave this as event, it will cast it as "SwapEvent | ShiftEvent" for some reason
       const tempEvent = event as SwapEvent;
-      action = "Swap";
+      action = 'Swap';
       valueUSD = `$${tempEvent.fromAmount
         .mul(tokenPrices[tempEvent.fromToken.symbol] || 0)
         // .add(tempEvent.toAmount.mul(tokenPrices[tempEvent.toToken.symbol] || 0))
-        .toHuman("short")}`;
-      description = `${tempEvent.fromAmount.toHuman("short")} ${tempEvent.fromToken.symbol} for ${tempEvent.toAmount.toHuman("short")} ${
+        .toHuman('short')}`;
+      description = `${tempEvent.fromAmount.toHuman('short')} ${tempEvent.fromToken.symbol} for ${tempEvent.toAmount.toHuman('short')} ${
         tempEvent.toToken.symbol
       }`;
 
       break;
     case EVENT_TYPE.SHIFT:
       event = event as ShiftEvent;
-      action = "Shift";
-      valueUSD = `$${event.toAmount.mul(tokenPrices[event.toToken.symbol] || 0).toHuman("short")}`;
-      description = `Swapped to ${event.toAmount.toHuman("short")} ${event.toToken.symbol}`;
+      action = 'Shift';
+      valueUSD = `$${event.toAmount.mul(tokenPrices[event.toToken.symbol] || 0).toHuman('short')}`;
+      description = `Swapped to ${event.toAmount.toHuman('short')} ${event.toToken.symbol}`;
 
       break;
     case EVENT_TYPE.ADD_LIQUIDITY:
       event = event as AddEvent;
-      action = "Add Liquidity";
+      action = 'Add Liquidity';
       event.tokenAmounts.forEach(function (amount, i) {
         accumulator = accumulator.add(amount.mul(prices[i] || 0));
       });
-      valueUSD = `$${accumulator.toHuman("short")}`;
+      valueUSD = `$${accumulator.toHuman('short')}`;
       description = event.tokenAmounts
         .map((amount, i) => {
-          return `${amount.toHuman("short")} ${well.tokens![i].symbol}`;
+          return `${amount.toHuman('short')} ${well.tokens![i].symbol}`;
         })
-        .join(" and ");
+        .join(' and ');
       break;
     case EVENT_TYPE.REMOVE_LIQUIDITY:
       event = event as RemoveEvent;
-      action = "Remove Liquidity";
+      action = 'Remove Liquidity';
       event.tokenAmounts.forEach(function (amount, i) {
         accumulator = accumulator.add(amount.mul(prices[i] || 0));
       });
-      valueUSD = `$${accumulator.toHuman("short")}`;
+      valueUSD = `$${accumulator.toHuman('short')}`;
       description = event.tokenAmounts
         .map((amount, i) => {
-          return `${amount.toHuman("short")} ${well.tokens![i].symbol}`;
+          return `${amount.toHuman('short')} ${well.tokens![i].symbol}`;
         })
-        .join(" and ");
+        .join(' and ');
       break;
     case EVENT_TYPE.SYNC:
       event = event as AddEvent;
-      action = "Add Liquidity";
-      valueUSD = `$${event.lpAmount.mul(lpTokenPrice).toHuman("short")}`;
-      description = "Sync";
+      action = 'Add Liquidity';
+      valueUSD = `$${event.lpAmount.mul(lpTokenPrice).toHuman('short')}`;
+      description = 'Sync';
       break;
   }
   return (
     <Row key={event.tx}>
       <Td>
-        <Action
-          href={`${explorerUrl(well.sdk.chainId)}/tx/${event.tx}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <Action href={`${explorerUrl(well.sdk.chainId)}/tx/${event.tx}`} target='_blank' rel='noopener noreferrer'>
           {action}
         </Action>
       </Td>
-      <DesktopOnlyTd align={"right"}>{valueUSD}</DesktopOnlyTd>
-      <DesktopOnlyTd align={"right"}>{description}</DesktopOnlyTd>
-      <Td align={"right"}>{time || event.block}</Td>
+      <DesktopOnlyTd align={'right'}>{valueUSD}</DesktopOnlyTd>
+      <DesktopOnlyTd align={'right'}>{description}</DesktopOnlyTd>
+      <Td align={'right'}>{time || event.block}</Td>
     </Row>
   );
 };

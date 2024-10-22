@@ -33,15 +33,11 @@ type TokenMap<T> = { [tokenSymbol: string]: T };
  * Contract calls to fetch internal & external balances
  * Only fetch balances for wells with a defined LP Token
  */
-const makeMultiCall = (
-  sdk: BeanstalkSDK,
-  lpTokens: Token[],
-  account: `0x${string}` | undefined,
-) => {
+const makeMultiCall = (sdk: BeanstalkSDK, lpTokens: Token[], account: `0x${string}` | undefined) => {
   const contractCalls: ContractFunctionParameters[] = [];
   if (!account) return contractCalls;
   Log.module('useLPPositionSummary').debug(
-    `Fetching internal & external token balances for ${lpTokens.length} lp tokens for address ${account}`,
+    `Fetching internal & external token balances for ${lpTokens.length} lp tokens for address ${account}`
   );
 
   for (const t of lpTokens) {
@@ -49,13 +45,13 @@ const makeMultiCall = (
       address: t.address as `0x{string}`,
       abi: erc20Abi,
       functionName: 'balanceOf',
-      args: [account],
+      args: [account]
     });
     contractCalls.push({
       address: sdk.contracts.beanstalk.address as `0x{string}`,
       abi: BEANSTALK_ABI as Readonly<ContractFunctionParameters['abi']>,
       functionName: 'getInternalBalance',
-      args: [account, t.address],
+      args: [account, t.address]
     });
   }
 
@@ -94,7 +90,7 @@ export const useLPPositionSummary = () => {
 
       const res = (await multicall(config, {
         contracts: makeMultiCall(sdk, lpTokens, address),
-        allowFailure: false,
+        allowFailure: false
       })) as unknown[] as BigNumber[];
 
       for (let i = 0; i < res.length; i++) {
@@ -104,7 +100,7 @@ export const useLPPositionSummary = () => {
         const lpToken = lpTokens[lpTokenIndex];
         let balance = balances?.[lpToken.address] || {
           external: TokenValue.ZERO,
-          internal: TokenValue.ZERO,
+          internal: TokenValue.ZERO
         };
 
         /// update the cache object & update useQuery cache
@@ -123,13 +119,10 @@ export const useLPPositionSummary = () => {
         } else {
           if (lpTokens[lpTokenIndex]) {
             balance.internal = lpTokens[lpTokenIndex].fromBlockchain(res[i]);
-            setQueryData(
-              queryKeys.tokenBalanceInternal(lpToken.address),
-              (oldData: TokenBalanceCache) => {
-                if (!oldData) return { [lpToken.address]: balance.internal };
-                return { ...oldData, [lpToken.address]: balance.internal };
-              },
-            );
+            setQueryData(queryKeys.tokenBalanceInternal(lpToken.address), (oldData: TokenBalanceCache) => {
+              if (!oldData) return { [lpToken.address]: balance.internal };
+              return { ...oldData, [lpToken.address]: balance.internal };
+            });
           }
         }
 
@@ -149,7 +142,7 @@ export const useLPPositionSummary = () => {
     retry: false,
     refetchInterval: 1000 * 30,
     refetchIntervalInBackground: false,
-    refetchOnWindowFocus: 'always',
+    refetchOnWindowFocus: 'always'
   });
 
   // Combine silo, internal & external balances & update state
@@ -162,14 +155,14 @@ export const useLPPositionSummary = () => {
       const siloBalance = siloBalances?.[curr.address] || TokenValue.ZERO;
       const internalExternal = balanceData?.[curr.address] || {
         external: TokenValue.ZERO,
-        internal: TokenValue.ZERO,
+        internal: TokenValue.ZERO
       };
 
       memo[curr.address] = {
         silo: siloBalance,
         internal: internalExternal.internal,
         external: internalExternal.external,
-        total: siloBalance.add(internalExternal.internal).add(internalExternal.external),
+        total: siloBalance.add(internalExternal.internal).add(internalExternal.external)
       };
 
       return memo;
@@ -193,7 +186,7 @@ export const useLPPositionSummary = () => {
       if (!well?.lpToken?.address) return undefined;
       return positions?.[well.lpToken.address];
     },
-    [positions],
+    [positions]
   );
 
   const hasPositions = useMemo(() => {
@@ -211,6 +204,6 @@ export const useLPPositionSummary = () => {
     refetch: refetch,
     isFetching: siloBalanceRest.isFetching || balanceRest.isFetching,
     getPositionWithWell,
-    hasPositions,
+    hasPositions
   };
 };

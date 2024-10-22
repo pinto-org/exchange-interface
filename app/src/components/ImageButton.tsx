@@ -1,8 +1,8 @@
-import React, { JSXElementConstructor } from "react";
+import React, { JSXElementConstructor } from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { FC } from "src/types";
+import { FC } from 'src/types';
 
 type Props = {
   size?: number;
@@ -28,7 +28,7 @@ export const ImageButton: FC<Props> = ({
   size = 32,
   src,
   component,
-  alt = "Image",
+  alt = 'Image',
   onClick,
   padding,
   rotate,
@@ -38,8 +38,7 @@ export const ImageButton: FC<Props> = ({
   return (
     <Button onClick={onClick} padding={padding} rotate={rotate} margin={margin}>
       {src && <img src={src} alt={alt} width={size} />}
-      {component &&
-        React.createElement(component, { width: size, height: size, color: color || "#000" })}
+      {component && React.createElement(component, { width: size, height: size, color: color || '#000' })}
     </Button>
   );
 };
@@ -51,9 +50,9 @@ const Button = styled.button<StyleProps>`
   border: none;
   outline: none;
   background: none;
-  padding: ${(props) => props.padding ?? "5px"};
-  ${(props) => props.onClick && "cursor: pointer;"};
-  rotate: ${(props) => props.rotate ?? "0"}deg;
-  margin: ${(props) => props.margin ?? "0px"};
+  padding: ${(props) => props.padding ?? '5px'};
+  ${(props) => props.onClick && 'cursor: pointer;'};
+  rotate: ${(props) => props.rotate ?? '0'}deg;
+  margin: ${(props) => props.margin ?? '0px'};
   transition-duration: 0.2s;
 `;

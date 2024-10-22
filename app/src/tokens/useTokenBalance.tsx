@@ -1,11 +1,11 @@
-import { useAccount } from "wagmi";
+import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useScopedQuery, useSetScopedQueryData } from "src/utils/query/useScopedQuery";
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useScopedQuery, useSetScopedQueryData } from 'src/utils/query/useScopedQuery';
 
-import { getTokenIndex } from "./utils";
+import { getTokenIndex } from './utils';
 
 type TokenBalanceCache = undefined | void | Record<string, TokenValue>;
 
@@ -43,7 +43,7 @@ export const useTokenBalance = (token: Token | undefined) => {
     staleTime: 1000 * 15,
     refetchInterval: 1000 * 15,
     refetchIntervalInBackground: false,
-    refetchOnWindowFocus: "always"
+    refetchOnWindowFocus: 'always'
   });
 
   return { data, isLoading, error, refetch, isFetching };

@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { theme } from "src/utils/ui/theme";
+import { theme } from 'src/utils/ui/theme';
 
 // Styled components
 
@@ -16,13 +16,13 @@ const ToggleContainer = styled.div<{ checked?: boolean; disabled?: boolean }>`
   border: 0.5px solid ${theme.colors.lightGray};
   background-color: ${theme.colors.white};
   box-sizing: border-box;
-  cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
 `;
 
 const ToggleCircle = styled.div<{ checked?: boolean; disabled?: boolean }>`
   position: absolute;
   top: 2px;
-  left: ${(props) => (props.checked ? "14px" : "2px")};
+  left: ${(props) => (props.checked ? '14px' : '2px')};
   width: 14px;
   height: 14px;
   border-radius: 50%;

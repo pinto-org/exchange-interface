@@ -1,18 +1,18 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { TokenMetadataResponse } from "alchemy-sdk";
+import { TokenMetadataResponse } from 'alchemy-sdk';
 
-import { ERC20Token, Token } from "@beanstalk/sdk";
+import { ERC20Token, Token } from '@beanstalk/sdk';
 
-import { images } from "src/assets/images/tokens";
-import tokenMetadataJson from "src/token-metadata.json";
-import { useTokens } from "src/tokens/useTokens";
-import { TokenMetadataMap } from "src/types";
-import { getIsValidEthereumAddress } from "src/utils/addresses";
-import { alchemy } from "src/utils/alchemy";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import { useWells } from "src/wells/useWells";
+import { images } from 'src/assets/images/tokens';
+import tokenMetadataJson from 'src/token-metadata.json';
+import { useTokens } from 'src/tokens/useTokens';
+import { TokenMetadataMap } from 'src/types';
+import { getIsValidEthereumAddress } from 'src/utils/addresses';
+import { alchemy } from 'src/utils/alchemy';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import { useWells } from 'src/wells/useWells';
 
 const emptyMetas: TokenMetadataResponse = {
   decimals: null,
@@ -22,8 +22,8 @@ const emptyMetas: TokenMetadataResponse = {
 };
 
 const defaultMetas: TokenMetadataResponse = {
-  name: "UNKNOWN",
-  symbol: "UNKNOWN",
+  name: 'UNKNOWN',
+  symbol: 'UNKNOWN',
   logo: images.DEFAULT,
   decimals: null
 };
@@ -34,7 +34,7 @@ const metadataJson = tokenMetadataJson as TokenMetadataMap;
 
 export const useTokenImage = (params: string | TokenIsh) => {
   const { data: wells } = useWells();
-  const address = (params instanceof Token ? params.address : params || "").toLowerCase();
+  const address = (params instanceof Token ? params.address : params || '').toLowerCase();
   const lpToken = wells?.find((well) => well.address.toLowerCase() === address)?.lpToken;
 
   const isValidAddress = getIsValidEthereumAddress(address);
@@ -50,9 +50,9 @@ export const useTokenImage = (params: string | TokenIsh) => {
   })();
 
   const query = useChainScopedQuery({
-    queryKey: queryKeys.tokenMetadata(address || "invalid"),
+    queryKey: queryKeys.tokenMetadata(address || 'invalid'),
     queryFn: async () => {
-      const tokenMeta = await alchemy.core.getTokenMetadata(address ?? "");
+      const tokenMeta = await alchemy.core.getTokenMetadata(address ?? '');
       if (!tokenMeta) return { ...defaultMetas };
       return tokenMeta;
     },
@@ -68,7 +68,7 @@ export const useTokenImage = (params: string | TokenIsh) => {
 };
 
 export const useTokenMetadata = (params: string | TokenIsh): TokenMetadataResponse | undefined => {
-  const address = (params instanceof Token ? params.address : params || "").toLowerCase();
+  const address = (params instanceof Token ? params.address : params || '').toLowerCase();
 
   const isValidAddress = getIsValidEthereumAddress(address);
   const { data: wells } = useWells();
@@ -84,7 +84,7 @@ export const useTokenMetadata = (params: string | TokenIsh): TokenMetadataRespon
       if (existingToken.name) metas.name = existingToken.name;
       if (existingToken.decimals) metas.decimals = existingToken.decimals;
       if (existingToken.symbol) metas.symbol = existingToken.symbol;
-      if (existingToken.logo && !existingToken.logo?.includes("DEFAULT.svg")) {
+      if (existingToken.logo && !existingToken.logo?.includes('DEFAULT.svg')) {
         metas.logo = existingToken.logo;
       }
     }
@@ -96,12 +96,12 @@ export const useTokenMetadata = (params: string | TokenIsh): TokenMetadataRespon
   const hasAllMetas = metaValues.length && metaValues.every(Boolean);
 
   const query = useChainScopedQuery({
-    queryKey: queryKeys.tokenMetadata(address || "invalid"),
+    queryKey: queryKeys.tokenMetadata(address || 'invalid'),
     queryFn: async () => {
       if (!wells?.length) return;
 
       let metas = { ...existingMetas };
-      const tokenMeta = await alchemy.core.getTokenMetadata(address ?? "");
+      const tokenMeta = await alchemy.core.getTokenMetadata(address ?? '');
       if (!tokenMeta) return { ...defaultMetas };
 
       metas = mergeMetas(tokenMeta, metas);
@@ -128,10 +128,7 @@ export const useTokenMetadata = (params: string | TokenIsh): TokenMetadataRespon
   return metadatas;
 };
 
-const mergeMetas = (
-  data: Token | TokenMetadataResponse | undefined,
-  meta: TokenMetadataResponse
-) => {
+const mergeMetas = (data: Token | TokenMetadataResponse | undefined, meta: TokenMetadataResponse) => {
   if (!data) return meta;
   if (!meta.decimals && data?.decimals) meta.decimals = data.decimals;
   if (!meta.symbol && data?.symbol) meta.symbol = data.symbol;

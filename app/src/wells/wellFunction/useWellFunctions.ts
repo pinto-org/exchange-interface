@@ -1,15 +1,15 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from 'react';
 
-import { multicall } from "@wagmi/core";
-import { ContractFunctionParameters } from "viem";
+import { multicall } from '@wagmi/core';
+import { ContractFunctionParameters } from 'viem';
 
-import { Well, WellFunction } from "@beanstalk/sdk-wells";
+import { Well, WellFunction } from '@beanstalk/sdk-wells';
 
-import { chunkArray } from "src/utils/array";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import { config } from "src/utils/wagmi/config";
-import { useWells } from "src/wells/useWells";
+import { chunkArray } from 'src/utils/array';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import { config } from 'src/utils/wagmi/config';
+import { useWells } from 'src/wells/useWells';
 
 type WellFunctionDataMap = Record<
   string,
@@ -50,18 +50,13 @@ export const useWellFunctions = () => {
     queryFn: async () => {
       const { contracts, chunkSize } = buildMulticall(addresses);
 
-      const results = await multicall(config, { contracts, allowFailure: false }).then((r) =>
-        chunkArray(r, chunkSize)
-      );
+      const results = await multicall(config, { contracts, allowFailure: false }).then((r) => chunkArray(r, chunkSize));
 
-      return addresses.reduce<Record<string, { name: string; symbol: string }>>(
-        (prev, wfAddress, i) => {
-          const [name, symbol] = results[i];
-          prev[wfAddress] = { name, symbol };
-          return prev;
-        },
-        {}
-      );
+      return addresses.reduce<Record<string, { name: string; symbol: string }>>((prev, wfAddress, i) => {
+        const [name, symbol] = results[i];
+        prev[wfAddress] = { name, symbol };
+        return prev;
+      }, {});
     },
     select: selectData,
     enabled: !!wells.length
@@ -83,24 +78,22 @@ const mapWellFunctions = (wells: Well[]) => {
 };
 
 const getWFAddresses = (wells: Well[]) => {
-  const set = new Set<string>(wells.map((well) => well.wellFunction?.address?.toLowerCase() || ""));
-  set.delete("");
+  const set = new Set<string>(wells.map((well) => well.wellFunction?.address?.toLowerCase() || ''));
+  set.delete('');
   return Array.from(set);
 };
 
 const buildMulticall = (addresses: string[]) => {
-  const calls: ContractFunctionParameters<typeof WellFunction.abi>[][] = addresses.map(
-    (address) => {
-      const contract = {
-        address: address as `0x${string}`,
-        abi: WellFunction.abi
-      };
-      return [
-        { ...contract, functionName: "name", args: [] },
-        { ...contract, functionName: "symbol", args: [] }
-      ];
-    }
-  );
+  const calls: ContractFunctionParameters<typeof WellFunction.abi>[][] = addresses.map((address) => {
+    const contract = {
+      address: address as `0x${string}`,
+      abi: WellFunction.abi
+    };
+    return [
+      { ...contract, functionName: 'name', args: [] },
+      { ...contract, functionName: 'symbol', args: [] }
+    ];
+  });
 
   return { contracts: calls.flat(), chunkSize: 2 };
 };

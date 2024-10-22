@@ -7,17 +7,14 @@ export class Address {
   private addresses: AddressDefinition;
 
   static make<T extends string | AddressDefinition>(input: T): Address {
-    const addresses: AddressDefinition =
-      typeof input === 'string' ? { [ChainResolver.defaultChainId]: input } : input;
+    const addresses: AddressDefinition = typeof input === 'string' ? { [ChainResolver.defaultChainId]: input } : input;
 
     return new Address(addresses);
   }
 
   constructor(addresses: AddressDefinition) {
     this.addresses = Object.fromEntries(
-      Object.entries(addresses).map(
-        ([key, value]) => [Number(key), (value || '').toLowerCase()] as const
-      )
+      Object.entries(addresses).map(([key, value]) => [Number(key), (value || '').toLowerCase()] as const)
     );
   }
 

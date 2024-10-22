@@ -1,10 +1,4 @@
-import {
-  ChainId,
-  MAINNET_CHAINS,
-  MainnetChainId,
-  TESTNET_CHAINS,
-  TestnetChainId,
-} from 'src/constants/chains';
+import { ChainId, MAINNET_CHAINS, MainnetChainId, TESTNET_CHAINS, TestnetChainId } from 'src/constants/chains';
 
 /**
  * ChainResolver provides utility methods for working with network chainIds.
@@ -17,7 +11,7 @@ export class ChainResolver {
   // Mapping of testnet chain IDs to their mainnet equivalents
   private static readonly fallbackChainIds: Record<TestnetChainId, MainnetChainId> = {
     [ChainId.LOCALHOST]: ChainResolver.defaultChainId,
-    [ChainId.TESTNET]: ChainResolver.defaultChainId,
+    [ChainId.TESTNET]: ChainResolver.defaultChainId
   };
 
   /**

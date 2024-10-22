@@ -3,9 +3,9 @@ import {
   ConstantProduct2__factory,
   IWellFunction,
   IWellFunction__factory
-} from "src/constants/generated";
-import { WellsSDK } from "./WellsSDK";
-import { setReadOnly } from "./utils";
+} from 'src/constants/generated';
+import { WellsSDK } from './WellsSDK';
+import { setReadOnly } from './utils';
 
 export class WellFunction {
   contract: IWellFunction;
@@ -25,7 +25,7 @@ export class WellFunction {
   async getName(): Promise<string> {
     if (!this.name) {
       this.name = await this.contract.name();
-      setReadOnly(this, "name", this.name, true);
+      setReadOnly(this, 'name', this.name, true);
     }
     return this.name;
   }
@@ -33,7 +33,7 @@ export class WellFunction {
   async getSymbol(): Promise<string> {
     if (!this.symbol) {
       this.symbol = await this.contract.symbol();
-      setReadOnly(this, "symbol", this.symbol, true);
+      setReadOnly(this, 'symbol', this.symbol, true);
     }
     return this.symbol;
   }
@@ -41,13 +41,13 @@ export class WellFunction {
   static async BuildConstantProduct(sdk: WellsSDK): Promise<WellFunction> {
     const constantProductContract = new ConstantProduct__factory(sdk.signer);
     const deployedWellFunction = await constantProductContract.deploy();
-    return new WellFunction(sdk, deployedWellFunction.address, "0x");
+    return new WellFunction(sdk, deployedWellFunction.address, '0x');
   }
 
   static async BuildConstantProduct2(sdk: WellsSDK): Promise<WellFunction> {
     const constantProduct2Contract = new ConstantProduct2__factory(sdk.signer);
     const deployedWellFunction = await constantProduct2Contract.deploy();
-    return new WellFunction(sdk, deployedWellFunction.address, "0x");
+    return new WellFunction(sdk, deployedWellFunction.address, '0x');
   }
 
   static abi = IWellFunction__factory.abi;

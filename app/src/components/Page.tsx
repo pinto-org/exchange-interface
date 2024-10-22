@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { size } from "src/breakpoints";
-import { FC } from "src/types";
+import { size } from 'src/breakpoints';
+import { FC } from 'src/types';
 
 export const Page: FC<{}> = ({ children }) => {
-  return <PageContainer id="page">{children}</PageContainer>;
+  return <PageContainer id='page'>{children}</PageContainer>;
 };
 
 const PageContainer = styled.div`

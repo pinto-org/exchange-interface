@@ -1,13 +1,13 @@
-import React, { useCallback } from "react";
+import React, { useCallback } from 'react';
 
-import toast from "react-hot-toast";
-import styled from "styled-components";
+import toast from 'react-hot-toast';
+import styled from 'styled-components';
 
-import { ImageButton } from "src/components/ImageButton";
-import { explorerName, explorerUrl, useSdkChainId } from "src/utils/chain";
+import { ImageButton } from 'src/components/ImageButton';
+import { explorerName, explorerUrl, useSdkChainId } from 'src/utils/chain';
 
-import { Copy, X } from "../Icons";
-import { BodyCaps, BodyS, LinksTextLink } from "../Typography";
+import { Copy, X } from '../Icons';
+import { BodyCaps, BodyS, LinksTextLink } from '../Typography';
 
 function dismissErrors(id?: any) {
   if (id) {
@@ -38,7 +38,7 @@ export function ToastAlert({
       <Text>
         <Title>{desc}</Title>
         {hash && (
-          <Link href={`${explorerUrl(chainId)}/tx/${hash}`} target="_blank" rel="noreferrer">
+          <Link href={`${explorerUrl(chainId)}/tx/${hash}`} target='_blank' rel='noreferrer'>
             View on {explorerName(chainId)}
           </Link>
         )}
@@ -48,21 +48,14 @@ export function ToastAlert({
       {rawError && (
         <ImageButton
           component={Copy}
-          alt="Close token selector modal"
+          alt='Close token selector modal'
           size={10}
           onClick={() => {
             navigator.clipboard.writeText(rawError);
           }}
         />
       )}
-      {msg && (
-        <ImageButton
-          component={X}
-          alt="Close token selector modal"
-          size={24}
-          onClick={handleClick}
-        />
-      )}
+      {msg && <ImageButton component={X} alt='Close token selector modal' size={24} onClick={handleClick} />}
     </Container>
   );
 }

@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { createStore, Provider } from "jotai";
+import { createStore, Provider } from 'jotai';
 
-import { aquiferAtom, wellsAtom, sdkAtom } from "./atoms";
-import AquiferProvider from "./providers/AquiferProvider";
-import { SdkProvider } from "./providers/SdkProvider";
-import WellsProvider from "./providers/WellsProvider";
+import { aquiferAtom, wellsAtom, sdkAtom } from './atoms';
+import AquiferProvider from './providers/AquiferProvider';
+import { SdkProvider } from './providers/SdkProvider';
+import WellsProvider from './providers/WellsProvider';
 
 const jotaiStore = createStore();
 jotaiStore.set(sdkAtom, null);

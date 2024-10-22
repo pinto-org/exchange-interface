@@ -1,5 +1,5 @@
-import { ethers } from "ethers";
-import { defaultAbiCoder } from "ethers/lib/utils";
+import { ethers } from 'ethers';
+import { defaultAbiCoder } from 'ethers/lib/utils';
 
 enum ClipboardType {
   STATIC = 0, // no bytes are copied; static call
@@ -41,7 +41,10 @@ export class Clipboard {
    *   - `ab01cd23` (first 8 hex characters = 4 bytes is the length of data)
    *   - `0000....` (next 64 hex characters = 32 bytes is first element)
    */
-  public static encode(pasteParams: PasteParamsByType[ClipboardType], etherValue: ethers.BigNumber = ethers.BigNumber.from(0)) {
+  public static encode(
+    pasteParams: PasteParamsByType[ClipboardType],
+    etherValue: ethers.BigNumber = ethers.BigNumber.from(0)
+  ) {
     let type: number;
     if (pasteParams.length === 0) {
       type = 0; // static
@@ -79,14 +82,21 @@ export class Clipboard {
    * in which case it should be set to `0x0${type}0${useEtherFlag}`
    * where type is 0, 1 or 2 and useEtherFlag is 0 or 1.
    */
-  private static pack(params: PasteParams, preBytes: string = "0x0000") {
-    return ethers.utils.solidityPack(["bytes2", "uint80", "uint80", "uint80"], [preBytes, params[0], params[1], params[2]]);
+  private static pack(params: PasteParams, preBytes: string = '0x0000') {
+    return ethers.utils.solidityPack(
+      ['bytes2', 'uint80', 'uint80', 'uint80'],
+      [preBytes, params[0], params[1], params[2]]
+    );
   }
 
   /**
    * Prepare types and packed data for a Paste operation.
    */
-  private static prepare<T extends ClipboardType>(type: T, pasteParams: PasteParamsByType[T], etherValue: ethers.BigNumber) {
+  private static prepare<T extends ClipboardType>(
+    type: T,
+    pasteParams: PasteParamsByType[T],
+    etherValue: ethers.BigNumber
+  ) {
     let hasValue = etherValue.gt(0);
     let types: string[] = [];
     let encodeData: (string | string[])[] = [];
@@ -94,12 +104,12 @@ export class Clipboard {
 
     switch (type) {
       case 0: {
-        types.push("bytes2");
+        types.push('bytes2');
         encodeData.push(typeBytes);
         break;
       }
       case 1: {
-        types.push("bytes32");
+        types.push('bytes32');
         encodeData.push(
           // pack `typeBytes` into the first slot of this value
           Clipboard.pack(pasteParams as PasteParams, typeBytes)
@@ -107,7 +117,7 @@ export class Clipboard {
         break;
       }
       case 2: {
-        types = types.concat(["bytes2", "uint256[]"]);
+        types = types.concat(['bytes2', 'uint256[]']);
         encodeData = encodeData.concat([
           typeBytes,
           // `typeBytes` held in independent slot, pack empty bytes for items in array
@@ -121,7 +131,7 @@ export class Clipboard {
     }
 
     if (hasValue) {
-      types.push("uint256");
+      types.push('uint256');
       encodeData.push(etherValue.toString());
     }
 

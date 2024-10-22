@@ -1,20 +1,20 @@
-import { multicall } from "@wagmi/core";
-import { erc20Abi as abi } from "viem";
+import { multicall } from '@wagmi/core';
+import { erc20Abi as abi } from 'viem';
 
-import { ERC20Token } from "@beanstalk/sdk";
+import { ERC20Token } from '@beanstalk/sdk';
 
-import { images } from "src/assets/images/tokens";
-import { alchemy } from "src/utils/alchemy";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import { config } from "src/utils/wagmi/config";
-import { useWells } from "src/wells/useWells";
+import { images } from 'src/assets/images/tokens';
+import { alchemy } from 'src/utils/alchemy';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import { config } from 'src/utils/wagmi/config';
+import { useWells } from 'src/wells/useWells';
 
-import { getIsValidEthereumAddress } from "../utils/addresses";
-import useSdk from "../utils/sdk/useSdk";
+import { getIsValidEthereumAddress } from '../utils/addresses';
+import useSdk from '../utils/sdk/useSdk';
 
 export const USE_ERC20_TOKEN_ERRORS = {
-  notERC20Ish: "Invalid ERC20 Token Address"
+  notERC20Ish: 'Invalid ERC20 Token Address'
 } as const;
 
 const getERC20Data = async (_address: string) => {
@@ -22,14 +22,14 @@ const getERC20Data = async (_address: string) => {
   const args: any[] = [];
 
   const calls: any[] = [
-    { address, abi, functionName: "decimals", args },
-    { address, abi, functionName: "totalSupply", args }
+    { address, abi, functionName: 'decimals', args },
+    { address, abi, functionName: 'totalSupply', args }
   ];
 
   return multicall(config, { contracts: calls });
 };
 
-export const useERC20TokenWithAddress = (_address: string | undefined = "") => {
+export const useERC20TokenWithAddress = (_address: string | undefined = '') => {
   const address = _address.toLowerCase();
 
   const { data: wells = [] } = useWells();
@@ -44,24 +44,24 @@ export const useERC20TokenWithAddress = (_address: string | undefined = "") => {
     refetch: refetchTokenMetadata,
     ...tokenMetadataQuery
   } = useChainScopedQuery({
-    queryKey: queryKeys.tokenMetadata(isValidAddress ? address : "invalid"),
+    queryKey: queryKeys.tokenMetadata(isValidAddress ? address : 'invalid'),
     queryFn: async () => {
-      console.debug("[useERC20Token] fetching: ", address);
+      console.debug('[useERC20Token] fetching: ', address);
       const multiCallResponse = await getERC20Data(address);
 
       // Validate as much as we can that this is an ERC20 token
       if (multiCallResponse[0]?.error || multiCallResponse[1]?.error) {
         throw new Error(USE_ERC20_TOKEN_ERRORS.notERC20Ish);
       }
-      console.debug("[useERC20Token] erc20 multicall response: ", multiCallResponse);
+      console.debug('[useERC20Token] erc20 multicall response: ', multiCallResponse);
 
       const metadata = await alchemy.core.getTokenMetadata(address);
 
-      console.debug("[useERC20Token] token metadata: ", metadata);
+      console.debug('[useERC20Token] token metadata: ', metadata);
 
       return {
-        name: metadata?.name ?? "",
-        symbol: metadata?.symbol ?? "",
+        name: metadata?.name ?? '',
+        symbol: metadata?.symbol ?? '',
         decimals: metadata?.decimals ?? undefined,
         logo: metadata?.logo ?? images.DEFAULT
       };
@@ -117,7 +117,7 @@ export const useERC20TokenWithAddress = (_address: string | undefined = "") => {
   const shouldRunWhenSdkToken = Boolean(sdkToken && isValidAddress && lpTokens.length);
 
   const erc20Query = useChainScopedQuery({
-    queryKey: queryKeys.erc20TokenWithAddress(isValidAddress ? address : "invalid"),
+    queryKey: queryKeys.erc20TokenWithAddress(isValidAddress ? address : 'invalid'),
     queryFn: async () => {
       let token: ERC20Token | undefined = undefined;
       token = await handleIsLPToken();
@@ -127,7 +127,7 @@ export const useERC20TokenWithAddress = (_address: string | undefined = "") => {
       if (token) return token;
 
       // The query have run if this we get to this point
-      const { decimals = 0, name = "", symbol = "", logo } = tokenMetadata ?? {};
+      const { decimals = 0, name = '', symbol = '', logo } = tokenMetadata ?? {};
 
       if (!decimals || !name || !symbol) {
         return undefined;
@@ -137,7 +137,7 @@ export const useERC20TokenWithAddress = (_address: string | undefined = "") => {
         sdk.chainId,
         address.toLowerCase(),
         decimals,
-        symbol.toString() ?? "",
+        symbol.toString() ?? '',
         {
           name: name,
           logo: logo,

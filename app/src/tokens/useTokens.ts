@@ -1,8 +1,8 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { useAtomValue } from "jotai";
+import { useAtomValue } from 'jotai';
 
-import { underlyingTokenMapAtom } from "src/state/atoms";
+import { underlyingTokenMapAtom } from 'src/state/atoms';
 
 export function useTokens() {
   return useAtomValue(underlyingTokenMapAtom);

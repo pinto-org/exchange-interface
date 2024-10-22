@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { size } from "src/breakpoints";
-import { LoadingTemplate } from "src/components/LoadingTemplate";
-import { Page } from "src/components/Page";
-import { Title } from "src/components/PageComponents/Title";
-import { SwapRoot } from "src/components/Swap/SwapRoot";
-import { useTokens } from "src/tokens/useTokens";
+import { size } from 'src/breakpoints';
+import { LoadingTemplate } from 'src/components/LoadingTemplate';
+import { Page } from 'src/components/Page';
+import { Title } from 'src/components/PageComponents/Title';
+import { SwapRoot } from 'src/components/Swap/SwapRoot';
+import { useTokens } from 'src/tokens/useTokens';
 
 export const Swap = () => {
   const tokens = useTokens();
@@ -16,7 +16,7 @@ export const Swap = () => {
 
   return (
     <Page>
-      <Title title="Swap" fontWeight={"600"} largeOnMobile />
+      <Title title='Swap' fontWeight={'600'} largeOnMobile />
       {loading ? (
         <Container>
           <LoadingTemplate.Input />

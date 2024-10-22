@@ -1,4 +1,4 @@
-import { EnvDexSettings } from ".";
+import { EnvDexSettings } from '.';
 
 export const DevSettings: EnvDexSettings = {
   PRODUCTION: false,

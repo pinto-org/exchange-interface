@@ -1,17 +1,17 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { size } from "src/breakpoints";
-import { AdditionalCssBase, BoxModelBase } from "src/utils/ui/styled";
-import { CommonCssProps, CommonCssStyles } from "src/utils/ui/styled/common";
-import { FlexModelProps, FlexBase } from "src/utils/ui/styled/flex-model";
-import { theme } from "src/utils/ui/theme";
-import { CssProps } from "src/utils/ui/theme/types";
+import { size } from 'src/breakpoints';
+import { AdditionalCssBase, BoxModelBase } from 'src/utils/ui/styled';
+import { CommonCssProps, CommonCssStyles } from 'src/utils/ui/styled/common';
+import { FlexModelProps, FlexBase } from 'src/utils/ui/styled/flex-model';
+import { theme } from 'src/utils/ui/theme';
+import { CssProps } from 'src/utils/ui/theme/types';
 
 export const Item = styled.div<{ stretch?: boolean; right?: boolean; column?: boolean }>`
   display: flex;
-  ${({ column }) => column && "flex-direction: column;"}
-  ${({ stretch }) => stretch && "flex: 2;"}
-  ${({ right, column }) => right && (column ? "align-items: end;" : "justify-content: right;")}
+  ${({ column }) => column && 'flex-direction: column;'}
+  ${({ stretch }) => stretch && 'flex: 2;'}
+  ${({ right, column }) => right && (column ? 'align-items: end;' : 'justify-content: right;')}
 `;
 
 export const Row = styled.div<{ gap?: number; mobileGap?: string }>`
@@ -43,7 +43,7 @@ export const Flex = styled.div<FlexProps>`
 
 export const Divider = styled.div<{ $color?: keyof typeof theme.colors }>`
   width: 100%;
-  border-bottom: 1px solid ${(props) => theme.colors[props.$color || "lightGray"]};
+  border-bottom: 1px solid ${(props) => theme.colors[props.$color || 'lightGray']};
 `;
 
 export type FlexCardProps = FlexProps & {
@@ -59,11 +59,11 @@ export const FlexCard = styled(Flex)<
     $bgColor?: keyof typeof theme.colors;
   }
 >`
-  border: ${(p) => p.$borderWidth ?? 1}px solid ${(p) => theme.colors[p.$borderColor || "black"]};
-  background: ${(p) => theme.colors[p.$bgColor || "white"]};
+  border: ${(p) => p.$borderWidth ?? 1}px solid ${(p) => theme.colors[p.$borderColor || 'black']};
+  background: ${(p) => theme.colors[p.$bgColor || 'white']};
   ${(p) => {
     if (p.$p || p.$px || p.$py || p.$pt || p.$pr || p.$pb || p.$pl) {
-      return "";
+      return '';
     } else {
       return `padding: ${theme.spacing(2, 3)};`;
     }

@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { Signer } from "ethers";
-import { useAtom, useSetAtom } from "jotai";
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { Signer } from 'ethers';
+import { useAtom, useSetAtom } from 'jotai';
 
-import { BeanstalkSDK, ChainId, DataSource } from "@beanstalk/sdk";
+import { BeanstalkSDK, ChainId, DataSource } from '@beanstalk/sdk';
 
-import { isDEV } from "src/settings";
-import { Log } from "src/utils/logger";
-import { useEthersProvider, useEthersSigner } from "src/utils/wagmi/ethersAdapter";
-import { getRpcUrl } from "src/utils/wagmi/urls";
+import { isDEV } from 'src/settings';
+import { Log } from 'src/utils/logger';
+import { useEthersProvider, useEthersSigner } from 'src/utils/wagmi/ethersAdapter';
+import { getRpcUrl } from 'src/utils/wagmi/urls';
 
-import { aquiferAtom, sdkAtom } from "../atoms";
+import { aquiferAtom, sdkAtom } from '../atoms';
 
 const getSDK = (provider?: JsonRpcProvider, signer?: Signer, chainId?: number) => {
   const sdk = new BeanstalkSDK({
@@ -22,7 +22,7 @@ const getSDK = (provider?: JsonRpcProvider, signer?: Signer, chainId?: number) =
     DEBUG: isDEV
   });
 
-  Log.module("sdk").debug("sdk initialized", sdk);
+  Log.module('sdk').debug('sdk initialized', sdk);
   return sdk;
 };
 

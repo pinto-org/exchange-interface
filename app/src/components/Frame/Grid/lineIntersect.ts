@@ -46,10 +46,12 @@ export function liangBarsky(x0, y0, x1, y1, bbox) {
     if (p === 0 && q < 0) return null; // Don't draw line at all. (parallel line outside)
 
     if (p < 0) {
-      if (r > t1) return null; // Don't draw line at all.
+      if (r > t1)
+        return null; // Don't draw line at all.
       else if (r > t0) t0 = r; // Line is clipped!
     } else if (p > 0) {
-      if (r < t0) return null; // Don't draw line at all.
+      if (r < t0)
+        return null; // Don't draw line at all.
       else if (r < t1) t1 = r; // Line is clipped!
     }
   }

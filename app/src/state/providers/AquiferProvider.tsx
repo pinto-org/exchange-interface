@@ -1,24 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { useAtom } from "jotai";
-import { useChainId } from "wagmi";
+import { useAtom } from 'jotai';
+import { useChainId } from 'wagmi';
 
-import { ChainResolver } from "@beanstalk/sdk-core";
-import { Aquifer } from "@beanstalk/sdk-wells";
+import { ChainResolver } from '@beanstalk/sdk-core';
+import { Aquifer } from '@beanstalk/sdk-wells';
 
-import useSdk from "src/utils/sdk/useSdk";
+import useSdk from 'src/utils/sdk/useSdk';
 
-import { aquiferAtom } from "../atoms";
+import { aquiferAtom } from '../atoms';
 
 const arbitrumAquiferAddress = import.meta.env.VITE_AQUIFER_ADDRESS_ARBITRUM as string;
 const ethereumAquiferAddress = import.meta.env.VITE_AQUIFER_ADDRESS_ETH as string;
 
 if (!arbitrumAquiferAddress) {
-  throw new Error("Missing Arbitrum Aquifer addresses env var");
+  throw new Error('Missing Arbitrum Aquifer addresses env var');
 }
 
 if (!ethereumAquiferAddress) {
-  throw new Error("Missing Ethereum Aquifer addresses env var");
+  throw new Error('Missing Ethereum Aquifer addresses env var');
 }
 
 export const getAquiferAddress = (chainId: number) => {

@@ -1,12 +1,12 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
+import { Well } from '@beanstalk/sdk/Wells';
 
-import { ERC20Token, TokenValue } from "@beanstalk/sdk";
+import { ERC20Token, TokenValue } from '@beanstalk/sdk';
 
-import { useTokenSupplyMany } from "src/tokens/useTokenSupply";
-import { AddressMap } from "src/types";
-import { useTokenPrices } from "src/utils/price/useTokenPrices";
+import { useTokenSupplyMany } from 'src/tokens/useTokenSupply';
+import { AddressMap } from 'src/types';
+import { useTokenPrices } from 'src/utils/price/useTokenPrices';
 
 /**
  * LP Token Price is calculated as: TVL / total supply
@@ -40,9 +40,7 @@ export const useWellLPTokenPrice = (params: Well | Well[] | undefined) => {
 
       const tokens = well?.tokens;
       const reserves =
-        well?.reserves && well.reserves.length === 2
-          ? well.reserves
-          : [TokenValue.ZERO, TokenValue.ZERO];
+        well?.reserves && well.reserves.length === 2 ? well.reserves : [TokenValue.ZERO, TokenValue.ZERO];
       const lpToken = well?.lpToken;
       const lpTokenSupply = tokenSupplies[wellIdx] || TokenValue.ONE;
 
@@ -57,8 +55,7 @@ export const useWellLPTokenPrice = (params: Well | Well[] | undefined) => {
         });
 
         const wellTVL = wellReserveValues?.reduce((acc, val) => acc.add(val));
-        lpTokenPrices[lpToken.address] =
-          wellTVL && lpTokenSupply.gt(0) ? wellTVL.div(lpTokenSupply) : TokenValue.ZERO;
+        lpTokenPrices[lpToken.address] = wellTVL && lpTokenSupply.gt(0) ? wellTVL.div(lpTokenSupply) : TokenValue.ZERO;
       }
     }
 

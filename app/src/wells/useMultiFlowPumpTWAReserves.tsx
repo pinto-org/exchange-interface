@@ -1,18 +1,18 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import { multicall } from "@wagmi/core";
+import { Well } from '@beanstalk/sdk/Wells';
+import { multicall } from '@wagmi/core';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import MULTI_PUMP_ABI from "src/abi/MULTI_PUMP_ABI.json";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
-import { config } from "src/utils/wagmi/config";
+import MULTI_PUMP_ABI from 'src/abi/MULTI_PUMP_ABI.json';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
+import { config } from 'src/utils/wagmi/config';
 
-import { useIsMultiFlowPump } from "./pump/utils";
-import { useBeanstalkSiloWhitelist } from "./useBeanstalkSiloWhitelist";
-import { useWells } from "./useWells";
+import { useIsMultiFlowPump } from './pump/utils';
+import { useBeanstalkSiloWhitelist } from './useBeanstalkSiloWhitelist';
+import { useWells } from './useWells';
 
 export const useMultiFlowPumpTWAReserves = () => {
   const { data: wells } = useWells();
@@ -21,7 +21,7 @@ export const useMultiFlowPumpTWAReserves = () => {
   const { getIsMultiFlow } = useIsMultiFlowPump();
 
   const query = useChainScopedQuery({
-    queryKey: ["wells", "multiFlowPumpTWAReserves"],
+    queryKey: ['wells', 'multiFlowPumpTWAReserves'],
 
     queryFn: async () => {
       const whitelistedWells = (wells || []).filter(
@@ -38,8 +38,8 @@ export const useMultiFlowPumpTWAReserves = () => {
           prev.push({
             address: pump.address as `0x{string}`,
             abi: MULTI_PUMP_ABI,
-            functionName: "readTwaReserves",
-            args: [well.address, wellOracleSnapshots[idx], seasonTimestamp.toString(), "0x"]
+            functionName: 'readTwaReserves',
+            args: [well.address, wellOracleSnapshots[idx], seasonTimestamp.toString(), '0x']
           });
         });
 

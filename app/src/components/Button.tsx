@@ -1,6 +1,6 @@
-import React, { ButtonHTMLAttributes, CSSProperties, forwardRef } from "react";
+import React, { ButtonHTMLAttributes, CSSProperties, forwardRef } from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 import {
   CommonCssProps,
@@ -8,13 +8,13 @@ import {
   FlexPropertiesStyle,
   FlexPropertiesProps,
   makeCssStyle
-} from "src/utils/ui/styled";
-import { theme } from "src/utils/ui/theme";
+} from 'src/utils/ui/styled';
+import { theme } from 'src/utils/ui/theme';
 
-import { Spinner } from "./Spinner";
+import { Spinner } from './Spinner';
 
-export type ButtonVariant = "outlined" | "contained"; // | "text" (Add Text Variant later)
-export type ButtonColor = "primary" | "secondary";
+export type ButtonVariant = 'outlined' | 'contained'; // | "text" (Add Text Variant later)
+export type ButtonColor = 'primary' | 'secondary';
 
 type BaseButtonProps = {
   $variant?: ButtonVariant;
@@ -26,7 +26,7 @@ type BaseButtonProps = {
 };
 
 type CommonButtonStyles = {
-  $whiteSpace?: CSSProperties["whiteSpace"];
+  $whiteSpace?: CSSProperties['whiteSpace'];
 };
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
@@ -46,7 +46,7 @@ export const ButtonPrimary = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 const getButtonFontColor = (props: BaseButtonProps) => {
-  if (props.$variant === "outlined") {
+  if (props.$variant === 'outlined') {
     if (props.disabled || props.$loading) return theme.colors.disabled;
     return props.$secondary ? theme.colors.stoneLight : theme.colors.black;
   }
@@ -55,14 +55,14 @@ const getButtonFontColor = (props: BaseButtonProps) => {
 };
 
 const getButtonBgColor = (props: BaseButtonProps) => {
-  if (props.$variant === "outlined") return theme.colors.white;
+  if (props.$variant === 'outlined') return theme.colors.white;
   if (props.disabled || props.$loading) return theme.colors.disabled;
   return props.$secondary ? theme.colors.stoneLight : theme.colors.black;
 };
 
 const getButtonOutline = (props: BaseButtonProps) => {
   if (props.disabled) return theme.colors.disabled;
-  if (props.$variant === "outlined") {
+  if (props.$variant === 'outlined') {
     return props.$secondary ? theme.colors.lightGray : theme.colors.black;
   }
   return theme.colors.black;
@@ -80,22 +80,22 @@ const ButtonBase = styled.button<ButtonProps>`
   outline: 0.5px solid ${getButtonOutline};
   outline-offset: -0.5px;
   color: ${getButtonFontColor};
-  ${(p) => makeCssStyle(p, "$whiteSpace")}
+  ${(p) => makeCssStyle(p, '$whiteSpace')}
 
   ${CommonCssStyles}
   ${FlexPropertiesStyle}
-  ${({ $fullWidth }) => $fullWidth && "width: 100%;"}
+  ${({ $fullWidth }) => $fullWidth && 'width: 100%;'}
   
-  ${theme.font.styles.variant("button-link")}
-  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+  ${theme.font.styles.variant('button-link')}
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 
   &:hover,
   &:focus {
-    outline: ${(props) => (!props.disabled ? `2px solid ${theme.colors.primary}` : "")};
+    outline: ${(props) => (!props.disabled ? `2px solid ${theme.colors.primary}` : '')};
   }
 
   ${theme.media.query.sm.only} {
     padding: ${theme.spacing(1)};
-    ${theme.font.styles.variant("xs")}
+    ${theme.font.styles.variant('xs')}
   }
 `;

@@ -74,11 +74,7 @@ async function executeSwap(token1: Token, token2: Token, direction: Direction) {
 
     if (direction === Direction.FORWARD) {
       amount = token1.amount(100);
-      const {
-        amount: quoteAmount,
-        doSwap,
-        doApproval,
-      } = await quoter!.quoteForward(amount, account, slippage);
+      const { amount: quoteAmount, doSwap, doApproval } = await quoter!.quoteForward(amount, account, slippage);
 
       if (doApproval) {
         const atx = await doApproval();
@@ -94,11 +90,7 @@ async function executeSwap(token1: Token, token2: Token, direction: Direction) {
       expect(balanceAfter.gte(balanceBefore.add(quoteAmount)));
     } else {
       amount = token2.amount(100);
-      const {
-        amount: quoteAmount,
-        doSwap,
-        doApproval,
-      } = await quoter!.quoteReverse(amount, account, slippage);
+      const { amount: quoteAmount, doSwap, doApproval } = await quoter!.quoteReverse(amount, account, slippage);
       // console.log(`${quoteAmount.toHuman()} ${quoter!.fromToken.symbol} Needed to get ==> ${amount.toHuman()} ${quoter!.toToken.symbol}`);
 
       if (doApproval) {

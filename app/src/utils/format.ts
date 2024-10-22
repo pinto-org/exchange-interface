@@ -1,4 +1,4 @@
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
 type NumberPrimitive = string | number | TokenValue | undefined | null;
 
@@ -16,17 +16,17 @@ export const formatNum = (
     minValue?: number;
   }
 ) => {
-  if (val === undefined || val === null) return options?.defaultValue || "-.--";
+  if (val === undefined || val === null) return options?.defaultValue || '-.--';
 
   const normalised = val instanceof TokenValue ? val.toHuman() : val.toString();
 
   const num = Number(normalised);
 
   if (options?.minValue && num > 0 && num < options.minValue) {
-    return `<${options.minValue}`
+    return `<${options.minValue}`;
   }
 
-  return Number(normalised).toLocaleString("en-US", {
+  return Number(normalised).toLocaleString('en-US', {
     minimumFractionDigits: options?.minDecimals || 0,
     maximumFractionDigits: options?.maxDecimals || 2
   });
@@ -43,7 +43,7 @@ export const formatUSD = (
 
 const normaliseAsTokenValue = (val: NumberPrimitive) => {
   if (val instanceof TokenValue) return val;
-  const num = val ? (typeof val === "string" ? Number(val) : val) : 0;
+  const num = val ? (typeof val === 'string' ? Number(val) : val) : 0;
   return TokenValue.ZERO.add(num);
 };
 
@@ -54,17 +54,17 @@ const normaliseAsTokenValue = (val: NumberPrimitive) => {
  * - If value is < (0.0001) (0.01%), it will be formatted as "<0.01%"
  */
 export const formatPercent = (val: NumberPrimitive, options?: { defaultValue: string }) => {
-  if (!val) return `${options?.defaultValue || "--"}%`;
+  if (!val) return `${options?.defaultValue || '--'}%`;
 
   const pct = normaliseAsTokenValue(val).mul(100);
 
-  if (pct.lt(0.01)) return "<0.01%";
+  if (pct.lt(0.01)) return '<0.01%';
 
   return `${formatNum(pct, { minDecimals: 2, maxDecimals: 2, ...options })}%`;
 };
 
 const TokenSymbolMap = {
-  BEANWETHCP2w: "BEANETH LP"
+  BEANWETHCP2w: 'BEANETH LP'
 };
 export const displayTokenSymbol = (token: Token) => {
   if (token.symbol in TokenSymbolMap) {

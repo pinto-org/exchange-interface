@@ -1,10 +1,10 @@
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from 'react';
 
-import throttle from "lodash/throttle";
+import throttle from 'lodash/throttle';
 
-import { Queue } from "./Queue";
-import { roundPathCorners } from "./roundCorners";
-import useRequestAnimationFrame from "./useAnimationFrame";
+import { Queue } from './Queue';
+import { roundPathCorners } from './roundCorners';
+import useRequestAnimationFrame from './useAnimationFrame';
 import {
   debugPoint,
   debugLine,
@@ -20,7 +20,7 @@ import {
   converToSvgPoint,
   dist,
   getIntersection
-} from "./utils";
+} from './utils';
 
 const DEBUG = false;
 const SHRINK = true;
@@ -44,9 +44,9 @@ export const useWiggle = (
 
   // Start listening for mouse movements
   useEffect(() => {
-    document.addEventListener("mousemove", mouseMove);
+    document.addEventListener('mousemove', mouseMove);
     return () => {
-      document.removeEventListener("mousemove", mouseMove);
+      document.removeEventListener('mousemove', mouseMove);
     };
   });
 
@@ -103,7 +103,7 @@ export const useWiggle = (
     // These need to be manually tagged with a `data-trace
     const traceables = getTraceables(contentEl, svg);
 
-    DEBUG && debugPoint(mouse, "debugpoint", svgRef);
+    DEBUG && debugPoint(mouse, 'debugpoint', svgRef);
     DEBUG && debugLine(mouse, lastPoint, svgRef);
     let intersected = false;
 
@@ -147,8 +147,8 @@ export const useWiggle = (
         }
         // Debug the intersection
         if (DEBUG) {
-          debugPoint(entryPoint, "start", svgRef);
-          debugPoint(exitPoint, "end", svgRef);
+          debugPoint(entryPoint, 'start', svgRef);
+          debugPoint(exitPoint, 'end', svgRef);
         }
 
         // Break out of the loop, we found and processed an intersection
@@ -172,7 +172,7 @@ export const useWiggle = (
     const wiggleLine = wiggleLinePointsRef.current;
     if (!path || !wiggleLine) return;
 
-    let pathData = "";
+    let pathData = '';
     const points = wiggleLine.items as DOMPoint[];
     for (const [i, point] of points.entries()) {
       const { x, y } = point;
@@ -189,7 +189,7 @@ export const useWiggle = (
     const roundedPathData = roundPathCorners(pathData, 4.5, false);
 
     // Draw it
-    path.setAttribute("d", roundedPathData);
+    path.setAttribute('d', roundedPathData);
   };
 
   /**
@@ -273,7 +273,7 @@ export const useWiggle = (
 
       while (!pointsEq(nextPoint, exitPoint)) {
         if (!nextPoint) {
-          throw new Error("Bug Here");
+          throw new Error('Bug Here');
         }
         const corners = getCorners(nextPoint, obj);
         // Check if we are now on the same line as our exit point
@@ -287,7 +287,7 @@ export const useWiggle = (
         nextPoint = closest;
         c++;
         if (c > 10) {
-          console.log("infinite loop");
+          console.log('infinite loop');
           return;
         }
       }
@@ -298,7 +298,7 @@ export const useWiggle = (
     // First, draw up to the entryPoint
     // then walk around
     if (through) {
-      DEBUG && console.log("through");
+      DEBUG && console.log('through');
       flattenDiagonals(entryPoint, lastWigglePoint);
       addPoint(entryPoint);
       walkAround();
@@ -306,13 +306,13 @@ export const useWiggle = (
 
     // User is moving the mouse inside the rect; there's nothing to do.
     if (inside) {
-      DEBUG && console.log("inside");
+      DEBUG && console.log('inside');
     }
 
     // Mouse line starts outside but ends on the rectangle.
     // Draw up to where it crosses (entryPoint)
     if (entering) {
-      DEBUG && console.log("entering");
+      DEBUG && console.log('entering');
       flattenDiagonals(entryPoint, lastWigglePoint);
       addPoint(entryPoint);
       return false;
@@ -322,7 +322,7 @@ export const useWiggle = (
     // to exitPoint
     if (exiting) {
       // Walk around
-      DEBUG && console.log("exiting or edgewalking");
+      DEBUG && console.log('exiting or edgewalking');
       if (wiggleLine.length > 1) {
         walkAround();
       } else {

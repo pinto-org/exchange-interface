@@ -1,10 +1,10 @@
-import React, { FocusEventHandler, RefObject, useCallback, useEffect, useState } from "react";
+import React, { FocusEventHandler, RefObject, useCallback, useEffect, useState } from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { FC } from "src/types";
+import { FC } from 'src/types';
 
 type Props = {
   id?: string;
@@ -40,9 +40,8 @@ export const BasicInput: FC<Props> = ({
     // which are mathematically equal, so we shouldn't update the displayValue.
     // But we need to do this comparison in big number space, using TokenValue.
 
-    if (TokenValue.fromHuman(value || 0, 18).eq(TokenValue.fromHuman(displayValue || 0, 18)))
-      return;
-    setDisplayValue(value === "0" || value === "" ? "" : value);
+    if (TokenValue.fromHuman(value || 0, 18).eq(TokenValue.fromHuman(displayValue || 0, 18))) return;
+    setDisplayValue(value === '0' || value === '' ? '' : value);
 
     // adding displayValue to the dependency array breaks the input in some edge cases
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +50,7 @@ export const BasicInput: FC<Props> = ({
   const maxNum = max && parseFloat(max.toHuman());
   const clamp = useCallback(
     (amount: string) => {
-      if (amount === "" || amount === ".") return amount;
+      if (amount === '' || amount === '.') return amount;
       return maxNum !== undefined ? Math.min(parseFloat(amount), maxNum).toString() : amount;
     },
     [maxNum]
@@ -61,12 +60,12 @@ export const BasicInput: FC<Props> = ({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       let rawValue = e.target.value;
       let cleanValue = rawValue;
-      if (rawValue === "") cleanValue = "0";
-      if (rawValue === ".") {
-        cleanValue = "0";
+      if (rawValue === '') cleanValue = '0';
+      if (rawValue === '.') {
+        cleanValue = '0';
       }
-      if (rawValue == "00") cleanValue = "0";
-      if (rawValue.startsWith(".") && rawValue.length > 1) {
+      if (rawValue == '00') cleanValue = '0';
+      if (rawValue.startsWith('.') && rawValue.length > 1) {
         rawValue = `0${rawValue}`;
       }
 
@@ -80,7 +79,7 @@ export const BasicInput: FC<Props> = ({
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       // allow "-" only when allowNegative is true, and only allow it once
       //input type "number" lets you enter two "-"
-      if (e.key === "-" && (!allowNegative || (e.target as HTMLInputElement).value.length > 1)) {
+      if (e.key === '-' && (!allowNegative || (e.target as HTMLInputElement).value.length > 1)) {
         e.preventDefault();
       }
 
@@ -91,21 +90,18 @@ export const BasicInput: FC<Props> = ({
 
   const handlePaste = useCallback(
     (e: React.ClipboardEvent<HTMLInputElement>) => {
-      const regN = "^-?([0-9]*[.])?[0-9]+$";
-      const regP = "^([0-9]*[.])?[0-9]+$";
+      const regN = '^-?([0-9]*[.])?[0-9]+$';
+      const regP = '^([0-9]*[.])?[0-9]+$';
       const reg = allowNegative ? regN : regP;
       const current = e.currentTarget.value;
 
       if (!current) {
-        e.currentTarget.value = "";
+        e.currentTarget.value = '';
       }
-      if (
-        !(current + e.clipboardData.getData("Text")).match(reg) &&
-        e.clipboardData.getData("Text").match(reg)
-      ) {
-        e.currentTarget.value = "";
+      if (!(current + e.clipboardData.getData('Text')).match(reg) && e.clipboardData.getData('Text').match(reg)) {
+        e.currentTarget.value = '';
       }
-      if (!e.clipboardData.getData("Text").match(reg)) {
+      if (!e.clipboardData.getData('Text').match(reg)) {
         e.preventDefault();
       }
     },
@@ -117,19 +113,19 @@ export const BasicInput: FC<Props> = ({
       <Label htmlFor={id}>{label}</Label>
       <StyledInput
         id={id}
-        type="number"
-        inputMode="decimal"
+        type='number'
+        inputMode='decimal'
         value={displayValue}
-        placeholder="0"
+        placeholder='0'
         onInput={handleChange}
         onKeyDown={filterKeyDown}
         onPaste={handlePaste}
         onFocus={onFocus}
         onBlur={onBlur}
         ref={inputRef}
-        spellCheck="false"
-        autoCorrect="off"
-        autoComplete="off"
+        spellCheck='false'
+        autoCorrect='off'
+        autoComplete='off'
         readOnly={!canChangeValue}
       />
     </>

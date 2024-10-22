@@ -1,8 +1,8 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from 'react';
 
-import { Well } from "@beanstalk/sdk-wells";
+import { Well } from '@beanstalk/sdk-wells';
 
-import useSdk from "src/utils/sdk/useSdk";
+import useSdk from 'src/utils/sdk/useSdk';
 
 export const useIsMultiFlowPump = (well: Well | undefined = undefined) => {
   const sdk = useSdk();

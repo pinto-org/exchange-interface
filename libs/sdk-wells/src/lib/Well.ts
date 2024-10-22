@@ -13,7 +13,7 @@ import {
   validateAmount,
   validateAtleastOneNonZeroAmount,
   validateDeadline,
-  validateToken,
+  validateToken
 } from './utils';
 import { WellFunction } from './WellFunction';
 import { WellsSDK } from './WellsSDK';
@@ -97,8 +97,7 @@ export class Well {
     } else {
       if (options.name) toLoad.push(this.getName());
       if (options.lpToken) toLoad.push(this.getLPToken());
-      if (options.tokens || options.wellFunction || options.pumps || options.aquifer)
-        toLoad.push(this.getWell());
+      if (options.tokens || options.wellFunction || options.pumps || options.aquifer) toLoad.push(this.getWell());
     }
 
     await Promise.all(toLoad);
@@ -160,7 +159,7 @@ export class Well {
         undefined,
         undefined,
         undefined,
-        this.sdk.providerOrSigner,
+        this.sdk.providerOrSigner
       );
       await token.loadFromChain();
       token.isLP = true;
@@ -264,7 +263,7 @@ export class Well {
       tokens: this.tokens!,
       wellFunction: this.wellFunction!,
       pumps: this.pumps!,
-      aquifer: this.aquifer!,
+      aquifer: this.aquifer!
     };
   }
 
@@ -348,7 +347,7 @@ export class Well {
     minAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction> {
     validateToken(fromToken, 'fromToken');
     validateToken(toToken, 'toToken');
@@ -357,9 +356,7 @@ export class Well {
     validateAddress(recipient, 'recipient');
     validateDeadline(deadline);
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     return this.contract.swapFrom(
       fromToken.address,
@@ -368,7 +365,7 @@ export class Well {
       minAmountOut.toBigNumber(),
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
   }
 
@@ -383,7 +380,7 @@ export class Well {
     fromToken: Token,
     toToken: Token,
     amountIn: TokenValue,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<TokenValue> {
     validateToken(fromToken, 'fromToken');
     validateToken(toToken, 'toToken');
@@ -393,7 +390,7 @@ export class Well {
       fromToken.address,
       toToken.address,
       amountIn.toBigNumber(),
-      overrides ?? {},
+      overrides ?? {}
     );
 
     return toToken.fromBlockchain(amount);
@@ -416,11 +413,9 @@ export class Well {
     minAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<TokenValue> {
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     if (!recipient) {
       return TokenValue.ZERO;
@@ -433,7 +428,7 @@ export class Well {
       minAmountOut.toBigNumber(),
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
 
     return TokenValue.fromBlockchain(gas, 0);
@@ -457,7 +452,7 @@ export class Well {
     minAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction> {
     validateToken(fromToken, 'fromToken');
     validateToken(toToken, 'toToken');
@@ -466,9 +461,7 @@ export class Well {
     validateAddress(recipient, 'recipient');
     validateDeadline(deadline);
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     return this.contract.swapFromFeeOnTransfer(
       fromToken.address,
@@ -477,7 +470,7 @@ export class Well {
       minAmountOut.toBigNumber(),
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
   }
 
@@ -498,11 +491,9 @@ export class Well {
     minAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<TokenValue> {
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     if (!recipient) {
       return TokenValue.ZERO;
@@ -515,7 +506,7 @@ export class Well {
       minAmountOut.toBigNumber(),
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
 
     return TokenValue.fromBlockchain(gas, 0);
@@ -540,7 +531,7 @@ export class Well {
     amountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<ContractTransaction> {
     validateToken(fromToken, 'fromToken');
     validateToken(toToken, 'toToken');
@@ -553,19 +544,9 @@ export class Well {
     const maxIn = maxAmountIn.toBigNumber();
     const out = amountOut.toBigNumber();
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
-    return this.contract.swapTo(
-      from,
-      to,
-      maxIn,
-      out,
-      recipient,
-      deadlineBlockchain,
-      overrides ?? {},
-    );
+    return this.contract.swapTo(from, to, maxIn, out, recipient, deadlineBlockchain, overrides ?? {});
   }
 
   /**
@@ -579,7 +560,7 @@ export class Well {
     fromToken: Token,
     toToken: Token,
     amountOut: TokenValue,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<TokenValue> {
     const from = fromToken.address;
     const to = toToken.address;
@@ -606,7 +587,7 @@ export class Well {
     amountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<TokenValue> {
     const from = fromToken.address;
     const to = toToken.address;
@@ -617,9 +598,7 @@ export class Well {
       return TokenValue.ZERO;
     }
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     const gas = await this.contract.estimateGas.swapTo(
       from,
@@ -628,7 +607,7 @@ export class Well {
       out,
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
     return TokenValue.fromBlockchain(gas, 0);
   }
@@ -648,7 +627,7 @@ export class Well {
     minLpAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<ContractTransaction> {
     validateAtleastOneNonZeroAmount(tokenAmountsIn);
     validateAmount(minLpAmountOut, 'minLpAmountOut');
@@ -657,17 +636,9 @@ export class Well {
     const amountsIn = tokenAmountsIn.map((tv) => tv.toBigNumber());
     const minLp = minLpAmountOut.toBigNumber();
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
-    return this.contract.addLiquidity(
-      amountsIn,
-      minLp,
-      recipient,
-      deadlineBlockchain,
-      overrides ?? {},
-    );
+    return this.contract.addLiquidity(amountsIn, minLp, recipient, deadlineBlockchain, overrides ?? {});
   }
 
   /**
@@ -675,10 +646,7 @@ export class Well {
    * @param tokenAmountsIn The amount of each token to add; MUST match the indexing of {Well.tokens}
    * @return lpAmountOut The amount of LP tokens to receive
    */
-  async addLiquidityQuote(
-    tokenAmountsIn: TokenValue[],
-    overrides?: CallOverrides,
-  ): Promise<TokenValue> {
+  async addLiquidityQuote(tokenAmountsIn: TokenValue[], overrides?: CallOverrides): Promise<TokenValue> {
     await this.getLPToken();
     const amountsIn = tokenAmountsIn.map((tv) => tv.toBigNumber());
     const result = await this.contract.getAddLiquidityOut(amountsIn, overrides ?? {});
@@ -699,21 +667,19 @@ export class Well {
     minLpAmountOut: TokenValue,
     recipient: string = '0x0000000000000000000000000000000000000000',
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<TokenValue> {
     const amountsIn = tokenAmountsIn.map((tv) => tv.toBigNumber());
     const minLp = minLpAmountOut.toBigNumber();
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     const gas = await this.contract.estimateGas.addLiquidity(
       amountsIn,
       minLp,
       recipient,
       deadlineBlockchain,
-      overrides || {},
+      overrides || {}
     );
     return TokenValue.fromBlockchain(gas, 0);
   }
@@ -732,7 +698,7 @@ export class Well {
     minLpAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<ContractTransaction> {
     // TODO: validate at least one (or all?) is fee-on-transfer
     validateAtleastOneNonZeroAmount(tokenAmountsIn);
@@ -742,17 +708,9 @@ export class Well {
     const amountsIn = tokenAmountsIn.map((tv) => tv.toBigNumber());
     const minLp = minLpAmountOut.toBigNumber();
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
-    return this.contract.addLiquidityFeeOnTransfer(
-      amountsIn,
-      minLp,
-      recipient,
-      deadlineBlockchain,
-      overrides ?? {},
-    );
+    return this.contract.addLiquidityFeeOnTransfer(amountsIn, minLp, recipient, deadlineBlockchain, overrides ?? {});
   }
 
   /**
@@ -768,21 +726,19 @@ export class Well {
     minLpAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<TokenValue> {
     const amountsIn = tokenAmountsIn.map((tv) => tv.toBigNumber());
     const minLp = minLpAmountOut.toBigNumber();
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     const gas = await this.contract.estimateGas.addLiquidityFeeOnTransfer(
       amountsIn,
       minLp,
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
     return TokenValue.fromBlockchain(gas, 0);
   }
@@ -802,7 +758,7 @@ export class Well {
     minTokenAmountsOut: TokenValue[],
     recipient: string,
     deadline?: number,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<ContractTransaction> {
     validateAmount(lpAmountIn, 'lpAmountIn');
     minTokenAmountsOut.forEach((v, i) => validateAmount(v, `minTokenAmountsOut[${i}]`));
@@ -811,17 +767,9 @@ export class Well {
     const lpAmount = lpAmountIn.toBigNumber();
     const minOutAmounts = minTokenAmountsOut.map((a) => a.toBigNumber());
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
-    return this.contract.removeLiquidity(
-      lpAmount,
-      minOutAmounts,
-      recipient,
-      deadlineBlockchain,
-      overrides ?? {},
-    );
+    return this.contract.removeLiquidity(lpAmount, minOutAmounts, recipient, deadlineBlockchain, overrides ?? {});
   }
 
   /**
@@ -829,15 +777,9 @@ export class Well {
    * @param lpAmountIn The amount of LP tokens to burn
    * @return tokenAmountsOut The amount of each underlying token to receive
    */
-  async removeLiquidityQuote(
-    lpAmountIn: TokenValue,
-    overrides?: CallOverrides,
-  ): Promise<TokenValue[]> {
+  async removeLiquidityQuote(lpAmountIn: TokenValue, overrides?: CallOverrides): Promise<TokenValue[]> {
     const tokens = await this.getTokens();
-    const res = await this.contract.getRemoveLiquidityOut(
-      lpAmountIn.toBigNumber(),
-      overrides ?? {},
-    );
+    const res = await this.contract.getRemoveLiquidityOut(lpAmountIn.toBigNumber(), overrides ?? {});
     const quote = res.map((value: BigNumber, i: number) => tokens[i].fromBlockchain(value));
 
     return quote;
@@ -856,21 +798,19 @@ export class Well {
     minTokenAmountsOut: TokenValue[],
     recipient: string,
     deadline?: number,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<TokenValue> {
     const lpAmount = lpAmountIn.toBigNumber();
     const minOutAmounts = minTokenAmountsOut.map((a) => a.toBigNumber());
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     const gas = await this.contract.estimateGas.removeLiquidity(
       lpAmount,
       minOutAmounts,
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
     return TokenValue.fromBlockchain(gas, 0);
   }
@@ -890,7 +830,7 @@ export class Well {
     minTokenAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<ContractTransaction> {
     validateAmount(lpAmountIn, 'lpAmountIn');
     validateToken(tokenOut, 'tokenOut');
@@ -901,9 +841,7 @@ export class Well {
     const token = tokenOut.address;
     const minOut = minTokenAmountOut.toBigNumber();
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     return this.contract.removeLiquidityOneToken(
       amountIn,
@@ -911,7 +849,7 @@ export class Well {
       minOut,
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
   }
 
@@ -925,16 +863,12 @@ export class Well {
   async removeLiquidityOneTokenQuote(
     lpAmountIn: TokenValue,
     tokenOut: Token,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<TokenValue> {
     const amountIn = lpAmountIn.toBigNumber();
     const address = tokenOut.address;
 
-    const quote = await this.contract.getRemoveLiquidityOneTokenOut(
-      amountIn,
-      address,
-      overrides ?? {},
-    );
+    const quote = await this.contract.getRemoveLiquidityOneTokenOut(amountIn, address, overrides ?? {});
     return tokenOut.fromBlockchain(quote);
   }
 
@@ -953,16 +887,14 @@ export class Well {
     minTokenAmountOut: TokenValue,
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<TokenValue> {
     validateDeadline(deadline);
     const amountIn = lpAmountIn.toBigNumber();
     const token = tokenOut.address;
     const minOut = minTokenAmountOut.toBigNumber();
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     const gas = await this.contract.estimateGas.removeLiquidityOneToken(
       amountIn,
@@ -970,7 +902,7 @@ export class Well {
       minOut,
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
     return TokenValue.fromBlockchain(gas, 0);
   }
@@ -988,7 +920,7 @@ export class Well {
     tokenAmountsOut: TokenValue[],
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<ContractTransaction> {
     validateAmount(maxLpAmountIn, 'maxLpAmountIn');
     tokenAmountsOut.forEach((t, i) => validateAmount(t, `tokenAmountsOut[${i}]`));
@@ -997,17 +929,9 @@ export class Well {
     const maxIn = maxLpAmountIn.toBigNumber();
     const amounts = tokenAmountsOut.map((tv) => tv.toBigNumber());
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
-    return this.contract.removeLiquidityImbalanced(
-      maxIn,
-      amounts,
-      recipient,
-      deadlineBlockchain,
-      overrides ?? {},
-    );
+    return this.contract.removeLiquidityImbalanced(maxIn, amounts, recipient, deadlineBlockchain, overrides ?? {});
   }
 
   /**
@@ -1015,10 +939,7 @@ export class Well {
    * @param tokenAmountsOut The amount of each underlying token to receive; MUST match the indexing of {Well.tokens}
    * @return lpAmountIn The amount of LP tokens to burn
    */
-  async removeLiquidityImbalancedQuote(
-    tokenAmounts: TokenValue[],
-    overrides?: CallOverrides,
-  ): Promise<TokenValue> {
+  async removeLiquidityImbalancedQuote(tokenAmounts: TokenValue[], overrides?: CallOverrides): Promise<TokenValue> {
     const amounts = tokenAmounts.map((tv) => tv.toBigNumber());
     const quote = await this.contract.getRemoveLiquidityImbalancedIn(amounts, overrides ?? {});
     const lpToken = await this.getLPToken();
@@ -1039,22 +960,20 @@ export class Well {
     tokenAmountsOut: TokenValue[],
     recipient: string,
     deadline?: number,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<TokenValue> {
     validateDeadline(deadline);
     const maxIn = maxLpAmountIn.toBigNumber();
     const amounts = tokenAmountsOut.map((tv) => tv.toBigNumber());
 
-    const deadlineBlockchain = deadline
-      ? deadlineSecondsToBlockchain(deadline)
-      : TokenValue.MAX_UINT256.toBlockchain();
+    const deadlineBlockchain = deadline ? deadlineSecondsToBlockchain(deadline) : TokenValue.MAX_UINT256.toBlockchain();
 
     const gas = await this.contract.estimateGas.removeLiquidityImbalanced(
       maxIn,
       amounts,
       recipient,
       deadlineBlockchain,
-      overrides ?? {},
+      overrides ?? {}
     );
     return TokenValue.fromBlockchain(gas, 0);
   }
@@ -1064,11 +983,7 @@ export class Well {
   /**
    * Shifts excess tokens held by the Well into liquidity and delivers to `recipient` `minAmountOut` LP tokens.
    */
-  async sync(
-    minAmountOut: TokenValue,
-    recipient: string,
-    overrides?: CallOverrides,
-  ): Promise<ContractTransaction> {
+  async sync(minAmountOut: TokenValue, recipient: string, overrides?: CallOverrides): Promise<ContractTransaction> {
     validateAmount(minAmountOut, 'minAmountOut');
     validateAddress(recipient, 'recipient');
 
@@ -1095,18 +1010,13 @@ export class Well {
     toToken: Token,
     minAmountOut: TokenValue,
     recipient: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<ContractTransaction> {
     validateToken(toToken, 'toToken');
     validateAmount(minAmountOut, 'minAmountOut');
     validateAddress(recipient, 'recipient');
 
-    return this.contract.shift(
-      toToken.address,
-      minAmountOut.toBigNumber(),
-      recipient,
-      overrides ?? {},
-    );
+    return this.contract.shift(toToken.address, minAmountOut.toBigNumber(), recipient, overrides ?? {});
   }
 
   /**
@@ -1162,7 +1072,7 @@ export class Well {
     aquifer: Aquifer,
     tokens: ERC20Token[],
     wellFunction: WellFunction,
-    pumps: Pump[],
+    pumps: Pump[]
   ): Promise<Well> {
     if (tokens.length < 2) {
       throw new Error('Well must have at least 2 tokens');
@@ -1197,27 +1107,27 @@ export class Well {
         address: this.lpToken?.address,
         symbol: this.lpToken?.symbol,
         decimals: this.lpToken?.decimals,
-        name: this.lpToken?.name,
+        name: this.lpToken?.name
       },
       tokens: this.tokens?.map((token) => ({
         address: token.address,
         symbol: token.symbol,
         decimals: token.decimals,
-        name: token.name,
+        name: token.name
       })),
       wellFunction: {
         symbol: this.wellFunction?.symbol,
         name: this.wellFunction?.name,
         data: this.wellFunction?.data,
-        address: this.wellFunction?.address,
+        address: this.wellFunction?.address
       },
       pumps: this.pumps?.map((pump) => ({
         address: pump.address,
-        data: pump.data,
+        data: pump.data
       })),
       aquifer: this.aquifer?.address,
       reserves: this.reserves?.map((reserve) => reserve.blockchainString),
-      wellData: this.wellData,
+      wellData: this.wellData
     };
     return JSON.stringify(asObj, null, 2);
   }

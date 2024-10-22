@@ -1,13 +1,13 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { QueryKey, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
-import { useChainId } from "wagmi";
+import { QueryKey, useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
+import { useChainId } from 'wagmi';
 
-import { useSdkChainId } from "../chain";
+import { useSdkChainId } from '../chain';
 
 const makeScopedQueryKey = (chainId: number, queryKey: QueryKey) => {
   const scope = [chainId];
-  return [scope, ...(typeof queryKey === "string" ? [queryKey] : queryKey)];
+  return [scope, ...(typeof queryKey === 'string' ? [queryKey] : queryKey)];
 };
 
 /**
@@ -23,7 +23,7 @@ export function useChainScopedQuery<
   const chainId = useSdkChainId();
 
   let key: string[] = [];
-  if (typeof queryKey === "string") {
+  if (typeof queryKey === 'string') {
     key = [queryKey];
   } else if (Array.isArray(queryKey)) {
     key = queryKey;
@@ -48,13 +48,10 @@ export function useSetChainScopedQueryData<TQueryKey extends QueryKey = QueryKey
 
   return useCallback(
     <T>(queryKey: TQueryKey, mergeData: (oldData: undefined | void | T) => T) =>
-      queryClient.setQueryData(
-        makeScopedQueryKey(chainId, queryKey),
-        (oldData: undefined | void | T) => {
-          const merged = mergeData(oldData);
-          return merged;
-        }
-      ),
+      queryClient.setQueryData(makeScopedQueryKey(chainId, queryKey), (oldData: undefined | void | T) => {
+        const merged = mergeData(oldData);
+        return merged;
+      }),
     [queryClient, chainId]
   );
 }
@@ -80,8 +77,7 @@ export function useFetchChainScopedQueryData<TQueryKey extends QueryKey = QueryK
   const queryClient = useQueryClient();
 
   return useCallback(
-    <T>(queryKey: TQueryKey) =>
-      queryClient.fetchQuery<T>({ queryKey: makeScopedQueryKey(chainId, queryKey) }),
+    <T>(queryKey: TQueryKey) => queryClient.fetchQuery<T>({ queryKey: makeScopedQueryKey(chainId, queryKey) }),
     [queryClient, chainId]
   );
 }

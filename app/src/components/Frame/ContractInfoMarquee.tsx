@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
-import { ChainId } from "@beanstalk/sdk-core";
+import { ChainId } from '@beanstalk/sdk-core';
 
-import { explorerUrl, useResolvedChainId } from "src/utils/chain";
+import { explorerUrl, useResolvedChainId } from 'src/utils/chain';
 
 type ContractMarqueeInfo = Record<string, { display: string; to?: string; url?: string }[]>;
 
 const CarouselData: ContractMarqueeInfo = {
   ADDRESS: [],
   AUDIT: [
-    { display: "HALBORN", url: "/halborn-basin-audit.pdf" },
-    { display: "CYFRIN", url: "/cyfrin-basin-audit.pdf" },
-    { display: "CODE4RENA", url: "https://code4rena.com/reports/2023-07-basin" }
+    { display: 'HALBORN', url: '/halborn-basin-audit.pdf' },
+    { display: 'CYFRIN', url: '/cyfrin-basin-audit.pdf' },
+    { display: 'CODE4RENA', url: 'https://code4rena.com/reports/2023-07-basin' }
   ],
-  V1: [{ display: "WHITEPAPER", url: "/basin.pdf" }]
+  V1: [{ display: 'WHITEPAPER', url: '/basin.pdf' }]
 };
 
 const ethCarouselAddresses = {
@@ -31,8 +31,7 @@ const arbCarouselAddresses = {
 const CarouselInfo = (chainId: ChainId) => {
   const data = { ...CarouselData };
 
-  const aquiferStruct =
-    chainId === ChainId.ARBITRUM_MAINNET ? arbCarouselAddresses : ethCarouselAddresses;
+  const aquiferStruct = chainId === ChainId.ARBITRUM_MAINNET ? arbCarouselAddresses : ethCarouselAddresses;
 
   data.ADDRESS[0] = aquiferStruct;
 
@@ -58,7 +57,7 @@ export const ContractInfoMarquee = () => {
 
   return (
     <Scroller x={repeatableWidth} duration={animationDuration}>
-      <CarouselRow style={{ justifyContent: "flex-start" }}>
+      <CarouselRow style={{ justifyContent: 'flex-start' }}>
         <>
           {Array(numItems)
             .fill(null)
@@ -69,14 +68,9 @@ export const ContractInfoMarquee = () => {
                     <InfoRow>
                       <InfoText>{key.toUpperCase()}:</InfoText>
                       {data.map(({ display, url }, i) => (
-                        <TextLink
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          key={`${display}-${i}`}
-                        >
+                        <TextLink href={url} target='_blank' rel='noopener noreferrer' key={`${display}-${i}`}>
                           {display}
-                          <span>{data.length > 1 && i + 1 < data.length ? <>{","}</> : ""}</span>
+                          <span>{data.length > 1 && i + 1 < data.length ? <>{','}</> : ''}</span>
                         </TextLink>
                       ))}
                     </InfoRow>

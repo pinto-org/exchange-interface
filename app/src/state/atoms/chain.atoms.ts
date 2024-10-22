@@ -1,8 +1,8 @@
-import { atom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtomValue, useSetAtom } from 'jotai';
 
 export enum ChainIdError {
-  INCORRECT = "INCORRECT",
-  INVALID = "UNKNOWN"
+  INCORRECT = 'INCORRECT',
+  INVALID = 'UNKNOWN'
 }
 
 const chainErrAtomn = atom<ChainIdError | null>(null);

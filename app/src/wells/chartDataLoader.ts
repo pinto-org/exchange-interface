@@ -1,31 +1,22 @@
-import { Well } from "@beanstalk/sdk/Wells";
+import { Well } from '@beanstalk/sdk/Wells';
 
-import { BeanstalkSDK } from "@beanstalk/sdk";
+import { BeanstalkSDK } from '@beanstalk/sdk';
 
-import { GetWellChartDataDocument, GetWellChartDataQuery } from "src/generated/graph/graphql";
-import { Log } from "src/utils/logger";
+import { GetWellChartDataDocument, GetWellChartDataQuery } from 'src/generated/graph/graphql';
+import { Log } from 'src/utils/logger';
 
-import { fetchFromSubgraphRequest } from "./subgraphFetch";
+import { fetchFromSubgraphRequest } from './subgraphFetch';
 
-export type IWellHourlySnapshot = NonNullable<
-  GetWellChartDataQuery["well"]
->["hourlySnapshots"][number];
+export type IWellHourlySnapshot = NonNullable<GetWellChartDataQuery['well']>['hourlySnapshots'][number];
 
-const loadFromGraph = async (
-  sdk: BeanstalkSDK,
-  well: Well,
-  timePeriod: string
-): Promise<IWellHourlySnapshot[]> => {
+const loadFromGraph = async (sdk: BeanstalkSDK, well: Well, timePeriod: string): Promise<IWellHourlySnapshot[]> => {
   if (!well) return [];
 
-  Log.module("wellChartData").debug("Loading chart data from Graph");
+  Log.module('wellChartData').debug('Loading chart data from Graph');
 
-  const HISTORY_DAYS =
-    timePeriod === "day" ? 1 : timePeriod === "month" ? 30 : timePeriod === "week" ? 7 : 0;
+  const HISTORY_DAYS = timePeriod === 'day' ? 1 : timePeriod === 'month' ? 30 : timePeriod === 'week' ? 7 : 0;
   const HISTORY_DAYS_AGO_BLOCK_TIMESTAMP =
-    HISTORY_DAYS === 0
-      ? 0
-      : Math.floor(new Date(Date.now() - HISTORY_DAYS * 24 * 60 * 60 * 1000).getTime() / 1000);
+    HISTORY_DAYS === 0 ? 0 : Math.floor(new Date(Date.now() - HISTORY_DAYS * 24 * 60 * 60 * 1000).getTime() / 1000);
 
   let results: IWellHourlySnapshot[] = [];
   let goToNextPage: boolean = false;
@@ -62,10 +53,6 @@ const loadFromGraph = async (
   return results;
 };
 
-export const loadChartData = async (
-  sdk: BeanstalkSDK,
-  well: Well,
-  timePeriod: string
-): Promise<any> => {
+export const loadChartData = async (sdk: BeanstalkSDK, well: Well, timePeriod: string): Promise<any> => {
   return loadFromGraph(sdk, well, timePeriod);
 };

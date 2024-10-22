@@ -12,11 +12,9 @@
     }
   },
   "extends": [
+    "plugin:eslint/recommended",
     "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended",
-    // "plugin:@typescript-eslint/recommended",
-    // "plugin:import/errors",
-    // "plugin:import/warnings",
+    "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript"
   ],
   "parser": "@typescript-eslint/parser",
@@ -46,14 +44,7 @@
     "import/order": [
       "warn",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          ["parent", "sibling", "index"],
-          "object",
-          "type"
-        ],
+        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "object", "type"],
         "pathGroups": [
           {
             "pattern": "react",
@@ -70,7 +61,7 @@
             "group": "internal"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react", "@beanstalk/sdk*"],
+        "pathGroupsExcludedImportTypes": ["react", "path"],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true

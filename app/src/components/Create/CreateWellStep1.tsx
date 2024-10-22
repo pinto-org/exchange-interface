@@ -1,24 +1,24 @@
-import React from "react";
+import React from 'react';
 
-import { FormProvider, useForm } from "react-hook-form";
-import styled from "styled-components";
+import { FormProvider, useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
-import { Flex } from "src/components/Layout";
-import { Text } from "src/components/Typography";
-import { theme } from "src/utils/ui/theme";
+import { Flex } from 'src/components/Layout';
+import { Text } from 'src/components/Typography';
+import { theme } from 'src/utils/ui/theme';
 
-import { CreateWellStepProps, useCreateWell } from "./CreateWellProvider";
-import { ComponentInputWithCustom } from "./shared/ComponentInputWithCustom";
-import { CreateWellButtonRow } from "./shared/CreateWellButtonRow";
-import { StyledForm } from "../Form";
+import { CreateWellStepProps, useCreateWell } from './CreateWellProvider';
+import { ComponentInputWithCustom } from './shared/ComponentInputWithCustom';
+import { CreateWellButtonRow } from './shared/CreateWellButtonRow';
+import { StyledForm } from '../Form';
 
-type FormValues = CreateWellStepProps["step1"];
+type FormValues = CreateWellStepProps['step1'];
 
 const WellImplementationForm = () => {
   const { wellImplementation, setStep1 } = useCreateWell();
 
   const methods = useForm<FormValues>({
-    defaultValues: { wellImplementation: wellImplementation ?? "" }
+    defaultValues: { wellImplementation: wellImplementation ?? '' }
   });
 
   const handleSubmit = async (values: FormValues) => {
@@ -30,13 +30,13 @@ const WellImplementationForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <StyledForm onSubmit={methods.handleSubmit(handleSubmit)} $width="100%">
+      <StyledForm onSubmit={methods.handleSubmit(handleSubmit)} $width='100%'>
         <Flex $gap={2}>
           <ComponentInputWithCustom
-            componentType="wellImplementations"
-            path="wellImplementation"
-            toggleMessage="Use a custom Well Implementation instead"
-            emptyValue=""
+            componentType='wellImplementations'
+            path='wellImplementation'
+            toggleMessage='Use a custom Well Implementation instead'
+            emptyValue=''
           />
           <CreateWellButtonRow />
         </Flex>
@@ -50,24 +50,21 @@ const WellImplementationForm = () => {
 export const CreateWellStep1 = () => {
   return (
     <Flex $gap={3} $fullWidth>
-      <Text $variant="h2">Create a Well - Choose a Well Implementation</Text>
+      <Text $variant='h2'>Create a Well - Choose a Well Implementation</Text>
       <ContentWrapper>
-        <Flex className="text-section">
-          <Text $color="text.secondary" $lineHeight="l">
+        <Flex className='text-section'>
+          <Text $color='text.secondary' $lineHeight='l'>
             Deploy a Well using Aquifer, a Well factory contract.
           </Text>
-          <Text $color="text.secondary" $lineHeight="l">
-            It is recommended to use the Well.sol Well Implementation, but you&apos;re welcome to
-            use a custom contract.
+          <Text $color='text.secondary' $lineHeight='l'>
+            It is recommended to use the Well.sol Well Implementation, but you&apos;re welcome to use a custom contract.
           </Text>
-          <Text $color="text.secondary" $lineHeight="l">
+          <Text $color='text.secondary' $lineHeight='l'>
             Visit the documentation to learn more about Aquifers and Well Implementations.
           </Text>
         </Flex>
-        <Flex className="form-section">
-          <Text $lineHeight="l">
-            {"Which Well Implementation do you want to use?".toUpperCase()}
-          </Text>
+        <Flex className='form-section'>
+          <Text $lineHeight='l'>{'Which Well Implementation do you want to use?'.toUpperCase()}</Text>
           <WellImplementationForm />
         </Flex>
       </ContentWrapper>
@@ -75,7 +72,7 @@ export const CreateWellStep1 = () => {
   );
 };
 
-const contentMaxWidth = "1048px";
+const contentMaxWidth = '1048px';
 
 const ContentWrapper = styled.div`
   display: flex;

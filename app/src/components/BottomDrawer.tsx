@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import x from "src/assets/images/x.svg";
-import { size } from "src/breakpoints";
-import { FC } from "src/types";
+import x from 'src/assets/images/x.svg';
+import { size } from 'src/breakpoints';
+import { FC } from 'src/types';
 
-import { ImageButton } from "./ImageButton";
-import { BodyXS } from "./Typography";
+import { ImageButton } from './ImageButton';
+import { BodyXS } from './Typography';
 
 interface Composition {
   Header: typeof Header;
@@ -29,18 +29,13 @@ type Props = {
   toggleDrawer?: (isDrawerOpen: boolean) => void;
 };
 
-export const BottomDrawer: FC<Props> & Composition = ({
-  children,
-  showDrawer,
-  headerText,
-  toggleDrawer
-}) => {
+export const BottomDrawer: FC<Props> & Composition = ({ children, showDrawer, headerText, toggleDrawer }) => {
   return (
     <>
-      <Container showDrawer={showDrawer} data-trace="true">
+      <Container showDrawer={showDrawer} data-trace='true'>
         <Header>
           {headerText}
-          <ImageButton src={x} alt="Close drawer" size={10} onClick={() => toggleDrawer!(false)} />
+          <ImageButton src={x} alt='Close drawer' size={10} onClick={() => toggleDrawer!(false)} />
         </Header>
         {children}
       </Container>
@@ -58,8 +53,8 @@ const Background = styled.div<Props>`
   background-color: rgba(0, 0, 0, 0.65);
   z-index: 9995;
   transition: all 0.3s ease-in-out;
-  opacity: ${({ showDrawer }) => (showDrawer ? "1" : "0")};
-  display: ${({ showDrawer }) => (showDrawer ? "flex" : "none")};
+  opacity: ${({ showDrawer }) => (showDrawer ? '1' : '0')};
+  display: ${({ showDrawer }) => (showDrawer ? 'flex' : 'none')};
   @media (min-width: ${size.mobile}) {
     display: none;
   }
@@ -73,7 +68,7 @@ const Container = styled.div<Props>`
   max-height: 80svh;
   left: 0;
   transition: all 0.3s ease-in-out;
-  bottom: ${({ showDrawer }) => (showDrawer ? "0" : "-100%")};
+  bottom: ${({ showDrawer }) => (showDrawer ? '0' : '-100%')};
   outline: 0.5px solid #9ca3af;
   outline-offset: -0.5px;
   z-index: 9996;

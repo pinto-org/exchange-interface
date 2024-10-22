@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { Skeleton } from "./Skeleton";
-import { ArrowButton } from "./Swap/ArrowButton";
+import { Skeleton } from './Skeleton';
+import { ArrowButton } from './Swap/ArrowButton';
 
 type MarginProps = {
   left?: number;
@@ -30,7 +30,7 @@ export function LoadingTemplate(props: FlexProps & { children: React.ReactNode }
 
 LoadingTemplate.Input = () => (
   <LoadingInputItem>
-    {"-"}
+    {'-'}
     <SkeletonRow>
       <Skeleton width={16} height={16} circle />
       <Skeleton width={48} height={24} />
@@ -118,11 +118,11 @@ type FlexProps = {
 const FlexBox = styled.div<FlexProps>`
   display: flex;
   ${(props) => `
-      flex-direction: ${props.row ? "row" : "column"};
+      flex-direction: ${props.row ? 'row' : 'column'};
       gap: ${props.gap || 0}px;
       ${props.alignItems && `align-items: ${props.alignItems};`}
       ${props.justifyContent && `justify-content: ${props.justifyContent};`}
-      ${props.width && `width: ${typeof props.width === "string" ? props.width : `${props.width}px`}`}
+      ${props.width && `width: ${typeof props.width === 'string' ? props.width : `${props.width}px`}`}
   `}
 `;
 
@@ -136,9 +136,9 @@ const Background = styled.div<{
   display: flex;
   background: white;
   ${(props) => `
-    height: ${props.height ? `${props.height}px` : "100%"};
-    width: ${props.width ? `${props.width}px` : "100%"};
-    border-radius: ${props.circle ? "50%" : props.rounded === true ? "4px" : "0px"};
+    height: ${props.height ? `${props.height}px` : '100%'};
+    width: ${props.width ? `${props.width}px` : '100%'};
+    border-radius: ${props.circle ? '50%' : props.rounded === true ? '4px' : '0px'};
     ${getMarginStyles(props)}
   `}
 `;

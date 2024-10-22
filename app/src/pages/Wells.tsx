@@ -1,35 +1,32 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { BeanstalkSDK, TokenValue } from "@beanstalk/sdk";
-import { Well } from "@beanstalk/sdk-wells";
+import { BeanstalkSDK, TokenValue } from '@beanstalk/sdk';
+import { Well } from '@beanstalk/sdk-wells';
 
-import { mediaQuery, size } from "src/breakpoints";
-import { Error } from "src/components/Error";
-import { Item } from "src/components/Layout";
-import { Row as TabRow } from "src/components/Layout";
-import { Page } from "src/components/Page";
-import { Title } from "src/components/PageComponents/Title";
-import { TabButton } from "src/components/TabButton";
-import { Row, TBody, THead, Table, Th } from "src/components/Table";
-import {
-  MyWellPositionLoadingRow,
-  MyWellPositionRow
-} from "src/components/Well/Table/MyWellPositionRow";
-import { WellDetailLoadingRow, WellDetailRow } from "src/components/Well/Table/WellDetailRow";
-import { useChainErrExists } from "src/state/atoms/chain.atoms";
-import { useLPPositionSummary } from "src/tokens/useLPPositionSummary";
-import { BasinAPIResponse } from "src/types";
-import { useTokenPrices } from "src/utils/price/useTokenPrices";
-import useSdk from "src/utils/sdk/useSdk";
-import { theme } from "src/utils/ui/theme";
-import { useLagLoading } from "src/utils/ui/useLagLoading";
-import useBasinStats from "src/wells/useBasinStats";
-import { useBeanstalkSiloAPYs } from "src/wells/useBeanstalkSiloAPYs";
-import { useWellLPTokenPrice } from "src/wells/useWellLPTokenPrice";
-import { useWells } from "src/wells/useWells";
-import { useWellFunctionNames } from "src/wells/wellFunction/useWellFunctionNames";
+import { mediaQuery, size } from 'src/breakpoints';
+import { Error } from 'src/components/Error';
+import { Item } from 'src/components/Layout';
+import { Row as TabRow } from 'src/components/Layout';
+import { Page } from 'src/components/Page';
+import { Title } from 'src/components/PageComponents/Title';
+import { TabButton } from 'src/components/TabButton';
+import { Row, TBody, THead, Table, Th } from 'src/components/Table';
+import { MyWellPositionLoadingRow, MyWellPositionRow } from 'src/components/Well/Table/MyWellPositionRow';
+import { WellDetailLoadingRow, WellDetailRow } from 'src/components/Well/Table/WellDetailRow';
+import { useChainErrExists } from 'src/state/atoms/chain.atoms';
+import { useLPPositionSummary } from 'src/tokens/useLPPositionSummary';
+import { BasinAPIResponse } from 'src/types';
+import { useTokenPrices } from 'src/utils/price/useTokenPrices';
+import useSdk from 'src/utils/sdk/useSdk';
+import { theme } from 'src/utils/ui/theme';
+import { useLagLoading } from 'src/utils/ui/useLagLoading';
+import useBasinStats from 'src/wells/useBasinStats';
+import { useBeanstalkSiloAPYs } from 'src/wells/useBeanstalkSiloAPYs';
+import { useWellLPTokenPrice } from 'src/wells/useWellLPTokenPrice';
+import { useWells } from 'src/wells/useWells';
+import { useWellFunctionNames } from 'src/wells/wellFunction/useWellFunctionNames';
 
 export const Wells = () => {
   const { data: wells, isLoading, error } = useWells();
@@ -49,12 +46,7 @@ export const Wells = () => {
   const tableData = makeTableData(sdk, wells, wellStats, tokenPrices);
 
   const loading = useLagLoading(
-    isLoading ||
-      apysLoading ||
-      positionsLoading ||
-      lpTokenPricesLoading ||
-      tokenPricesLoading ||
-      wellNamesLoading
+    isLoading || apysLoading || positionsLoading || lpTokenPricesLoading || tokenPricesLoading || wellNamesLoading
   );
 
   if (error && !chainErrExists) {
@@ -63,8 +55,8 @@ export const Wells = () => {
 
   return (
     <Page>
-      <Title fontWeight={"600"} title="WELLS" largeOnMobile />
-      <StyledRow gap={24} mobileGap={"0px"}>
+      <Title fontWeight={'600'} title='WELLS' largeOnMobile />
+      <StyledRow gap={24} mobileGap={'0px'}>
         <Item stretch>
           <TabButton onClick={() => showTab(0)} active={tab === 0} stretch bold justify hover>
             <span>View Wells</span>
@@ -82,11 +74,11 @@ export const Wells = () => {
             <TableRow>
               <DesktopHeader>Well</DesktopHeader>
               <DesktopHeader>Well Function</DesktopHeader>
-              <DesktopHeader align="right">Yield</DesktopHeader>
-              <DesktopHeader align="right">Total Liquidity</DesktopHeader>
-              <DesktopHeader align="right">Price</DesktopHeader>
-              <DesktopHeader align="right">24H Volume</DesktopHeader>
-              <DesktopHeader align="right">Reserves</DesktopHeader>
+              <DesktopHeader align='right'>Yield</DesktopHeader>
+              <DesktopHeader align='right'>Total Liquidity</DesktopHeader>
+              <DesktopHeader align='right'>Price</DesktopHeader>
+              <DesktopHeader align='right'>24H Volume</DesktopHeader>
+              <DesktopHeader align='right'>Reserves</DesktopHeader>
               <MobileHeader>All Wells</MobileHeader>
             </TableRow>
           </THead>
@@ -94,10 +86,10 @@ export const Wells = () => {
           <THead>
             <TableRow>
               <DesktopHeader>My Positions</DesktopHeader>
-              <DesktopHeader align="right">My Liquidity</DesktopHeader>
-              <DesktopHeader align="right">USD Value</DesktopHeader>
+              <DesktopHeader align='right'>My Liquidity</DesktopHeader>
+              <DesktopHeader align='right'>USD Value</DesktopHeader>
               <MobileHeader>My Liquidity Positions</MobileHeader>
-              <MobileHeader align="right">USD Value</MobileHeader>
+              <MobileHeader align='right'>USD Value</MobileHeader>
             </TableRow>
           </THead>
         )}
@@ -128,8 +120,7 @@ export const Wells = () => {
               ) : (
                 tableData?.map(({ well, baseTokenPrice, liquidityUSD, targetVolume }, index) => {
                   if (tab === 0) {
-                    const priceFnName =
-                      well.wellFunction?.name || wellFnNames?.[well.wellFunction?.address || ""];
+                    const priceFnName = well.wellFunction?.name || wellFnNames?.[well.wellFunction?.address || ''];
 
                     return (
                       <WellDetailRow
@@ -201,9 +192,7 @@ const makeTableData = (
         liquidityUSD = reserve1USD.add(reserve2USD);
       }
 
-      const baseVolume = token2.fromHuman(
-        statsByPoolId[well.address.toLowerCase()]?.target_volume || 0
-      );
+      const baseVolume = token2.fromHuman(statsByPoolId[well.address.toLowerCase()]?.target_volume || 0);
       targetVolume = baseVolume.mul(targetPrice);
 
       const bothPricesAvailable = !!(reserve1USD && reserve2USD);

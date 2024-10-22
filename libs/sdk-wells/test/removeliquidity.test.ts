@@ -90,12 +90,7 @@ describe('Remove Liquidity', () => {
       const quote = await testWell.removeLiquidityOneTokenQuote(lpAmountIn, wellsSdk.tokens.PINTO);
 
       // Remove liquidity
-      const tx = await testWell.removeLiquidityOneToken(
-        lpAmountIn,
-        wellsSdk.tokens.PINTO,
-        quote,
-        account
-      );
+      const tx = await testWell.removeLiquidityOneToken(lpAmountIn, wellsSdk.tokens.PINTO, quote, account);
 
       // Check the LP token balance
       const finalLpBalance = await wellLpToken.getBalance(account);

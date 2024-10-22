@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react';
 
-import { FormProvider, useForm } from "react-hook-form";
-import styled from "styled-components";
+import { FormProvider, useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
-import { Divider, Flex } from "src/components/Layout";
-import { Text } from "src/components/Typography";
-import useSdk from "src/utils/sdk/useSdk";
-import { theme } from "src/utils/ui/theme";
-import { useWells } from "src/wells/useWells";
+import { Divider, Flex } from 'src/components/Layout';
+import { Text } from 'src/components/Typography';
+import useSdk from 'src/utils/sdk/useSdk';
+import { theme } from 'src/utils/ui/theme';
+import { useWells } from 'src/wells/useWells';
 
-import { CreateWellStepProps, useCreateWell } from "./CreateWellProvider";
-import { CreateWellButtonRow } from "./shared/CreateWellButtonRow";
-import { CreateWellFormProgress } from "./shared/CreateWellFormProgress";
-import { StyledForm, TextInputField } from "../Form";
+import { CreateWellStepProps, useCreateWell } from './CreateWellProvider';
+import { CreateWellButtonRow } from './shared/CreateWellButtonRow';
+import { CreateWellFormProgress } from './shared/CreateWellFormProgress';
+import { StyledForm, TextInputField } from '../Form';
 
-export type WellDetailsFormValues = CreateWellStepProps["step3"];
+export type WellDetailsFormValues = CreateWellStepProps['step3'];
 
 // If the user goes back to step 2 changes the well function & returns to this step,
 // the default values will not be updated.
@@ -30,19 +30,14 @@ const useWellDetailsDefaultValues = () => {
   const token2 = wellTokens?.token2?.symbol;
 
   const upgradeable = wellImplementation?.toLowerCase() === wellDotSolL2.toLowerCase();
-  const upgradeableNameFragment = upgradeable ? " Upgradeable " : "";
-  const upgradeableSymbolFragment = upgradeable ? "U-" : "";
+  const upgradeableNameFragment = upgradeable ? ' Upgradeable ' : '';
+  const upgradeableSymbolFragment = upgradeable ? 'U-' : '';
 
   const defaultName =
-    wellName && token1 && token2
-      ? `${token1}:${token2} ${wellName}${upgradeableNameFragment}Well`
-      : undefined;
+    wellName && token1 && token2 ? `${token1}:${token2} ${wellName}${upgradeableNameFragment}Well` : undefined;
 
   const defaultSymbol =
-    wellSymbol &&
-    token1 &&
-    token2 &&
-    `${upgradeableSymbolFragment}${token1}${token2}${wellSymbol}w`;
+    wellSymbol && token1 && token2 && `${upgradeableSymbolFragment}${token1}${token2}${wellSymbol}w`;
 
   return {
     name: defaultName,
@@ -57,8 +52,8 @@ const NameAndSymbolForm = () => {
 
   const methods = useForm<WellDetailsFormValues>({
     defaultValues: {
-      name: wellDetails?.name || defaults?.name || "",
-      symbol: wellDetails?.symbol || defaults?.symbol || ""
+      name: wellDetails?.name || defaults?.name || '',
+      symbol: wellDetails?.symbol || defaults?.symbol || ''
     }
   });
 
@@ -75,51 +70,51 @@ const NameAndSymbolForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <StyledForm onSubmit={methods.handleSubmit(onSubmit)} $width="100%">
+      <StyledForm onSubmit={methods.handleSubmit(onSubmit)} $width='100%'>
         <FormInnerWrapper>
           <CreateWellFormProgress />
           <Flex $fullWidth $gap={4}>
             <div>
-              <Text $variant="h3" $mb={2}>
+              <Text $variant='h3' $mb={2}>
                 Name and Symbol
               </Text>
-              <Flex className="component-inputs-wrapper">
-                <Flex className="input-wrapper">
-                  <Text $variant="xs" $color="text.secondary" $mb={1}>
+              <Flex className='component-inputs-wrapper'>
+                <Flex className='input-wrapper'>
+                  <Text $variant='xs' $color='text.secondary' $mb={1}>
                     Well Token Name
                   </Text>
                   <TextInputField
-                    {...methods.register("name", {
+                    {...methods.register('name', {
                       required: {
                         value: true,
-                        message: "Token Name is required"
+                        message: 'Token Name is required'
                       },
                       validate: (value) => {
                         const duplicate = (wells || []).some(
                           (well) => well.name?.toLowerCase() === value.toLowerCase()
                         );
 
-                        return !duplicate || "Token name taken";
+                        return !duplicate || 'Token name taken';
                       }
                     })}
                     error={methods.formState.errors.name?.message as string | undefined}
                   />
                 </Flex>
-                <Flex className="input-wrapper">
-                  <Text $variant="xs" $color="text.secondary" $mb={1}>
+                <Flex className='input-wrapper'>
+                  <Text $variant='xs' $color='text.secondary' $mb={1}>
                     Well Token Symbol
                   </Text>
                   <TextInputField
-                    {...methods.register("symbol", {
+                    {...methods.register('symbol', {
                       required: {
                         value: true,
-                        message: "Token Symbol is required"
+                        message: 'Token Symbol is required'
                       },
                       validate: (value) => {
                         const duplicate = (wells || []).some(
                           (well) => well?.lpToken?.symbol.toLowerCase() === value.toLowerCase()
                         );
-                        return !duplicate || "Token symbol taken";
+                        return !duplicate || 'Token symbol taken';
                       }
                     })}
                     error={methods.formState.errors.symbol?.message as string | undefined}
@@ -140,7 +135,7 @@ export const CreateWellStep3 = () => {
   return (
     <Flex $gap={3} $fullWidth>
       <div>
-        <Text $variant="h2">Well Name and Symbol</Text>
+        <Text $variant='h2'>Well Name and Symbol</Text>
         <Subtitle>Give your Well LP token a name and a symbol.</Subtitle>
       </div>
       <NameAndSymbolForm />

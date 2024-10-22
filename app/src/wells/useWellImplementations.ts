@@ -1,27 +1,27 @@
-import { multicall } from "@wagmi/core";
+import { multicall } from '@wagmi/core';
 
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import { config } from "src/utils/wagmi/config";
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import { config } from 'src/utils/wagmi/config';
 
-import { useAquifer } from "./aquifer/aquifer";
-import { useWells } from "./useWells";
+import { useAquifer } from './aquifer/aquifer';
+import { useWells } from './useWells';
 
 const aquiferAbiSnippet = [
   {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "wellImplementation",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function"
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'wellImplementation',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function'
   }
 ] as const;
 
 const getCallObjects = (aquiferAddress: string, addresses: string[]) => {
   return addresses.map((address) => ({
-    address: aquiferAddress as "0x{string}",
+    address: aquiferAddress as '0x{string}',
     abi: aquiferAbiSnippet,
-    functionName: "wellImplementation",
+    functionName: 'wellImplementation',
     args: [address]
   }));
 };

@@ -6,8 +6,8 @@ class Logger {
   name: string;
 
   constructor(name?: string) {
-    this.name = name ?? "";
-    const savedConfig = localStorage.getItem("debugConfig");
+    this.name = name ?? '';
+    const savedConfig = localStorage.getItem('debugConfig');
     if (savedConfig) Logger.debugConfig = JSON.parse(savedConfig);
 
     // @ts-ignore
@@ -15,24 +15,24 @@ class Logger {
       // @ts-ignore
       globalThis.debug = (param?: string) => {
         if (param !== undefined) {
-          if (typeof param === "boolean") {
+          if (typeof param === 'boolean') {
             for (const [key, _] of Object.entries(Logger.debugConfig)) {
               Logger.debugConfig[key] = param;
             }
           } else {
             Logger.debugConfig[param] = !Logger.debugConfig[param];
           }
-          localStorage.setItem("debugConfig", JSON.stringify(Logger.debugConfig));
+          localStorage.setItem('debugConfig', JSON.stringify(Logger.debugConfig));
         }
-        this.log("%cDebug Config: ", "color: green");
+        this.log('%cDebug Config: ', 'color: green');
         for (const [key, val] of Object.entries(Logger.debugConfig)) {
-          this.log(`%c\t${key}: `, "color: green", val);
+          this.log(`%c\t${key}: `, 'color: green', val);
         }
       };
   }
 
   prefix() {
-    return this.name ? `[${this.name.toLowerCase()}]: ` : "";
+    return this.name ? `[${this.name.toLowerCase()}]: ` : '';
   }
 
   log(...args: any[]) {
@@ -48,7 +48,7 @@ class Logger {
   }
 
   debug(...args: any[]) {
-    const m = this.name || "DEFAULT";
+    const m = this.name || 'DEFAULT';
     if (!!Logger.debugConfig[m]) {
       this.prefix() ? console.debug(this.prefix(), ...args) : console.debug(...args);
     }

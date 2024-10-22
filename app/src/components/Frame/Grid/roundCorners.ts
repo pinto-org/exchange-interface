@@ -67,7 +67,7 @@ export function roundPathCorners(pathString, radius, useFractionalRadius) {
 
   // Split apart the path, handing concatonated letters and numbers
   var pathParts = pathString.split(/[,\s]/).reduce(function (parts, part) {
-    var match = part.match("([a-zA-Z])(.+)");
+    var match = part.match('([a-zA-Z])(.+)');
     if (match) {
       parts.push(match[1]);
       parts.push(match[2]);
@@ -97,8 +97,8 @@ export function roundPathCorners(pathString, radius, useFractionalRadius) {
 
     // Handle the close path case with a "virtual" closing line
     var virtualCloseLine = null;
-    if (commands[commands.length - 1][0] == "Z" && commands[0].length > 2) {
-      virtualCloseLine = ["L", startPoint.x, startPoint.y];
+    if (commands[commands.length - 1][0] == 'Z' && commands[0].length > 2) {
+      virtualCloseLine = ['L', startPoint.x, startPoint.y];
       commands[commands.length - 1] = virtualCloseLine;
     }
 
@@ -114,7 +114,7 @@ export function roundPathCorners(pathString, radius, useFractionalRadius) {
       var nextCmd = curCmd == virtualCloseLine ? commands[1] : commands[cmdIndex + 1];
 
       // Nasty logic to decide if this path is a candidite.
-      if (nextCmd && prevCmd && prevCmd.length > 2 && curCmd[0] == "L" && nextCmd.length > 2 && nextCmd[0] == "L") {
+      if (nextCmd && prevCmd && prevCmd.length > 2 && curCmd[0] == 'L' && nextCmd.length > 2 && nextCmd[0] == 'L') {
         // Calc the points we're dealing with
         var prevPoint = pointForCommand(prevCmd);
         var curPoint = pointForCommand(curCmd);
@@ -142,7 +142,7 @@ export function roundPathCorners(pathString, radius, useFractionalRadius) {
         var endControl = moveTowardsFractional(curPoint, curveEnd, 0.5);
 
         // Create the curve
-        var curveCmd = ["C", startControl.x, startControl.y, endControl.x, endControl.y, curveEnd.x, curveEnd.y];
+        var curveCmd = ['C', startControl.x, startControl.y, endControl.x, endControl.y, curveEnd.x, curveEnd.y];
         // Save the original point for fractional calculations
         curveCmd.origPoint = curPoint;
         resultCommands.push(curveCmd);
@@ -155,7 +155,7 @@ export function roundPathCorners(pathString, radius, useFractionalRadius) {
     // Fix up the starting point and restore the close path if the path was orignally closed
     if (virtualCloseLine) {
       var newStartPoint = pointForCommand(resultCommands[resultCommands.length - 1]);
-      resultCommands.push(["Z"]);
+      resultCommands.push(['Z']);
       adjustCommand(resultCommands[0], newStartPoint);
     }
   } else {
@@ -163,6 +163,6 @@ export function roundPathCorners(pathString, radius, useFractionalRadius) {
   }
 
   return resultCommands.reduce(function (str, c) {
-    return str + c.join(" ") + " ";
-  }, "");
+    return str + c.join(' ') + ' ';
+  }, '');
 }

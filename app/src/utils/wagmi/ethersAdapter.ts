@@ -1,9 +1,9 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { providers } from "ethers";
-import { Config, useClient, useConnectorClient } from "wagmi";
+import { providers } from 'ethers';
+import { Config, useClient, useConnectorClient } from 'wagmi';
 
-import type { Account, Chain, Client, Transport } from "viem";
+import type { Account, Chain, Client, Transport } from 'viem';
 
 function clientToProvider(client: Client<Transport, Chain>) {
   const { chain, transport } = client;
@@ -12,7 +12,7 @@ function clientToProvider(client: Client<Transport, Chain>) {
     name: chain.name,
     ensAddress: chain.contracts?.ensRegistry?.address
   };
-  if (transport.type === "fallback")
+  if (transport.type === 'fallback')
     return new providers.FallbackProvider(
       (transport.transports as ReturnType<Transport>[]).map(
         ({ value }) => new providers.JsonRpcProvider(value?.url, network)
@@ -38,7 +38,7 @@ function clientToSigner(client: Client<Transport, Chain, Account>) {
 export function useEthersProvider({ chainId }: { chainId?: number | undefined } = {}) {
   const client = useClient<Config>({ chainId });
   if (!client) {
-    throw new Error("No client to create Ethers Adapter");
+    throw new Error('No client to create Ethers Adapter');
   }
 
   return useMemo(

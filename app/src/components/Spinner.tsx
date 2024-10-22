@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
-import { FC } from "src/types";
+import { FC } from 'src/types';
 
 type Props = {
   size: number;

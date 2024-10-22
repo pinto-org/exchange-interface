@@ -1,8 +1,8 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { Pump } from "@beanstalk/sdk-wells";
+import { Pump } from '@beanstalk/sdk-wells';
 
-import { useWells } from "src/wells/useWells";
+import { useWells } from 'src/wells/useWells';
 
 export const usePumps = () => {
   const { data: wells } = useWells();

@@ -1,34 +1,34 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { FormProvider, useForm, useFormContext, useWatch } from "react-hook-form";
-import styled from "styled-components";
+import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
+import styled from 'styled-components';
 
-import { ERC20Token } from "@beanstalk/sdk";
+import { ERC20Token } from '@beanstalk/sdk';
 
-import { images } from "src/assets/images/tokens";
-import { Dropdown } from "src/components/Dropdown";
-import { StyledForm, TextInputField } from "src/components/Form";
-import { XIcon } from "src/components/Icons";
-import { Divider, Flex, FlexCard } from "src/components/Layout";
-import { Text } from "src/components/Typography";
-import { useERC20TokenWithAddress } from "src/tokens/useERC20Token";
-import { getIsValidEthereumAddress } from "src/utils/addresses";
-import useSdk from "src/utils/sdk/useSdk";
-import { theme } from "src/utils/ui/theme";
-import { useBoolean } from "src/utils/ui/useBoolean";
-import BoreWellUtils from "src/wells/boreWell";
-import { useValidateWellFunction } from "src/wells/wellFunction/useValidateWellFunction";
+import { images } from 'src/assets/images/tokens';
+import { Dropdown } from 'src/components/Dropdown';
+import { StyledForm, TextInputField } from 'src/components/Form';
+import { XIcon } from 'src/components/Icons';
+import { Divider, Flex, FlexCard } from 'src/components/Layout';
+import { Text } from 'src/components/Typography';
+import { useERC20TokenWithAddress } from 'src/tokens/useERC20Token';
+import { getIsValidEthereumAddress } from 'src/utils/addresses';
+import useSdk from 'src/utils/sdk/useSdk';
+import { theme } from 'src/utils/ui/theme';
+import { useBoolean } from 'src/utils/ui/useBoolean';
+import BoreWellUtils from 'src/wells/boreWell';
+import { useValidateWellFunction } from 'src/wells/wellFunction/useValidateWellFunction';
 
-import { CreateWellStepProps, useCreateWell } from "./CreateWellProvider";
-import { ComponentInputWithCustom } from "./shared/ComponentInputWithCustom";
-import { CreateWellButtonRow } from "./shared/CreateWellButtonRow";
-import { CreateWellFormProgress } from "./shared/CreateWellFormProgress";
+import { CreateWellStepProps, useCreateWell } from './CreateWellProvider';
+import { ComponentInputWithCustom } from './shared/ComponentInputWithCustom';
+import { CreateWellButtonRow } from './shared/CreateWellButtonRow';
+import { CreateWellFormProgress } from './shared/CreateWellFormProgress';
 
 const additionalOptions = [
   {
-    value: "none",
-    label: "None",
-    subLabel: "No Pump"
+    value: 'none',
+    label: 'None',
+    subLabel: 'No Pump'
   }
 ];
 
@@ -37,24 +37,17 @@ type TokenFormValues = {
   token2: string;
 };
 
-type OmitWellTokens = Omit<CreateWellStepProps["step2"], "wellTokens">;
+type OmitWellTokens = Omit<CreateWellStepProps['step2'], 'wellTokens'>;
 
 export type FunctionTokenPumpFormValues = OmitWellTokens & TokenFormValues;
 
-const tokenFormKeys = ["token1", "token2"] as const;
+const tokenFormKeys = ['token1', 'token2'] as const;
 
-const optionalKeys = ["wellFunctionData", "pumpData"] as const;
+const optionalKeys = ['wellFunctionData', 'pumpData'] as const;
 
 const FunctionTokensPumpForm = () => {
-  const {
-    wellTokens,
-    wellFunctionAddress,
-    pumpAddress,
-    setStep2,
-    wellFunctionData,
-    pumpData,
-    wellFunction
-  } = useCreateWell();
+  const { wellTokens, wellFunctionAddress, pumpAddress, setStep2, wellFunctionData, pumpData, wellFunction } =
+    useCreateWell();
   const sdk = useSdk();
 
   const [validateWellFunction] = useValidateWellFunction();
@@ -64,12 +57,12 @@ const FunctionTokensPumpForm = () => {
 
   const methods = useForm<FunctionTokenPumpFormValues>({
     defaultValues: {
-      wellFunctionAddress: wellFunctionAddress || "",
-      wellFunctionData: wellFunctionData || "",
-      token1: wellTokens?.token1?.address || "",
-      token2: wellTokens?.token2?.address || "",
-      pumpAddress: pumpAddress || "",
-      pumpData: pumpData || ""
+      wellFunctionAddress: wellFunctionAddress || '',
+      wellFunctionData: wellFunctionData || '',
+      token1: wellTokens?.token1?.address || '',
+      token2: wellTokens?.token2?.address || '',
+      pumpAddress: pumpAddress || '',
+      pumpData: pumpData || ''
     }
   });
 
@@ -91,8 +84,7 @@ const FunctionTokensPumpForm = () => {
     const [tk1, tk2] = BoreWellUtils.prepareTokenOrderForBoreWell(sdk, [token1, token2]);
 
     const wellFunctionValidated =
-      wellFunction &&
-      values.wellFunctionAddress.toLowerCase() === wellFunction.address.toLowerCase();
+      wellFunction && values.wellFunctionAddress.toLowerCase() === wellFunction.address.toLowerCase();
 
     let validWellFunction = wellFunctionValidated ? wellFunction : undefined;
 
@@ -103,8 +95,8 @@ const FunctionTokensPumpForm = () => {
       });
 
       if (!validWellFunction) {
-        methods.setError("wellFunctionAddress", { message: "Invalid Well Function or Data" });
-        methods.setError("wellFunctionData", { message: "Invalid Well Function or Data" });
+        methods.setError('wellFunctionAddress', { message: 'Invalid Well Function or Data' });
+        methods.setError('wellFunctionData', { message: 'Invalid Well Function or Data' });
         return;
       }
     }
@@ -124,7 +116,7 @@ const FunctionTokensPumpForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <StyledForm onSubmit={methods.handleSubmit(handleSubmit)} $width="100%">
+      <StyledForm onSubmit={methods.handleSubmit(handleSubmit)} $width='100%'>
         <FormInnerWrapper>
           <CreateWellFormProgress />
           <Flex $fullWidth $gap={4}>
@@ -132,19 +124,19 @@ const FunctionTokensPumpForm = () => {
              * Well Function Form Section
              */}
             <SectionWrapper>
-              <Flex $gap={2} className="description">
-                <Text $variant="h3">Well Functions</Text>
-                <Text $variant="xs" $color="text.secondary">
+              <Flex $gap={2} className='description'>
+                <Text $variant='h3'>Well Functions</Text>
+                <Text $variant='xs' $color='text.secondary'>
                   Choose a Well Function to determine how the tokens in the Well get priced.
                 </Text>
               </Flex>
-              <Flex className="form-section" $gap={2} $fullWidth>
+              <Flex className='form-section' $gap={2} $fullWidth>
                 <ComponentInputWithCustom<FunctionTokenPumpFormValues>
-                  toggleMessage="Use a custom Well Implementation instead"
-                  path="wellFunctionAddress"
-                  dataPath="wellFunctionData"
-                  componentType="wellFunctions"
-                  emptyValue=""
+                  toggleMessage='Use a custom Well Implementation instead'
+                  path='wellFunctionAddress'
+                  dataPath='wellFunctionData'
+                  componentType='wellFunctions'
+                  emptyValue=''
                   toggleOpen={!!wellFunctionData}
                 />
               </Flex>
@@ -154,23 +146,23 @@ const FunctionTokensPumpForm = () => {
              * Token Select Section
              */}
             <Flex $gap={2} $fullWidth>
-              <Text $variant="h3">Tokens</Text>
+              <Text $variant='h3'>Tokens</Text>
               <TokenSelectWrapper>
                 {tokenFormKeys.map((path) => {
-                  const setToken = path === "token1" ? setToken1 : setToken2;
-                  const typeText = path === "token1" ? "Token 1 Type" : "Token 2 Type";
+                  const setToken = path === 'token1' ? setToken1 : setToken2;
+                  const typeText = path === 'token1' ? 'Token 1 Type' : 'Token 2 Type';
                   return (
-                    <div className="input-wrapper" key={`set-token-${path}`}>
+                    <div className='input-wrapper' key={`set-token-${path}`}>
                       <Flex>
-                        <Text $color="text.secondary" $variant="xs" $mb={1}>
+                        <Text $color='text.secondary' $variant='xs' $mb={1}>
                           {typeText}
                         </Text>
-                        <FlexCard $p={1.5} $alignItems="center">
-                          <Text $variant="button-link">ERC-20</Text>
+                        <FlexCard $p={1.5} $alignItems='center'>
+                          <Text $variant='button-link'>ERC-20</Text>
                         </FlexCard>
                       </Flex>
                       <Flex>
-                        <Text $color="text.secondary" $variant="xs" $mb={1}>
+                        <Text $color='text.secondary' $variant='xs' $mb={1}>
                           Specify token
                         </Text>
                         <TokenAddressInputWithSearch path={path} setToken={setToken} />
@@ -185,17 +177,17 @@ const FunctionTokensPumpForm = () => {
              * Pump Select Section
              */}
             <SectionWrapper>
-              <Flex $gap={2} className="description" $justifyContent="flex-start">
-                <Text $variant="h3">Pumps</Text>
-                <Text $variant="xs">Choose Pump(s) to set up a price feed from your Well.</Text>
+              <Flex $gap={2} className='description' $justifyContent='flex-start'>
+                <Text $variant='h3'>Pumps</Text>
+                <Text $variant='xs'>Choose Pump(s) to set up a price feed from your Well.</Text>
               </Flex>
-              <Flex className="form-section" $gap={2} $fullWidth>
+              <Flex className='form-section' $gap={2} $fullWidth>
                 <ComponentInputWithCustom<FunctionTokenPumpFormValues>
-                  componentType="pumps"
-                  path="pumpAddress"
-                  dataPath="pumpData"
-                  toggleMessage="Use a custom Pump"
-                  emptyValue=""
+                  componentType='pumps'
+                  path='pumpAddress'
+                  dataPath='pumpData'
+                  toggleMessage='Use a custom Pump'
+                  emptyValue=''
                   additional={additionalOptions}
                   toggleOpen={!!pumpData}
                 />
@@ -204,11 +196,7 @@ const FunctionTokensPumpForm = () => {
             {/*
              * Actions
              */}
-            <CreateWellButtonRow
-              onGoBack={handleSave}
-              disabled={!token1 || !token2}
-              optionalKeys={optionalKeys}
-            />
+            <CreateWellButtonRow onGoBack={handleSave} disabled={!token1 || !token2} optionalKeys={optionalKeys} />
           </Flex>
         </FormInnerWrapper>
       </StyledForm>
@@ -222,7 +210,7 @@ export const CreateWellStep2 = () => {
   return (
     <Flex $gap={3} $fullWidth>
       <div>
-        <Text $variant="h2">Create a Well - Choose a Well Function and Pump</Text>
+        <Text $variant='h2'>Create a Well - Choose a Well Function and Pump</Text>
         <Subtitle>Select the components to use in your Well.</Subtitle>
       </div>
       <FunctionTokensPumpForm />
@@ -232,14 +220,14 @@ export const CreateWellStep2 = () => {
 
 // ---------- STYLES & COMPONENTS ----------
 
-const uniqueTokensRequiredErrMessage = "Unique tokens required";
+const uniqueTokensRequiredErrMessage = 'Unique tokens required';
 
 type TokenAddressInputWithSearchProps = {
-  path: "token1" | "token2";
+  path: 'token1' | 'token2';
   setToken: React.Dispatch<React.SetStateAction<ERC20Token | undefined>>;
 };
 const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSearchProps) => {
-  const counterPath = path === "token1" ? "token2" : "token1";
+  const counterPath = path === 'token1' ? 'token2' : 'token1';
   const sdk = useSdk();
   const [open, { set: setOpen }] = useBoolean();
 
@@ -260,9 +248,7 @@ const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSe
   const formErrMessage = formError?.message;
   const counterFormErrMessage = counterFormError?.message;
 
-  const tokenAndFormValueMatch = Boolean(
-    token && token.address.toLowerCase() === value.toLowerCase()
-  );
+  const tokenAndFormValueMatch = Boolean(token && token.address.toLowerCase() === value.toLowerCase());
 
   useEffect(() => {
     if (token && tokenAndFormValueMatch) {
@@ -286,7 +272,7 @@ const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSe
   );
 
   const filteredOptions = useMemo(() => {
-    const val = value?.toLowerCase() || "";
+    const val = value?.toLowerCase() || '';
     return options.filter((token) => {
       const symbolMatch = token.symbol.toLowerCase().includes(val);
       const addressMatch = token.address.toLowerCase().includes(val);
@@ -306,10 +292,7 @@ const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSe
           offset={-43}
           trigger={
             <TokenInputWrapper $fullWidth>
-              <TextInputField
-                placeholder="Search for token or input an address"
-                startIcon="search"
-              />
+              <TextInputField placeholder='Search for token or input an address' startIcon='search' />
             </TokenInputWrapper>
           }
         >
@@ -321,22 +304,22 @@ const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSe
               {...register(path, {
                 required: {
                   value: true,
-                  message: "Token address is required"
+                  message: 'Token address is required'
                 },
                 validate: {
                   invalidAddress: (formValue) => {
-                    return getIsValidEthereumAddress(formValue) || "Invalid address";
+                    return getIsValidEthereumAddress(formValue) || 'Invalid address';
                   },
                   tokensAreSame: (formValue, formValues) => {
-                    const counterToken = formValues[path === "token1" ? "token2" : "token1"];
+                    const counterToken = formValues[path === 'token1' ? 'token2' : 'token1'];
                     const tokensAreSame = formValue.toLowerCase() === counterToken.toLowerCase();
-                    return !tokensAreSame || "Unique tokens required";
+                    return !tokensAreSame || 'Unique tokens required';
                   }
                 },
                 onBlur: (e) => e.currentTarget.focus() // prevent this input field from going out of focus
               })}
-              placeholder="Search for token or input an address"
-              startIcon="search"
+              placeholder='Search for token or input an address'
+              startIcon='search'
               error={formErrMessage ?? erc20ErrMessage}
             />
           </Flex>
@@ -354,7 +337,7 @@ const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSe
                     <ImgContainer width={16} height={16}>
                       {<img src={images[token.symbol]} alt={value} />}
                     </ImgContainer>
-                    <Text className="item-token-symbol">{token.symbol}</Text>
+                    <Text className='item-token-symbol'>{token.symbol}</Text>
                   </TokenSelectItemWrapper>
                 </Dropdown.SingleSelect>
               );
@@ -368,10 +351,10 @@ const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSe
                 {<img src={token.logo} alt={value} />}
               </ImgContainer>
             )}
-            <Text $variant="button-link" className="token-symbol">
+            <Text $variant='button-link' className='token-symbol'>
               {token?.symbol}
-            </Text>{" "}
-            <ImgContainer width={10} height={10} onClick={() => setValue(path, "")}>
+            </Text>{' '}
+            <ImgContainer width={10} height={10} onClick={() => setValue(path, '')}>
               <XIcon width={10} height={10} />
             </ImgContainer>
           </FoundTokenInfo>

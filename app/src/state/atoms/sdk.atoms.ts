@@ -1,11 +1,11 @@
-import { atom } from "jotai";
+import { atom } from 'jotai';
 
-import { BeanstalkSDK } from "@beanstalk/sdk";
+import { BeanstalkSDK } from '@beanstalk/sdk';
 
-import { isDEV } from "src/settings";
+import { isDEV } from 'src/settings';
 
 export const sdkAtom = atom<BeanstalkSDK | null>(null);
 
 if (isDEV) {
-  sdkAtom.debugLabel = "sdk";
+  sdkAtom.debugLabel = 'sdk';
 }

@@ -41,14 +41,7 @@ export class Tokens {
 
     // ---------- Native Tokens ----------
     // ETH
-    this.ETH = new NativeToken(
-      cid,
-      null,
-      18,
-      'ETH',
-      { name: 'Ether', displayDecimals: 4 },
-      provider,
-    );
+    this.ETH = new NativeToken(cid, null, 18, 'ETH', { name: 'Ether', displayDecimals: 4 }, provider);
     this.tokens.add(this.ETH);
 
     // ---------- ERC20 Tokens ----------
@@ -61,9 +54,9 @@ export class Tokens {
       'PINTO',
       {
         name: 'PINTO',
-        displayDecimals: 2,
+        displayDecimals: 2
       },
-      provider,
+      provider
     );
     this.tokens.add(this.PINTO);
 
@@ -76,9 +69,9 @@ export class Tokens {
       'cbBTC',
       {
         name: 'Coinbase Wrapped BTC',
-        displayDecimals: 6,
+        displayDecimals: 6
       },
-      provider,
+      provider
     );
     this.tokens.add(this.CBBTC);
 
@@ -91,9 +84,9 @@ export class Tokens {
       'WETH',
       {
         name: 'Wrapped Ether',
-        displayDecimals: 4,
+        displayDecimals: 4
       },
-      provider,
+      provider
     );
     this.tokens.add(this.WETH);
 
@@ -106,9 +99,9 @@ export class Tokens {
       'cbETH',
       {
         name: 'Coinbase Wrapped Staked ETH',
-        displayDecimals: 4,
+        displayDecimals: 4
       },
-      provider,
+      provider
     );
     this.tokens.add(this.CBETH);
 
@@ -120,9 +113,9 @@ export class Tokens {
       'weETH',
       {
         name: 'Wrapped eETH',
-        displayDecimals: 4,
+        displayDecimals: 4
       },
-      provider,
+      provider
     );
     this.tokens.add(this.WEETH);
 
@@ -134,9 +127,9 @@ export class Tokens {
       'wstETH',
       {
         name: 'Wrapped liquid staked Ether 2.0',
-        displayDecimals: 4,
+        displayDecimals: 4
       },
-      provider,
+      provider
     );
     this.tokens.add(this.WSTETH);
 
@@ -148,9 +141,9 @@ export class Tokens {
       'rETH',
       {
         name: 'Rocket Pool ETH',
-        displayDecimals: 4,
+        displayDecimals: 4
       },
-      provider,
+      provider
     );
     this.tokens.add(this.RETH);
 
@@ -164,9 +157,9 @@ export class Tokens {
       'USDC',
       {
         name: 'USD Coin',
-        displayDecimals: 2,
+        displayDecimals: 2
       },
-      provider,
+      provider
     );
     this.tokens.add(this.USDC);
 
@@ -178,9 +171,9 @@ export class Tokens {
       'USDT',
       {
         name: 'Tether USD',
-        displayDecimals: 2,
+        displayDecimals: 2
       },
-      provider,
+      provider
     );
     this.tokens.add(this.USDT);
 
@@ -192,9 +185,9 @@ export class Tokens {
       'DAI',
       {
         name: 'Dai Stablecoin',
-        displayDecimals: 4,
+        displayDecimals: 4
       },
-      provider,
+      provider
     );
     this.tokens.add(this.DAI);
 
@@ -206,9 +199,9 @@ export class Tokens {
       'ZRO',
       {
         name: 'LayerZero',
-        displayDecimals: 4,
+        displayDecimals: 4
       },
-      provider,
+      provider
     );
     this.tokens.add(this.ZRO);
 

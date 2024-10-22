@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { Token } from "@beanstalk/sdk";
-import { SwapBuilder } from "@beanstalk/sdk-wells";
+import { Token } from '@beanstalk/sdk';
+import { SwapBuilder } from '@beanstalk/sdk-wells';
 
-import useSdk from "src/utils/sdk/useSdk";
-import { useWells } from "src/wells/useWells";
+import useSdk from 'src/utils/sdk/useSdk';
+import { useWells } from 'src/wells/useWells';
 
 export const useSwapBuilder = () => {
   const sdk = useSdk();

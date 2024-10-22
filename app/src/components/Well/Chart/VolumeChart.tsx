@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { FC } from "src/types";
+import { FC } from 'src/types';
 
-import { ChartContainer } from "./ChartStyles";
+import { ChartContainer } from './ChartStyles';
 
 type Props = {};
 export const VolumeChart: FC<Props> = ({}) => {

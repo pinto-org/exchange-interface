@@ -1,27 +1,27 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from 'react';
 
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { useChainId } from "wagmi";
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useChainId } from 'wagmi';
 
-import { mediaQuery, size } from "src/breakpoints";
-import { Error } from "src/components/Error";
-import { ChevronDown } from "src/components/Icons";
-import { ImageButton } from "src/components/ImageButton";
-import { Item, Row } from "src/components/Layout";
-import { AddLiquidity } from "src/components/Liquidity/AddLiquidity";
-import { RemoveLiquidity } from "src/components/Liquidity/RemoveLiquidity";
-import { LoadingItem } from "src/components/LoadingItem";
-import { Page } from "src/components/Page";
-import { Button } from "src/components/Swap/Button";
-import { TabButton } from "src/components/TabButton";
-import { BodyXS, TextNudge } from "src/components/Typography";
-import { LearnPump } from "src/components/Well/LearnPump";
-import { LearnWellFunction } from "src/components/Well/LearnWellFunction";
-import { LearnYield } from "src/components/Well/LearnYield";
-import { LiquidityBox } from "src/components/Well/LiquidityBox";
-import { Log } from "src/utils/logger";
-import { useWellWithParams } from "src/wells/useWellWithParams";
+import { mediaQuery, size } from 'src/breakpoints';
+import { Error } from 'src/components/Error';
+import { ChevronDown } from 'src/components/Icons';
+import { ImageButton } from 'src/components/ImageButton';
+import { Item, Row } from 'src/components/Layout';
+import { AddLiquidity } from 'src/components/Liquidity/AddLiquidity';
+import { RemoveLiquidity } from 'src/components/Liquidity/RemoveLiquidity';
+import { LoadingItem } from 'src/components/LoadingItem';
+import { Page } from 'src/components/Page';
+import { Button } from 'src/components/Swap/Button';
+import { TabButton } from 'src/components/TabButton';
+import { BodyXS, TextNudge } from 'src/components/Typography';
+import { LearnPump } from 'src/components/Well/LearnPump';
+import { LearnWellFunction } from 'src/components/Well/LearnWellFunction';
+import { LearnYield } from 'src/components/Well/LearnYield';
+import { LiquidityBox } from 'src/components/Well/LiquidityBox';
+import { Log } from 'src/utils/logger';
+import { useWellWithParams } from 'src/wells/useWellWithParams';
 
 export const Liquidity = () => {
   const { well, loading, error } = useWellWithParams();
@@ -41,7 +41,7 @@ export const Liquidity = () => {
   }, [showSlippageSettings]);
 
   const handleSlippageValueChange = (value: string) => {
-    Log.module("liquidity").debug(`Slippage changed: ${parseFloat(value)}`);
+    Log.module('liquidity').debug(`Slippage changed: ${parseFloat(value)}`);
     setSlippage(parseFloat(value));
   };
 
@@ -59,14 +59,14 @@ export const Liquidity = () => {
   return (
     <Page>
       <ContentWrapper>
-        <SideBar id="sidebar">
+        <SideBar id='sidebar'>
           <LoadingItem loading={loading} onLoading={<EmptyLearnItem />}>
             <Button
               secondary
-              label="← Back To Well Details"
-              width={"100%"}
-              margin={"0px"}
-              onClick={() => navigate(`../wells/${chainId.toString()}/${well?.address || ""}`)}
+              label='← Back To Well Details'
+              width={'100%'}
+              margin={'0px'}
+              onClick={() => navigate(`../wells/${chainId.toString()}/${well?.address || ''}`)}
             />
           </LoadingItem>
           <LiquidityBox well={well} loading={loading} />
@@ -78,11 +78,11 @@ export const Liquidity = () => {
                 <ImageButton
                   component={ChevronDown}
                   size={10}
-                  rotate={open ? "180" : "0"}
+                  rotate={open ? '180' : '0'}
                   onClick={toggle}
-                  padding="0px"
-                  alt="Click to expand and learn how to earn yield"
-                  color={"#46B955"}
+                  padding='0px'
+                  alt='Click to expand and learn how to earn yield'
+                  color={'#46B955'}
                 />
               </LearnMoreText>
               <LearnMoreLine />
@@ -101,11 +101,11 @@ export const Liquidity = () => {
           </LearnMoreContainer>
         </SideBar>
 
-        <CenterBar id="centerbar" ref={scrollRef}>
+        <CenterBar id='centerbar' ref={scrollRef}>
           <AddRemoveLiquidityRow gap={0} tabSelected={true}>
             <Item stretch>
               <TabButton onClick={() => setTab(0)} active={tab === 0} stretch bold justify hover>
-                <LoadingItem loading={loading} onLoading={<>{""}</>}>
+                <LoadingItem loading={loading} onLoading={<>{''}</>}>
                   <span>Add Liquidity</span>
                 </LoadingItem>
               </TabButton>
@@ -120,7 +120,7 @@ export const Liquidity = () => {
                 hover
                 disabled={!nonEmptyReserves}
               >
-                <LoadingItem loading={loading} onLoading={<>{""}</>}>
+                <LoadingItem loading={loading} onLoading={<>{''}</>}>
                   <span>Remove Liquidity</span>
                 </LoadingItem>
               </TabButton>
@@ -256,7 +256,7 @@ const LearnMoreButtons = styled.div<{ open: boolean }>`
   gap: 24px;
 
   ${mediaQuery.lg.down} {
-    ${(props) => (props.open ? "display: flex" : "display: none")};
+    ${(props) => (props.open ? 'display: flex' : 'display: none')};
     gap: 16px;
   }
 `;

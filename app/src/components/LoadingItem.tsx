@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
-import { Skeleton, SkeletonProps } from "./Skeleton";
+import { Skeleton, SkeletonProps } from './Skeleton';
 
 type BaseProps = {
   loading?: boolean;

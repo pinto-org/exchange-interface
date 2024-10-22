@@ -7,7 +7,7 @@ import {
   WETH9,
   WETH9__factory,
   UnwrapAndSendEthJunction__factory,
-  UnwrapAndSendEthJunction,
+  UnwrapAndSendEthJunction
 } from 'src/constants/generated';
 import { addresses } from 'src/constants/addresses';
 import { WellsSDK } from 'src/lib/WellsSDK';
@@ -63,13 +63,10 @@ export class Quote {
     this.route = route;
     this.account = account;
 
-    this.weth9 = WETH9__factory.connect(
-      addresses.WETH9.get(this.sdk.chainId),
-      this.sdk.providerOrSigner,
-    );
+    this.weth9 = WETH9__factory.connect(addresses.WETH9.get(this.sdk.chainId), this.sdk.providerOrSigner);
     this.unwrapAndSendEthJunction = UnwrapAndSendEthJunction__factory.connect(
       addresses.UNWRAP_AND_SEND_JUNCTION.get(this.sdk.chainId),
-      this.sdk.providerOrSigner,
+      this.sdk.providerOrSigner
     );
 
     for (const { from, to, well } of this.route) {
@@ -86,10 +83,7 @@ export class Quote {
       this.steps.push(new SwapStep(well, from, to));
     }
 
-    this.depot = Depot__factory.connect(
-      addresses.DEPOT.get(this.sdk.chainId),
-      this.sdk.providerOrSigner,
-    );
+    this.depot = Depot__factory.connect(addresses.DEPOT.get(this.sdk.chainId), this.sdk.providerOrSigner);
   }
 
   /**
@@ -98,11 +92,7 @@ export class Quote {
    * @param amountIn The amount of `fromToken` to use for a quote.
    * @returns The amount of `toToken` you will receive in exchange for `amountIn` of `fromToken`
    */
-  async quoteForward(
-    amountIn: number | TokenValue,
-    recipient: string,
-    slippage: number,
-  ): Promise<QuoteResult> {
+  async quoteForward(amountIn: number | TokenValue, recipient: string, slippage: number): Promise<QuoteResult> {
     if (typeof amountIn == 'number') {
       amountIn = this.fromToken.amount(amountIn);
     }
@@ -115,11 +105,7 @@ export class Quote {
    * @param amountOut The amount of `toToken` to use for a quote.
    * @returns The amount of `fromToken` you will need to spend to receive `amountOut` of `toToken`
    */
-  async quoteReverse(
-    amountOut: number | TokenValue,
-    recipient: string,
-    slippage: number,
-  ): Promise<QuoteResult> {
+  async quoteReverse(amountOut: number | TokenValue, recipient: string, slippage: number): Promise<QuoteResult> {
     if (typeof amountOut == 'number') {
       amountOut = this.toToken.amount(amountOut);
     }
@@ -130,7 +116,7 @@ export class Quote {
     amount: TokenValue,
     direction: Direction,
     recipient: string,
-    slippage: number,
+    slippage: number
   ): Promise<QuoteResult> {
     if (!slippage) throw new Error('Must supply slippage when doing a quote');
 
@@ -149,7 +135,7 @@ export class Quote {
         isMultiReverse ? prevQuoteWSlippage : prevQuote,
         direction,
         slippage,
-        recipient,
+        recipient
       );
       prevQuote = quote;
       prevQuoteWSlippage = quoteWithSlippage;
@@ -169,14 +155,14 @@ export class Quote {
       amountWithSlippage: prevQuoteWSlippage,
       gas,
       doApproval,
-      doSwap,
+      doSwap
     };
   }
 
   async prepare(
     recipient: string,
     deadline: number = DEFAULT_DEADLINE,
-    overrides?: TxOverrides,
+    overrides?: TxOverrides
   ): Promise<QuotePrepareResult> {
     if (!this.fullQuote || !this.amountUsedForQuote || this.direction == undefined) {
       throw new Error('Cannot prepare. You must run .quoteForward() or .quoteReverse() first');
@@ -187,9 +173,7 @@ export class Quote {
     if (this.route.length === 1) {
       return this.prepareSingle(recipient, blockChainDeadline);
     } else {
-      return fwd
-        ? this.prepareMulti(recipient)
-        : this.prepareMultiReverse(recipient, blockChainDeadline);
+      return fwd ? this.prepareMulti(recipient) : this.prepareMultiReverse(recipient, blockChainDeadline);
     }
   }
 
@@ -199,7 +183,7 @@ export class Quote {
       this.amountUsedForQuote,
       step.quoteResultWithSlippage!,
       recipient,
-      deadline,
+      deadline
     );
 
     const getParameters = (overrides: TxOverrides = {}) => {
@@ -226,16 +210,9 @@ export class Quote {
     };
 
     const amountToSpend =
-      this.direction === Direction.FORWARD
-        ? this.amountUsedForQuote
-        : step.quoteResultWithSlippage!;
+      this.direction === Direction.FORWARD ? this.amountUsedForQuote : step.quoteResultWithSlippage!;
 
-    const doApproval = await this.getApproval(
-      step.fromToken,
-      amountToSpend,
-      contract.address,
-      recipient,
-    );
+    const doApproval = await this.getApproval(step.fromToken, amountToSpend, contract.address, recipient);
 
     return { doApproval, doSwap, doGasEstimate };
   }
@@ -265,34 +242,23 @@ export class Quote {
       let nextRecipient = steps[i + 1]?.well.contract.address ?? recipient;
 
       // If this is a swap that ends in ETH, we need to send the amount of the last swap (which should be WETH) to the Unwrap and Send ETH Junction
-      if (i === steps.length - 1 && this.toToken.symbol === 'ETH')
-        nextRecipient = UNWRAP_AND_SEND_JUNCTION;
+      if (i === steps.length - 1 && this.toToken.symbol === 'ETH') nextRecipient = UNWRAP_AND_SEND_JUNCTION;
 
-      const { contract, method, parameters } = step.swapMany(
-        nextRecipient,
-        step.quoteResultWithSlippage!,
-      );
+      const { contract, method, parameters } = step.swapMany(nextRecipient, step.quoteResultWithSlippage!);
 
       const shiftOp = {
         target: contract.address,
         // @ts-ignore
         callData: contract.interface.encodeFunctionData(method, parameters),
-        clipboard: '0x0000000000000000000000000000000000000000000000000000000000000000', // Clipboard.encode([])
+        clipboard: '0x0000000000000000000000000000000000000000000000000000000000000000' // Clipboard.encode([])
       };
 
-      this.log(
-        `Well: ${step.well.name}, Method: ${method}, Params: ${parameters}, Recipient: ${nextRecipient}`,
-      );
+      this.log(`Well: ${step.well.name}, Method: ${method}, Params: ${parameters}, Recipient: ${nextRecipient}`);
 
       shiftOps.push(shiftOp);
     }
 
-    const doApproval = await this.getApproval(
-      this.fromToken,
-      this.amountUsedForQuote,
-      this.depot.address,
-      recipient,
-    );
+    const doApproval = await this.getApproval(this.fromToken, this.amountUsedForQuote, this.depot.address, recipient);
 
     let doSwap;
     let doGasEstimate;
@@ -303,20 +269,20 @@ export class Quote {
       const wrapEth = {
         target: this.weth9.address,
         callData: this.weth9.interface.encodeFunctionData('deposit'),
-        clipboard: Clipboard.encode([], this.amountUsedForQuote.toBigNumber()),
+        clipboard: Clipboard.encode([], this.amountUsedForQuote.toBigNumber())
       };
       const wethTransfer = {
         target: this.weth9.address,
         callData: this.weth9.interface.encodeFunctionData('transfer', [
           steps[0].well.address,
-          this.amountUsedForQuote.toBigNumber(),
+          this.amountUsedForQuote.toBigNumber()
         ]),
-        clipboard: Clipboard.encode([]),
+        clipboard: Clipboard.encode([])
       };
 
       pipe = this.depot.interface.encodeFunctionData('advancedPipe', [
         [wrapEth, wethTransfer, ...shiftOps],
-        this.amountUsedForQuote.toBlockchain(),
+        this.amountUsedForQuote.toBlockchain()
       ]);
 
       doSwap = (overrides: TxOverrides = {}): Promise<ContractTransaction> => {
@@ -335,30 +301,23 @@ export class Quote {
       // Last step should be to swap to WETH
       const wethStep = steps[steps.length - 1];
       if (wethStep.toToken.symbol !== 'WETH')
-        throw new Error(
-          'Last step of multi-swap should have been a swap to WETH if the overall swap is for ETH.',
-        );
+        throw new Error('Last step of multi-swap should have been a swap to WETH if the overall swap is for ETH.');
 
       const transferToFirstWell = this.depot.interface.encodeFunctionData('transferToken', [
         this.fromToken.address,
         steps[0].well.address,
         this.amountUsedForQuote.toBigNumber(),
         0,
-        0,
+        0
       ]);
 
       const unwrapAndSendEth = {
         target: this.unwrapAndSendEthJunction.address,
-        callData: this.unwrapAndSendEthJunction.interface.encodeFunctionData('unwrapAndSendETH', [
-          recipient,
-        ]),
-        clipboard: Clipboard.encode([]),
+        callData: this.unwrapAndSendEthJunction.interface.encodeFunctionData('unwrapAndSendETH', [recipient]),
+        clipboard: Clipboard.encode([])
       };
 
-      pipe = this.depot.interface.encodeFunctionData('advancedPipe', [
-        [...shiftOps, unwrapAndSendEth],
-        0,
-      ]);
+      pipe = this.depot.interface.encodeFunctionData('advancedPipe', [[...shiftOps, unwrapAndSendEth], 0]);
 
       doSwap = (overrides: TxOverrides = {}): Promise<ContractTransaction> => {
         return this.depot.farm([transferToFirstWell, pipe], overrides);
@@ -376,7 +335,7 @@ export class Quote {
         steps[0].well.address,
         this.amountUsedForQuote.toBigNumber(),
         0,
-        0,
+        0
       ]);
 
       pipe = this.depot.interface.encodeFunctionData('advancedPipe', [shiftOps, 0]);
@@ -394,14 +353,11 @@ export class Quote {
     return {
       doSwap,
       doApproval,
-      doGasEstimate,
+      doGasEstimate
     };
   }
 
-  private async prepareMultiReverse(
-    recipient: string,
-    deadline: number,
-  ): Promise<QuotePrepareResult> {
+  private async prepareMultiReverse(recipient: string, deadline: number): Promise<QuotePrepareResult> {
     const direction = Direction.REVERSE;
 
     // Should never happen but sanity check
@@ -429,8 +385,7 @@ export class Quote {
       let nextRecipient = i === steps.length - 1 ? recipient : pipelineAddress;
 
       // If this is a swap that ends in ETH, we need to send the amount of the last swap (which should be WETH) to the Unwrap and Send ETH Junction
-      if (i === steps.length - 1 && this.toToken.symbol === 'ETH')
-        nextRecipient = UNWRAP_AND_SEND_JUNCTION;
+      if (i === steps.length - 1 && this.toToken.symbol === 'ETH') nextRecipient = UNWRAP_AND_SEND_JUNCTION;
 
       const amountWithSlippage = step.quoteResultWithSlippage!;
       const maxAmountOut = amountWithSlippage;
@@ -439,25 +394,22 @@ export class Quote {
         nextRecipient,
         maxAmountOut,
         currentDesiredAmount,
-        deadline,
+        deadline
       );
 
       operations.push({
         target: step.fromToken.address,
         callData: step.fromToken
           .getContract()!
-          .interface.encodeFunctionData('approve', [
-            step.well.address,
-            amountWithSlippage.toBigNumber(),
-          ]),
-        clipboard: '0x0000000000000000000000000000000000000000000000000000000000000000', // Clipboard.encode([])
+          .interface.encodeFunctionData('approve', [step.well.address, amountWithSlippage.toBigNumber()]),
+        clipboard: '0x0000000000000000000000000000000000000000000000000000000000000000' // Clipboard.encode([])
       });
 
       const swapToOp = {
         target: contract.address,
         // @ts-ignore
         callData: contract.interface.encodeFunctionData(method, parameters),
-        clipboard: '0x0000000000000000000000000000000000000000000000000000000000000000', // Clipboard.encode([])
+        clipboard: '0x0000000000000000000000000000000000000000000000000000000000000000' // Clipboard.encode([])
       };
 
       operations.push(swapToOp);
@@ -478,12 +430,12 @@ export class Quote {
       const wrapEth = {
         target: this.weth9.address,
         callData: this.weth9.interface.encodeFunctionData('deposit'),
-        clipboard: Clipboard.encode([], ethAmount.toBigNumber()),
+        clipboard: Clipboard.encode([], ethAmount.toBigNumber())
       };
 
       pipe = this.depot.interface.encodeFunctionData('advancedPipe', [
         [wrapEth, ...operations],
-        ethAmount.toBigNumber(),
+        ethAmount.toBigNumber()
       ]);
 
       doSwap = (overrides: TxOverrides = {}): Promise<ContractTransaction> => {
@@ -502,30 +454,23 @@ export class Quote {
       // Last step should be to swap to WETH
       const wethStep = steps[steps.length - 1];
       if (wethStep.toToken.symbol !== 'WETH')
-        throw new Error(
-          'Last step of multi-swap should have been a swap to WETH if the overall swap is for ETH.',
-        );
+        throw new Error('Last step of multi-swap should have been a swap to WETH if the overall swap is for ETH.');
 
       const transferToPipeline = this.depot.interface.encodeFunctionData('transferToken', [
         this.fromToken.address,
         pipelineAddress,
         startingAmount.toBigNumber(),
         0,
-        0,
+        0
       ]);
 
       const unwrapAndSendEth = {
         target: this.unwrapAndSendEthJunction.address,
-        callData: this.unwrapAndSendEthJunction.interface.encodeFunctionData('unwrapAndSendETH', [
-          recipient,
-        ]),
-        clipboard: Clipboard.encode([]),
+        callData: this.unwrapAndSendEthJunction.interface.encodeFunctionData('unwrapAndSendETH', [recipient]),
+        clipboard: Clipboard.encode([])
       };
 
-      pipe = this.depot.interface.encodeFunctionData('advancedPipe', [
-        [...operations, unwrapAndSendEth],
-        0,
-      ]);
+      pipe = this.depot.interface.encodeFunctionData('advancedPipe', [[...operations, unwrapAndSendEth], 0]);
 
       doSwap = (overrides: TxOverrides = {}): Promise<ContractTransaction> => {
         return this.depot.farm([transferToPipeline, pipe], overrides);
@@ -543,7 +488,7 @@ export class Quote {
         pipelineAddress,
         startingAmount.toBigNumber(),
         0,
-        0,
+        0
       ]);
 
       pipe = this.depot.interface.encodeFunctionData('advancedPipe', [operations, 0]);
@@ -558,17 +503,12 @@ export class Quote {
       };
     }
 
-    const doApproval = await this.getApproval(
-      this.fromToken,
-      startingAmount,
-      this.depot.address,
-      recipient,
-    );
+    const doApproval = await this.getApproval(this.fromToken, startingAmount, this.depot.address, recipient);
 
     return {
       doSwap,
       doApproval,
-      doGasEstimate,
+      doGasEstimate
     };
   }
 

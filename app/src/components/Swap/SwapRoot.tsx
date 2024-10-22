@@ -1,46 +1,46 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Quote, QuoteResult } from "@beanstalk/sdk/Wells";
-import { useSearchParams } from "react-router-dom";
-import styled from "styled-components";
-import { useAccount } from "wagmi";
+import { Quote, QuoteResult } from '@beanstalk/sdk/Wells';
+import { useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
-import { size } from "src/breakpoints";
-import { ActionWalletButtonWrapper } from "src/components/Wallet";
-import { useAllTokensBalance } from "src/tokens/useAllTokenBalance";
-import { useTokens } from "src/tokens/useTokens";
-import { Log } from "src/utils/logger";
-import { getPrice } from "src/utils/price/usePrice";
-import useSdk from "src/utils/sdk/useSdk";
+import { size } from 'src/breakpoints';
+import { ActionWalletButtonWrapper } from 'src/components/Wallet';
+import { useAllTokensBalance } from 'src/tokens/useAllTokenBalance';
+import { useTokens } from 'src/tokens/useTokens';
+import { Log } from 'src/utils/logger';
+import { getPrice } from 'src/utils/price/usePrice';
+import useSdk from 'src/utils/sdk/useSdk';
 
-import { ArrowButton } from "./ArrowButton";
-import { Button } from "./Button";
-import { TokenInput } from "./TokenInput";
-import { useSwapBuilder } from "./useSwapBuilder";
-import QuoteDetails from "../Liquidity/QuoteDetails";
-import { TransactionToast } from "../TxnToast/TransactionToast";
+import { ArrowButton } from './ArrowButton';
+import { Button } from './Button';
+import { TokenInput } from './TokenInput';
+import { useSwapBuilder } from './useSwapBuilder';
+import QuoteDetails from '../Liquidity/QuoteDetails';
+import { TransactionToast } from '../TxnToast/TransactionToast';
 
-const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
+const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export const SwapRoot = () => {
   const { address: account } = useAccount();
   const sdk = useSdk();
 
   const [tokenSwapParams] = useSearchParams();
-  const fromToken = tokenSwapParams.get("fromToken");
-  const toToken = tokenSwapParams.get("toToken");
+  const fromToken = tokenSwapParams.get('fromToken');
+  const toToken = tokenSwapParams.get('toToken');
 
   const tokens = useTokens();
   // We need _some_ address in order to make quotes work when there's no account connected.
   const [recipient, setRecipient] = useState<string>(NULL_ADDRESS);
   const [inAmount, setInAmount] = useState<TokenValue>();
   const [inToken, setInToken] = useState<Token>(
-    fromToken ? (tokens[fromToken] ? tokens[fromToken] : tokens["ETH"]) : tokens["ETH"]
+    fromToken ? (tokens[fromToken] ? tokens[fromToken] : tokens['ETH']) : tokens['ETH']
   );
   const [outToken, setOutToken] = useState<Token>(
-    toToken ? (tokens[toToken] ? tokens[toToken] : tokens["BEAN"]) : tokens["BEAN"]
+    toToken ? (tokens[toToken] ? tokens[toToken] : tokens['BEAN']) : tokens['BEAN']
   );
   const [outAmount, setOutAmount] = useState<TokenValue>();
   const [slippage, setSlippage] = useState<number>(0.1);
@@ -75,23 +75,17 @@ export const SwapRoot = () => {
   // Fetch all tokens. Needed for populating the token selector dropdowns
   useEffect(() => {
     const fetching = isAllTokenLoading;
-    fetching
-      ? setIsLoadingAllBalances(true)
-      : setTimeout(() => setIsLoadingAllBalances(false), 500);
+    fetching ? setIsLoadingAllBalances(true) : setTimeout(() => setIsLoadingAllBalances(false), 500);
   }, [isAllTokenLoading]);
 
   // Builds a Quoter object. Dependency array updates it when those change
   useEffect(() => {
-    const quoter = builder?.buildQuote(inToken, outToken, account || "");
+    const quoter = builder?.buildQuote(inToken, outToken, account || '');
     setQuoter(quoter ?? null);
   }, [inToken, outToken, builder, account]);
 
   useEffect(() => {
-    readyToSwap &&
-    hasEnoughBalance &&
-    !!account &&
-    inAmount?.gt(TokenValue.ZERO) &&
-    outAmount?.gt(TokenValue.ZERO)
+    readyToSwap && hasEnoughBalance && !!account && inAmount?.gt(TokenValue.ZERO) && outAmount?.gt(TokenValue.ZERO)
       ? setButtonEnabled(true)
       : setButtonEnabled(false);
   }, [readyToSwap, account, inAmount, outAmount, hasEnoughBalance]);
@@ -120,7 +114,7 @@ export const SwapRoot = () => {
 
       const balance = await token.getBalance(account);
       const enough = balance.gte(amount);
-      Log.module("swap").debug(`Has enough ${token.symbol}? `, enough);
+      Log.module('swap').debug(`Has enough ${token.symbol}? `, enough);
 
       return enough;
     },
@@ -139,7 +133,7 @@ export const SwapRoot = () => {
 
       try {
         const quote = await quoter?.quoteForward(amount, recipient, slippage);
-        Log.module("swap").debug("Forward quote", quote);
+        Log.module('swap').debug('Forward quote', quote);
         if (!quote) {
           setOutAmount(undefined);
           setNeedsApproval(true);
@@ -159,7 +153,7 @@ export const SwapRoot = () => {
         setQuote(quote);
         setHasEnoughBalance(await checkBalance(quoter!.fromToken, amount));
       } catch (err: unknown) {
-        Log.module("swap").error("Error during quote: ", (err as Error).message);
+        Log.module('swap').error('Error during quote: ', (err as Error).message);
         setOutAmount(undefined);
         setNeedsApproval(true);
         setQuote(undefined);
@@ -180,7 +174,7 @@ export const SwapRoot = () => {
       }
       try {
         const quote = await quoter?.quoteReverse(amount, recipient!, slippage);
-        Log.module("swap").debug("Reverse quote", quote);
+        Log.module('swap').debug('Reverse quote', quote);
         if (!quote) {
           setInAmount(undefined);
           setNeedsApproval(true);
@@ -200,7 +194,7 @@ export const SwapRoot = () => {
         setQuote(quote);
         setHasEnoughBalance(await checkBalance(quoter!.fromToken, quote.amountWithSlippage));
       } catch (err: unknown) {
-        Log.module("swap").error("Error during quote: ", (err as Error).message);
+        Log.module('swap').error('Error during quote: ', (err as Error).message);
         setInAmount(undefined);
         setReadyToSwap(false);
       }
@@ -254,15 +248,15 @@ export const SwapRoot = () => {
   );
 
   const approve = async () => {
-    Log.module("swap").debug("Doing approval");
-    if (!quote!.doApproval) throw new Error("quote.doApproval() is missing. Bad logic");
+    Log.module('swap').debug('Doing approval');
+    if (!quote!.doApproval) throw new Error('quote.doApproval() is missing. Bad logic');
 
     setTxLoading(true);
 
     const toast = new TransactionToast({
-      loading: "Waiting for approval",
-      error: "Approval failed",
-      success: "Approved"
+      loading: 'Waiting for approval',
+      error: 'Approval failed',
+      success: 'Approved'
     });
 
     try {
@@ -281,13 +275,13 @@ export const SwapRoot = () => {
       setQuote(newQuote);
       if (!!newQuote?.doApproval) {
         setNeedsApproval(true);
-        toast.error(new Error("Approval was not enough"));
+        toast.error(new Error('Approval was not enough'));
       } else {
         toast.success(receipt);
         setNeedsApproval(false);
       }
     } catch (err) {
-      Log.module("swap").error("Approval Failed", err);
+      Log.module('swap').error('Approval Failed', err);
       toast.error(err);
     } finally {
       setTxLoading(false);
@@ -295,19 +289,19 @@ export const SwapRoot = () => {
   };
 
   const swap = async () => {
-    Log.module("swap").debug("Doing swap");
+    Log.module('swap').debug('Doing swap');
     setTxLoading(true);
 
     const toast = new TransactionToast({
-      loading: "Confirming swap",
-      error: "Swap failed",
-      success: "Swap confirmed"
+      loading: 'Confirming swap',
+      error: 'Swap failed',
+      success: 'Swap confirmed'
     });
 
     try {
       // sanity check
-      if (recipient === NULL_ADDRESS) throw new Error("FATAL: recipient is the NULL_ADDRESS!");
-      if (!quote) throw new Error("FATAL: quote is missing");
+      if (recipient === NULL_ADDRESS) throw new Error('FATAL: recipient is the NULL_ADDRESS!');
+      if (!quote) throw new Error('FATAL: quote is missing');
 
       const gasEstimate = quote.gas;
       const tx = await quote.doSwap({ gasLimit: gasEstimate?.mul(1.2).toBigNumber() });
@@ -322,7 +316,7 @@ export const SwapRoot = () => {
       setReadyToSwap(false);
       setQuote(undefined);
     } catch (err) {
-      Log.module("swap").error("Swap Failed", err);
+      Log.module('swap').error('Swap Failed', err);
       toast.error(err);
     } finally {
       setTxLoading(false);
@@ -338,33 +332,29 @@ export const SwapRoot = () => {
         await swap();
       }
     } catch (err) {
-      Log.module("swap").error("Operation Failed", err);
+      Log.module('swap').error('Operation Failed', err);
     }
   };
 
   const getLabel = useCallback(() => {
-    if (!routeExists) return "No route available";
-    if (!inAmount && !outAmount) return "Enter Amount";
-    if (inToken.address === outToken.address) return "Select different output token";
-    if (inAmount?.eq(TokenValue.ZERO) && outAmount?.eq(TokenValue.ZERO)) return "Enter Amount";
-    if (!hasEnoughBalance) return "Insufficient Balance";
-    if (needsApproval) return "Approve";
+    if (!routeExists) return 'No route available';
+    if (!inAmount && !outAmount) return 'Enter Amount';
+    if (inToken.address === outToken.address) return 'Select different output token';
+    if (inAmount?.eq(TokenValue.ZERO) && outAmount?.eq(TokenValue.ZERO)) return 'Enter Amount';
+    if (!hasEnoughBalance) return 'Insufficient Balance';
+    if (needsApproval) return 'Approve';
 
-    return "Swap";
+    return 'Swap';
   }, [hasEnoughBalance, inAmount, needsApproval, outAmount, inToken, outToken, routeExists]);
 
   if (Object.keys(tokens).length === 0)
-    return (
-      <Container>
-        There are no tokens. Please check you are connected to the right network.
-      </Container>
-    );
+    return <Container>There are no tokens. Please check you are connected to the right network.</Container>;
 
   return (
     <Container>
       <SwapInputContainer>
         <TokenInput
-          id="input-amount"
+          id='input-amount'
           label={`Input amount in ${inToken.symbol}`}
           token={inToken}
           amount={inAmount}
@@ -381,7 +371,7 @@ export const SwapRoot = () => {
       </ArrowContainer>
       <SwapInputContainer>
         <TokenInput
-          id="output-amount"
+          id='output-amount'
           label={`Output amount in ${inToken.symbol}`}
           token={outToken}
           amount={outAmount}
@@ -395,7 +385,7 @@ export const SwapRoot = () => {
         />
       </SwapInputContainer>
       <QuoteDetails
-        type={isForwardQuote ? "FORWARD_SWAP" : "REVERSE_SWAP"}
+        type={isForwardQuote ? 'FORWARD_SWAP' : 'REVERSE_SWAP'}
         quote={{
           quote: quote?.amount || TokenValue.ZERO,
           estimate: quote?.amountWithSlippage || TokenValue.ZERO,
@@ -407,7 +397,7 @@ export const SwapRoot = () => {
         slippage={slippage}
         tokenPrices={prices}
       />
-      <SwapButtonContainer data-trace="true">
+      <SwapButtonContainer data-trace='true'>
         <ActionWalletButtonWrapper>
           <Button
             label={getLabel()}

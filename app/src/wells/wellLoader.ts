@@ -1,57 +1,57 @@
-import { multicall } from "@wagmi/core";
-import { BigNumber } from "ethers";
-import memoize from "lodash/memoize";
-import { Abi, ContractFunctionParameters, erc20Abi } from "viem";
+import { multicall } from '@wagmi/core';
+import { BigNumber } from 'ethers';
+import memoize from 'lodash/memoize';
+import { Abi, ContractFunctionParameters, erc20Abi } from 'viem';
 
-import { BeanstalkSDK, ChainId } from "@beanstalk/sdk";
-import { ChainResolver, ERC20Token } from "@beanstalk/sdk-core";
-import { Aquifer, Well } from "@beanstalk/sdk-wells";
+import { BeanstalkSDK, ChainId } from '@beanstalk/sdk';
+import { ChainResolver, ERC20Token } from '@beanstalk/sdk-core';
+import { Aquifer, Well } from '@beanstalk/sdk-wells';
 
-import { GetWellAddressesDocument } from "src/generated/graph/graphql";
-import { Settings } from "src/settings";
-import { chunkArray } from "src/utils/array";
-import { convertBytes32ToString } from "src/utils/bytes";
-import { Log } from "src/utils/logger";
-import { config } from "src/utils/wagmi/config";
+import { GetWellAddressesDocument } from 'src/generated/graph/graphql';
+import { Settings } from 'src/settings';
+import { chunkArray } from 'src/utils/array';
+import { convertBytes32ToString } from 'src/utils/bytes';
+import { Log } from 'src/utils/logger';
+import { config } from 'src/utils/wagmi/config';
 
-import { fetchFromSubgraphRequest } from "./subgraphFetch";
+import { fetchFromSubgraphRequest } from './subgraphFetch';
 
 type WellAddresses = string[];
 
 const WELL_BLACKLIST: Record<number, WellAddresses> = {
   [ChainId.ETH_MAINNET]: [
-    "0x875b1da8dcba757398db2bc35043a72b4b62195d".toLowerCase(),
-    "0xBea0061680A2DEeBFA59076d77e0b6c769660595".toLowerCase(), // bean:wstETH duplicate
-    "0xbEa00022Ee2F7E2eb222f75fE79eFE4871E655ca".toLowerCase(), // bean:wstETH duplicate
-    "0xbea0009b5b96D87643DFB7392293f18af7C041F4".toLowerCase(), // bean:wstETH duplicate
-    "0x5997111CbBAA0f4C613Ae678Ba4803e764140266".toLowerCase() // usdc:frax duplicate
+    '0x875b1da8dcba757398db2bc35043a72b4b62195d'.toLowerCase(),
+    '0xBea0061680A2DEeBFA59076d77e0b6c769660595'.toLowerCase(), // bean:wstETH duplicate
+    '0xbEa00022Ee2F7E2eb222f75fE79eFE4871E655ca'.toLowerCase(), // bean:wstETH duplicate
+    '0xbea0009b5b96D87643DFB7392293f18af7C041F4'.toLowerCase(), // bean:wstETH duplicate
+    '0x5997111CbBAA0f4C613Ae678Ba4803e764140266'.toLowerCase() // usdc:frax duplicate
   ],
   [ChainId.ARBITRUM_MAINNET]: [
     // PRE-L2-MIGRATION-WELLS
-    "0x0adf75da6980fee8f848d52a7af1f8d6f34a8169".toLowerCase(), // BEAN:WETH duplicate,
-    "0xc22dd977c50812f754c14319de84493cc18b6cf0".toLowerCase(), // BEAN:WETH duplicate
-    "0x15d7a96c3dbf6b267fae741d15c3a72f331418fe".toLowerCase(), // BEAN:WETH duplicate
-    "0xd902f7bd849da907202d177fafc1bd39f6bbadc4".toLowerCase(), // BEAN:WETH duplicate
-    "0xb968de36ce9c61371a82a78b715af660c2209d11".toLowerCase(), // BEAN:wstETH duplicate
-    "0x430837acc8cfe4726453b09b8d782730654899e0".toLowerCase(), // BEAN:wstETH duplicate
-    "0x4731431430e7febd8df6a4aa7d28867927e827a6".toLowerCase(), // BEAN:wstETH duplicate
-    "0xc49b38dff421622628258683444f4977078cb96b".toLowerCase(), // BEAN:wstETH duplicate
-    "0x8d74ff8e729b4e78898488775b619c05d1ecb5e5".toLowerCase(), // BEAN:weETH duplicate
-    "0x65709d322f9c762f9435a326c653e7393807c0bc".toLowerCase(), // BEAN:weETH duplicate
-    "0x8dc6400022ac4304b3236f4d073053056ac24086".toLowerCase(), // BEAN:weETH duplicate
-    "0x45f6af24e6eb8371571dde1464a458770cbbbb65".toLowerCase(), // BEAN:weETH duplicate
-    "0x370062BE2d6Fc8d02948fEA75fAfe471F74854CF".toLowerCase(), // BEAN:WBTC duplicate
-    "0xee950139d7730706695a4613198ecac26e69e12d".toLowerCase(), // BEAN:WBTC duplicate
-    "0xb147ff6e2fd05ad3db185028beb3cce4dcb12b72".toLowerCase(), // BEAN:WBTC duplicate
-    "0xd4baa4197aa17c7f27a2465073de33690d77ec7e".toLowerCase(), // BEAN:WBTC duplicate
-    "0x157219b5D112F2D8aaFD3c7F3bA5D4c73343cc96".toLowerCase(), // BEAN:USDC duplicate
-    "0xdc29769db1caa5cab41835ef9a42becde80de028".toLowerCase(), // BEAN:USDC duplicate
-    "0xde1a4b24aa46286739c1879612c5e5445382d93d".toLowerCase(), // BEAN:USDC duplicate
-    "0xeaddd2848e962817fd565ea269a7fedb0588b3f4".toLowerCase(), // BEAN:USDC duplicate
-    "0xF3e4FC5c53D5500989e68F81d070094525caC240".toLowerCase(), // BEAN:USDT duplicate
-    "0xacfb4644b708043ad6eff1cc323fda374fe6d3ce".toLowerCase(), // BEAN:USDT duplicate
-    "0x704e68281325242a60515616228c668e4865694c".toLowerCase(), // BEAN:USDT duplicate
-    "0xde8317a2a31a1684e2e4becedec17700718630d8".toLowerCase() //  BEAN:USDT duplicate
+    '0x0adf75da6980fee8f848d52a7af1f8d6f34a8169'.toLowerCase(), // BEAN:WETH duplicate,
+    '0xc22dd977c50812f754c14319de84493cc18b6cf0'.toLowerCase(), // BEAN:WETH duplicate
+    '0x15d7a96c3dbf6b267fae741d15c3a72f331418fe'.toLowerCase(), // BEAN:WETH duplicate
+    '0xd902f7bd849da907202d177fafc1bd39f6bbadc4'.toLowerCase(), // BEAN:WETH duplicate
+    '0xb968de36ce9c61371a82a78b715af660c2209d11'.toLowerCase(), // BEAN:wstETH duplicate
+    '0x430837acc8cfe4726453b09b8d782730654899e0'.toLowerCase(), // BEAN:wstETH duplicate
+    '0x4731431430e7febd8df6a4aa7d28867927e827a6'.toLowerCase(), // BEAN:wstETH duplicate
+    '0xc49b38dff421622628258683444f4977078cb96b'.toLowerCase(), // BEAN:wstETH duplicate
+    '0x8d74ff8e729b4e78898488775b619c05d1ecb5e5'.toLowerCase(), // BEAN:weETH duplicate
+    '0x65709d322f9c762f9435a326c653e7393807c0bc'.toLowerCase(), // BEAN:weETH duplicate
+    '0x8dc6400022ac4304b3236f4d073053056ac24086'.toLowerCase(), // BEAN:weETH duplicate
+    '0x45f6af24e6eb8371571dde1464a458770cbbbb65'.toLowerCase(), // BEAN:weETH duplicate
+    '0x370062BE2d6Fc8d02948fEA75fAfe471F74854CF'.toLowerCase(), // BEAN:WBTC duplicate
+    '0xee950139d7730706695a4613198ecac26e69e12d'.toLowerCase(), // BEAN:WBTC duplicate
+    '0xb147ff6e2fd05ad3db185028beb3cce4dcb12b72'.toLowerCase(), // BEAN:WBTC duplicate
+    '0xd4baa4197aa17c7f27a2465073de33690d77ec7e'.toLowerCase(), // BEAN:WBTC duplicate
+    '0x157219b5D112F2D8aaFD3c7F3bA5D4c73343cc96'.toLowerCase(), // BEAN:USDC duplicate
+    '0xdc29769db1caa5cab41835ef9a42becde80de028'.toLowerCase(), // BEAN:USDC duplicate
+    '0xde1a4b24aa46286739c1879612c5e5445382d93d'.toLowerCase(), // BEAN:USDC duplicate
+    '0xeaddd2848e962817fd565ea269a7fedb0588b3f4'.toLowerCase(), // BEAN:USDC duplicate
+    '0xF3e4FC5c53D5500989e68F81d070094525caC240'.toLowerCase(), // BEAN:USDT duplicate
+    '0xacfb4644b708043ad6eff1cc323fda374fe6d3ce'.toLowerCase(), // BEAN:USDT duplicate
+    '0x704e68281325242a60515616228c668e4865694c'.toLowerCase(), // BEAN:USDT duplicate
+    '0xde8317a2a31a1684e2e4becedec17700718630d8'.toLowerCase() //  BEAN:USDT duplicate
   ]
 };
 
@@ -63,7 +63,7 @@ const loadFromChain = async (sdk: BeanstalkSDK, aquifer: Aquifer): Promise<WellA
     const eventFilter = contract.filters.BoreWell();
 
     const fromBlock = Number(Settings.WELLS_ORIGIN_BLOCK);
-    const toBlock = "latest";
+    const toBlock = 'latest';
     const events = await contract.queryFilter(eventFilter, fromBlock, toBlock);
     const blacklist = WELL_BLACKLIST[chainId];
 
@@ -76,7 +76,7 @@ const loadFromChain = async (sdk: BeanstalkSDK, aquifer: Aquifer): Promise<WellA
 
     return addresses;
   } catch (e) {
-    console.error("error loading wells from chain: ", e);
+    console.error('error loading wells from chain: ', e);
     return [];
   }
 };
@@ -100,11 +100,11 @@ export const findWells = memoize(
     const result = await Promise.any([
       loadFromChain(sdk, aquifer)
         .then((res) => {
-          Log.module("wells").debug("Used blockchain to load wells");
+          Log.module('wells').debug('Used blockchain to load wells');
           return res;
         })
         .catch((err) => {
-          Log.module("wells").error("Error loading wells from blockchain: ", err);
+          Log.module('wells').error('Error loading wells from blockchain: ', err);
           throw err;
         })
 
@@ -125,17 +125,17 @@ export const findWells = memoize(
     const addresses = new Set([...wellLPAddresses, ...resultAddresses]);
 
     // Remove empty string
-    addresses.delete("");
+    addresses.delete('');
 
     if (!addresses.size) {
-      throw new Error("No deployed wells found");
+      throw new Error('No deployed wells found');
     }
 
     return [...addresses];
   },
   // Override the default memoize caching with just a '1'
   // so it always caches, regardless of parameter passed
-  (sdk) => sdk.chainId?.toString() || "no-chain-id"
+  (sdk) => sdk.chainId?.toString() || 'no-chain-id'
 );
 
 // ---------- Fetch Wells ----------
@@ -194,9 +194,7 @@ type MulticallResult<T extends ContractFunctionParameters> = Awaited<
   ReturnType<typeof multicall<typeof config, ContractFunctionParameters[]>>
 >[number];
 
-const extractArrayResult = <T extends ContractFunctionParameters, K>(
-  data: MulticallResult<T>[]
-): K | null => {
+const extractArrayResult = <T extends ContractFunctionParameters, K>(data: MulticallResult<T>[]): K | null => {
   if (data.some((d) => d.error)) return null;
   return data.map((d) => d.result) as unknown as K;
 };
@@ -210,13 +208,7 @@ interface CallStruct {
 
 type WellsMultiCallResult = [
   name: string,
-  well: [
-    tokens: string[],
-    wellFunction: CallStruct,
-    pumps: CallStruct[],
-    wellData: string,
-    aquifer: string
-  ],
+  well: [tokens: string[], wellFunction: CallStruct, pumps: CallStruct[], wellData: string, aquifer: string],
   reserves: bigint[]
 ];
 
@@ -227,15 +219,13 @@ const fetchWellsWithMulticall = async (sdk: BeanstalkSDK, wellAddresses: string[
   const wellCalls = makeWellContractCalls(wellAddresses);
 
   const wellResults = await Promise.all(
-    wellCalls.contractCalls.map((contracts) =>
-      multicall(config, { contracts: contracts, allowFailure: true })
-    )
+    wellCalls.contractCalls.map((contracts) => multicall(config, { contracts: contracts, allowFailure: true }))
   ).then((results) => {
     const chunked = chunkArray(results.flat(), wellCalls.chunkSize).map((chunk, i) => ({
       data: extractArrayResult<WellContractCall, WellsMultiCallResult>(chunk),
       address: wellAddresses[i].toLowerCase()
     }));
-    Log.module("wells").debug("Well Multicall : ", chunked);
+    Log.module('wells').debug('Well Multicall : ', chunked);
 
     chunked.forEach((data) => {
       if (!data?.data) return;
@@ -268,9 +258,9 @@ const makeWellContractCalls = (addresses: string[]) => {
       address: _address as `0x{string}`,
       abi: wellsABI
     };
-    const nameCall: WellContractCall = { ...contract, functionName: "name", args: [] };
-    const wellCall: WellContractCall = { ...contract, functionName: "well", args: [] };
-    const reservesCall: WellContractCall = { ...contract, functionName: "getReserves", args: [] };
+    const nameCall: WellContractCall = { ...contract, functionName: 'name', args: [] };
+    const wellCall: WellContractCall = { ...contract, functionName: 'well', args: [] };
+    const reservesCall: WellContractCall = { ...contract, functionName: 'getReserves', args: [] };
 
     callBucket.push(nameCall, wellCall, reservesCall);
 
@@ -306,9 +296,7 @@ const fetchTokensWithMulticall = async (
   const tokensCalls = makeTokensContractCall(tokenAddresses, erc20Abi);
 
   const tokenResults = await Promise.all(
-    tokensCalls.contractCalls.map((contracts) =>
-      multicall(config, { contracts: contracts, allowFailure: true })
-    )
+    tokensCalls.contractCalls.map((contracts) => multicall(config, { contracts: contracts, allowFailure: true }))
   ).then((r) =>
     chunkArray(r.flat(), tokensCalls.chunkSize).map((chunk, i) => ({
       data: extractArrayResult<StandardERC20Call, TokenCallResult>(chunk),
@@ -370,9 +358,9 @@ const makeTokensContractCall = <T extends Abi>(addresses: string[], abi: T) => {
   let callBucket: ContractFunctionParameters[] = [];
   addresses.forEach((address) => {
     const contract = { address: address as `0x{string}`, abi: abi };
-    const nameCall = { ...contract, functionName: "name", args: [] };
-    const symbolCall = { ...contract, functionName: "symbol", args: [] };
-    const decimalsCall = { ...contract, functionName: "decimals", args: [] };
+    const nameCall = { ...contract, functionName: 'name', args: [] };
+    const symbolCall = { ...contract, functionName: 'symbol', args: [] };
+    const decimalsCall = { ...contract, functionName: 'decimals', args: [] };
 
     callBucket.push(nameCall, symbolCall, decimalsCall);
 
@@ -397,70 +385,70 @@ const makeTokensContractCall = <T extends Abi>(addresses: string[], abi: T) => {
 const wellsABI = [
   {
     inputs: [],
-    name: "name",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function"
+    name: 'name',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "well",
+    name: 'well',
     outputs: [
-      { internalType: "contract IERC20[]", name: "_tokens", type: "address[]" },
+      { internalType: 'contract IERC20[]', name: '_tokens', type: 'address[]' },
       {
         components: [
-          { internalType: "address", name: "target", type: "address" },
-          { internalType: "bytes", name: "data", type: "bytes" }
+          { internalType: 'address', name: 'target', type: 'address' },
+          { internalType: 'bytes', name: 'data', type: 'bytes' }
         ],
-        internalType: "struct Call",
-        name: "_wellFunction",
-        type: "tuple"
+        internalType: 'struct Call',
+        name: '_wellFunction',
+        type: 'tuple'
       },
       {
         components: [
-          { internalType: "address", name: "target", type: "address" },
-          { internalType: "bytes", name: "data", type: "bytes" }
+          { internalType: 'address', name: 'target', type: 'address' },
+          { internalType: 'bytes', name: 'data', type: 'bytes' }
         ],
-        internalType: "struct Call[]",
-        name: "_pumps",
-        type: "tuple[]"
+        internalType: 'struct Call[]',
+        name: '_pumps',
+        type: 'tuple[]'
       },
-      { internalType: "bytes", name: "_wellData", type: "bytes" },
-      { internalType: "address", name: "_aquifer", type: "address" }
+      { internalType: 'bytes', name: '_wellData', type: 'bytes' },
+      { internalType: 'address', name: '_aquifer', type: 'address' }
     ],
-    stateMutability: "pure",
-    type: "function"
+    stateMutability: 'pure',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "getReserves",
-    outputs: [{ internalType: "uint256[]", name: "reserves", type: "uint256[]" }],
-    stateMutability: "view",
-    type: "function"
+    name: 'getReserves',
+    outputs: [{ internalType: 'uint256[]', name: 'reserves', type: 'uint256[]' }],
+    stateMutability: 'view',
+    type: 'function'
   }
 ] as const;
 
 export const standardErc20Abi = [
   {
-    type: "function",
-    name: "decimals",
-    stateMutability: "view",
+    type: 'function',
+    name: 'decimals',
+    stateMutability: 'view',
     inputs: [],
-    outputs: [{ type: "uint8" }]
+    outputs: [{ type: 'uint8' }]
   },
   {
-    type: "function",
-    name: "name",
-    stateMutability: "view",
+    type: 'function',
+    name: 'name',
+    stateMutability: 'view',
     inputs: [],
-    outputs: [{ type: "string" }]
+    outputs: [{ type: 'string' }]
   },
   {
-    type: "function",
-    name: "symbol",
-    stateMutability: "view",
+    type: 'function',
+    name: 'symbol',
+    stateMutability: 'view',
     inputs: [],
-    outputs: [{ type: "string" }]
+    outputs: [{ type: 'string' }]
   }
 ] as const;
 
@@ -469,28 +457,28 @@ const nonStandardERC20ABI = [
   {
     constant: true,
     inputs: [],
-    name: "decimals",
-    outputs: [{ name: "", type: "uint256" }],
+    name: 'decimals',
+    outputs: [{ name: '', type: 'uint256' }],
     payable: false,
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     constant: true,
     inputs: [],
-    name: "name",
-    outputs: [{ name: "", type: "bytes32" }],
+    name: 'name',
+    outputs: [{ name: '', type: 'bytes32' }],
     payable: false,
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     constant: true,
     inputs: [],
-    name: "symbol",
-    outputs: [{ name: "", type: "bytes32" }],
+    name: 'symbol',
+    outputs: [{ name: '', type: 'bytes32' }],
     payable: false,
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function'
   }
 ] as const;

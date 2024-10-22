@@ -67,8 +67,7 @@ export class TokenValue {
     if (typeof value === 'bigint') {
       return TokenValue.fromBigInt(value, decimals);
     }
-    if ((value as BigNumber)._isBigNumber)
-      return TokenValue.fromBigNumber(value as BigNumber, decimals);
+    if ((value as BigNumber)._isBigNumber) return TokenValue.fromBigNumber(value as BigNumber, decimals);
 
     throw new Error('Invalid value parameter');
   }
@@ -210,15 +209,9 @@ export class TokenValue {
     return TokenValue.from(this.value.mul(this.toDBN(num)).reDecimal(this.decimals));
   }
   mulMod(num: TokenValue | number, denominator: TokenValue | number): TokenValue {
-    return TokenValue.from(
-      this.value.mul(this.toDBN(num)).mod(this.toDBN(denominator).reDecimal(this.decimals))
-    );
+    return TokenValue.from(this.value.mul(this.toDBN(num)).mod(this.toDBN(denominator).reDecimal(this.decimals)));
   }
-  mulDiv(
-    num: TokenValue | BigNumber | number,
-    denominator: TokenValue | number,
-    rounding?: 'down' | 'up'
-  ) {
+  mulDiv(num: TokenValue | BigNumber | number, denominator: TokenValue | number, rounding?: 'down' | 'up') {
     return TokenValue.from(
       this.value.mulDiv(this.toDBN(num), this.toDBN(denominator), rounding).reDecimal(this.decimals)
     );
@@ -328,7 +321,7 @@ export class TokenValue {
     if (tv.gte(TokenValue.fromHuman(1e3, 0))) {
       return tv.value.toApproxNumber().toLocaleString('en-US', {
         minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
+        maximumFractionDigits: 0
       });
     }
 

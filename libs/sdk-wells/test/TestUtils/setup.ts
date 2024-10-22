@@ -10,7 +10,7 @@ export const createWell = async (
   wellTokens: ERC20Token[],
   account: string,
   aquifer?: Aquifer,
-  liquidityAmounts?: TokenValue[],
+  liquidityAmounts?: TokenValue[]
 ) => {
   if (!aquifer) aquifer = await Aquifer.BuildAquifer(wellsSdk);
   if (!liquidityAmounts) liquidityAmounts = wellTokens.map((token) => token.amount(50_000_000));
@@ -22,7 +22,7 @@ export const createWell = async (
   await Promise.all(
     wellTokens.map(async (token, i) => {
       await utils.setBalance(token, account, liquidityAmounts![i]);
-    }),
+    })
   );
 
   await utils.mine();
@@ -49,10 +49,7 @@ export const createDex = async (account: string) => {
   const aquifer = await Aquifer.BuildAquifer(wellsSdk);
   console.log('Aquifer: ' + aquifer.address);
 
-  const WETH_PINTO = await createWell([WETH, PINTO], account, aquifer, [
-    WETH.amount(25_000),
-    PINTO.amount(50_000_000),
-  ]);
+  const WETH_PINTO = await createWell([WETH, PINTO], account, aquifer, [WETH.amount(25_000), PINTO.amount(50_000_000)]);
   const PINTO_USDC = await createWell([PINTO, USDC], account, aquifer);
   const USDC_DAI = await createWell([USDC, DAI], account, aquifer);
 

@@ -1,6 +1,6 @@
-import { ChainId, ChainResolver } from "@beanstalk/sdk-core";
+import { ChainId, ChainResolver } from '@beanstalk/sdk-core';
 
-import useSdk from "./sdk/useSdk";
+import useSdk from './sdk/useSdk';
 
 /**
  * Returns the current chainId.
@@ -30,8 +30,8 @@ export const explorerUrl = (chainId: ChainId) => {
 export const explorerName = (chainId: ChainId) => {
   switch (ChainResolver.resolveToMainnetChainId(chainId)) {
     case ChainId.ARBITRUM_MAINNET:
-      return "Arbiscan";
+      return 'Arbiscan';
     default:
-      return "Etherscan";
+      return 'Etherscan';
   }
 };

@@ -5,7 +5,7 @@ import { Operation } from './Types';
 
 export enum Direction {
   FORWARD,
-  REVERSE,
+  REVERSE
 }
 
 export class SwapStep {
@@ -54,12 +54,7 @@ export class SwapStep {
   /**
    * The operation to perform when the swap consists of a single step in the route. IE, the to and from tokens are in the same well
    */
-  swapSingle(
-    amount: TokenValue,
-    amountWithSlippage: TokenValue,
-    recipient: string,
-    deadline: number,
-  ): Operation {
+  swapSingle(amount: TokenValue, amountWithSlippage: TokenValue, recipient: string, deadline: number): Operation {
     if (!this.hasQuoted) throw new Error('Must do a quote before swapping');
 
     return this.direction === Direction.FORWARD
@@ -72,8 +67,8 @@ export class SwapStep {
             amount.toBigNumber(),
             amountWithSlippage.toBigNumber(),
             recipient,
-            deadline,
-          ],
+            deadline
+          ]
         }
       : {
           contract: this.well.contract,
@@ -84,8 +79,8 @@ export class SwapStep {
             amountWithSlippage.toBigNumber(),
             amount.toBigNumber(),
             recipient,
-            deadline,
-          ],
+            deadline
+          ]
         };
   }
 
@@ -105,19 +100,14 @@ export class SwapStep {
     return {
       contract: this.well.contract,
       method: 'shift',
-      parameters: [this.toToken.address, minAmountOut.toBlockchain(), recipient],
+      parameters: [this.toToken.address, minAmountOut.toBlockchain(), recipient]
     };
   }
 
   /**
    * The operation to perform when the swap consists of more than one step in the route and the direction is reversed.
    */
-  swapManyReverse(
-    recipient: string,
-    maxAmountIn: TokenValue,
-    desiredAmount: TokenValue,
-    deadline: number,
-  ): Operation {
+  swapManyReverse(recipient: string, maxAmountIn: TokenValue, desiredAmount: TokenValue, deadline: number): Operation {
     if (!this.hasQuoted) throw new Error('Must do a quote before swapping');
     if (this.direction !== Direction.REVERSE)
       throw new Error('swapMany() can only be called for quotes where direction was Reverse');
@@ -131,8 +121,8 @@ export class SwapStep {
         maxAmountIn.toBlockchain(),
         desiredAmount.toBlockchain(),
         recipient,
-        deadline,
-      ],
+        deadline
+      ]
     };
   }
 }

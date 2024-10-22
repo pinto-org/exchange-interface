@@ -2,11 +2,11 @@
  * These table styles are for the tables on the Well detail page,
  * in Activity and Other
  */
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { size } from "src/breakpoints";
+import { size } from 'src/breakpoints';
 
-import { BodyCaps, BodyS, BodyXS } from "../Typography";
+import { BodyCaps, BodyS, BodyXS } from '../Typography';
 
 export const Table = styled.table`
   border: 0.5px solid #000;
@@ -39,7 +39,7 @@ export const Th = styled.th`
   padding: 12px 24px;
   ${BodyCaps}
   color: #4B5563;
-  text-align: ${(props) => props.align || "left"};
+  text-align: ${(props) => props.align || 'left'};
   cursor: default;
 
   @media (max-width: ${size.mobile}) {
@@ -49,7 +49,7 @@ export const Th = styled.th`
 `;
 export const Td = styled.td`
   padding: 16px 24px;
-  text-align: ${(props) => props.align || "left"};
+  text-align: ${(props) => props.align || 'left'};
 
   @media (max-width: ${size.mobile}) {
     ${BodyXS}

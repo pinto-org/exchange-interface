@@ -1,15 +1,15 @@
-import { Well } from "@beanstalk/sdk/Wells";
+import { Well } from '@beanstalk/sdk/Wells';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
 
 export const useWellReserves = (well: Well) => {
   const sdk = useSdk();
 
   const { data, isLoading, error, refetch, isFetching } = useChainScopedQuery({
-    queryKey: ["well", sdk, well.address, "reserves"],
+    queryKey: ['well', sdk, well.address, 'reserves'],
 
     queryFn: async () => {
       let reserves: TokenValue[];

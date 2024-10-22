@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { Token } from "@beanstalk/sdk";
+import { Token } from '@beanstalk/sdk';
 
-import { size } from "src/breakpoints";
-import { useTokenImage } from "src/tokens/useTokenMetadata";
-import { FC } from "src/types";
+import { size } from 'src/breakpoints';
+import { useTokenImage } from 'src/tokens/useTokenMetadata';
+import { FC } from 'src/types';
 
 type Props = {
   size: number;
@@ -19,12 +19,7 @@ export const TokenLogo: FC<Props> = ({ size, mobileSize, token, isLP: _isLP = fa
   const img = useTokenImage(token);
 
   return (
-    <Container
-      width={size}
-      height={size}
-      mobileWidth={mobileSize || size}
-      mobileHeight={mobileSize || size}
-    >
+    <Container width={size} height={size} mobileWidth={mobileSize || size} mobileHeight={mobileSize || size}>
       <img src={img} alt={`${token?.symbol} Logo`} />
     </Container>
   );

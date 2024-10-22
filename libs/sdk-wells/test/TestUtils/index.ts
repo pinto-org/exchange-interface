@@ -1,2 +1,2 @@
-export { BlockchainUtils } from "./BlockchainUtils";
-export { setupConnection, getProvider, ACCOUNTS } from "./provider";
+export { BlockchainUtils } from './BlockchainUtils';
+export { setupConnection, getProvider, ACCOUNTS } from './provider';

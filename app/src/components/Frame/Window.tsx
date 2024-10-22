@@ -1,9 +1,9 @@
-import React, { RefCallback, useCallback, useRef, useState } from "react";
+import React, { RefCallback, useCallback, useRef, useState } from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { Grid } from "src/components/Frame/Grid/Grid";
-import { FC } from "src/types";
+import { Grid } from 'src/components/Frame/Grid/Grid';
+import { FC } from 'src/types';
 export const Window: FC<{}> = ({ children }) => {
   const [contentElement, setContentElement] = useState<HTMLDivElement>();
 
@@ -12,7 +12,7 @@ export const Window: FC<{}> = ({ children }) => {
   }, []);
 
   return (
-    <ViewPort id="viewport">
+    <ViewPort id='viewport'>
       <GridContainer>{contentElement && <Grid content={contentElement} />}</GridContainer>
       <Content ref={ref}>{children}</Content>
     </ViewPort>

@@ -4,7 +4,7 @@
 export enum ChainId {
   BASE_MAINNET = 8453,
   LOCALHOST = 1337,
-  TESTNET = 31337,
+  TESTNET = 31337
 }
 
 export type TestnetChainId = ChainId.LOCALHOST | ChainId.TESTNET;

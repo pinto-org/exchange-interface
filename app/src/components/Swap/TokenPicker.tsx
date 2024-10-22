@@ -1,23 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
-import { Token } from "@beanstalk/sdk";
+import { Token } from '@beanstalk/sdk';
 
-import x from "src/assets/images/x.svg";
-import { size } from "src/breakpoints";
-import { TokenLogo } from "src/components/TokenLogo";
-import { useAllTokensBalance } from "src/tokens/useAllTokenBalance";
-import { useTokens } from "src/tokens/useTokens";
-import { displayTokenName, getTokenIndex } from "src/tokens/utils";
-import { FC } from "src/types";
-import { displayTokenSymbol } from "src/utils/format";
+import x from 'src/assets/images/x.svg';
+import { size } from 'src/breakpoints';
+import { TokenLogo } from 'src/components/TokenLogo';
+import { useAllTokensBalance } from 'src/tokens/useAllTokenBalance';
+import { useTokens } from 'src/tokens/useTokens';
+import { displayTokenName, getTokenIndex } from 'src/tokens/utils';
+import { FC } from 'src/types';
+import { displayTokenSymbol } from 'src/utils/format';
 
-import { BottomDrawer } from "../BottomDrawer";
-import { ChevronDown } from "../Icons";
-import { ImageButton } from "../ImageButton";
-import { Spinner } from "../Spinner";
-import { BodyS } from "../Typography";
+import { BottomDrawer } from '../BottomDrawer';
+import { ChevronDown } from '../Icons';
+import { ImageButton } from '../ImageButton';
+import { Spinner } from '../Spinner';
+import { BodyS } from '../Typography';
 
 export type TokenPickerProps = {
   token: Token;
@@ -92,24 +92,14 @@ export const TokenPicker: FC<TokenPickerProps> = ({
         ) : (
           <div>Select a Token</div>
         )}
-        {editable && <ChevronDown width={8} color="#adadad" />}
+        {editable && <ChevronDown width={8} color='#adadad' />}
       </Button>
       {modalOpen && (
-        <DesktopModal
-          id="modal-background"
-          onClick={closeModal}
-          role="dialog"
-          aria-labelledby="dialog-title"
-        >
-          <ModalContainer id="modal" data-trace="true">
+        <DesktopModal id='modal-background' onClick={closeModal} role='dialog' aria-labelledby='dialog-title'>
+          <ModalContainer id='modal' data-trace='true'>
             <ModalHeader>
-              <div id="dialog-title">Select a token</div>
-              <ImageButton
-                src={x}
-                alt="Close token selector modal"
-                size={10}
-                onClick={closeModal}
-              />
+              <div id='dialog-title'>Select a token</div>
+              <ImageButton src={x} alt='Close token selector modal' size={10} onClick={closeModal} />
             </ModalHeader>
             <ModalContent>
               <Ol>
@@ -130,25 +120,21 @@ export const TokenPicker: FC<TokenPickerProps> = ({
               </Ol>
             </ModalContent>
           </ModalContainer>
-          {connectorFor === "input-amount" && (
+          {connectorFor === 'input-amount' && (
             <InConnector>
-              <svg xmlns="http://www.w3.org/2000/svg" width={48} height={6} fill="none">
-                <path id="line" stroke="#46B955" d="M0 3h47.5" />
-                <path fill="#F9F8F6" stroke="#3E404B" d="M48.5 5.45a2.5 2.5 0 0 1 0-4.9v4.9Z" />
-                <path fill="#F9F8F6" stroke="#46B955" d="M0 .55a2.5 2.5 0 0 1 0 4.9V.55Z" />
+              <svg xmlns='http://www.w3.org/2000/svg' width={48} height={6} fill='none'>
+                <path id='line' stroke='#46B955' d='M0 3h47.5' />
+                <path fill='#F9F8F6' stroke='#3E404B' d='M48.5 5.45a2.5 2.5 0 0 1 0-4.9v4.9Z' />
+                <path fill='#F9F8F6' stroke='#46B955' d='M0 .55a2.5 2.5 0 0 1 0 4.9V.55Z' />
               </svg>
             </InConnector>
           )}
-          {connectorFor === "output-amount" && (
+          {connectorFor === 'output-amount' && (
             <OutConnector>
-              <svg xmlns="http://www.w3.org/2000/svg" width={48} height={184} fill="none">
-                <path
-                  id="line"
-                  stroke="#46B955"
-                  d="M-1 171H21a3 3 0 0 0 3-3V5a3 3 0 0 1 3-3h20.5"
-                />
-                <path fill="#F9F8F6" stroke="#3E404B" d="M48.5 5.45a2.5 2.5 0 0 1 0-4.9v4.9Z" />
-                <path fill="#F9F8F6" stroke="#46B955" d="M0 167.55a2.502 2.502 0 0 1 0 4.9v-4.9Z" />
+              <svg xmlns='http://www.w3.org/2000/svg' width={48} height={184} fill='none'>
+                <path id='line' stroke='#46B955' d='M-1 171H21a3 3 0 0 0 3-3V5a3 3 0 0 1 3-3h20.5' />
+                <path fill='#F9F8F6' stroke='#3E404B' d='M48.5 5.45a2.5 2.5 0 0 1 0-4.9v4.9Z' />
+                <path fill='#F9F8F6' stroke='#46B955' d='M0 167.55a2.502 2.502 0 0 1 0 4.9v-4.9Z' />
               </svg>
             </OutConnector>
           )}
@@ -156,11 +142,7 @@ export const TokenPicker: FC<TokenPickerProps> = ({
       )}
       {modalOpen && (
         <MobileDrawer>
-          <BottomDrawer
-            showDrawer={modalOpen}
-            headerText={"Select a token"}
-            toggleDrawer={setModalOpen}
-          >
+          <BottomDrawer showDrawer={modalOpen} headerText={'Select a token'} toggleDrawer={setModalOpen}>
             <ModalContent>
               <Ol>
                 {list.map((token: Token) => (
@@ -173,7 +155,7 @@ export const TokenPicker: FC<TokenPickerProps> = ({
                     {balancesLoading || isFetching ? (
                       <Spinner size={14} />
                     ) : (
-                      <Balance>{balances?.[token.symbol]?.toHuman("short")}</Balance>
+                      <Balance>{balances?.[token.symbol]?.toHuman('short')}</Balance>
                     )}
                   </TokenRow>
                 ))}
@@ -356,7 +338,7 @@ const Button = styled.button<ContainerProps>`
 
   padding: 0px 5px;
   gap: 6px;
-  cursor: ${(props) => (props.editable ? "pointer" : "auto")};
+  cursor: ${(props) => (props.editable ? 'pointer' : 'auto')};
 `;
 
 const TokenSymbol = styled.div`

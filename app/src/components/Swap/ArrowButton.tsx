@@ -1,23 +1,23 @@
-import * as React from "react";
-import { MouseEventHandler } from "react";
+import * as React from 'react';
+import { MouseEventHandler } from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { FC } from "src/types";
+import { FC } from 'src/types';
 
 type ArrowButtonType = {
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 export const ArrowButton: FC<ArrowButtonType> = ({ onClick }) => (
-  <Container data-trace="true">
+  <Container data-trace='true'>
     <Button onClick={onClick}>
-      <svg width={14} height={20} fill="none" xmlns="http://www.w3.org/2000/svg" strokeWidth={1.5}>
+      <svg width={14} height={20} fill='none' xmlns='http://www.w3.org/2000/svg' strokeWidth={1.5}>
         <path
-          d="m5.333 5.417 3.75-3.75m0 0 3.75 3.75m-3.75-3.75V10m-.417 4.583-3.75 3.75m0 0-3.75-3.75m3.75 3.75v-7.5"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          d='m5.333 5.417 3.75-3.75m0 0 3.75 3.75m-3.75-3.75V10m-.417 4.583-3.75 3.75m0 0-3.75-3.75m3.75 3.75v-7.5'
+          stroke='currentColor'
+          strokeLinecap='round'
+          strokeLinejoin='round'
         />
       </svg>
     </Button>

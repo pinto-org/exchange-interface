@@ -1,19 +1,19 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef } from 'react';
 
-import debounce from "lodash/debounce";
-import styled, { keyframes } from "styled-components";
+import debounce from 'lodash/debounce';
+import styled, { keyframes } from 'styled-components';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
-import { size } from "src/breakpoints";
-import { useTokenBalance } from "src/tokens/useTokenBalance";
-import { getTokenIndex } from "src/tokens/utils";
-import { FC } from "src/types";
+import { size } from 'src/breakpoints';
+import { useTokenBalance } from 'src/tokens/useTokenBalance';
+import { getTokenIndex } from 'src/tokens/utils';
+import { FC } from 'src/types';
 
-import { BasicInput } from "./BasicInput";
-import { TokenPicker, TokenPickerProps } from "./TokenPicker";
-import { Spinner } from "../Spinner";
-import { BodyXS } from "../Typography";
+import { BasicInput } from './BasicInput';
+import { TokenPicker, TokenPickerProps } from './TokenPicker';
+import { Spinner } from '../Spinner';
+import { BodyXS } from '../Typography';
 
 type ContainerProps = {
   width: string;
@@ -36,7 +36,7 @@ type TokenInput = {
   debounceTime?: number;
   clamp?: boolean;
   balanceLabel?: string;
-} & Pick<TokenPickerProps, "excludeToken" | "tokenOptions">;
+} & Pick<TokenPickerProps, 'excludeToken' | 'tokenOptions'>;
 
 export const TokenInput: FC<TokenInput> = ({
   id,
@@ -53,7 +53,7 @@ export const TokenInput: FC<TokenInput> = ({
   canChangeValue = true,
   debounceTime = 500,
   clamp = false,
-  balanceLabel = "balance",
+  balanceLabel = 'balance',
   /// TokenPickerProps
   excludeToken,
   tokenOptions
@@ -61,7 +61,7 @@ export const TokenInput: FC<TokenInput> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { data: balance, isLoading: isBalanceLoading } = useTokenBalance(token);
-  width = width ?? "100%";
+  width = width ?? '100%';
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateAmount = useCallback(
@@ -92,25 +92,19 @@ export const TokenInput: FC<TokenInput> = ({
   }, []);
 
   const handleClickMax = useCallback(() => {
-    const val = balance?.[token.address]?.toHuman() ?? "";
+    const val = balance?.[token.address]?.toHuman() ?? '';
     handleAmountChange(val);
   }, [balance, handleAmountChange, token.address]);
 
-  if (loading) return <LoadingContainer width={width} data-trace="true" />;
+  if (loading) return <LoadingContainer width={width} data-trace='true' />;
 
   return (
-    <Container
-      width={width}
-      id="token-input"
-      onClick={handleClick}
-      showBalance={showBalance}
-      data-trace="true"
-    >
+    <Container width={width} id='token-input' onClick={handleClick} showBalance={showBalance} data-trace='true'>
       <TopRow>
         <BasicInput
           id={id}
           label={label}
-          value={amount?.toHuman() || ""}
+          value={amount?.toHuman() || ''}
           onChange={handleAmountChange}
           inputRef={inputRef}
           allowNegative={allowNegative}
@@ -130,8 +124,8 @@ export const TokenInput: FC<TokenInput> = ({
       {showBalance && (
         <BalanceRow>
           <Balance onClick={handleClickMax}>
-            {balanceLabel}:{" "}
-            {isBalanceLoading ? <Spinner size={12} /> : balance?.[getTokenIndex(token)]?.toHuman("short")}
+            {balanceLabel}:{' '}
+            {isBalanceLoading ? <Spinner size={12} /> : balance?.[getTokenIndex(token)]?.toHuman('short')}
           </Balance>
         </BalanceRow>
       )}

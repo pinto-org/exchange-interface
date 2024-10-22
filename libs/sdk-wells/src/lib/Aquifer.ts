@@ -6,7 +6,7 @@ import {
   makeCallObject,
   setReadOnly,
   validateAddress,
-  validateHasMinTokensForWell,
+  validateHasMinTokensForWell
 } from './utils';
 import { WellsSDK } from './WellsSDK';
 import { WellFunction } from './WellFunction';
@@ -53,12 +53,7 @@ export class Aquifer {
     validateSalt(salt);
 
     // Prepare Data
-    const immutableData = Aquifer.getEncodedWellImmutableData(
-      this.address,
-      tokens,
-      wellFunction,
-      pumps
-    );
+    const immutableData = Aquifer.getEncodedWellImmutableData(this.address, tokens, wellFunction, pumps);
     const { name, symbol } = await getNameAndSymbol(wellFunction, tokens, _name, _symbol);
     const initFunctionCall = await Aquifer.getEncodedWellInitFunctionData(name, symbol);
 
@@ -66,12 +61,7 @@ export class Aquifer {
     const saltBytes32 = salt ? getBytesHexString(salt, 32) : constants.HashZero;
 
     // Bore It
-    const deployedWell = await this.contract.boreWell(
-      wellAddress,
-      immutableData,
-      initFunctionCall,
-      saltBytes32
-    );
+    const deployedWell = await this.contract.boreWell(wellAddress, immutableData, initFunctionCall, saltBytes32);
 
     const txn = await deployedWell.wait();
 
@@ -94,12 +84,7 @@ export class Aquifer {
     validateHasMinTokensForWell(tokens);
     validateSalt(salt);
 
-    const immutableData = Aquifer.getEncodedWellImmutableData(
-      this.address,
-      tokens,
-      wellFunction,
-      pumps
-    );
+    const immutableData = Aquifer.getEncodedWellImmutableData(this.address, tokens, wellFunction, pumps);
     const saltBytes32 = salt ? getBytesHexString(salt, 32) : constants.HashZero;
 
     return this.contract.predictWellAddress(implementation, immutableData, saltBytes32);
@@ -116,12 +101,7 @@ export class Aquifer {
    * @param pumps
    * @returns
    */
-  static getEncodedWellImmutableData(
-    aquifer: string,
-    tokens: ERC20Token[],
-    wellFunction: WellFunction,
-    pumps: Pump[]
-  ) {
+  static getEncodedWellImmutableData(aquifer: string, tokens: ERC20Token[], wellFunction: WellFunction, pumps: Pump[]) {
     validateAddress(wellFunction.address, wellFunction.address);
 
     if (tokens.length < 2) {
@@ -176,12 +156,7 @@ function validateSalt(salt?: number) {
   }
 }
 
-async function getNameAndSymbol(
-  wellFunction: WellFunction,
-  tokens: ERC20Token[],
-  _name?: string,
-  _symbol?: string
-) {
+async function getNameAndSymbol(wellFunction: WellFunction, tokens: ERC20Token[], _name?: string, _symbol?: string) {
   let name = _name ?? '';
   let symbol = _symbol ?? '';
 

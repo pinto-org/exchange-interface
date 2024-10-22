@@ -1,12 +1,12 @@
-import { useAccount } from "wagmi";
+import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
-import { ChainResolver } from "@beanstalk/sdk-core";
+import { Token, TokenValue } from '@beanstalk/sdk';
+import { ChainResolver } from '@beanstalk/sdk-core';
 
-import { getIsValidEthereumAddress } from "src/utils/addresses";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useScopedQuery, useSetScopedQueryData } from "src/utils/query/useScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
+import { getIsValidEthereumAddress } from 'src/utils/addresses';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useScopedQuery, useSetScopedQueryData } from 'src/utils/query/useScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
 
 export const useSiloBalance = (token: Token) => {
   const { address } = useAccount();
@@ -30,7 +30,7 @@ export const useSiloBalance = (token: Token) => {
     staleTime: 1000 * 30,
     refetchInterval: 1000 * 30,
     refetchIntervalInBackground: false,
-    refetchOnWindowFocus: "always"
+    refetchOnWindowFocus: 'always'
   });
 
   return { data, isLoading, error, refetch, isFetching };
@@ -62,7 +62,7 @@ export const useFarmerWellsSiloBalances = () => {
 
         return resultMap;
       } catch (e) {
-        console.error("Error fetching silo balances: ", e);
+        console.error('Error fetching silo balances: ', e);
         return {};
       }
     },

@@ -1,66 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import {
-  Control,
-  Controller,
-  FormProvider,
-  useForm,
-  useFormContext,
-  useWatch
-} from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { useAccount } from "wagmi";
+import { Control, Controller, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useAccount } from 'wagmi';
 
-import { ERC20Token, TokenValue } from "@beanstalk/sdk";
+import { ERC20Token, TokenValue } from '@beanstalk/sdk';
 
-import { StyledForm, SwitchField, TextInputField } from "src/components/Form";
-import { Box, Divider, Flex, FlexCard } from "src/components/Layout";
-import { SelectCard } from "src/components/Selectable";
-import { TokenInput } from "src/components/Swap/TokenInput";
-import { Text } from "src/components/Typography";
-import { useTokenAllowance } from "src/tokens/useTokenAllowance";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useInvalidateQueries } from "src/utils/query/useInvalidateQueries";
-import useSdk from "src/utils/sdk/useSdk";
-import { theme } from "src/utils/ui/theme";
-import { useBoolean } from "src/utils/ui/useBoolean";
+import { StyledForm, SwitchField, TextInputField } from 'src/components/Form';
+import { Box, Divider, Flex, FlexCard } from 'src/components/Layout';
+import { SelectCard } from 'src/components/Selectable';
+import { TokenInput } from 'src/components/Swap/TokenInput';
+import { Text } from 'src/components/Typography';
+import { useTokenAllowance } from 'src/tokens/useTokenAllowance';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useInvalidateQueries } from 'src/utils/query/useInvalidateQueries';
+import useSdk from 'src/utils/sdk/useSdk';
+import { theme } from 'src/utils/ui/theme';
+import { useBoolean } from 'src/utils/ui/useBoolean';
 
-import { CreateWellContext, CreateWellStepProps, useCreateWell } from "./CreateWellProvider";
-import { CreateWellButtonRow } from "./shared/CreateWellButtonRow";
-import { WellComponentInfo, useWhitelistedWellComponents } from "./useWhitelistedWellComponents";
-import { ButtonPrimary } from "../Button";
-import { ensureAllowance } from "../Liquidity/allowance";
-import { Modal } from "../Modal";
-import { ProgressCircle } from "../ProgressCircle";
+import { CreateWellContext, CreateWellStepProps, useCreateWell } from './CreateWellProvider';
+import { CreateWellButtonRow } from './shared/CreateWellButtonRow';
+import { WellComponentInfo, useWhitelistedWellComponents } from './useWhitelistedWellComponents';
+import { ButtonPrimary } from '../Button';
+import { ensureAllowance } from '../Liquidity/allowance';
+import { Modal } from '../Modal';
+import { ProgressCircle } from '../ProgressCircle';
 
-type FormValues = CreateWellStepProps["step4"] & {
+type FormValues = CreateWellStepProps['step4'] & {
   usingSalt: boolean;
   seedingLiquidity: boolean;
 };
 
 type FormContentProps = {
   salt: number | undefined;
-  liquidity: CreateWellContext["liquidity"];
+  liquidity: CreateWellContext['liquidity'];
   token1: ERC20Token;
   token2: ERC20Token;
   deploying: boolean;
-  setStep4: CreateWellContext["setStep4"];
-  deployWell: CreateWellContext["deployWell"];
+  setStep4: CreateWellContext['setStep4'];
+  deployWell: CreateWellContext['deployWell'];
 };
 
-const FormContent = ({
-  token1,
-  token2,
-  salt,
-  liquidity,
-  deploying,
-  setStep4,
-  deployWell
-}: FormContentProps) => {
+const FormContent = ({ token1, token2, salt, liquidity, deploying, setStep4, deployWell }: FormContentProps) => {
   const [enoughAllowance, setEnoughAllowance] = useState(true);
   const [modalOpen, { set: setModal }] = useBoolean(false);
-  const [deployedWellAddress, setDeployedWellAddress] = useState<string>("");
+  const [deployedWellAddress, setDeployedWellAddress] = useState<string>('');
   const [deployErr, setDeployErr] = useState<Error | undefined>();
   const navigate = useNavigate();
 
@@ -69,16 +54,12 @@ const FormContent = ({
       usingSalt: !!salt,
       salt: salt,
       seedingLiquidity: !!(liquidity.token1Amount || liquidity.token2Amount),
-      token1Amount: liquidity.token1Amount?.toString() || "",
-      token2Amount: liquidity.token2Amount?.toString() || ""
+      token1Amount: liquidity.token1Amount?.toString() || '',
+      token2Amount: liquidity.token2Amount?.toString() || ''
     }
   });
 
-  const [seeding, _amt1, _amt2] = methods.watch([
-    "seedingLiquidity",
-    "token1Amount",
-    "token2Amount"
-  ]);
+  const [seeding, _amt1, _amt2] = methods.watch(['seedingLiquidity', 'token1Amount', 'token2Amount']);
 
   const amt1 = Number(_amt1 || 0);
   const amt2 = Number(_amt2 || 0);
@@ -106,22 +87,20 @@ const FormContent = ({
       return;
     }
 
-    const token1Amount = token1.fromHuman(Number(values.token1Amount || "0"));
-    const token2Amount = token2.fromHuman(Number(values.token2Amount || "0"));
+    const token1Amount = token1.fromHuman(Number(values.token1Amount || '0'));
+    const token2Amount = token2.fromHuman(Number(values.token2Amount || '0'));
 
     // We determine that the user is seeding liquidity if they have 'seeding liquidity' toggled on in the CURRENT form
     // and if they have provided a non-zero amount for BOTH tokens.
-    const seedingLiquidity =
-      values.seedingLiquidity && Boolean(token1Amount.gt(0) && token2Amount.gt(0));
+    const seedingLiquidity = values.seedingLiquidity && Boolean(token1Amount.gt(0) && token2Amount.gt(0));
 
     // Always use the salt value from the current form.
     const saltValue = (values.usingSalt && values.salt) || 0;
 
-    const liquidity =
-      seedingLiquidity && token1Amount && token2Amount ? { token1Amount, token2Amount } : undefined;
+    const liquidity = seedingLiquidity && token1Amount && token2Amount ? { token1Amount, token2Amount } : undefined;
 
     const result = await deployWell(saltValue, liquidity);
-    if ("wellAddress" in result) {
+    if ('wellAddress' in result) {
       setDeployedWellAddress(result.wellAddress);
       navigate(`/wells/${result.wellAddress}`);
     } else {
@@ -132,18 +111,14 @@ const FormContent = ({
   return (
     <>
       <FormProvider {...methods}>
-        <StyledForm $width="100%" onSubmit={methods.handleSubmit(onSubmit)}>
+        <StyledForm $width='100%' onSubmit={methods.handleSubmit(onSubmit)}>
           <Flex $gap={2}>
-            <LiquidityForm
-              token1={token1}
-              token2={token2}
-              setHasEnoughAllowance={setEnoughAllowance}
-            />
+            <LiquidityForm token1={token1} token2={token2} setHasEnoughAllowance={setEnoughAllowance} />
             <SaltForm />
             <CreateWellButtonRow
               onGoBack={handleSave}
               valuesRequired={false}
-              disabledMessage={bothAmountsNeeded ? "Both Amounts Required" : undefined}
+              disabledMessage={bothAmountsNeeded ? 'Both Amounts Required' : undefined}
               disabled={!enoughAllowance || bothAmountsNeeded}
             />
           </Flex>
@@ -151,10 +126,10 @@ const FormContent = ({
       </FormProvider>
       <Modal allowClose={!deploying} open={modalOpen} wide onOpenChange={setModal}>
         <Modal.Content noTitle>
-          <ModalContentWrapper $fullWidth $alignItems="center">
-            <Text $variant="l">Well Deployment In Progress</Text>
+          <ModalContentWrapper $fullWidth $alignItems='center'>
+            <Text $variant='l'>Well Deployment In Progress</Text>
             <Flex $fullWidth>
-              <Flex $my={5} $alignSelf="center">
+              <Flex $my={5} $alignSelf='center'>
                 <ProgressCircle
                   size={75}
                   progress={80}
@@ -162,14 +137,14 @@ const FormContent = ({
                   trackColor={theme.colors.white}
                   strokeColor={theme.colors.primary}
                   animate
-                  status={deployedWellAddress ? "success" : deployErr ? "error" : undefined}
+                  status={deployedWellAddress ? 'success' : deployErr ? 'error' : undefined}
                 />
               </Flex>
               {deployErr ? (
-                <Flex $alignSelf="flex-start" $gap={2}>
+                <Flex $alignSelf='flex-start' $gap={2}>
                   <Text>Transaction Reverted: </Text>
                   <ErroMessageWrapper>
-                    <Text>{deployErr.message || "See console for details"}</Text>
+                    <Text>{deployErr.message || 'See console for details'}</Text>
                   </ErroMessageWrapper>
                 </Flex>
               ) : null}
@@ -204,25 +179,25 @@ type LiquidityFormProps = {
 };
 const LiquidityForm = ({ token1, token2, setHasEnoughAllowance }: LiquidityFormProps) => {
   const { control } = useFormContext<FormValues>();
-  const seedingLiquidity = useWatch({ control, name: "seedingLiquidity" });
+  const seedingLiquidity = useWatch({ control, name: 'seedingLiquidity' });
 
   return (
     <Flex $gap={2}>
-      <Flex $direction="row" $gap={1} $alignItems="center">
-        <SwitchField control={control} name="seedingLiquidity" />
-        <Text $variant="xs" $weight="bold" $mb={-0.5}>
+      <Flex $direction='row' $gap={1} $alignItems='center'>
+        <SwitchField control={control} name='seedingLiquidity' />
+        <Text $variant='xs' $weight='bold' $mb={-0.5}>
           Seed Well with initial liquidity
         </Text>
       </Flex>
       {seedingLiquidity && (
-        <FlexCard $gap={3} $p={3} $boxSizing="border-box" $fullWidth $maxWidth="430px">
+        <FlexCard $gap={3} $p={3} $boxSizing='border-box' $fullWidth $maxWidth='430px'>
           <Controller
-            name="token1Amount"
+            name='token1Amount'
             control={control}
             render={({ field }) => {
               return (
                 <TokenInput
-                  id="seed-liquidity-input-1"
+                  id='seed-liquidity-input-1'
                   token={token1}
                   amount={field.value ? token1.amount(Number(field.value)) : undefined}
                   onAmountChange={(value) => {
@@ -230,21 +205,21 @@ const LiquidityForm = ({ token1, token2, setHasEnoughAllowance }: LiquidityFormP
                   }}
                   canChangeToken={false}
                   loading={false}
-                  label=""
+                  label=''
                   allowNegative={false}
-                  balanceLabel="Available"
+                  balanceLabel='Available'
                   clamp
                 />
               );
             }}
           />
           <Controller
-            name="token2Amount"
+            name='token2Amount'
             control={control}
             render={({ field }) => {
               return (
                 <TokenInput
-                  id="seed-liquidity-input-1"
+                  id='seed-liquidity-input-1'
                   token={token2}
                   amount={field.value ? token2.amount(Number(field.value)) : undefined}
                   onAmountChange={(value) => {
@@ -252,9 +227,9 @@ const LiquidityForm = ({ token1, token2, setHasEnoughAllowance }: LiquidityFormP
                   }}
                   canChangeToken={false}
                   loading={false}
-                  label=""
+                  label=''
                   allowNegative={false}
-                  balanceLabel="Available"
+                  balanceLabel='Available'
                   clamp
                 />
               );
@@ -291,8 +266,8 @@ const AllowanceButtons = ({
   const { data: token1Allowance } = useTokenAllowance(token1, sdk.contracts.beanstalk.address);
   const { data: token2Allowance } = useTokenAllowance(token2, sdk.contracts.beanstalk.address);
 
-  const amount1 = useWatch({ control, name: "token1Amount" });
-  const amount2 = useWatch({ control, name: "token2Amount" });
+  const amount1 = useWatch({ control, name: 'token1Amount' });
+  const amount2 = useWatch({ control, name: 'token2Amount' });
 
   const amount1ExceedsAllowance = token1Allowance && amount1 && token1Allowance.lt(Number(amount1));
   const amount2ExceedsAllowance = token2Allowance && amount2 && token2Allowance.lt(Number(amount2));
@@ -317,7 +292,7 @@ const AllowanceButtons = ({
   }
 
   return (
-    <Flex $direction="row" $gap={2}>
+    <Flex $direction='row' $gap={2}>
       {amount1ExceedsAllowance && (
         <ButtonPrimary
           $fullWidth
@@ -351,10 +326,10 @@ const AllowanceButtons = ({
 const useSeedingLiquidity = () => {
   const { control, setValue } = useFormContext<FormValues>();
 
-  const seedingLiquidity = useWatch({ control, name: "seedingLiquidity" });
-  const amount1 = useWatch({ control, name: "token1Amount" });
-  const amount2 = useWatch({ control, name: "token2Amount" });
-  const salt = useWatch({ control, name: "salt" });
+  const seedingLiquidity = useWatch({ control, name: 'seedingLiquidity' });
+  const amount1 = useWatch({ control, name: 'token1Amount' });
+  const amount2 = useWatch({ control, name: 'token2Amount' });
+  const salt = useWatch({ control, name: 'salt' });
 
   const noAmounts = !amount1 && !amount2;
   const noSaltValue = !salt;
@@ -364,14 +339,14 @@ const useSeedingLiquidity = () => {
   // Conditionally toggle 'usingSalt' field based on seeding liquidity and salt values
   useEffect(() => {
     if (seedingLiquidity) {
-      setValue("usingSalt", true);
+      setValue('usingSalt', true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seedingLiquidity]);
 
   useEffect(() => {
     if (!seedingLiquidity && noSaltValue && noAmounts) {
-      setValue("usingSalt", false);
+      setValue('usingSalt', false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noSaltValue, seedingLiquidity, noAmounts]);
@@ -390,45 +365,45 @@ const SaltForm = () => {
       errors: { salt: saltError }
     }
   } = useFormContext<FormValues>();
-  const usingSalt = useWatch({ control, name: "usingSalt" });
+  const usingSalt = useWatch({ control, name: 'usingSalt' });
   const { isSeedingLiquidityAndHasValues, seedingLiquidityToggled } = useSeedingLiquidity();
 
   return (
     <Flex $gap={2}>
       <Flex $gap={1}>
-        <Flex $direction="row" $gap={1} $alignItems="center">
+        <Flex $direction='row' $gap={1} $alignItems='center'>
           <SwitchField
             control={control}
-            name="usingSalt"
+            name='usingSalt'
             // disable the user from toggling the field if seeding liquidity is toggled
             disabled={seedingLiquidityToggled}
           />
-          <Text $variant="xs" $weight="bold" $mb={-0.5}>
+          <Text $variant='xs' $weight='bold' $mb={-0.5}>
             Deploy Well with a Salt
           </Text>
         </Flex>
         {usingSalt ? (
-          <Text $variant="xs" $color="text.secondary">
+          <Text $variant='xs' $color='text.secondary'>
             New Wells are deployed using pipeline. Salt should be mined with the pipeline address
           </Text>
         ) : null}
       </Flex>
       {usingSalt && (
         <TextInputField
-          placeholder="Input Salt"
-          type="number"
-          {...register("salt", {
+          placeholder='Input Salt'
+          type='number'
+          {...register('salt', {
             required: {
               value: isSeedingLiquidityAndHasValues ? true : false,
-              message: "Salt is required when seeding liquidity"
+              message: 'Salt is required when seeding liquidity'
             },
             min: {
               value: isSeedingLiquidityAndHasValues ? 1 : 0,
-              message: "Salt must be >= 1 when seeding liquidity"
+              message: 'Salt must be >= 1 when seeding liquidity'
             },
             validate: (formValue) => {
               if (formValue && !Number.isInteger(Number(formValue))) {
-                return "Salt must be an integer";
+                return 'Salt must be an integer';
               }
               return true;
             }
@@ -457,73 +432,61 @@ export const CreateWellStep4 = () => {
     deployWell
   } = useCreateWell();
 
-  if (
-    !wellImplementation ||
-    !pumpAddress ||
-    !wellFunctionAddress ||
-    !token1 ||
-    !token2 ||
-    !wellName ||
-    !wellSymbol
-  ) {
+  if (!wellImplementation || !pumpAddress || !wellFunctionAddress || !token1 || !token2 || !wellName || !wellSymbol) {
     return null;
   }
 
   return (
     <Flex $fullWidth>
       <div>
-        <Text $variant="h2">Preview Deployment</Text>
+        <Text $variant='h2'>Preview Deployment</Text>
         <Subtitle>Review selections and deploy your Well.</Subtitle>
       </div>
       <Flex $mt={3}>
         <Flex $gap={4}>
           {/* well implementation */}
           <Flex $gap={1}>
-            <Text $variant="h3">Well Implementation</Text>
+            <Text $variant='h3'>Well Implementation</Text>
             <SelectedComponentCard
               {...getSelectedCardComponentProps(wellImplementation, components.wellImplementations)}
             />
           </Flex>
           {/* name & symbol */}
           <Flex $gap={1}>
-            <Text $variant="h3">Well Name & Symbol</Text>
-            <Text $variant="l" $color="text.secondary">
-              Name:{" "}
-              <Text as="span" $variant="l" $weight="semi-bold" $color="text.secondary">
+            <Text $variant='h3'>Well Name & Symbol</Text>
+            <Text $variant='l' $color='text.secondary'>
+              Name:{' '}
+              <Text as='span' $variant='l' $weight='semi-bold' $color='text.secondary'>
                 {wellName}
               </Text>
             </Text>
-            <Text $variant="l" $color="text.secondary">
-              Symbol:{" "}
-              <Text as="span" $variant="l" $weight="semi-bold" $color="text.secondary">
+            <Text $variant='l' $color='text.secondary'>
+              Symbol:{' '}
+              <Text as='span' $variant='l' $weight='semi-bold' $color='text.secondary'>
                 {wellSymbol}
               </Text>
             </Text>
           </Flex>
           {/* Tokens */}
           <Flex $gap={1}>
-            <Text $variant="h3">Tokens</Text>
+            <Text $variant='h3'>Tokens</Text>
             <InlineImgFlex>
-              <img src={token1.logo ?? ""} alt={token1.name ?? ""} />
-              <Text $variant="l">{token1?.symbol ?? ""}</Text>
+              <img src={token1.logo ?? ''} alt={token1.name ?? ''} />
+              <Text $variant='l'>{token1?.symbol ?? ''}</Text>
             </InlineImgFlex>
             <InlineImgFlex>
-              <img src={token2.logo ?? ""} alt={token2.name ?? ""} />
-              <Text $variant="l">{token2?.symbol ?? ""}</Text>
+              <img src={token2.logo ?? ''} alt={token2.name ?? ''} />
+              <Text $variant='l'>{token2?.symbol ?? ''}</Text>
             </InlineImgFlex>
           </Flex>
           {/* Pricing Function */}
           <Flex $gap={1}>
-            <Text $variant="h3">Pricing Function</Text>
-            <SelectedComponentCard
-              {...getSelectedCardComponentProps(wellFunctionAddress, components.wellFunctions)}
-            />
+            <Text $variant='h3'>Pricing Function</Text>
+            <SelectedComponentCard {...getSelectedCardComponentProps(wellFunctionAddress, components.wellFunctions)} />
           </Flex>
           <Flex $gap={1}>
-            <Text $variant="h3">Pumps</Text>
-            <SelectedComponentCard
-              {...getSelectedCardComponentProps(pumpAddress, components.pumps)}
-            />
+            <Text $variant='h3'>Pumps</Text>
+            <SelectedComponentCard {...getSelectedCardComponentProps(pumpAddress, components.pumps)} />
           </Flex>
         </Flex>
       </Flex>
@@ -564,11 +527,11 @@ const SelectedComponentCard = ({ title, subtitle }: { title?: string; subtitle?:
   return (
     <SelectCard selected={true}>
       <div>
-        <Text $variant="xs" $weight="bold">
+        <Text $variant='xs' $weight='bold'>
           {title}
         </Text>
         {subtitle ? (
-          <Text $variant="xs" $color="text.secondary">
+          <Text $variant='xs' $color='text.secondary'>
             {subtitle}
           </Text>
         ) : null}
@@ -582,8 +545,8 @@ const Subtitle = styled(Text).attrs({ $mt: 0.5 })`
 `;
 
 const InlineImgFlex = styled(Flex).attrs({
-  $display: "inline-flex",
-  $direction: "row",
+  $display: 'inline-flex',
+  $direction: 'row',
   $gap: 0.5
 })`
   img {

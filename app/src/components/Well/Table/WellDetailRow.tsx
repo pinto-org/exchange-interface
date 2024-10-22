@@ -1,29 +1,29 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { mediaQuery, size } from "src/breakpoints";
-import { Item } from "src/components/Layout";
-import { Skeleton } from "src/components/Skeleton";
-import { Row, Td } from "src/components/Table";
-import { TokenLogo } from "src/components/TokenLogo";
-import { useResolvedChainId } from "src/utils/chain";
-import { formatNum } from "src/utils/format";
+import { mediaQuery, size } from 'src/breakpoints';
+import { Item } from 'src/components/Layout';
+import { Skeleton } from 'src/components/Skeleton';
+import { Row, Td } from 'src/components/Table';
+import { TokenLogo } from 'src/components/TokenLogo';
+import { useResolvedChainId } from 'src/utils/chain';
+import { formatNum } from 'src/utils/format';
 
-import { WellYieldWithTooltip } from "../WellYieldWithTooltip";
+import { WellYieldWithTooltip } from '../WellYieldWithTooltip';
 
 /// format value with 2 decimals, if value is less than 1M, otherwise use short format
 const formatMayDecimals = (tv: TokenValue | undefined) => {
-  if (!tv) return "-.--";
-  if (tv.gt(0) && tv.lt(0.001)) return "<0.001";
+  if (!tv) return '-.--';
+  if (tv.gt(0) && tv.lt(0.001)) return '<0.001';
   if (tv.lt(1_000_000)) {
     return formatNum(tv, { minDecimals: 2, maxDecimals: 2 });
   }
-  return tv.toHuman("short");
+  return tv.toHuman('short');
 };
 
 export const WellDetailRow: FC<{
@@ -42,7 +42,7 @@ export const WellDetailRow: FC<{
   const renderTokenSymbols = () => {
     return tokens
       .map((token) => token.symbol)
-      .join("/")
+      .join('/')
       .toString();
   };
 
@@ -54,11 +54,7 @@ export const WellDetailRow: FC<{
         <WellDetail>
           <TokenLogos>
             {tokens.map((token, i) => (
-              <TokenLogo
-                token={token}
-                size={25}
-                key={`desktop-logos-${well.address}-${token.address}-${i}`}
-              />
+              <TokenLogo token={token} size={25} key={`desktop-logos-${well.address}-${token.address}-${i}`} />
             ))}
           </TokenLogos>
           <TokenSymbols>{renderTokenSymbols()}</TokenSymbols>
@@ -66,25 +62,25 @@ export const WellDetailRow: FC<{
       </DesktopContainer>
       <DesktopContainer>
         <PricingFunction>
-          <div className="function-name">{functionName || "Price Function"}</div>
-          <div className="trading-fee">{"0.00% Trading Fees"}</div>
+          <div className='function-name'>{functionName || 'Price Function'}</div>
+          <div className='trading-fee'>{'0.00% Trading Fees'}</div>
         </PricingFunction>
       </DesktopContainer>
-      <DesktopContainer align="right">
+      <DesktopContainer align='right'>
         <Item column right>
           <WellYieldWithTooltip well={well} />
         </Item>
       </DesktopContainer>
-      <DesktopContainer align="right">
-        <Amount>${liquidity ? liquidity.toHuman("short") : "-.--"}</Amount>
+      <DesktopContainer align='right'>
+        <Amount>${liquidity ? liquidity.toHuman('short') : '-.--'}</Amount>
       </DesktopContainer>
-      <DesktopContainer align="right">
-        <Amount>${price && price.gt(0) ? price.toHuman("short") : "-.--"}</Amount>
+      <DesktopContainer align='right'>
+        <Amount>${price && price.gt(0) ? price.toHuman('short') : '-.--'}</Amount>
       </DesktopContainer>
-      <DesktopContainer align="right">
-        <Amount>${volume ? volume.toHuman("short") : "-.--"}</Amount>
+      <DesktopContainer align='right'>
+        <Amount>${volume ? volume.toHuman('short') : '-.--'}</Amount>
       </DesktopContainer>
-      <DesktopContainer align="right">
+      <DesktopContainer align='right'>
         {tokens.map((token, i) => {
           return (
             <Reserves key={`reserves-${well.address}-${token.address}-${i}`}>
@@ -103,11 +99,7 @@ export const WellDetailRow: FC<{
         <WellDetail>
           <TokenLogos>
             {tokens.map((token, i) => (
-              <TokenLogo
-                token={token}
-                size={25}
-                key={`mobile-logos-${well.address}-${token.address}-${i}`}
-              />
+              <TokenLogo token={token} size={25} key={`mobile-logos-${well.address}-${token.address}-${i}`} />
             ))}
           </TokenLogos>
           <TokenSymbols>{renderTokenSymbols()}</TokenSymbols>
@@ -130,20 +122,20 @@ export const WellDetailLoadingRow: FC<{}> = () => {
       <DesktopContainer>
         <Skeleton height={24} width={125} />
       </DesktopContainer>
-      <DesktopContainer align="right">
+      <DesktopContainer align='right'>
         <Skeleton height={32} width={75} />
       </DesktopContainer>
-      <DesktopContainer align="right">
+      <DesktopContainer align='right'>
         <Skeleton height={24} width={90} />
       </DesktopContainer>
-      <DesktopContainer align="right">
+      <DesktopContainer align='right'>
         <Skeleton height={24} width={90} />
       </DesktopContainer>
-      <DesktopContainer align="right">
+      <DesktopContainer align='right'>
         <Skeleton height={24} width={90} />
       </DesktopContainer>
-      <DesktopContainer align="right">
-        <LoadingColumn align="right">
+      <DesktopContainer align='right'>
+        <LoadingColumn align='right'>
           <Skeleton height={24} width={50} />
           <Skeleton height={24} width={50} />
         </LoadingColumn>
@@ -158,12 +150,12 @@ export const WellDetailLoadingRow: FC<{}> = () => {
   );
 };
 
-const LoadingColumn = styled.div<{ align?: "right" | "left" }>`
+const LoadingColumn = styled.div<{ align?: 'right' | 'left' }>`
   display: flex;
   flex-direction: column;
   gap: 8px;
   ${(props) => `
-    align-items: ${props.align === "right" ? "flex-end" : "flex-start"};
+    align-items: ${props.align === 'right' ? 'flex-end' : 'flex-start'};
   `}
 
   ${mediaQuery.sm.only} {

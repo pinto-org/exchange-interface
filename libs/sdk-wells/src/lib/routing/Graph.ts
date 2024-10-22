@@ -10,7 +10,7 @@ export class Graph {
     this.graph = new GraphLib({
       multigraph: true,
       directed: true,
-      compound: false,
+      compound: false
     });
   }
 
@@ -24,7 +24,7 @@ export class Graph {
     this.graph.setEdge(tokenA.symbol, tokenB.symbol, {
       well,
       from: tokenA,
-      to: tokenB,
+      to: tokenB
     });
   }
 

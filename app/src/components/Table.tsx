@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { mediaQuery, size } from "src/breakpoints";
+import { mediaQuery, size } from 'src/breakpoints';
 
 export const Table = styled.table`
   border: 0.5px solid #9ca3af;
@@ -26,13 +26,13 @@ export const Th = styled.th`
   font-weight: 400;
   font-size: 16px;
   line-height: 16px;
-  text-align: ${(props) => props.align || "left"};
+  text-align: ${(props) => props.align || 'left'};
   text-transform: uppercase;
   cursor: default;
 `;
 export const Td = styled.td`
   padding: 16px;
-  text-align: ${(props) => props.align || "left"};
+  text-align: ${(props) => props.align || 'left'};
 `;
 export const THead = styled.thead`
   ${Row} {

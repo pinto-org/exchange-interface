@@ -13,14 +13,18 @@ type Diffs = Array<{
 
 /** is pojo or array */
 function isObj(obj: any) {
-  return typeof obj === "object" && obj !== null;
+  return typeof obj === 'object' && obj !== null;
 }
 
 /**
  * compares a react dependencies list with its previous values (from previous cycle)
  * and prints which dependency is the one that changed
  */
-export const reactWhatChanged = function reactWhatChanged(dependencies: AnyObject, verbose: boolean = false, id?: string | number) {
+export const reactWhatChanged = function reactWhatChanged(
+  dependencies: AnyObject,
+  verbose: boolean = false,
+  id?: string | number
+) {
   if (isObj(dependencies)) {
     if (Array.isArray(dependencies)) {
       id = Boolean(id) ? id : dependencies.length;
@@ -37,14 +41,14 @@ export const reactWhatChanged = function reactWhatChanged(dependencies: AnyObjec
 
       const output: any = {};
       dependencies.forEach((dependencyValue, index) => {
-        const changedMsg = Object.is(dependencyValue, oldValues[index]) ? "NO" : "YES";
+        const changedMsg = Object.is(dependencyValue, oldValues[index]) ? 'NO' : 'YES';
         if (!verbose) {
-          output[index] = { "changed?": changedMsg };
+          output[index] = { 'changed?': changedMsg };
         } else {
           output[index] = {
-            "changed?": changedMsg,
-            "old value": oldValues[index],
-            "new value": dependencyValue
+            'changed?': changedMsg,
+            'old value': oldValues[index],
+            'new value': dependencyValue
           };
         }
       });
@@ -65,14 +69,14 @@ export const reactWhatChanged = function reactWhatChanged(dependencies: AnyObjec
       const dependenciesArray: any[] = [];
       const output: any = {};
       Object.entries(dependencies).forEach(([dependencyName, dependencyValue]) => {
-        const changedMsg = Object.is(dependencyValue, oldValues[dependencyName]) ? "NO" : "YES";
+        const changedMsg = Object.is(dependencyValue, oldValues[dependencyName]) ? 'NO' : 'YES';
         if (!verbose) {
-          output[dependencyName] = { "changed?": changedMsg };
+          output[dependencyName] = { 'changed?': changedMsg };
         } else {
           output[dependencyName] = {
-            "changed?": changedMsg,
-            "old value": oldValues[dependencyName],
-            "new value": dependencyValue
+            'changed?': changedMsg,
+            'old value': oldValues[dependencyName],
+            'new value': dependencyValue
           };
         }
 
@@ -87,7 +91,7 @@ export const reactWhatChanged = function reactWhatChanged(dependencies: AnyObjec
       return dependenciesArray;
     }
   } else {
-    console.error("dependencies is not an array nor an object");
+    console.error('dependencies is not an array nor an object');
     return [];
   }
 };
@@ -100,7 +104,7 @@ function diffsPush(diffs: Diffs, path: string, oldValue: any, newValue: any) {
   });
 }
 
-function recursiveDiff(obj: AnyObject, prevObj: AnyObject, path = "", diffs: Diffs = []) {
+function recursiveDiff(obj: AnyObject, prevObj: AnyObject, path = '', diffs: Diffs = []) {
   const bothArrays = Array.isArray(obj) && Array.isArray(prevObj);
   const bothPojos = !Array.isArray(obj) && !Array.isArray(prevObj);
 
@@ -146,13 +150,13 @@ export const reactWhatDiff = function reactWhatDiff(obj: AnyObject, id?: string 
     if (Array.isArray(obj)) {
       id = Boolean(id) ? id : obj.length;
     } else {
-      id = Boolean(id) ? id : Object.keys(obj).join("");
+      id = Boolean(id) ? id : Object.keys(obj).join('');
     }
     const hash = `_ReactWhatDiff_${id}`;
     let diffs: Diffs = [];
     const prevObj: AnyObject | undefined = globalThis[hash];
 
-    if (typeof prevObj !== "undefined") {
+    if (typeof prevObj !== 'undefined') {
       if (isObj(prevObj)) {
         diffs = recursiveDiff(obj, prevObj);
       }
@@ -161,13 +165,13 @@ export const reactWhatDiff = function reactWhatDiff(obj: AnyObject, id?: string 
         const output: any = {};
         for (const diff of diffs) {
           output[diff.path] = {
-            "old value": diff.oldValue,
-            "new value": diff.newValue
+            'old value': diff.oldValue,
+            'new value': diff.newValue
           };
         }
         console.table(diffs);
       } else {
-        console.log("no differences were found");
+        console.log('no differences were found');
       }
     }
 
@@ -178,7 +182,7 @@ export const reactWhatDiff = function reactWhatDiff(obj: AnyObject, id?: string 
       return diffs;
     }
   } else {
-    console.error("can not show diffs on a primitive");
+    console.error('can not show diffs on a primitive');
   }
 
   return obj;
@@ -189,7 +193,7 @@ export const reactWhatDiff = function reactWhatDiff(obj: AnyObject, id?: string 
  * and print a detailed list of all property changes
  */
 export const whatDiff = function whatDiff(newObj: AnyObject, prevObj: AnyObject) {
-  const id = "$WhatDiff$";
+  const id = '$WhatDiff$';
   const hash = `_ReactWhatDiff_${id}`;
 
   // save reference of the prev object

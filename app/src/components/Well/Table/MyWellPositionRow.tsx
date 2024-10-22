@@ -1,21 +1,21 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { mediaQuery, size } from "src/breakpoints";
-import { Skeleton } from "src/components/Skeleton";
-import { Row, Td } from "src/components/Table";
-import { TokenLogo } from "src/components/TokenLogo";
-import { Tooltip } from "src/components/Tooltip";
-import { LPBalanceSummary } from "src/tokens/useLPPositionSummary";
-import { displayTokenSymbol, formatNum, formatUSD } from "src/utils/format";
-import { useIsMobile } from "src/utils/ui/useIsMobile";
-import { useBeanstalkSiloWhitelist } from "src/wells/useBeanstalkSiloWhitelist";
-import { useWellLPTokenPrice } from "src/wells/useWellLPTokenPrice";
+import { mediaQuery, size } from 'src/breakpoints';
+import { Skeleton } from 'src/components/Skeleton';
+import { Row, Td } from 'src/components/Table';
+import { TokenLogo } from 'src/components/TokenLogo';
+import { Tooltip } from 'src/components/Tooltip';
+import { LPBalanceSummary } from 'src/tokens/useLPPositionSummary';
+import { displayTokenSymbol, formatNum, formatUSD } from 'src/utils/format';
+import { useIsMobile } from 'src/utils/ui/useIsMobile';
+import { useBeanstalkSiloWhitelist } from 'src/wells/useBeanstalkSiloWhitelist';
+import { useWellLPTokenPrice } from 'src/wells/useWellLPTokenPrice';
 
 const PositionBreakdown: React.FC<{
   items: { external: TokenValue; silo: TokenValue; internal: TokenValue; total: TokenValue };
@@ -27,20 +27,20 @@ const PositionBreakdown: React.FC<{
   const isMobile = useIsMobile();
 
   const getTooltipProps = () => {
-    let base = { side: "right", offsetX: 3, offsetY: -100, arrowSize: 4, arrowOffset: 40 };
+    let base = { side: 'right', offsetX: 3, offsetY: -100, arrowSize: 4, arrowOffset: 40 };
 
     if (isMobile) {
       if (isLP) {
         base.offsetY = -162;
         base.arrowOffset = 67;
       } else {
-        base.side = "left";
+        base.side = 'left';
         base.offsetX = -5;
         base.offsetY = -96;
         base.arrowOffset = 43;
       }
     } else if (!isMobile && !isLP) {
-      base.side = "left";
+      base.side = 'left';
       base.offsetX = -10;
       base.offsetY = -100;
     }
@@ -54,15 +54,15 @@ const PositionBreakdown: React.FC<{
       content={
         <Breakdown>
           <BreakdownRow>
-            {"Wallet Balance:"}
+            {'Wallet Balance:'}
             <span>{formatFn(items.external)}</span>
           </BreakdownRow>
           <BreakdownRow>
-            {"Silo Deposits:"}
+            {'Silo Deposits:'}
             <span>{formatFn(items.silo)}</span>
           </BreakdownRow>
           <BreakdownRow>
-            {"Farm Balance:"}
+            {'Farm Balance:'}
             <span>{formatFn(items.internal)}</span>
           </BreakdownRow>
         </Breakdown>
@@ -78,7 +78,7 @@ const PositionBreakdown: React.FC<{
 export const MyWellPositionRow: FC<{
   well: Well | undefined;
   position: LPBalanceSummary | undefined;
-  prices: ReturnType<typeof useWellLPTokenPrice>["data"];
+  prices: ReturnType<typeof useWellLPTokenPrice>['data'];
 }> = ({ well, position, prices }) => {
   const navigate = useNavigate();
   const { getIsWhitelisted } = useBeanstalkSiloWhitelist();
@@ -115,25 +115,25 @@ export const MyWellPositionRow: FC<{
       <DesktopContainer>
         <WellDetail>
           <TokenLogos>{logos}</TokenLogos>
-          <TokenSymbols>{symbols.join("/")}</TokenSymbols>
+          <TokenSymbols>{symbols.join('/')}</TokenSymbols>
         </WellDetail>
       </DesktopContainer>
-      <DesktopContainer align="right">
+      <DesktopContainer align='right'>
         <BalanceContainer>
           <PositionBreakdown
             isWhitelisted={whitelisted}
             items={position}
-            totalDisplay={`${position?.total.toHuman("short") || "-"} ${displayTokenSymbol(lpToken)}`}
+            totalDisplay={`${position?.total.toHuman('short') || '-'} ${displayTokenSymbol(lpToken)}`}
             isLP
           />
         </BalanceContainer>
       </DesktopContainer>
-      <DesktopContainer align="right">
+      <DesktopContainer align='right'>
         <BalanceContainer>
           <PositionBreakdown
             isWhitelisted={whitelisted}
             items={positionsUSD}
-            totalDisplay={positionsUSD.total.gt(0) ? formatUSD(positionsUSD.total) : "$-.--"}
+            totalDisplay={positionsUSD.total.gt(0) ? formatUSD(positionsUSD.total) : '$-.--'}
             isLP={false}
           />
         </BalanceContainer>
@@ -141,24 +141,24 @@ export const MyWellPositionRow: FC<{
       <MobileContainer>
         <WellDetail>
           <TokenLogos>{logos}</TokenLogos>
-          <TokenSymbols>{symbols.join("/")}</TokenSymbols>
+          <TokenSymbols>{symbols.join('/')}</TokenSymbols>
           {/* <Deployer>{deployer}</Deployer> */}
         </WellDetail>
         <BalanceContainer left={true}>
           <PositionBreakdown
             items={position}
             isWhitelisted={whitelisted}
-            totalDisplay={`${position?.total.toHuman("short") || "-"} ${displayTokenSymbol(lpToken)}`}
+            totalDisplay={`${position?.total.toHuman('short') || '-'} ${displayTokenSymbol(lpToken)}`}
             isLP
           />
         </BalanceContainer>
       </MobileContainer>
-      <MobileContainer align="right">
+      <MobileContainer align='right'>
         <BalanceContainer>
           <PositionBreakdown
             items={positionsUSD}
             isWhitelisted={whitelisted}
-            totalDisplay={positionsUSD.total.gt(0) ? formatUSD(positionsUSD.total) : "$-.--"}
+            totalDisplay={positionsUSD.total.gt(0) ? formatUSD(positionsUSD.total) : '$-.--'}
             isLP={false}
           />
         </BalanceContainer>
@@ -175,10 +175,10 @@ export const MyWellPositionLoadingRow: FC<{}> = () => (
         <Skeleton height={24} width={115} />
       </LoadingColumn>
     </DesktopContainer>
-    <DesktopContainer align="right">
+    <DesktopContainer align='right'>
       <Skeleton height={24} width={115} />
     </DesktopContainer>
-    <DesktopContainer align="right">
+    <DesktopContainer align='right'>
       <Skeleton height={24} width={115} />
     </DesktopContainer>
     <MobileContainer>
@@ -187,18 +187,18 @@ export const MyWellPositionLoadingRow: FC<{}> = () => (
         <Skeleton height={20} width={50} />
       </LoadingColumn>
     </MobileContainer>
-    <MobileContainer align="right">
+    <MobileContainer align='right'>
       <Skeleton height={24} width={50} />
     </MobileContainer>
   </TableRow>
 );
 
-const LoadingColumn = styled.div<{ align?: "right" | "left" }>`
+const LoadingColumn = styled.div<{ align?: 'right' | 'left' }>`
   display: flex;
   flex-direction: column;
   gap: 8px;
   ${(props) => `
-    align-items: ${props.align === "right" ? "flex-end" : "flex-start"};
+    align-items: ${props.align === 'right' ? 'flex-end' : 'flex-start'};
   `}
 
   ${mediaQuery.sm.only} {
@@ -261,7 +261,7 @@ const WellLPBalance = styled.div`
 
 const BalanceContainer = styled.div<{ left?: boolean }>`
   display: flex;
-  justify-content: ${(props) => (props.left ? "flex-start" : "flex-end")};
+  justify-content: ${(props) => (props.left ? 'flex-start' : 'flex-end')};
 `;
 
 const Breakdown = styled.div`

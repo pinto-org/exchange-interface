@@ -1,6 +1,6 @@
-import { BigNumber, BaseContract, ContractTransaction, ethers, utils, providers, Signer } from "ethers";
-import { TokenValue } from "../TokenValue";
-import { PromiseOrValue } from "src/constants/generated/common";
+import { BigNumber, BaseContract, ContractTransaction, ethers, utils, providers, Signer } from 'ethers';
+import { TokenValue } from '../TokenValue';
+import { PromiseOrValue } from 'src/constants/generated/common';
 
 type TokenMetadata = {
   name?: string;
@@ -64,7 +64,7 @@ export abstract class Token {
       value: signerOrProvider,
       writable: true,
       configurable: false,
-      enumerable: false,
+      enumerable: false
     });
 
     this.name = metadata?.name ?? this.symbol;
@@ -108,9 +108,7 @@ export abstract class Token {
    * @param other the other currency
    */
   public equals(other: Token): boolean {
-    return (
-      this.address.toLowerCase() === other.address.toLowerCase() && this.chainId === other.chainId
-    );
+    return this.address.toLowerCase() === other.address.toLowerCase() && this.chainId === other.chainId;
   }
 
   public toString(): string {

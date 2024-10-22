@@ -22,7 +22,7 @@ describe('Swap', () => {
 
     describe.each([
       [wellsSdk.tokens.PINTO, wellsSdk.tokens.WETH],
-      [wellsSdk.tokens.WETH, wellsSdk.tokens.PINTO],
+      [wellsSdk.tokens.WETH, wellsSdk.tokens.PINTO]
     ])('valid swaps - swapFrom', (tokenIn, tokenOut) => {
       it(`${tokenIn.symbol} -> ${tokenOut.symbol}`, async () => {
         await executeSwapFromTest(testPINTOWethWell, tokenIn, tokenOut, account, '500');
@@ -31,7 +31,7 @@ describe('Swap', () => {
 
     describe.each([
       [wellsSdk.tokens.PINTO, wellsSdk.tokens.WETH],
-      [wellsSdk.tokens.WETH, wellsSdk.tokens.PINTO],
+      [wellsSdk.tokens.WETH, wellsSdk.tokens.PINTO]
     ])('valid swaps - swapTo', (tokenIn, tokenOut) => {
       it(`${tokenIn.symbol} -> ${tokenOut.symbol}`, async () => {
         await executeSwapToTest(testPINTOWethWell, tokenIn, tokenOut, account, '500');
@@ -40,7 +40,7 @@ describe('Swap', () => {
 
     describe.each([
       [wellsSdk.tokens.PINTO, wellsSdk.tokens.USDC],
-      [wellsSdk.tokens.USDC, wellsSdk.tokens.PINTO],
+      [wellsSdk.tokens.USDC, wellsSdk.tokens.PINTO]
     ])('invalid swaps', (tokenIn, tokenOut) => {
       it(`${tokenIn.symbol} -> ${tokenOut.symbol}`, async () => {
         await executeFailedSwapTest(testPINTOWethWell, tokenIn, tokenOut, '1000');
@@ -108,13 +108,7 @@ async function executeFailedSwapTest(well: Well, tokenIn: Token, tokenOut: Token
   );
 }
 
-async function executeSwapFromTest(
-  well: Well,
-  tokenIn: Token,
-  tokenOut: Token,
-  account: string,
-  amount: string
-) {
+async function executeSwapFromTest(well: Well, tokenIn: Token, tokenOut: Token, account: string, amount: string) {
   const SLIPPAGE = 0.5;
 
   const swapAmount = tokenIn.amount(amount);
@@ -149,13 +143,7 @@ async function executeSwapFromTest(
   expect(tokenOutBalanceAfter.gte(amountWithSlippage));
 }
 
-async function executeSwapToTest(
-  well: Well,
-  tokenIn: Token,
-  tokenOut: Token,
-  account: string,
-  amount: string
-) {
+async function executeSwapToTest(well: Well, tokenIn: Token, tokenOut: Token, account: string, amount: string) {
   const SLIPPAGE = 0.5;
 
   const tokenInBalanceBefore = await getBalance(tokenIn, account);

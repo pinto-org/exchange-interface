@@ -1,22 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import styled from 'styled-components';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { mediaQuery, size } from "src/breakpoints";
-import { BottomDrawer } from "src/components/BottomDrawer";
-import { LoadingTemplate } from "src/components/LoadingTemplate";
-import { TabButton } from "src/components/TabButton";
-import { FC } from "src/types";
-import { IWellHourlySnapshot } from "src/wells/chartDataLoader";
-import useWellChartData from "src/wells/useWellChartData";
+import { mediaQuery, size } from 'src/breakpoints';
+import { BottomDrawer } from 'src/components/BottomDrawer';
+import { LoadingTemplate } from 'src/components/LoadingTemplate';
+import { TabButton } from 'src/components/TabButton';
+import { FC } from 'src/types';
+import { IWellHourlySnapshot } from 'src/wells/chartDataLoader';
+import useWellChartData from 'src/wells/useWellChartData';
 
-import { Chart } from "./Chart";
-import { ChartContainer } from "./ChartStyles";
-import { ChevronDown } from "../../Icons";
-import { Row } from "../../Layout";
+import { Chart } from './Chart';
+import { ChartContainer } from './ChartStyles';
+import { ChevronDown } from '../../Icons';
+import { Row } from '../../Layout';
 
 function timeToLocal(originalTime: number) {
   const d = new Date(originalTime * 1000);
@@ -34,7 +34,7 @@ function timeToLocal(originalTime: number) {
 }
 
 type TimeToHourlySnapshotItem = {
-  data: Pick<IWellHourlySnapshot, "deltaTradeVolumeUSD" | "totalLiquidityUSD">;
+  data: Pick<IWellHourlySnapshot, 'deltaTradeVolumeUSD' | 'totalLiquidityUSD'>;
   count: number;
 };
 
@@ -89,8 +89,8 @@ const parseAndDeduplicateSnapshots = (arr: IWellHourlySnapshot[]) => {
 const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
   const [tab, setTab] = useState(0);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [timePeriod, setTimePeriod] = useState("week");
-  const [dropdownButtonText, setDropdownButtonText] = useState("1 WEEK");
+  const [timePeriod, setTimePeriod] = useState('week');
+  const [dropdownButtonText, setDropdownButtonText] = useState('1 WEEK');
 
   const {
     data: chartData,
@@ -125,19 +125,19 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
   function setChartRange(range: string) {
     setShowDropdown(false);
     setTimePeriod(range);
-    if (range === "day") {
-      setDropdownButtonText("1 DAY");
-    } else if (range === "week") {
-      setDropdownButtonText("1 WEEK");
-    } else if (range === "month") {
-      setDropdownButtonText("1 MONTH");
+    if (range === 'day') {
+      setDropdownButtonText('1 DAY');
+    } else if (range === 'week') {
+      setDropdownButtonText('1 WEEK');
+    } else if (range === 'month') {
+      setDropdownButtonText('1 MONTH');
     } else {
-      setDropdownButtonText("ALL");
+      setDropdownButtonText('ALL');
     }
   }
 
   return (
-    <Container id="chart-section">
+    <Container id='chart-section'>
       <DesktopRow>
         <>
           <TabButton onClick={(e) => showTab(e, 0)} active={tab === 0} hover>
@@ -157,7 +157,7 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
                 stretch
                 hover
                 onClick={() => {
-                  setChartRange("day");
+                  setChartRange('day');
                 }}
               >
                 1 DAY
@@ -166,7 +166,7 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
                 stretch
                 hover
                 onClick={() => {
-                  setChartRange("week");
+                  setChartRange('week');
                 }}
               >
                 1 WEEK
@@ -175,7 +175,7 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
                 stretch
                 hover
                 onClick={() => {
-                  setChartRange("month");
+                  setChartRange('month');
                 }}
               >
                 1 MONTH
@@ -184,7 +184,7 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
                 stretch
                 hover
                 onClick={() => {
-                  setChartRange("all");
+                  setChartRange('all');
                 }}
               >
                 ALL
@@ -194,12 +194,10 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
         </>
       </DesktopRow>
       <MobileRow>
-        <TabButton onClick={() => setChartTypeDrawerOpen(true)}>
-          {tab === 0 ? "LIQUIDITY" : "VOLUME"}
-        </TabButton>
+        <TabButton onClick={() => setChartTypeDrawerOpen(true)}>{tab === 0 ? 'LIQUIDITY' : 'VOLUME'}</TabButton>
         <BottomDrawer
           showDrawer={isChartTypeDrawerOpen}
-          headerText={"View Chart"}
+          headerText={'View Chart'}
           toggleDrawer={setChartTypeDrawerOpen}
         >
           <DrawerRow
@@ -222,33 +220,33 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
         </FilterButton>
         <BottomDrawer
           showDrawer={isChartRangeDrawerOpen}
-          headerText={"Time Period"}
+          headerText={'Time Period'}
           toggleDrawer={setChartRangeDrawerOpen}
         >
           <DrawerRow
             onClick={() => {
-              setChartRange("day"), setChartRangeDrawerOpen(false);
+              setChartRange('day'), setChartRangeDrawerOpen(false);
             }}
           >
             DAY
           </DrawerRow>
           <DrawerRow
             onClick={() => {
-              setChartRange("week"), setChartRangeDrawerOpen(false);
+              setChartRange('week'), setChartRangeDrawerOpen(false);
             }}
           >
             WEEK
           </DrawerRow>
           <DrawerRow
             onClick={() => {
-              setChartRange("month"), setChartRangeDrawerOpen(false);
+              setChartRange('month'), setChartRangeDrawerOpen(false);
             }}
           >
             MONTH
           </DrawerRow>
           <DrawerRow
             onClick={() => {
-              setChartRange("all"), setChartRangeDrawerOpen(false);
+              setChartRange('all'), setChartRangeDrawerOpen(false);
             }}
           >
             ALL
@@ -265,31 +263,28 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
         </ChartLoader>
       ) : (
         <>
-          {tab === 0 && !error && <Chart data={liquidityData} legend={"TOTAL LIQUIDITY"} />}
-          {tab === 1 && !error && <Chart data={volumeData} legend={"HOURLY VOLUME"} />}
+          {tab === 0 && !error && <Chart data={liquidityData} legend={'TOTAL LIQUIDITY'} />}
+          {tab === 1 && !error && <Chart data={volumeData} legend={'HOURLY VOLUME'} />}
         </>
       )}
     </Container>
   );
 };
 
-export const ChartSection: FC<{ well: Well | undefined; loading?: boolean }> = ({
-  well,
-  loading
-}) => {
+export const ChartSection: FC<{ well: Well | undefined; loading?: boolean }> = ({ well, loading }) => {
   if (!well || loading) {
     return (
-      <Container id="chart-section-loading">
+      <Container id='chart-section-loading'>
         <DesktopRow>
           <LoadingTabButton width={110.59} active>
-            {""}
+            {''}
           </LoadingTabButton>
-          <LoadingTabButton width={99.17}>{""}</LoadingTabButton>
-          <LoadingFilterButton width={103.41}>{""}</LoadingFilterButton>
+          <LoadingTabButton width={99.17}>{''}</LoadingTabButton>
+          <LoadingFilterButton width={103.41}>{''}</LoadingFilterButton>
         </DesktopRow>
         <MobileRow>
-          <LoadingTabButton width={84.03}>{""}</LoadingTabButton>
-          <LoadingFilterButton width={103.41}>{""}</LoadingFilterButton>
+          <LoadingTabButton width={84.03}>{''}</LoadingTabButton>
+          <LoadingFilterButton width={103.41}>{''}</LoadingFilterButton>
         </MobileRow>
         <ChartLoader>
           <LoadingTemplate gap={4}>
@@ -341,7 +336,7 @@ const Dropdown = styled.div<{ enabled: boolean }>`
   top: 49px;
   right: 0px;
   width: 120px;
-  visibility: ${(props) => (props.enabled ? "visible" : "hidden")};
+  visibility: ${(props) => (props.enabled ? 'visible' : 'hidden')};
   z-index: 100;
   @media (max-width: ${size.mobile}) {
     top: 41px;

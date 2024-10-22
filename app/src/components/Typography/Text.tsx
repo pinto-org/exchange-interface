@@ -1,15 +1,10 @@
-import React, { forwardRef } from "react";
-import type { HTMLAttributes, ElementType, CSSProperties } from "react";
+import React, { forwardRef } from 'react';
+import type { HTMLAttributes, ElementType, CSSProperties } from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import {
-  BoxModelBase,
-  BoxModelProps,
-  FlexPropertiesStyle,
-  FlexPropertiesProps
-} from "src/utils/ui/styled";
-import { BlockDisplayStyle, DisplayStyleProps } from "src/utils/ui/styled/common";
+import { BoxModelBase, BoxModelProps, FlexPropertiesStyle, FlexPropertiesProps } from 'src/utils/ui/styled';
+import { BlockDisplayStyle, DisplayStyleProps } from 'src/utils/ui/styled/common';
 import {
   theme,
   FontWeight,
@@ -23,9 +18,9 @@ import {
   TextAlignStyle,
   TextAlign,
   FontColorStyle
-} from "src/utils/ui/theme";
+} from 'src/utils/ui/theme';
 
-import { ResponsiveTextProps } from "./typography-components";
+import { ResponsiveTextProps } from './typography-components';
 
 export interface TextProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -40,21 +35,19 @@ export interface TextProps
   $size?: FontSize;
   $lineHeight?: number | FontSize;
   $align?: TextAlign;
-  $textDecoration?: CSSProperties["textDecoration"];
+  $textDecoration?: CSSProperties['textDecoration'];
   as?: ElementType;
   className?: string;
   $mobileVariant?: FontVariant;
-  $whitespace?: CSSProperties["whiteSpace"];
+  $whitespace?: CSSProperties['whiteSpace'];
 }
 
 export const Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
-  return (
-    <TextComponent ref={ref} $responsive={props.$responsive !== false ? true : false} {...props} />
-  );
+  return <TextComponent ref={ref} $responsive={props.$responsive !== false ? true : false} {...props} />;
 });
 
 const TextComponent = styled.div<TextProps>`
-  ${(props) => theme.font.styles.variant(props.$variant || "s")}
+  ${(props) => theme.font.styles.variant(props.$variant || 's')}
   ${FontSizeStyle}
   ${LineHeightStyle}
   ${FontWeightStyle}
@@ -65,5 +58,5 @@ const TextComponent = styled.div<TextProps>`
   ${FlexPropertiesStyle}
   ${(props) => props.$textDecoration && `text-decoration: ${props.$textDecoration};`}
   ${(props) => props.$whitespace && `white-space: ${props.$whitespace};`}
-  ${(props) => (props.$css ? props.$css : "")}
+  ${(props) => (props.$css ? props.$css : '')}
 `;

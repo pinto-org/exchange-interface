@@ -1,14 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { Flex } from "src/components/Layout";
-import { theme } from "src/utils/ui/theme";
-import { useBoolean } from "src/utils/ui/useBoolean";
+import { Flex } from 'src/components/Layout';
+import { theme } from 'src/utils/ui/theme';
+import { useBoolean } from 'src/utils/ui/useBoolean';
 
-import { ChevronDown, CircleEmptyIcon, CircleFilledCheckIcon } from "./Icons";
-import { ImageButton } from "./ImageButton";
-
+import { ChevronDown, CircleEmptyIcon, CircleFilledCheckIcon } from './Icons';
+import { ImageButton } from './ImageButton';
 
 type SelectnIndicatorIconProps = {
   selected: boolean;
@@ -53,15 +52,15 @@ export const AccordionSelectCard = ({
 
   return (
     <SelectWrapper $active={selected} onClick={onClick} $clickable>
-      <Flex $direction="row" $alignItems="center" $fullWidth $justifyContent="space-between">
-        <Flex $direction="row" $alignItems="center" $fullWidth $gap={2}>
+      <Flex $direction='row' $alignItems='center' $fullWidth $justifyContent='space-between'>
+        <Flex $direction='row' $alignItems='center' $fullWidth $gap={2}>
           <SelectIndicatorIcon selected={selected} />
           {upper}
         </Flex>
         <ImageButton
           component={ChevronDown}
           size={12}
-          rotate={expanded ? "180" : "0"}
+          rotate={expanded ? '180' : '0'}
           onClick={(e) => {
             // prevent the card from being clicked
             e.preventDefault();
@@ -69,7 +68,7 @@ export const AccordionSelectCard = ({
             toggle();
           }}
           padding={theme.spacing(1)}
-          alt=""
+          alt=''
         />
       </Flex>
       {expanded && (
@@ -90,7 +89,7 @@ type SelectCardProps = {
 export const SelectCard = ({ selected, children, onClick }: SelectCardProps) => {
   return (
     <SelectWrapper onClick={onClick} $active={selected} $clickable={!!onClick}>
-      <Flex $direction="row" $alignItems="center" $fullWidth $gap={2}>
+      <Flex $direction='row' $alignItems='center' $fullWidth $gap={2}>
         <SelectIndicatorIcon selected={selected} />
         {children}
       </Flex>
@@ -103,7 +102,7 @@ const SelectWrapper = styled(Flex).attrs({ $gap: 2 })<{ $active: boolean; $click
   border: 1px solid ${(props) => (props.$active ? theme.colors.black : theme.colors.lightGray)};
   background: ${(props) => (props.$active ? theme.colors.primaryLight : theme.colors.white)};
   padding: ${theme.spacing(2, 3)};
-  cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
+  cursor: ${(props) => (props.$clickable ? 'pointer' : 'default')};
 `;
 
 const Divider = styled.div`

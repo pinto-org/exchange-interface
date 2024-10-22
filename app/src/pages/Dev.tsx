@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { ethers } from "ethers";
-import toast from "react-hot-toast";
-import styled from "styled-components";
-import { useAccount } from "wagmi";
+import { ethers } from 'ethers';
+import toast from 'react-hot-toast';
+import styled from 'styled-components';
+import { useAccount } from 'wagmi';
 
-import { BeanstalkSDK, TestUtils, Token, TokenValue } from "@beanstalk/sdk";
+import { BeanstalkSDK, TestUtils, Token, TokenValue } from '@beanstalk/sdk';
 
-import { Page } from "src/components/Page";
-import { Title } from "src/components/PageComponents/Title";
-import { Button } from "src/components/Swap/Button";
-import { TokenInput } from "src/components/Swap/TokenInput";
-import { ToastAlert } from "src/components/TxnToast/ToastAlert";
-import { useAllTokensBalance } from "src/tokens/useAllTokenBalance";
-import { useTokensArr } from "src/tokens/useTokens";
-import { useEthersProvider } from "src/utils/wagmi/ethersAdapter";
-import { useWells } from "src/wells/useWells";
+import { Page } from 'src/components/Page';
+import { Title } from 'src/components/PageComponents/Title';
+import { Button } from 'src/components/Swap/Button';
+import { TokenInput } from 'src/components/Swap/TokenInput';
+import { ToastAlert } from 'src/components/TxnToast/ToastAlert';
+import { useAllTokensBalance } from 'src/tokens/useAllTokenBalance';
+import { useTokensArr } from 'src/tokens/useTokens';
+import { useEthersProvider } from 'src/utils/wagmi/ethersAdapter';
+import { useWells } from 'src/wells/useWells';
 
 export const Dev = () => {
   const provider = useEthersProvider();
@@ -38,19 +38,17 @@ export const Dev = () => {
   const goBalance = async (token: Token) => {
     const amount = amounts.get(token.symbol) || TokenValue.ZERO;
     const utils = new TestUtils.BlockchainUtils(sdk);
-    await utils.setBalance(token, account.address || "", amount);
+    await utils.setBalance(token, account.address || '', amount);
     await mine();
     await refetchTokenBalances();
-    toast.success(
-      <ToastAlert desc={`Set ${token.symbol} balance to  ${amount.toHuman("short")}`} />
-    );
+    toast.success(<ToastAlert desc={`Set ${token.symbol} balance to  ${amount.toHuman('short')}`} />);
   };
 
   const clearApproval = async (token: Token) => {
-    await token.approve("0xDEb0f00071497a5cc9b4A6B96068277e57A82Ae2", TokenValue.ZERO); //depot
+    await token.approve('0xDEb0f00071497a5cc9b4A6B96068277e57A82Ae2', TokenValue.ZERO); //depot
     toast.success(<ToastAlert desc={`Revoked ${token.symbol} allowance for Depot`} />);
     for await (const well of wells || []) {
-      const allowance = await token.getAllowance(account.address || "", well.address);
+      const allowance = await token.getAllowance(account.address || '', well.address);
       if (!allowance || allowance.eq(TokenValue.ZERO)) continue;
       await token.approve(well.address, TokenValue.ZERO); //depot
       toast.success(<ToastAlert desc={`Revoked ${token.symbol} allowance for ${well.name}`} />);
@@ -74,7 +72,7 @@ export const Dev = () => {
         <TokenInput
           token={token}
           canChangeToken={false}
-          label="token"
+          label='token'
           loading={false}
           amount={amounts.get(token.symbol)}
           onAmountChange={(amount) => {
@@ -86,7 +84,7 @@ export const Dev = () => {
           onClick={() => {
             goBalance(token);
           }}
-          label={"Set Balance"}
+          label={'Set Balance'}
           disabled={false}
           loading={false}
         />
@@ -96,7 +94,7 @@ export const Dev = () => {
           onClick={() => {
             clearApproval(token);
           }}
-          label={"Clear Approvals (multi tx)"}
+          label={'Clear Approvals (multi tx)'}
           disabled={false}
           loading={false}
         />
@@ -106,12 +104,12 @@ export const Dev = () => {
 
   return (
     <Page>
-      <Title title="Developer" />
+      <Title title='Developer' />
       <span>Give yourself some tokens</span>
       <Container>{rows}</Container>
       <hr />
       <Row>
-        <Button onClick={mine} label={"Mine Block"} disabled={false} loading={false} />
+        <Button onClick={mine} label={'Mine Block'} disabled={false} loading={false} />
       </Row>
     </Page>
   );

@@ -1,11 +1,11 @@
-import { useAccount } from "wagmi";
+import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
-import { useScopedQuery } from "src/utils/query/useScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
+import { useScopedQuery } from 'src/utils/query/useScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
 
-const emptyAddress = "0x0";
+const emptyAddress = '0x0';
 
 /**
  * tokenBalanceInternal refers to farm balance
@@ -17,7 +17,7 @@ export default function useTokenBalanceInternal(token: Token | undefined) {
   const beanstalk = sdk.contracts.beanstalk;
 
   const { data, isLoading, error, refetch, isFetching } = useScopedQuery({
-    queryKey: ["token", "internalBalance", sdk, token?.address || emptyAddress],
+    queryKey: ['token', 'internalBalance', sdk, token?.address || emptyAddress],
 
     queryFn: async () => {
       const resultMap: Record<string, TokenValue> = {};
@@ -39,7 +39,7 @@ export default function useTokenBalanceInternal(token: Token | undefined) {
 
     refetchInterval: 1000 * 30,
     refetchIntervalInBackground: false,
-    refetchOnWindowFocus: "always"
+    refetchOnWindowFocus: 'always'
   });
 
   return { data, isLoading, error, refetch, isFetching };

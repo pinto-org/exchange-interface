@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { useChainId } from "wagmi";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { useChainId } from 'wagmi';
 
-import buildIcon from "src/assets/images/navbar/build.svg";
-import swapIcon from "src/assets/images/navbar/swap.svg";
-import wellsIcon from "src/assets/images/navbar/wells.svg";
-import { WalletButton } from "src/components/Wallet";
-import { Settings } from "src/settings";
-import { FC } from "src/types";
-import { useSdkChainId } from "src/utils/chain";
-import { theme } from "src/utils/ui/theme";
+import buildIcon from 'src/assets/images/navbar/build.svg';
+import swapIcon from 'src/assets/images/navbar/swap.svg';
+import wellsIcon from 'src/assets/images/navbar/wells.svg';
+import { WalletButton } from 'src/components/Wallet';
+import { Settings } from 'src/settings';
+import { FC } from 'src/types';
+import { useSdkChainId } from 'src/utils/chain';
+import { theme } from 'src/utils/ui/theme';
 
-import { Footer } from "./Footer";
-import { TokenMarquee } from "./TokenMarquee";
-import { Window } from "./Window";
-import { BurgerMenuIcon, Discord, Github, Logo, Twitter, X, BeanstalkLogoBlack } from "../Icons";
-import CustomToaster from "../TxnToast/CustomToaster";
-import { LinksNav } from "../Typography";
+import { Footer } from './Footer';
+import { TokenMarquee } from './TokenMarquee';
+import { Window } from './Window';
+import { BurgerMenuIcon, Discord, Github, Logo, Twitter, X, BeanstalkLogoBlack } from '../Icons';
+import CustomToaster from '../TxnToast/CustomToaster';
+import { LinksNav } from '../Typography';
 
 export const Frame: FC<{}> = ({ children }) => {
   const isNotProd = !Settings.PRODUCTION;
@@ -26,29 +26,29 @@ export const Frame: FC<{}> = ({ children }) => {
   const resolvedcid = useSdkChainId();
 
   return (
-    <Container id="frame">
+    <Container id='frame'>
       {/* Desktop */}
       <NavContainer>
         <NavGrid>
           <BrandContainer onClick={() => setMobileMenuOpen(false)}>
             <Brand>
-              <Link to={"/"}>
+              <Link to={'/'}>
                 <Logo /> <BasinText>BASIN</BasinText>
               </Link>
             </Brand>
           </BrandContainer>
           <LinksContainer>
             <NavLinks>
-              <NavLink to="/build" hovericon={buildIcon}>
+              <NavLink to='/build' hovericon={buildIcon}>
                 Build
               </NavLink>
               <NavLink to={`/wells/${resolvedcid}`} hovericon={wellsIcon}>
                 Liquidity
               </NavLink>
-              <NavLink to="/swap" hovericon={swapIcon}>
+              <NavLink to='/swap' hovericon={swapIcon}>
                 Swap
               </NavLink>
-              {(isNotProd || false) && <NavLink to="/dev">Dev</NavLink>}
+              {(isNotProd || false) && <NavLink to='/dev'>Dev</NavLink>}
             </NavLinks>
           </LinksContainer>
           <StyledConnectContainer>
@@ -64,58 +64,46 @@ export const Frame: FC<{}> = ({ children }) => {
         <CustomToaster />
         <BurgerMenu open={mobileMenuOpen}>
           <MobileNavLinkContainer>
-            <MobileNavLink $bold to="/swap" onClick={() => setMobileMenuOpen(false)}>
+            <MobileNavLink $bold to='/swap' onClick={() => setMobileMenuOpen(false)}>
               Swap
             </MobileNavLink>
-            <MobileNavLink
-              $bold
-              to={`/wells/${resolvedcid}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
+            <MobileNavLink $bold to={`/wells/${resolvedcid}`} onClick={() => setMobileMenuOpen(false)}>
               Wells
             </MobileNavLink>
-            <MobileNavLink $bold to="/build" onClick={() => setMobileMenuOpen(false)}>
+            <MobileNavLink $bold to='/build' onClick={() => setMobileMenuOpen(false)}>
               Build
             </MobileNavLink>
             {isNotProd && (
-              <MobileNavLink $bold to="/dev" onClick={() => setMobileMenuOpen(false)}>
+              <MobileNavLink $bold to='/dev' onClick={() => setMobileMenuOpen(false)}>
                 Dev
               </MobileNavLink>
             )}
             <MobileLargeNavRow onClick={() => setMobileMenuOpen(false)}>
-              <Box href="https://basin.exchange/discord" rel="noopener noreferrer" target="_blank">
+              <Box href='https://basin.exchange/discord' rel='noopener noreferrer' target='_blank'>
                 <Discord width={20} />
               </Box>
-              <Box
-                href="https://twitter.com/basinexchange"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
+              <Box href='https://twitter.com/basinexchange' rel='noopener noreferrer' target='_blank'>
                 <Twitter width={20} />
               </Box>
-              <Box
-                href="https://github.com/BeanstalkFarms/Basin"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
+              <Box href='https://github.com/BeanstalkFarms/Basin' rel='noopener noreferrer' target='_blank'>
                 <Github width={20} />
               </Box>
-              <Box href="https://bean.money" rel="noopener noreferrer" target="_blank">
+              <Box href='https://bean.money' rel='noopener noreferrer' target='_blank'>
                 <BeanstalkLogoBlack width={20} />
               </Box>
             </MobileLargeNavRow>
             <MobileNavRow
-              href="https://immunefi.com/bounty/beanstalk/"
-              rel="noopener noreferrer"
-              target="_blank"
+              href='https://immunefi.com/bounty/beanstalk/'
+              rel='noopener noreferrer'
+              target='_blank'
               onClick={() => setMobileMenuOpen(false)}
             >
               Bug Bounty Program
             </MobileNavRow>
             <MobileNavRow
-              href="https://docs.basin.exchange/"
-              rel="noopener noreferrer"
-              target="_blank"
+              href='https://docs.basin.exchange/'
+              rel='noopener noreferrer'
+              target='_blank'
               onClick={() => setMobileMenuOpen(false)}
             >
               Documentation
@@ -204,7 +192,7 @@ const NavLink = styled(Link)<NavLinkProps>`
   line-height: 24px;
   color: black;
   outline: none !important;
-  cursor: ${(props) => (props.hovericon ? `url(${props.hovericon}), auto` : "pointer")};
+  cursor: ${(props) => (props.hovericon ? `url(${props.hovericon}), auto` : 'pointer')};
 
   :focus {
     outline: none !important;

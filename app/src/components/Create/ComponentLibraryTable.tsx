@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { Table, Td, THead, ResponsiveTr, Th, TBody, Row } from "src/components//Table";
-import { Text } from "src/components/Typography";
-import { theme } from "src/utils/ui/theme";
+import { Table, Td, THead, ResponsiveTr, Th, TBody, Row } from 'src/components//Table';
+import { Text } from 'src/components/Typography';
+import { theme } from 'src/utils/ui/theme';
 
-import { useWhitelistedWellComponents } from "./useWhitelistedWellComponents";
+import { useWhitelistedWellComponents } from './useWhitelistedWellComponents';
 
 export const ComponentLibraryTable = () => {
   const {
@@ -18,41 +18,41 @@ export const ComponentLibraryTable = () => {
 
   const openInNewTab = (url: string | undefined) => {
     if (!url) return;
-    window.open(url, "_blank", "noopener noreferrer");
+    window.open(url, '_blank', 'noopener noreferrer');
   };
 
   return (
     <StyledTable>
       <THead>
         <ResponsiveTr>
-          <StyledTh align="left">Well Component</StyledTh>
-          <StyledTh align="right">Type</StyledTh>
-          <StyledTh align="right" $hideMobile>
+          <StyledTh align='left'>Well Component</StyledTh>
+          <StyledTh align='right'>Type</StyledTh>
+          <StyledTh align='right' $hideMobile>
             Developer
           </StyledTh>
         </ResponsiveTr>
       </THead>
       <TBody>
         {entries.map(({ component, info }, i) => {
-          const deployInfo = info.find((data) => data.label === "Deployed By");
-          if (!deployInfo || typeof deployInfo.value !== "string") return null;
+          const deployInfo = info.find((data) => data.label === 'Deployed By');
+          if (!deployInfo || typeof deployInfo.value !== 'string') return null;
 
           return (
             <StyledTr key={`${component.name}-${i}`} onClick={() => openInNewTab(component.url)}>
-              <TableData align="left">
-                <Text $variant="l">{component.name}</Text>
-                <Text $color="text.secondary">{component.summary}</Text>
+              <TableData align='left'>
+                <Text $variant='l'>{component.name}</Text>
+                <Text $color='text.secondary'>{component.summary}</Text>
               </TableData>
               <TableData>
                 <TextWrapper>
                   {component.type.imgSrc && <IconImg src={component.type.imgSrc} />}
-                  <Text $variant="l">{component.type.display}</Text>
+                  <Text $variant='l'>{component.type.display}</Text>
                 </TextWrapper>
               </TableData>
               <TableData url={deployInfo?.url} hideMobile>
                 <TextWrapper>
                   <IconImg src={deployInfo?.imgSrc} $rounded />
-                  <Text $variant="l">{deployInfo.value}</Text>
+                  <Text $variant='l'>{deployInfo.value}</Text>
                 </TextWrapper>
               </TableData>
             </StyledTr>
@@ -106,13 +106,13 @@ const TextWrapper = styled.div`
 const IconImg = styled.img<{ $rounded?: boolean }>`
   max-height: 24px;
   max-width: 24px;
-  ${(props) => (props.$rounded ? "border-radius: 50%;" : "")}
+  ${(props) => (props.$rounded ? 'border-radius: 50%;' : '')}
   margin-bottom: ${theme.spacing(0.375)};
 `;
 
 const StyledLink = styled(Link).attrs({
-  target: "_blank",
-  rel: "noopener noreferrer"
+  target: '_blank',
+  rel: 'noopener noreferrer'
 })`
   text-decoration: none;
   color: ${theme.colors.black};
@@ -122,11 +122,11 @@ const StyledLink = styled(Link).attrs({
 const TableData = ({
   children,
   url,
-  align = "right",
+  align = 'right',
   hideMobile
 }: {
   children: React.ReactNode;
-  align?: "left" | "right";
+  align?: 'left' | 'right';
   url?: string;
   hideMobile?: boolean;
 }) => {

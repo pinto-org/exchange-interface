@@ -1,8 +1,8 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { Well, WellFunction } from "@beanstalk/sdk-wells";
+import { Well, WellFunction } from '@beanstalk/sdk-wells';
 
-import useSdk from "src/utils/sdk/useSdk";
+import useSdk from 'src/utils/sdk/useSdk';
 
 export const useIsConstantProduct2 = (param: Well | WellFunction | undefined | null) => {
   const sdk = useSdk();
@@ -20,7 +20,7 @@ export const useIsConstantProduct2 = (param: Well | WellFunction | undefined | n
     return (
       wf &&
       cp2.some((_address) => {
-        const address = _address.get(sdk.chainId) || "";
+        const address = _address.get(sdk.chainId) || '';
         return address.toLowerCase() === wf.address.toLowerCase();
       })
     );

@@ -1,8 +1,8 @@
-import { BigNumber, ContractTransaction } from "ethers";
-import { ERC20Permit, ERC20Permit__factory } from "src/constants/generated";
-import { PromiseOrValue } from "src/constants/generated/common";
-import { Token } from "./Token";
-import { TokenValue } from "src/lib/TokenValue";
+import { BigNumber, ContractTransaction } from 'ethers';
+import { ERC20Permit, ERC20Permit__factory } from 'src/constants/generated';
+import { PromiseOrValue } from 'src/constants/generated/common';
+import { Token } from './Token';
+import { TokenValue } from 'src/lib/TokenValue';
 
 export class ERC20Token extends Token {
   private contract: ERC20Permit;
@@ -10,7 +10,7 @@ export class ERC20Token extends Token {
   public getContract() {
     if (!this.contract) {
       // Make this.contract "invisible" to console.log
-      Object.defineProperty(this, "contract", {
+      Object.defineProperty(this, 'contract', {
         enumerable: false,
         configurable: false,
         writable: true,
@@ -34,7 +34,7 @@ export class ERC20Token extends Token {
 
     if (name) {
       this.name = name;
-      if (this.displayName === "Unknown Token") this.displayName = name;
+      if (this.displayName === 'Unknown Token') this.displayName = name;
     }
   }
 
@@ -65,7 +65,10 @@ export class ERC20Token extends Token {
       .then((result) => TokenValue.fromBlockchain(result, this.decimals));
   }
 
-  public approve(spenderContract: PromiseOrValue<string>, amount: TokenValue | BigNumber): Promise<ContractTransaction> {
+  public approve(
+    spenderContract: PromiseOrValue<string>,
+    amount: TokenValue | BigNumber
+  ): Promise<ContractTransaction> {
     if (!this.getContract().signer) {
       throw new Error(`A signer is required to call .approve() - ${this.symbol}`);
     }

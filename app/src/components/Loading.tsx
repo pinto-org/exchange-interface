@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { Footer } from "src/components/Frame/Footer";
-import { Frame } from "src/components/Frame/Frame";
-import { Spinner2 } from "src/components/Spinner2";
+import { Footer } from 'src/components/Frame/Footer';
+import { Frame } from 'src/components/Frame/Frame';
+import { Spinner2 } from 'src/components/Spinner2';
 
 type LoadingProps = {
   spinnerOnly?: boolean;

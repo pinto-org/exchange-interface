@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import styled, { css, keyframes } from "styled-components";
+import styled, { css, keyframes } from 'styled-components';
 
-import { theme } from "src/utils/ui/theme";
+import { theme } from 'src/utils/ui/theme';
 
-import { CheckIcon, XIcon } from "./Icons";
+import { CheckIcon, XIcon } from './Icons';
 
 interface ProgressCircleProps {
   size: number; // Size of the circle
@@ -65,7 +65,7 @@ const ProgressCircle = ({
   status
 }: ProgressCircleProps & {
   animate?: boolean;
-  status?: "success" | "error";
+  status?: 'success' | 'error';
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
@@ -78,12 +78,12 @@ const ProgressCircle = ({
             cy={size / 2}
             cx={size / 2}
             r={radius}
-            fill={status === "success" ? theme.colors.primary : theme.colors.errorRed}
+            fill={status === 'success' ? theme.colors.primary : theme.colors.errorRed}
           />
         </svg>
         <AbsoluteCenter>
-          {status === "success" && <CheckIcon color={theme.colors.white} width={30} height={30} />}
-          {status === "error" && <XIcon color={theme.colors.white} width={12.5} height={12.5} />}
+          {status === 'success' && <CheckIcon color={theme.colors.white} width={30} height={30} />}
+          {status === 'error' && <XIcon color={theme.colors.white} width={12.5} height={12.5} />}
         </AbsoluteCenter>
       </StatusContainer>
     );
@@ -103,7 +103,7 @@ const ProgressCircle = ({
         r={radius}
         stroke={trackColor}
         strokeWidth={strokeWidth}
-        opacity="0.3"
+        opacity='0.3'
         circumference={circumference}
         progress={0}
         animate={animate}

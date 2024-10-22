@@ -1,27 +1,27 @@
-import { multicall } from "@wagmi/core";
-import { BigNumber } from "ethers";
-import { ContractFunctionParameters } from "viem";
-import { useAccount } from "wagmi";
+import { multicall } from '@wagmi/core';
+import { BigNumber } from 'ethers';
+import { ContractFunctionParameters } from 'viem';
+import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
-import { useTokens } from "src/tokens/useTokens";
-import { Log } from "src/utils/logger";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useScopedQuery, useSetScopedQueryData } from "src/utils/query/useScopedQuery";
-import { config } from "src/utils/wagmi/config";
+import { useTokens } from 'src/tokens/useTokens';
+import { Log } from 'src/utils/logger';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useScopedQuery, useSetScopedQueryData } from 'src/utils/query/useScopedQuery';
+import { config } from 'src/utils/wagmi/config';
 
-import { getTokenIndex } from "./utils";
+import { getTokenIndex } from './utils';
 
 const TokenBalanceABI = [
   {
     constant: true,
-    inputs: [{ name: "_owner", type: "address" }],
-    name: "balanceOf",
-    outputs: [{ name: "balance", type: "uint256" }],
+    inputs: [{ name: '_owner', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: 'balance', type: 'uint256' }],
     payable: false,
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function'
   }
 ] as const;
 
@@ -29,16 +29,14 @@ const MAX_PER_CALL = 20;
 
 const makeCalls = (tokensToLoad: Token[], address: string) => {
   const contractCalls: ContractFunctionParameters[][] = [];
-  Log.module("app").debug(
-    `Fetching token balances for ${tokensToLoad.length} tokens, for address ${address}`
-  );
+  Log.module('app').debug(`Fetching token balances for ${tokensToLoad.length} tokens, for address ${address}`);
 
   let callBucket: ContractFunctionParameters[] = [];
   tokensToLoad.forEach((token, i) => {
     callBucket.push({
       address: token.address as `0x{string}`,
       abi: TokenBalanceABI,
-      functionName: "balanceOf",
+      functionName: 'balanceOf',
       args: [address]
     });
 
@@ -58,7 +56,7 @@ export const useAllTokensBalance = () => {
   const { address } = useAccount();
   const setQueryData = useSetScopedQueryData();
 
-  const tokensToLoad = Object.values(tokens).filter((t) => t.symbol !== "ETH");
+  const tokensToLoad = Object.values(tokens).filter((t) => t.symbol !== 'ETH');
 
   const { data, isLoading, error, refetch, isFetching } = useScopedQuery({
     queryKey: queryKeys.tokenBalancesAll,
@@ -78,7 +76,7 @@ export const useAllTokensBalance = () => {
       const balances: Record<string, TokenValue> = {};
 
       if (ethBalance) {
-        Log.module("app").debug(`ETH balance: `, ethBalance.toHuman());
+        Log.module('app').debug(`ETH balance: `, ethBalance.toHuman());
         setQueryData<Record<string, TokenValue>>(queryKeys.tokenBalance(ETH.symbol), () => {
           return { [getTokenIndex(ETH)]: ethBalance };
         });

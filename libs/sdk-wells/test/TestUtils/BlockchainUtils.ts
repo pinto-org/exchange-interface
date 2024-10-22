@@ -15,9 +15,9 @@ export class BlockchainUtils {
     await this.sdk.provider.send('anvil_reset', [
       {
         forking: {
-          jsonRpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/f6piiDvMBMGRYvCOwLJFMD7cUjIvI1TP',
-        },
-      },
+          jsonRpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/f6piiDvMBMGRYvCOwLJFMD7cUjIvI1TP'
+        }
+      }
     ]);
   }
 
@@ -43,7 +43,7 @@ export class BlockchainUtils {
       this.setWETHBalance(account, this.sdk.tokens.WETH.amount(amount)),
       this.setPINTOBalance(account, this.sdk.tokens.PINTO.amount(amount)),
       this.setUSDTBalance(account, this.sdk.tokens.USDT.amount(amount)),
-      this.setDAIBalance(account, this.sdk.tokens.DAI.amount(amount)),
+      this.setDAIBalance(account, this.sdk.tokens.DAI.amount(amount))
     ]);
   }
   async setETHBalance(account: string, balance: TokenValue) {
@@ -96,11 +96,7 @@ export class BlockchainUtils {
     if (isTokenReverse) values.reverse();
 
     const index = ethers.utils.solidityKeccak256(['uint256', 'uint256'], values);
-    await this.setStorageAt(
-      _token.address,
-      index.toString(),
-      this.toBytes32(balanceAmount).toString()
-    );
+    await this.setStorageAt(_token.address, index.toString(), this.toBytes32(balanceAmount).toString());
   }
 
   private async setStorageAt(address: string, index: string, value: string) {

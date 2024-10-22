@@ -1,18 +1,18 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState } from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import styled from 'styled-components';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { size } from "src/breakpoints";
-import { LoadingTemplate } from "src/components/LoadingTemplate";
-import { TabButton } from "src/components/TabButton";
-import { Row, TBody, THead, Table, Td, Th } from "src/components/Well/Table";
-import { useTokenSupply } from "src/tokens/useTokenSupply";
-import useWellHistory, { EVENT_TYPE, WellEvent } from "src/wells/useWellHistory";
+import { size } from 'src/breakpoints';
+import { LoadingTemplate } from 'src/components/LoadingTemplate';
+import { TabButton } from 'src/components/TabButton';
+import { Row, TBody, THead, Table, Td, Th } from 'src/components/Well/Table';
+import { useTokenSupply } from 'src/tokens/useTokenSupply';
+import useWellHistory, { EVENT_TYPE, WellEvent } from 'src/wells/useWellHistory';
 
-import { renderEvent } from "./eventRender";
+import { renderEvent } from './eventRender';
 
 type BaseWellHistoryProps = {
   tokenPrices: (TokenValue | null)[];
@@ -25,13 +25,13 @@ type WellHistoryProps = {
 
 const WellHistorySkeleton: React.FC<{}> = () => (
   <WellHistoryContainer>
-    <Table width="100%">
+    <Table width='100%'>
       <THead>
         <Row>
-          <Th>{""}</Th>
-          <DesktopOnlyTh align={"right"}>{""}</DesktopOnlyTh>
-          <DesktopOnlyTh align={"right"}>{""}</DesktopOnlyTh>
-          <Th align={"right"}>{""}</Th>
+          <Th>{''}</Th>
+          <DesktopOnlyTh align={'right'}>{''}</DesktopOnlyTh>
+          <DesktopOnlyTh align={'right'}>{''}</DesktopOnlyTh>
+          <Th align={'right'}>{''}</Th>
         </Row>
       </THead>
       <TBody>
@@ -45,18 +45,18 @@ const WellHistorySkeleton: React.FC<{}> = () => (
                     <LoadingTemplate.Item width={75} />
                   </LoadingTemplate.Flex>
                 </Td>
-                <DesktopOnlyTd align={"right"}>
-                  <LoadingTemplate alignItems="flex-end">
+                <DesktopOnlyTd align={'right'}>
+                  <LoadingTemplate alignItems='flex-end'>
                     <LoadingTemplate.Item width={75} />
                   </LoadingTemplate>
                 </DesktopOnlyTd>
-                <DesktopOnlyTd align={"right"}>
-                  <LoadingTemplate alignItems="flex-end">
+                <DesktopOnlyTd align={'right'}>
+                  <LoadingTemplate alignItems='flex-end'>
                     <LoadingTemplate.Item width={75} />
                   </LoadingTemplate>
                 </DesktopOnlyTd>
-                <Td align={"right"}>
-                  <LoadingTemplate alignItems="flex-end">
+                <Td align={'right'}>
+                  <LoadingTemplate alignItems='flex-end'>
                     <LoadingTemplate.Item width={75} />
                   </LoadingTemplate>
                 </Td>
@@ -81,9 +81,7 @@ const WellHistoryContent: React.FC<WellHistoryProps> = ({ well, tokenPrices, res
   const lpTokenSupply = useTokenSupply(well.lpToken!);
   const isNonEmptyWell = lpTokenSupply.totalSupply && lpTokenSupply.totalSupply.gt(0);
   const lpTokenPrice =
-    lpTokenSupply.totalSupply && isNonEmptyWell
-      ? reservesUSD.div(lpTokenSupply.totalSupply)
-      : TokenValue.ZERO;
+    lpTokenSupply.totalSupply && isNonEmptyWell ? reservesUSD.div(lpTokenSupply.totalSupply) : TokenValue.ZERO;
 
   if (loading) {
     return <WellHistorySkeleton />;
@@ -93,9 +91,7 @@ const WellHistoryContent: React.FC<WellHistoryProps> = ({ well, tokenPrices, res
     .filter((e: WellEvent) => filter === null || e.type == filter)
     .map<ReactElement>(
       (e, index): any =>
-        index >= newestEventOnPage &&
-        index <= oldestEventOnPage &&
-        renderEvent(e, well, tokenPrices, lpTokenPrice)
+        index >= newestEventOnPage && index <= oldestEventOnPage && renderEvent(e, well, tokenPrices, lpTokenPrice)
     );
 
   return (
@@ -106,13 +102,13 @@ const WellHistoryContent: React.FC<WellHistoryProps> = ({ well, tokenPrices, res
             <button onClick={() => setFilter(EVENT_TYPE.ADD_LIQUIDITY)}>Deposits</button>
             <button onClick={() => setFilter(EVENT_TYPE.REMOVE_LIQUIDITY)}>Withdraws</button>
           </div> */}
-      <Table width="100%">
+      <Table width='100%'>
         <THead>
           <Row>
             <Th>Action</Th>
-            <DesktopOnlyTh align={"right"}>Value</DesktopOnlyTh>
-            <DesktopOnlyTh align={"right"}>Description</DesktopOnlyTh>
-            <Th align={"right"}>Time</Th>
+            <DesktopOnlyTh align={'right'}>Value</DesktopOnlyTh>
+            <DesktopOnlyTh align={'right'}>Description</DesktopOnlyTh>
+            <Th align={'right'}>Time</Th>
           </Row>
         </THead>
         <TBody>
@@ -141,9 +137,7 @@ const WellHistoryContent: React.FC<WellHistoryProps> = ({ well, tokenPrices, res
                     <StyledTabButton
                       active
                       pageLimit={currentPage === totalPages}
-                      onClick={() =>
-                        setCurrentPage(currentPage < totalPages ? currentPage + 1 : totalPages)
-                      }
+                      onClick={() => setCurrentPage(currentPage < totalPages ? currentPage + 1 : totalPages)}
                     >
                       →
                     </StyledTabButton>
@@ -164,9 +158,7 @@ const WellHistoryContent: React.FC<WellHistoryProps> = ({ well, tokenPrices, res
                     <StyledTabButton
                       active
                       pageLimit={currentPage === totalPages}
-                      onClick={() =>
-                        setCurrentPage(currentPage < totalPages ? currentPage + 1 : totalPages)
-                      }
+                      onClick={() => setCurrentPage(currentPage < totalPages ? currentPage + 1 : totalPages)}
                     >
                       →
                     </StyledTabButton>
@@ -181,20 +173,12 @@ const WellHistoryContent: React.FC<WellHistoryProps> = ({ well, tokenPrices, res
   );
 };
 
-export const WellHistory: React.FC<
-  BaseWellHistoryProps & { well: Well | undefined; loading?: boolean }
-> = (props) => {
+export const WellHistory: React.FC<BaseWellHistoryProps & { well: Well | undefined; loading?: boolean }> = (props) => {
   if (props.loading || !props.well) {
     return <WellHistorySkeleton />;
   }
 
-  return (
-    <WellHistoryContent
-      well={props.well}
-      tokenPrices={props.tokenPrices}
-      reservesUSD={props.reservesUSD}
-    />
-  );
+  return <WellHistoryContent well={props.well} tokenPrices={props.tokenPrices} reservesUSD={props.reservesUSD} />;
 };
 
 const DesktopOnlyTd = styled(Td)`
@@ -240,7 +224,7 @@ const SelectorContainer = styled.div`
 const StyledTabButton = styled(TabButton)<{ pageLimit: boolean }>`
   background-color: #f9f8f6;
   outline: 0px;
-  ${({ pageLimit }) => pageLimit && "color: #9CA3AF;"}
+  ${({ pageLimit }) => pageLimit && 'color: #9CA3AF;'}
 `;
 
 const PageSelector = styled(Td)`

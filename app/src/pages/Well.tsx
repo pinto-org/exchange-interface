@@ -1,41 +1,41 @@
-import React, { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { useChainId } from "wagmi";
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useChainId } from 'wagmi';
 
-import { TokenValue } from "@beanstalk/sdk";
+import { TokenValue } from '@beanstalk/sdk';
 
-import { mediaQuery, size } from "src/breakpoints";
-import { Error } from "src/components/Error";
-import { ChevronDown } from "src/components/Icons";
-import { ImageButton } from "src/components/ImageButton";
-import { Item, Row } from "src/components/Layout";
-import { LoadingItem } from "src/components/LoadingItem";
-import { LoadingTemplate } from "src/components/LoadingTemplate";
-import { Page } from "src/components/Page";
-import { Title } from "src/components/PageComponents/Title";
-import { Button } from "src/components/Swap/Button";
-import { TabButton } from "src/components/TabButton";
-import { TokenLogo } from "src/components/TokenLogo";
-import { BodyL, BodyS, BodyXS, TextNudge } from "src/components/Typography";
-import { WellHistory } from "src/components/Well/Activity/WellHistory";
-import { ChartSection } from "src/components/Well/Chart/ChartSection";
-import { LearnPump } from "src/components/Well/LearnPump";
-import { LearnWellFunction } from "src/components/Well/LearnWellFunction";
-import { LearnYield } from "src/components/Well/LearnYield";
-import { LiquidityBox } from "src/components/Well/LiquidityBox";
-import { OtherSection } from "src/components/Well/OtherSection";
-import { Reserves } from "src/components/Well/Reserves";
-import { WellYieldWithTooltip } from "src/components/Well/WellYieldWithTooltip";
-import { useChainErrExists } from "src/state/atoms/chain.atoms";
-import { getPrice } from "src/utils/price/usePrice";
-import useSdk from "src/utils/sdk/useSdk";
-import { useIsMobile } from "src/utils/ui/useIsMobile";
-import { useLagLoading } from "src/utils/ui/useLagLoading";
-import { useBeanstalkSiloAPYs } from "src/wells/useBeanstalkSiloAPYs";
-import { useMultiFlowPumpTWAReserves } from "src/wells/useMultiFlowPumpTWAReserves";
-import { useWellWithParams } from "src/wells/useWellWithParams";
+import { mediaQuery, size } from 'src/breakpoints';
+import { Error } from 'src/components/Error';
+import { ChevronDown } from 'src/components/Icons';
+import { ImageButton } from 'src/components/ImageButton';
+import { Item, Row } from 'src/components/Layout';
+import { LoadingItem } from 'src/components/LoadingItem';
+import { LoadingTemplate } from 'src/components/LoadingTemplate';
+import { Page } from 'src/components/Page';
+import { Title } from 'src/components/PageComponents/Title';
+import { Button } from 'src/components/Swap/Button';
+import { TabButton } from 'src/components/TabButton';
+import { TokenLogo } from 'src/components/TokenLogo';
+import { BodyL, BodyS, BodyXS, TextNudge } from 'src/components/Typography';
+import { WellHistory } from 'src/components/Well/Activity/WellHistory';
+import { ChartSection } from 'src/components/Well/Chart/ChartSection';
+import { LearnPump } from 'src/components/Well/LearnPump';
+import { LearnWellFunction } from 'src/components/Well/LearnWellFunction';
+import { LearnYield } from 'src/components/Well/LearnYield';
+import { LiquidityBox } from 'src/components/Well/LiquidityBox';
+import { OtherSection } from 'src/components/Well/OtherSection';
+import { Reserves } from 'src/components/Well/Reserves';
+import { WellYieldWithTooltip } from 'src/components/Well/WellYieldWithTooltip';
+import { useChainErrExists } from 'src/state/atoms/chain.atoms';
+import { getPrice } from 'src/utils/price/usePrice';
+import useSdk from 'src/utils/sdk/useSdk';
+import { useIsMobile } from 'src/utils/ui/useIsMobile';
+import { useLagLoading } from 'src/utils/ui/useLagLoading';
+import { useBeanstalkSiloAPYs } from 'src/wells/useBeanstalkSiloAPYs';
+import { useMultiFlowPumpTWAReserves } from 'src/wells/useMultiFlowPumpTWAReserves';
+import { useWellWithParams } from 'src/wells/useWellWithParams';
 
 export const Well = () => {
   const { well, loading: dataLoading, error } = useWellWithParams();
@@ -49,7 +49,7 @@ export const Well = () => {
   const sdk = useSdk();
   const navigate = useNavigate();
   const [prices, setPrices] = useState<(TokenValue | null)[]>([]);
-  const [wellFunctionName, setWellFunctionName] = useState<string | undefined>("-");
+  const [wellFunctionName, setWellFunctionName] = useState<string | undefined>('-');
   const isMobile = useIsMobile();
 
   const [tab, setTab] = useState(0);
@@ -81,7 +81,7 @@ export const Well = () => {
     run();
   }, [sdk, well, chainIdErr]);
 
-  const title = (well?.tokens ?? []).map((t) => t.symbol).join("/");
+  const title = (well?.tokens ?? []).map((t) => t.symbol).join('/');
   const logos: ReactNode[] = (well?.tokens || []).map((token) => (
     <TokenLogo token={token} size={48} mobileSize={24} key={token.symbol} />
   ));
@@ -97,16 +97,11 @@ export const Well = () => {
       percentage: TokenValue.ZERO
     };
   });
-  const totalUSD = reserves.reduce(
-    (total, r) => total.add(r.dollarAmount ?? TokenValue.ZERO),
-    TokenValue.ZERO
-  );
+  const totalUSD = reserves.reduce((total, r) => total.add(r.dollarAmount ?? TokenValue.ZERO), TokenValue.ZERO);
 
   reserves.forEach((reserve) => {
     reserve.percentage =
-      reserve.dollarAmount && totalUSD.gt(TokenValue.ZERO)
-        ? reserve.dollarAmount.div(totalUSD)
-        : TokenValue.ZERO;
+      reserve.dollarAmount && totalUSD.gt(TokenValue.ZERO) ? reserve.dollarAmount.div(totalUSD) : TokenValue.ZERO;
   });
 
   const twaReserves = useMemo(() => getTWAReservesWithWell(well), [well, getTWAReservesWithWell]);
@@ -132,7 +127,7 @@ export const Well = () => {
 
     const options = {
       root: null,
-      rootMargin: "56px",
+      rootMargin: '56px',
       threshold: 1.0
     };
 
@@ -156,12 +151,7 @@ export const Well = () => {
   return (
     <Page>
       <ContentWrapper>
-        <StyledTitle
-          title={title}
-          parent={{ title: "Liquidity", path: `/wells/${chainId}` }}
-          fontWeight="550"
-          center
-        />
+        <StyledTitle title={title} parent={{ title: 'Liquidity', path: `/wells/${chainId}` }} fontWeight='550' center />
 
         {/*
          *Header
@@ -174,13 +164,13 @@ export const Well = () => {
                 <TextNudge amount={10} mobileAmount={-2}>
                   {title}
                 </TextNudge>
-                <div className="silo-yield-section">
+                <div className='silo-yield-section'>
                   <WellYieldWithTooltip
                     well={well}
                     tooltipProps={{
                       offsetX: isMobile ? -35 : 0,
                       offsetY: 0,
-                      side: "top"
+                      side: 'top'
                     }}
                     returnNullOnNoAPY={true}
                   />
@@ -213,29 +203,15 @@ export const Well = () => {
         {/*
          * Chart Type Button Selectors
          */}
-        <ActivityOtherButtons gap={24} mobileGap={"0px"}>
+        <ActivityOtherButtons gap={24} mobileGap={'0px'}>
           <LoadingItem loading={loading} onLoading={<SkeletonButtonsRow />}>
             <Item stretch>
-              <TabButton
-                onClick={(e) => showTab(e, 0)}
-                active={tab === 0}
-                stretch
-                justify
-                bold
-                hover
-              >
+              <TabButton onClick={(e) => showTab(e, 0)} active={tab === 0} stretch justify bold hover>
                 Activity
               </TabButton>
             </Item>
             <Item stretch>
-              <TabButton
-                onClick={(e) => showTab(e, 1)}
-                active={tab === 1}
-                stretch
-                justify
-                bold
-                hover
-              >
+              <TabButton onClick={(e) => showTab(e, 1)} active={tab === 1} stretch justify bold hover>
                 Contract Addresses
               </TabButton>
             </Item>
@@ -246,14 +222,7 @@ export const Well = () => {
          * Well History & Contract Info Tables
          */}
         <BottomContainer>
-          {tab === 0 && (
-            <WellHistory
-              well={well}
-              tokenPrices={prices}
-              reservesUSD={totalUSD}
-              loading={loading}
-            />
-          )}
+          {tab === 0 && <WellHistory well={well} tokenPrices={prices} reservesUSD={totalUSD} loading={loading} />}
           {tab === 1 && <OtherSection well={well} loading={loading} />}
         </BottomContainer>
 
@@ -270,20 +239,20 @@ export const Well = () => {
         <LiquiditySwapButtonsMobile sticky={isSticky}>
           <LoadingItem loading={loading} onLoading={<SkeletonButtonsRow />}>
             <Item stretch>
-              <Button secondary label="Add/Rm Liquidity" onClick={goLiquidity} />
+              <Button secondary label='Add/Rm Liquidity' onClick={goLiquidity} />
             </Item>
             <Item stretch>
-              <Button label="Swap" onClick={goSwap} />
+              <Button label='Swap' onClick={goSwap} />
             </Item>
           </LoadingItem>
         </LiquiditySwapButtonsMobile>
         <LiquiditySwapButtonsDesktop gap={24}>
           <LoadingItem loading={loading} onLoading={<SkeletonButtonsRow />}>
             <Item stretch>
-              <Button secondary label="Add/Rm Liquidity" onClick={goLiquidity} />
+              <Button secondary label='Add/Rm Liquidity' onClick={goLiquidity} />
             </Item>
             <Item stretch>
-              <Button label="Swap" onClick={goSwap} />
+              <Button label='Swap' onClick={goSwap} />
             </Item>
           </LoadingItem>
         </LiquiditySwapButtonsDesktop>
@@ -306,11 +275,11 @@ export const Well = () => {
               <ImageButton
                 component={ChevronDown}
                 size={10}
-                rotate={open ? "180" : "0"}
+                rotate={open ? '180' : '0'}
                 onClick={toggle}
-                padding="0px"
-                alt="Click to expand and learn how to earn yield"
-                color={"#46B955"}
+                padding='0px'
+                alt='Click to expand and learn how to earn yield'
+                color={'#46B955'}
               />
             </LearnMoreText>
             <LearnMoreLine />
@@ -466,9 +435,9 @@ const LiquiditySwapButtonsMobile = styled(Row)<{ sticky?: boolean }>`
 
   ${mediaQuery.sm.only} {
     position: sticky;
-    gap: ${(props) => (props.sticky ? "0px" : "8px")};
-    margin-left: ${(props) => (props.sticky ? "-12px" : "0px")};
-    width: ${(props) => (props.sticky ? "100vw" : "100%")};
+    gap: ${(props) => (props.sticky ? '0px' : '8px')};
+    margin-left: ${(props) => (props.sticky ? '-12px' : '0px')};
+    width: ${(props) => (props.sticky ? '100vw' : '100%')};
   }
 
   ${mediaQuery.lg.only} {
@@ -581,7 +550,7 @@ const LearnMoreText = styled.div`
 `;
 
 const LearnMoreButtons = styled.div<{ open: boolean }>`
-  ${(props) => (props.open ? "display: flex" : "display: none")};
+  ${(props) => (props.open ? 'display: flex' : 'display: none')};
   flex-direction: column;
   gap: 16px;
 
@@ -655,7 +624,7 @@ const SkeletonReserves: React.FC<{}> = () => {
           <LoadingTemplate key={`ReservesLoading-${i}`}>
             <LoadingTemplate.Flex gap={4}>
               <LoadingTemplate.Item width={75} height={20} />
-              <LoadingTemplate.Flex gap={4} row alignItems="flex-end">
+              <LoadingTemplate.Flex gap={4} row alignItems='flex-end'>
                 <LoadingTemplate.Item width={100} height={24} />
                 <LoadingTemplate.Item width={70} height={24} />
               </LoadingTemplate.Flex>

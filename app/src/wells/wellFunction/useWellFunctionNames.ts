@@ -1,19 +1,19 @@
-import { multicall } from "@wagmi/core";
-import { ContractFunctionParameters, MulticallReturnType } from "viem";
+import { multicall } from '@wagmi/core';
+import { ContractFunctionParameters, MulticallReturnType } from 'viem';
 
-import { Well, WellFunction } from "@beanstalk/sdk-wells";
+import { Well, WellFunction } from '@beanstalk/sdk-wells';
 
-import { AddressMap } from "src/types";
-import { Log } from "src/utils/logger";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useChainScopedQuery } from "src/utils/query/useChainScopedQuery";
-import { config } from "src/utils/wagmi/config";
+import { AddressMap } from 'src/types';
+import { Log } from 'src/utils/logger';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import { config } from 'src/utils/wagmi/config';
 
 interface WellWithWellFn extends Well {
   wellFunction: WellFunction;
 }
 
-const Logger = Log.module("useWellFunctionNames");
+const Logger = Log.module('useWellFunctionNames');
 
 /**
  * Returns a Record of well function addresses to their names.
@@ -25,7 +25,7 @@ export const useWellFunctionNames = (_wells: Well[] | undefined) => {
   const addresses = wellsWithWellFunctions.map((well) => well.wellFunction.address);
 
   return useChainScopedQuery({
-    queryKey: queryKeys.wellFunctionNames(addresses.length ? addresses : ["invalid"]),
+    queryKey: queryKeys.wellFunctionNames(addresses.length ? addresses : ['invalid']),
     queryFn: async () => {
       Logger.debug(`Fetching well function names for wells: ${addresses}`);
       const calls = makeMultiCall(wellsWithWellFunctions);
@@ -53,7 +53,7 @@ const makeMultiCall = (wells: WellWithWellFn[]) => {
     return {
       address: well.wellFunction.address as `0x{string}`,
       abi: WellFunction.abi,
-      functionName: "name",
+      functionName: 'name',
       args: []
     };
   });

@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { size } from "src/breakpoints";
-import { FC } from "src/types";
+import { size } from 'src/breakpoints';
+import { FC } from 'src/types';
 
-import { BodyS, BodyXS } from "./Typography";
+import { BodyS, BodyXS } from './Typography';
 
 interface Composition {
   Header: typeof Header;
@@ -18,7 +18,7 @@ interface Composition {
 
 type Props = {};
 export const InfoBox: FC<Props> & Composition = ({ children }) => {
-  return <Container data-trace="true">{children}</Container>;
+  return <Container data-trace='true'>{children}</Container>;
 };
 
 const Container = styled.div<Props>`

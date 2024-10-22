@@ -1,19 +1,19 @@
-import React, { useCallback } from "react";
+import React, { useCallback } from 'react';
 
-import { FieldValues, Path, PathValue, useFormContext, useWatch } from "react-hook-form";
-import styled from "styled-components";
+import { FieldValues, Path, PathValue, useFormContext, useWatch } from 'react-hook-form';
+import styled from 'styled-components';
 
-import { Flex } from "src/components/Layout";
-import { ToggleSwitch } from "src/components/ToggleSwitch";
-import { Text } from "src/components/Typography";
-import { getIsValidEthereumAddress } from "src/utils/addresses";
-import { theme } from "src/utils/ui/theme";
-import { useBoolean } from "src/utils/ui/useBoolean";
+import { Flex } from 'src/components/Layout';
+import { ToggleSwitch } from 'src/components/ToggleSwitch';
+import { Text } from 'src/components/Typography';
+import { getIsValidEthereumAddress } from 'src/utils/addresses';
+import { theme } from 'src/utils/ui/theme';
+import { useBoolean } from 'src/utils/ui/useBoolean';
 
-import { WellComponentAccordionCard } from "./ComponentAccordionCard";
-import { TextInputField } from "../../Form";
-import { CircleFilledCheckIcon, CircleEmptyIcon } from "../../Icons";
-import { useWhitelistedWellComponents } from "../useWhitelistedWellComponents";
+import { WellComponentAccordionCard } from './ComponentAccordionCard';
+import { TextInputField } from '../../Form';
+import { CircleFilledCheckIcon, CircleEmptyIcon } from '../../Icons';
+import { useWhitelistedWellComponents } from '../useWhitelistedWellComponents';
 
 type AdditionalOptionProps = {
   value: string;
@@ -24,7 +24,7 @@ type AdditionalOptionProps = {
 type Props<T extends FieldValues> = {
   path: Path<T>;
   dataPath?: Path<T>;
-  componentType: keyof ReturnType<typeof useWhitelistedWellComponents>["components"];
+  componentType: keyof ReturnType<typeof useWhitelistedWellComponents>['components'];
   toggleMessage: string;
   emptyValue: PathValue<T, Path<T>>;
   additional?: AdditionalOptionProps[];
@@ -75,7 +75,7 @@ export const ComponentInputWithCustom = <T extends FieldValues>({
 
   // we can always assume that error.message is a string b/c we define the
   // validation here in this component
-  const errMessage = (error?.message || "") as string | undefined;
+  const errMessage = (error?.message || '') as string | undefined;
 
   return (
     <>
@@ -91,24 +91,20 @@ export const ComponentInputWithCustom = <T extends FieldValues>({
         const selected = !usingCustom && option.value === value;
         return (
           <AdditionalOption
-            $direction="row"
+            $direction='row'
             $active={selected}
             $gap={2}
             key={`well-functions-option-${option.value}-${i}`}
             onClick={() => handleSetValue(option.value)}
           >
-            <Flex $direction="row" $alignItems="center" $fullWidth $gap={2}>
-              {selected ? (
-                <CircleFilledCheckIcon />
-              ) : (
-                <CircleEmptyIcon color={theme.colors.lightGray} />
-              )}
+            <Flex $direction='row' $alignItems='center' $fullWidth $gap={2}>
+              {selected ? <CircleFilledCheckIcon /> : <CircleEmptyIcon color={theme.colors.lightGray} />}
               <div>
-                <Text $variant="xs" $weight="semi-bold">
+                <Text $variant='xs' $weight='semi-bold'>
                   {option.label}
                 </Text>
                 {option.subLabel && (
-                  <Text $variant="xs" $color="text.secondary">
+                  <Text $variant='xs' $color='text.secondary'>
                     {option.subLabel}
                   </Text>
                 )}
@@ -117,9 +113,9 @@ export const ComponentInputWithCustom = <T extends FieldValues>({
           </AdditionalOption>
         );
       })}
-      <Flex $direction="row" $gap={1}>
+      <Flex $direction='row' $gap={1}>
         <ToggleSwitch checked={usingCustom} toggle={handleToggle} />
-        <Text $variant="xs" color="text.secondary">
+        <Text $variant='xs' color='text.secondary'>
           {toggleMessage}
         </Text>
       </Flex>
@@ -128,10 +124,10 @@ export const ComponentInputWithCustom = <T extends FieldValues>({
           <TextInputField
             {...register(path, {
               validate: (_value) => {
-                return getIsValidEthereumAddress(_value) || "Invalid address";
+                return getIsValidEthereumAddress(_value) || 'Invalid address';
               }
             })}
-            placeholder="Input address"
+            placeholder='Input address'
             error={errMessage}
           />
           {dataPath && <ComponentDataFieldInput path={dataPath} />}
@@ -149,16 +145,16 @@ const ComponentDataFieldInput = <T extends FieldValues>(props: { path: Path<T> }
     }
   } = useFormContext<T>();
 
-  const errMessage = (error?.message || "") as string | undefined;
+  const errMessage = (error?.message || '') as string | undefined;
 
   return (
     <TextInputField
       {...register(props.path, {
         validate: (_value) => {
-          return _value.startsWith("0x") || "Invalid input";
+          return _value.startsWith('0x') || 'Invalid input';
         }
       })}
-      placeholder="0x data"
+      placeholder='0x data'
       error={errMessage}
     />
   );

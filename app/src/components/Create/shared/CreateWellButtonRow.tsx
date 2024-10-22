@@ -1,33 +1,33 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import { useFormContext, useWatch } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { useFormContext, useWatch } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { ActionWalletButtonWrapper } from "src/components/Wallet";
-import { theme } from "src/utils/ui/theme";
+import { ActionWalletButtonWrapper } from 'src/components/Wallet';
+import { theme } from 'src/utils/ui/theme';
 
-import { ButtonPrimary } from "../../Button";
-import { LeftArrow, RightArrow } from "../../Icons";
-import { Flex } from "../../Layout";
-import { useCreateWell } from "../CreateWellProvider";
+import { ButtonPrimary } from '../../Button';
+import { LeftArrow, RightArrow } from '../../Icons';
+import { Flex } from '../../Layout';
+import { useCreateWell } from '../CreateWellProvider';
 
 const ButtonLabels = [
   {
-    back: "Back",
-    next: "Next: Customize Well"
+    back: 'Back',
+    next: 'Next: Customize Well'
   },
   {
-    back: "Back: Choose Well Implementation",
-    next: "Next: Well Name and Symbol"
+    back: 'Back: Choose Well Implementation',
+    next: 'Next: Well Name and Symbol'
   },
   {
-    back: "Back: Customize Well",
-    next: "Next: Preview Deployment"
+    back: 'Back: Customize Well',
+    next: 'Next: Preview Deployment'
   },
   {
-    back: "Back: Customize Well",
-    next: "Deploy Well"
+    back: 'Back: Customize Well',
+    next: 'Deploy Well'
   }
 ] as const;
 
@@ -56,7 +56,7 @@ export const CreateWellButtonRow = ({
   const handleGoBack = () => {
     onGoBack?.();
     if (step === 0) {
-      navigate("/build");
+      navigate('/build');
     } else {
       goBack();
     }
@@ -74,13 +74,13 @@ export const CreateWellButtonRow = ({
 
   const goNextEnabled = noErrors && hasRequiredValues;
 
-  const goBackLabel = ButtonLabels[step].back || "Back";
-  const nextLabel = (disabled && disabledMessage) || ButtonLabels[step].next || "Next";
+  const goBackLabel = ButtonLabels[step].back || 'Back';
+  const nextLabel = (disabled && disabledMessage) || ButtonLabels[step].next || 'Next';
 
   return (
-    <Flex $fullWidth $direction="row" $justifyContent="space-between" $gap={2}>
+    <Flex $fullWidth $direction='row' $justifyContent='space-between' $gap={2}>
       <ButtonPrimary
-        $variant="outlined"
+        $variant='outlined'
         onClick={(e) => {
           // stop the event from bubbling up
           e.preventDefault();
@@ -94,7 +94,7 @@ export const CreateWellButtonRow = ({
         </ButtonLabel>
       </ButtonPrimary>
       <ActionWalletButtonWrapper allow={step !== 3}>
-        <ButtonPrimary type="submit" disabled={!goNextEnabled || disabled} $loading={isSubmitting}>
+        <ButtonPrimary type='submit' disabled={!goNextEnabled || disabled} $loading={isSubmitting}>
           <ButtonLabel>
             {nextLabel}
             <RightArrow width={16} height={16} color={theme.colors.white} />
@@ -107,9 +107,9 @@ export const CreateWellButtonRow = ({
 
 const ButtonLabel = styled(Flex).attrs({
   $gap: 1,
-  $direction: "row",
-  $alignItems: "center",
-  $justiyContent: "center"
+  $direction: 'row',
+  $alignItems: 'center',
+  $justiyContent: 'center'
 })`
   svg {
     margin-bottom: 2px;

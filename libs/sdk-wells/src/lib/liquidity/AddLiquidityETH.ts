@@ -16,14 +16,8 @@ export class AddLiquidityETH {
 
   constructor(sdk: WellsSDK) {
     this.sdk = sdk;
-    this.weth9 = WETH9__factory.connect(
-      addresses.WETH9.get(this.sdk.chainId),
-      this.sdk.providerOrSigner,
-    );
-    this.depot = Depot__factory.connect(
-      addresses.DEPOT.get(this.sdk.chainId),
-      this.sdk.providerOrSigner,
-    );
+    this.weth9 = WETH9__factory.connect(addresses.WETH9.get(this.sdk.chainId), this.sdk.providerOrSigner);
+    this.depot = Depot__factory.connect(addresses.DEPOT.get(this.sdk.chainId), this.sdk.providerOrSigner);
   }
 
   generateSteps(well: Well, amounts: TokenValue[], quote: TokenValue, account: string) {
@@ -38,7 +32,7 @@ export class AddLiquidityETH {
           well.address,
           amounts[i].toBigNumber(),
           0,
-          0,
+          0
         ]);
         tokenTransfers.push(tokenTransfer);
       } else {
@@ -50,30 +44,27 @@ export class AddLiquidityETH {
     const wrapEth = {
       target: this.weth9.address,
       callData: this.weth9.interface.encodeFunctionData('deposit'),
-      clipboard: Clipboard.encode([], ethAmount!.toBigNumber()),
+      clipboard: Clipboard.encode([], ethAmount!.toBigNumber())
     };
 
     // SEND WETH TO WELL
     const wethTransfer = {
       target: this.weth9.address,
-      callData: this.weth9.interface.encodeFunctionData('transfer', [
-        well.address,
-        ethAmount.toBigNumber(),
-      ]),
-      clipboard: Clipboard.encode([]),
+      callData: this.weth9.interface.encodeFunctionData('transfer', [well.address, ethAmount.toBigNumber()]),
+      clipboard: Clipboard.encode([])
     };
 
     // SYNC TO USER
     const syncWell = {
       target: well.address,
       callData: well.contract.interface.encodeFunctionData('sync', [account, quote.toBlockchain()]),
-      clipboard: Clipboard.encode([]),
+      clipboard: Clipboard.encode([])
     };
 
     // ENCODE ADVANCEDPIPE
     const pipe = this.depot.interface.encodeFunctionData('advancedPipe', [
       [wrapEth, wethTransfer, syncWell],
-      ethAmount.toBlockchain(),
+      ethAmount.toBlockchain()
     ]);
 
     return { steps: [...tokenTransfers, pipe], ethAmount: ethAmount };
@@ -84,14 +75,9 @@ export class AddLiquidityETH {
     amounts: TokenValue[],
     quote: TokenValue,
     account?: string,
-    overrides: TxOverrides = {},
+    overrides: TxOverrides = {}
   ): Promise<TokenValue> {
-    const { steps, ethAmount } = this.generateSteps(
-      well,
-      amounts,
-      quote,
-      account || this.ZERO_ADDRESS,
-    );
+    const { steps, ethAmount } = this.generateSteps(well, amounts, quote, account || this.ZERO_ADDRESS);
     const overrideOptions = { ...overrides, value: ethAmount.toBigNumber() };
     const gas = await this.depot.estimateGas.farm(steps, overrideOptions);
     return TokenValue.fromBlockchain(gas, 0);
@@ -103,13 +89,13 @@ export class AddLiquidityETH {
     quote: TokenValue,
     account: string,
     gasEstimate: TokenValue,
-    overrides: TxOverrides = {},
+    overrides: TxOverrides = {}
   ): Promise<ContractTransaction> {
     const { steps, ethAmount } = this.generateSteps(well, amounts, quote, account);
     const overrideOptions = {
       ...overrides,
       value: ethAmount.toBigNumber(),
-      gasLimit: gasEstimate.toBlockchain() || 500000,
+      gasLimit: gasEstimate.toBlockchain() || 500000
     };
     return this.depot.farm(steps, overrideOptions);
   }

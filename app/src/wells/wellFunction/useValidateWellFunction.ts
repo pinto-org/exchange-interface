@@ -1,20 +1,17 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { multicall } from "@wagmi/core";
-import { BigNumber } from "ethers";
+import { multicall } from '@wagmi/core';
+import { BigNumber } from 'ethers';
 
-import { BeanstalkSDK } from "@beanstalk/sdk";
-import { WellFunction } from "@beanstalk/sdk-wells";
+import { BeanstalkSDK } from '@beanstalk/sdk';
+import { WellFunction } from '@beanstalk/sdk-wells';
 
-import { queryKeys } from "src/utils/query/queryKeys";
-import {
-  useGetChainScopedQueryData,
-  useSetChainScopedQueryData
-} from "src/utils/query/useChainScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
-import { config } from "src/utils/wagmi/config";
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useGetChainScopedQueryData, useSetChainScopedQueryData } from 'src/utils/query/useChainScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
+import { config } from 'src/utils/wagmi/config';
 
-import { useWellFunctions } from "./useWellFunctions";
+import { useWellFunctions } from './useWellFunctions';
 
 const getWellFunctionCalls = (wellFunction: WellFunction) => {
   const address = wellFunction.address as `0x${string}`;
@@ -25,10 +22,10 @@ const getWellFunctionCalls = (wellFunction: WellFunction) => {
     {
       address,
       abi,
-      functionName: "calcLPTokenUnderlying",
+      functionName: 'calcLPTokenUnderlying',
       args: [bn, [bn, bn], bn, wellFunction.data]
     },
-    { address, abi, functionName: "calcLpTokenSupply", args: [[bn, bn], wellFunction.data] },
+    { address, abi, functionName: 'calcLpTokenSupply', args: [[bn, bn], wellFunction.data] },
     // { // might be flaky
     //   address,
     //   abi,
@@ -40,8 +37,8 @@ const getWellFunctionCalls = (wellFunction: WellFunction) => {
     //     wellFunction.data
     //   ]
     // },
-    { address, abi, functionName: "name", args: [] },
-    { address, abi, functionName: "symbol", args: [] }
+    { address, abi, functionName: 'name', args: [] },
+    { address, abi, functionName: 'symbol', args: [] }
   ];
 };
 
@@ -81,7 +78,7 @@ type CachedWellFunctionData = WellFunction | string | undefined;
 
 // why set the invalidWellFunctionData to a string?
 // react-query doesn't cache undefined values, so we need to set it to a string
-const invalidWellFunctionData = "invalid-well-function";
+const invalidWellFunctionData = 'invalid-well-function';
 
 export const useValidateWellFunction = () => {
   const wellFunctions = useWellFunctions();
@@ -92,12 +89,12 @@ export const useValidateWellFunction = () => {
 
   const validate = useCallback(
     async ({ address, data, wellFunction }: ValidateWellFunctionParams) => {
-      const queryKey = queryKeys.wellFunctionValid(address || "no-address", data || "no-data");
+      const queryKey = queryKeys.wellFunctionValid(address || 'no-address', data || 'no-data');
       try {
         // check the queryClientCache first
         const cachedWellFunction = getQueryData(queryKey) as CachedWellFunctionData;
         if (cachedWellFunction) {
-          if (typeof cachedWellFunction === "string") return undefined;
+          if (typeof cachedWellFunction === 'string') return undefined;
           return cachedWellFunction;
         }
 

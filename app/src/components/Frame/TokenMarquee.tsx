@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
-import { images } from "src/assets/images/tokens";
-import { size } from "src/breakpoints";
+import { images } from 'src/assets/images/tokens';
+import { size } from 'src/breakpoints';
 
-import { Image } from "../Image";
+import { Image } from '../Image';
 
 const randomKey = () => Math.random().toString(36).substring(2, 7);
 
 // only use BEAN & WETH for the Marquee. We can add more as the wells become deeper in liquidity.
-const marqueeSymbols = ["BEAN", "WETH"];
+const marqueeSymbols = ['BEAN', 'WETH'];
 
 export const TokenMarquee = () => {
   // we need distinct keys for these, so we return a function so the key can be set later
@@ -86,37 +86,37 @@ const Circle = () => {
       cx={12}
       cy={12}
       r={11.75}
-      fill="#F5F3FF"
-      stroke="#4C1D95"
-      strokeDasharray="1.5 1.5"
-      strokeLinecap="round"
+      fill='#F5F3FF'
+      stroke='#4C1D95'
+      strokeDasharray='1.5 1.5'
+      strokeLinecap='round'
       strokeWidth={0.5}
     />,
     <circle
       key={2}
-      cx="12"
-      cy="12"
-      r="11.75"
-      fill="#FFF1F2"
-      stroke="#881337"
-      strokeWidth="0.5"
-      strokeLinecap="round"
-      strokeDasharray="1.5 1.5"
+      cx='12'
+      cy='12'
+      r='11.75'
+      fill='#FFF1F2'
+      stroke='#881337'
+      strokeWidth='0.5'
+      strokeLinecap='round'
+      strokeDasharray='1.5 1.5'
     />,
     <circle
       key={23}
-      cx="12"
-      cy="12"
-      r="11.75"
-      fill="#F0FDF4"
-      stroke="#14532D"
-      strokeWidth="0.5"
-      strokeLinecap="round"
-      strokeDasharray="1.5 1.5"
+      cx='12'
+      cy='12'
+      r='11.75'
+      fill='#F0FDF4'
+      stroke='#14532D'
+      strokeWidth='0.5'
+      strokeLinecap='round'
+      strokeDasharray='1.5 1.5'
     />
   ];
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
+    <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} fill='none'>
       {items[Math.floor(Math.random() * items.length)]}
     </svg>
   );

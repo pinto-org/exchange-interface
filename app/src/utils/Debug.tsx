@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import { useChains } from "connectkit";
-import { useAccount } from "wagmi";
+import { useChains } from 'connectkit';
+import { useAccount } from 'wagmi';
 
 export const Debug = () => {
   const account = useAccount();
   const chains = useChains();
-  console.log("DEBUG:");
+  console.log('DEBUG:');
   console.log(account);
   console.log(chains);
 

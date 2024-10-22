@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { ConnectKitButton, useModal as useConnectKitModal } from "connectkit";
-import { useAtom } from "jotai";
-import styled from "styled-components";
-import { useAccount } from "wagmi";
+import { ConnectKitButton, useModal as useConnectKitModal } from 'connectkit';
+import { useAtom } from 'jotai';
+import styled from 'styled-components';
+import { useAccount } from 'wagmi';
 
-import { sdkAtom } from "src/state/atoms";
+import { sdkAtom } from 'src/state/atoms';
 
-import { ButtonPrimary } from "./Button";
+import { ButtonPrimary } from './Button';
 
 type ActionWalletButtonProps = {
   children: JSX.Element;
@@ -26,7 +26,7 @@ export const WalletButton = () => {
         return (
           <>
             <StyledConnectButton onClick={show}>
-              {isConnected ? ensName ?? truncatedAddress : "Connect Wallet"}
+              {isConnected ? (ensName ?? truncatedAddress) : 'Connect Wallet'}
             </StyledConnectButton>
           </>
         );
@@ -90,7 +90,7 @@ const useUpdateWalletModalStyles = () => {
   const { address } = useAccount();
   const { open, setOpen } = useConnectKitModal({
     onConnect: () => {
-      console.log("connecting....");
+      console.log('connecting....');
     }
   });
   const [sdk, setSdk] = useAtom(sdkAtom);
@@ -100,9 +100,9 @@ const useUpdateWalletModalStyles = () => {
 
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.innerText !== "Other Wallets") return;
+      if (target.innerText !== 'Other Wallets') return;
       const els = document.querySelectorAll<HTMLElement>('[role="dialog"]');
-      const el: any = Array.from(els).find((e) => e.className.includes("ModalContainer"));
+      const el: any = Array.from(els).find((e) => e.className.includes('ModalContainer'));
 
       if (el) {
         el.style.zIndex = 1;
@@ -112,13 +112,13 @@ const useUpdateWalletModalStyles = () => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (!mutation.addedNodes) return;
-        const modal = document.getElementById("__CONNECTKIT__");
+        const modal = document.getElementById('__CONNECTKIT__');
         if (!modal) return;
 
-        modal.addEventListener("click", handleClick);
+        modal.addEventListener('click', handleClick);
 
         return () => {
-          modal.removeEventListener("click", handleClick);
+          modal.removeEventListener('click', handleClick);
         };
       });
     });

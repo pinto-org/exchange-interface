@@ -1,27 +1,23 @@
-import { RefObject } from "react";
+import { RefObject } from 'react';
 
-import throttle from "lodash/throttle";
+import throttle from 'lodash/throttle';
 
-import { liangBarsky } from "./lineIntersect";
+import { liangBarsky } from './lineIntersect';
 
-export const debugPoint = (
-  point: DOMPoint,
-  id: string = "debugpoint",
-  svgRef: RefObject<SVGSVGElement>
-) => {
+export const debugPoint = (point: DOMPoint, id: string = 'debugpoint', svgRef: RefObject<SVGSVGElement>) => {
   const el = svgRef.current?.getElementById(id);
-  el?.setAttribute("cx", point.x.toString());
-  el?.setAttribute("cy", point.y.toString());
+  el?.setAttribute('cx', point.x.toString());
+  el?.setAttribute('cy', point.y.toString());
 };
 
 export const debugLine = (end: DOMPoint, start: DOMPoint, svgRef: RefObject<SVGSVGElement>) => {
   if (!end || !start) return;
-  const el = svgRef.current?.getElementById("debugline");
+  const el = svgRef.current?.getElementById('debugline');
 
-  el?.setAttribute("x1", start.x.toString());
-  el?.setAttribute("y1", start.y.toString());
-  el?.setAttribute("x2", end.x.toString());
-  el?.setAttribute("y2", end.y.toString());
+  el?.setAttribute('x1', start.x.toString());
+  el?.setAttribute('y1', start.y.toString());
+  el?.setAttribute('x2', end.x.toString());
+  el?.setAttribute('y2', end.y.toString());
 };
 
 export const getCorners = (point: DOMPoint, obj: any) => {
@@ -131,8 +127,8 @@ export const getTraceables = throttle(
     const svgPosition = svg.getBoundingClientRect();
     // console.log("SVG: ", svgPosition);
     // Get all children of the container and find any that have a 'data-trace' attribtue
-    const descendants = Array.from(container.querySelectorAll("*"));
-    const elements = descendants.filter((e: Element) => e.getAttribute("data-trace") === "true");
+    const descendants = Array.from(container.querySelectorAll('*'));
+    const elements = descendants.filter((e: Element) => e.getAttribute('data-trace') === 'true');
     // for each one, return a DOMRect made up of its coordinates
     const traceables = elements.map((e) => {
       const el = e as HTMLElement;

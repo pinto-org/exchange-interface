@@ -1,9 +1,9 @@
-import { BigNumber } from "ethers";
-import { formatEther } from "ethers/lib/utils.js";
+import { BigNumber } from 'ethers';
+import { formatEther } from 'ethers/lib/utils.js';
 
-import { BeanstalkSDK } from "@beanstalk/sdk";
+import { BeanstalkSDK } from '@beanstalk/sdk';
 
-import { getPrice } from "./price/usePrice";
+import { getPrice } from './price/usePrice';
 
 export const getGasInUsd = async (sdk: BeanstalkSDK, value: BigNumber) => {
   const feeData = await sdk.provider.getFeeData();

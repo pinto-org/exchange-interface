@@ -1,15 +1,15 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { QueryKey, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
-import { useAccount } from "wagmi";
+import { QueryKey, useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
+import { useAccount } from 'wagmi';
 
-import { AddressIsh } from "src/types";
+import { AddressIsh } from 'src/types';
 
-import { useSdkChainId } from "../chain";
+import { useSdkChainId } from '../chain';
 
 const makeScopedQueryKey = (chainId: number, address: AddressIsh, queryKey: QueryKey) => {
-  const scope = [chainId, address || "no-address"];
-  return [scope, ...(typeof queryKey === "string" ? [queryKey] : queryKey)];
+  const scope = [chainId, address || 'no-address'];
+  return [scope, ...(typeof queryKey === 'string' ? [queryKey] : queryKey)];
 };
 
 /**
@@ -27,7 +27,7 @@ export function useScopedQuery<
   const { queryKey, ...rest } = arg;
 
   let key: string[] = [];
-  if (typeof queryKey === "string") {
+  if (typeof queryKey === 'string') {
     key = [queryKey];
   } else if (Array.isArray(queryKey)) {
     key = queryKey;
@@ -52,13 +52,10 @@ export function useSetScopedQueryData<TQueryKey extends QueryKey = QueryKey>() {
 
   return useCallback(
     <T>(queryKey: TQueryKey, mergeData: (oldData: undefined | void | T) => T) =>
-      queryClient.setQueryData(
-        makeScopedQueryKey(chainId, address, queryKey),
-        (oldData: undefined | void | T) => {
-          const merged = mergeData(oldData);
-          return merged;
-        }
-      ),
+      queryClient.setQueryData(makeScopedQueryKey(chainId, address, queryKey), (oldData: undefined | void | T) => {
+        const merged = mergeData(oldData);
+        return merged;
+      }),
     [queryClient, address, chainId]
   );
 }
@@ -72,8 +69,7 @@ export function useGetScopedQueryData<TQueryKey extends QueryKey = QueryKey>() {
   const queryClient = useQueryClient();
 
   return useCallback(
-    <T>(queryKey: TQueryKey) =>
-      queryClient.getQueryData<T>(makeScopedQueryKey(chainId, address, queryKey)),
+    <T>(queryKey: TQueryKey) => queryClient.getQueryData<T>(makeScopedQueryKey(chainId, address, queryKey)),
     [queryClient, address, chainId]
   );
 }
@@ -87,8 +83,7 @@ export function useFetchScopedQueryData<TQueryKey extends QueryKey = QueryKey>()
   const queryClient = useQueryClient();
 
   return useCallback(
-    (queryKey: TQueryKey) =>
-      queryClient.fetchQuery({ queryKey: makeScopedQueryKey(chainId, address, queryKey) }),
+    (queryKey: TQueryKey) => queryClient.fetchQuery({ queryKey: makeScopedQueryKey(chainId, address, queryKey) }),
     [queryClient, address, chainId]
   );
 }

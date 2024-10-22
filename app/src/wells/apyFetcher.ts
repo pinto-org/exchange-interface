@@ -1,9 +1,9 @@
-import { BeanstalkSDK, TokenValue } from "@beanstalk/sdk";
+import { BeanstalkSDK, TokenValue } from '@beanstalk/sdk';
 
-import { BeanstalkSiloLatestApyDocument } from "src/generated/graph/graphql";
-import { Log } from "src/utils/logger";
+import { BeanstalkSiloLatestApyDocument } from 'src/generated/graph/graphql';
+import { Log } from 'src/utils/logger';
 
-import { fetchFromSubgraphRequest } from "./subgraphFetch";
+import { fetchFromSubgraphRequest } from './subgraphFetch';
 
 export type SiloAPYResult = {
   id: string;
@@ -13,25 +13,22 @@ export type SiloAPYResult = {
 };
 
 const defaultResult: SiloAPYResult = {
-  id: "",
+  id: '',
   season: 0,
   tokenAPYs: {},
   beansPerSeasonEMA: TokenValue.ZERO
 };
 
 const normalise = (data: string | number) => {
-  return TokenValue.ZERO.add(parseFloat(typeof data === "string" ? data : data.toString()));
+  return TokenValue.ZERO.add(parseFloat(typeof data === 'string' ? data : data.toString()));
 };
 
 // BS3TODO: use correct subgraph
 const fetchAPYFromSubgraph = async (sdk: BeanstalkSDK) => {
-  Log.module("SiloAPYData").debug("Loading APY data from Graph");
-  const fetch = await fetchFromSubgraphRequest(
-    BeanstalkSiloLatestApyDocument,
-    undefined,
-    sdk.chainId,
-    { useBeanstalkSubgraph: true }
-  );
+  Log.module('SiloAPYData').debug('Loading APY data from Graph');
+  const fetch = await fetchFromSubgraphRequest(BeanstalkSiloLatestApyDocument, undefined, sdk.chainId, {
+    useBeanstalkSubgraph: true
+  });
 
   const result = await fetch()
     .then((response) => {
@@ -39,7 +36,7 @@ const fetchAPYFromSubgraph = async (sdk: BeanstalkSDK) => {
 
       return response.siloYields.reduce<SiloAPYResult>(
         (_, datum) => {
-          const tokenYields: SiloAPYResult["tokenAPYs"] = {};
+          const tokenYields: SiloAPYResult['tokenAPYs'] = {};
 
           datum.tokenAPYS.forEach((result) => {
             tokenYields[result.token] = normalise(result.beanAPY);
@@ -61,7 +58,7 @@ const fetchAPYFromSubgraph = async (sdk: BeanstalkSDK) => {
       return { ...defaultResult };
     });
 
-  Log.module("SiloAPYData").debug("result: ", result);
+  Log.module('SiloAPYData').debug('result: ', result);
 
   return result;
 };

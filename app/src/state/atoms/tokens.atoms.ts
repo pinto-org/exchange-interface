@@ -1,11 +1,11 @@
-import { atom } from "jotai";
+import { atom } from 'jotai';
 
-import { ERC20Token, NativeToken, Token } from "@beanstalk/sdk";
+import { ERC20Token, NativeToken, Token } from '@beanstalk/sdk';
 
-import { isDEV } from "src/settings";
-import { wellsAtom, sdkAtom } from "src/state/atoms";
-import { getTokenIndex } from "src/tokens/utils";
-import { TokenSymbolMap } from "src/types";
+import { isDEV } from 'src/settings';
+import { wellsAtom, sdkAtom } from 'src/state/atoms';
+import { getTokenIndex } from 'src/tokens/utils';
+import { TokenSymbolMap } from 'src/types';
 
 const ethAtom = atom<NativeToken | null>((get) => {
   const sdk = get(sdkAtom);
@@ -42,6 +42,6 @@ export const wellLpTokensAtom = atom<ERC20Token[]>((get) => {
 });
 
 if (isDEV) {
-  ethAtom.debugLabel = "eth";
-  underlyingTokenMapAtom.debugLabel = "underlyingTokenMap";
+  ethAtom.debugLabel = 'eth';
+  underlyingTokenMapAtom.debugLabel = 'underlyingTokenMap';
 }

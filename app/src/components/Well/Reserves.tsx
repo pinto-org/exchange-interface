@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import { Well } from "@beanstalk/sdk/Wells";
-import styled from "styled-components";
+import { Well } from '@beanstalk/sdk/Wells';
+import styled from 'styled-components';
 
-import { Token, TokenValue } from "@beanstalk/sdk";
+import { Token, TokenValue } from '@beanstalk/sdk';
 
-import { size } from "src/breakpoints";
-import { FC } from "src/types";
-import { formatNum, formatPercent } from "src/utils/format";
-import { useIsMobile } from "src/utils/ui/useIsMobile";
-import { useIsMultiFlowPump } from "src/wells/pump/utils";
+import { size } from 'src/breakpoints';
+import { FC } from 'src/types';
+import { formatNum, formatPercent } from 'src/utils/format';
+import { useIsMobile } from 'src/utils/ui/useIsMobile';
+import { useIsMultiFlowPump } from 'src/wells/pump/utils';
 
-import { MultiFlowPumpTooltip } from "./MultiFlowPumpTooltip";
-import { Item, Row } from "../Layout";
-import { TokenLogo } from "../TokenLogo";
-import { TooltipProps } from "../Tooltip";
-import { BodyL, BodyS, TextNudge } from "../Typography";
+import { MultiFlowPumpTooltip } from './MultiFlowPumpTooltip';
+import { Item, Row } from '../Layout';
+import { TokenLogo } from '../TokenLogo';
+import { TooltipProps } from '../Tooltip';
+import { BodyL, BodyS, TextNudge } from '../Typography';
 
 export type ReservesProps = {
   well: Well | undefined;
@@ -41,12 +41,8 @@ export const Reserves: FC<ReservesProps> = ({ reserves, well, twaReserves }) => 
       <Symbol>
         {r.token?.symbol}
         {isMultiFlow && (
-          <div className="info-icon">
-            <MultiFlowPumpTooltip
-              well={well}
-              twaReserves={twaReserves}
-              tooltipProps={getTooltipProps(isMobile, i)}
-            />
+          <div className='info-icon'>
+            <MultiFlowPumpTooltip well={well} twaReserves={twaReserves} tooltipProps={getTooltipProps(isMobile, i)} />
           </div>
         )}
       </Symbol>
@@ -115,7 +111,7 @@ const baseTooltipProps = {
   offsetY: 0,
   arrowSize: 0,
   arrowOffset: 0,
-  side: "top"
+  side: 'top'
 } as TooltipProps;
 
 const getTooltipProps = (isMobile: boolean, index: number) => {

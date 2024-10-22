@@ -11,7 +11,19 @@
     "libs/*"
   ],
   "scripts": {
+    "format:prettier": "prettier --write \"**/*.{ts,tsx,json}\"",
     "sdks:build": "yarn core:build && yarn wells:build",
     "generate": "yarn core:generate && yarn wells:generate"
+  },
+  "devDependencies": {
+    "@types/prettier": "^2.7.3",
+    "husky": "8.0.3",
+    "jest": "29.2.2",
+    "jest-serial-runner": "1.2.1",
+    "lint-staged": "13.3.0",
+    "prettier": "3.3.3",
+    "ts-jest": "29.1.2",
+    "ts-node": "10.9.2",
+    "typescript": "5.3.3"
   }
 }

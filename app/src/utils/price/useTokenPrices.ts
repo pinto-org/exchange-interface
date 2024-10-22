@@ -1,15 +1,15 @@
-import { ERC20Token, TokenValue } from "@beanstalk/sdk";
-import { Well } from "@beanstalk/sdk-wells";
+import { ERC20Token, TokenValue } from '@beanstalk/sdk';
+import { Well } from '@beanstalk/sdk-wells';
 
-import { AddressMap } from "src/types";
-import { Log } from "src/utils/logger";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { UseReactQueryOptions } from "src/utils/query/types";
-import useSdk from "src/utils/sdk/useSdk";
+import { AddressMap } from 'src/types';
+import { Log } from 'src/utils/logger';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { UseReactQueryOptions } from 'src/utils/query/types';
+import useSdk from 'src/utils/sdk/useSdk';
 
-import { PriceLookups } from "./priceLookups";
-import { getPrice } from "./usePrice";
-import { useChainScopedQuery, useSetChainScopedQueryData } from "../query/useChainScopedQuery";
+import { PriceLookups } from './priceLookups';
+import { getPrice } from './usePrice';
+import { useChainScopedQuery, useSetChainScopedQueryData } from '../query/useChainScopedQuery';
 
 type WellOrToken = Well | ERC20Token;
 
@@ -50,12 +50,8 @@ export const useTokenPrices = <K = AddressMap<TokenValue>>(
         tokens.map((token) => {
           if (PriceLookups[token.symbol]) return getPrice(token, sdk);
 
-          Log.module("useTokenPrices").debug(
-            "No price lookup function for ",
-            token.symbol,
-            "... resolving with 0"
-          );
-          return Promise.resolve(token.fromHuman("0"));
+          Log.module('useTokenPrices').debug('No price lookup function for ', token.symbol, '... resolving with 0');
+          return Promise.resolve(token.fromHuman('0'));
         })
       );
 

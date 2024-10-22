@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useRef } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useRef } from 'react';
 
-import { createChart, IChartApi, ISeriesApi, Time } from "lightweight-charts";
-import styled from "styled-components";
+import { createChart, IChartApi, ISeriesApi, Time } from 'lightweight-charts';
+import styled from 'styled-components';
 
-import { FC } from "src/types";
+import { FC } from 'src/types';
 
-import { IChartDataItem } from "./ChartSection";
-import { ChartContainer } from "./ChartStyles";
+import { IChartDataItem } from './ChartSection';
+import { ChartContainer } from './ChartStyles';
 
 type Props = {
   legend: string;
@@ -21,9 +21,7 @@ type ChartData = {
 };
 
 function formatToUSD(value: any) {
-  const formattedValue = Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
-    value
-  );
+  const formattedValue = Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
   return formattedValue;
 }
 
@@ -37,7 +35,7 @@ function mapChartData(data: IChartDataItem[]) {
 export const Chart: FC<Props> = ({ legend, data: _data }) => {
   const chartContainerRef = useRef<any>();
   const chart = useRef<IChartApi>();
-  const lineSeries = useRef<ISeriesApi<"Line">>();
+  const lineSeries = useRef<ISeriesApi<'Line'>>();
   const [lastDataPoint, setLastDataPoint] = useState<ChartData | null>(null);
   const [dataPoint, setDataPoint] = useState<any>();
   const [dataPointValue, setDataPointValue] = useState<any>();
@@ -49,17 +47,17 @@ export const Chart: FC<Props> = ({ legend, data: _data }) => {
 
     const chartOptions = {
       layout: {
-        fontFamily: "PPMori, sans-serif"
+        fontFamily: 'PPMori, sans-serif'
       },
       localization: {
         priceFormatter: formatToUSD
       },
       crosshair: {
         vertLine: {
-          labelBackgroundColor: "#000"
+          labelBackgroundColor: '#000'
         },
         horzLine: {
-          labelBackgroundColor: "#000"
+          labelBackgroundColor: '#000'
         }
       },
       timeScale: {
@@ -77,12 +75,12 @@ export const Chart: FC<Props> = ({ legend, data: _data }) => {
     };
 
     chart.current = createChart(chartContainerRef.current, chartOptions);
-    lineSeries.current = chart.current.addLineSeries({ color: "#000", lineWidth: 2 });
+    lineSeries.current = chart.current.addLineSeries({ color: '#000', lineWidth: 2 });
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
       chart.current?.remove();
     };
   }, []);
@@ -122,7 +120,7 @@ export const Chart: FC<Props> = ({ legend, data: _data }) => {
   }, [dataPoint]);
 
   return (
-    <ChartContainer ref={chartContainerRef} id="container">
+    <ChartContainer ref={chartContainerRef} id='container'>
       <Legend>
         <div>{legend}</div>
         <LegendValue>{formatToUSD(dataPointValue || lastDataPoint?.value || 0)}</LegendValue>

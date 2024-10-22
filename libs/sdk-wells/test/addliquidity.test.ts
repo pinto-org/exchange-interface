@@ -44,10 +44,7 @@ const setupWell = async (wellTokens: ERC20Token[], account: string) => {
 
 describe('Add Liquidity', () => {
   beforeEach(async () => {
-    testWell = await setupWell(
-      [wellsSdkInstance.tokens.PINTO, wellsSdkInstance.tokens.USDC],
-      account
-    );
+    testWell = await setupWell([wellsSdkInstance.tokens.PINTO, wellsSdkInstance.tokens.USDC], account);
     wellLpToken = await testWell.getLPToken();
   });
 
@@ -55,7 +52,7 @@ describe('Add Liquidity', () => {
     it('should obtain quote add liquidity to the Well', async () => {
       const tokenAmountsIn: TokenValue[] = [
         wellsSdkInstance.tokens.PINTO.amount(100),
-        wellsSdkInstance.tokens.USDC.amount(100),
+        wellsSdkInstance.tokens.USDC.amount(100)
       ];
       const minLpAmountOut = await testWell.addLiquidityQuote(tokenAmountsIn);
 
@@ -79,15 +76,11 @@ describe('Add Liquidity', () => {
     it('should return the estimated gas needed for adding liquidity', async () => {
       const tokenAmountsIn: TokenValue[] = [
         wellsSdkInstance.tokens.PINTO.amount(100),
-        wellsSdkInstance.tokens.USDC.amount(100),
+        wellsSdkInstance.tokens.USDC.amount(100)
       ];
       const minLpAmountOut = await testWell.addLiquidityQuote(tokenAmountsIn);
 
-      const gasEstimate = await testWell.addLiquidityGasEstimate(
-        tokenAmountsIn,
-        minLpAmountOut,
-        account
-      );
+      const gasEstimate = await testWell.addLiquidityGasEstimate(tokenAmountsIn, minLpAmountOut, account);
 
       // Assert that the gas estimate is greater than zero
       expect(gasEstimate.gt(TokenValue.ZERO)).toBeTruthy();

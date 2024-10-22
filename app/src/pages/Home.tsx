@@ -1,28 +1,26 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import shapesIcons from "src/assets/images/home-banner.svg";
-import { mediaQuery } from "src/breakpoints";
-import { ContractInfoMarquee } from "src/components/Frame/ContractInfoMarquee";
-import { BodyL } from "src/components/Typography";
+import shapesIcons from 'src/assets/images/home-banner.svg';
+import { mediaQuery } from 'src/breakpoints';
+import { ContractInfoMarquee } from 'src/components/Frame/ContractInfoMarquee';
+import { BodyL } from 'src/components/Typography';
 
 const copy = {
-  build:
-    "Use DEX components written, audited and deployed by other developers for your custom liquidity pool.",
-  deploy:
-    "Deploy liquidity in pools with unique pricing functions for more granular market making.",
+  build: 'Use DEX components written, audited and deployed by other developers for your custom liquidity pool.',
+  deploy: 'Deploy liquidity in pools with unique pricing functions for more granular market making.',
   fees: "Exchange assets in liquidity pools that don't impose trading fees."
 };
 
 const links = {
-  multiFlowPump: "/multi-flow-pump.pdf",
-  whitepaper: "/basin.pdf",
-  docs: "https://docs.basin.exchange/implementations/overview",
-  wells: "/#/wells",
-  swap: "/#/swap",
-  build: "/#/build"
+  multiFlowPump: '/multi-flow-pump.pdf',
+  whitepaper: '/basin.pdf',
+  docs: 'https://docs.basin.exchange/implementations/overview',
+  wells: '/#/wells',
+  swap: '/#/swap',
+  build: '/#/build'
 };
 
 export const Home = () => {
@@ -35,18 +33,12 @@ export const Home = () => {
               <MevInfo>
                 <MevTitle>Multi Flow Pump is here!</MevTitle>
                 <div>
-                  Explore the{" "}
-                  <span style={{ fontWeight: 600 }}>
-                    inter-block MEV manipulation resistant oracle implementation
-                  </span>{" "}
+                  Explore the{' '}
+                  <span style={{ fontWeight: 600 }}>inter-block MEV manipulation resistant oracle implementation</span>{' '}
                   used by the BEAN:WETH Well.
                 </div>
               </MevInfo>
-              <GetStartedContainer
-                href={links.multiFlowPump}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <GetStartedContainer href={links.multiFlowPump} target='_blank' rel='noopener noreferrer'>
                 <GetStarted>Read the whitepaper →</GetStarted>
               </GetStartedContainer>
             </MevBannerBG>
@@ -56,7 +48,7 @@ export const Home = () => {
               <Title>A Composable EVM-Native DEX </Title>
               <SubTitle>
                 Customizable liquidity pools with shared components.&nbsp;
-                <WhitepaperLink href={links.whitepaper} target="_blank">
+                <WhitepaperLink href={links.whitepaper} target='_blank'>
                   Read the whitepaper →
                 </WhitepaperLink>
               </SubTitle>
@@ -64,7 +56,7 @@ export const Home = () => {
             <AccordionContainer>
               <AccordionItem href={links.build}>
                 <AccordionTitle>
-                  <Emoji role="img" aria-label="crystal ball">
+                  <Emoji role='img' aria-label='crystal ball'>
                     🔮
                   </Emoji>
                   &nbsp;Build using components
@@ -74,7 +66,7 @@ export const Home = () => {
               <AccordionItem href={links.wells}>
                 <AccordionTitle>
                   <div>
-                    <Emoji role="img" aria-label="lightning">
+                    <Emoji role='img' aria-label='lightning'>
                       ⚡️
                     </Emoji>
                     &nbsp;Deploy flexible liquidity
@@ -85,7 +77,7 @@ export const Home = () => {
               <AccordionItem href={links.swap}>
                 <AccordionTitle>
                   <div>
-                    <Emoji role="img" aria-label="heart">
+                    <Emoji role='img' aria-label='heart'>
                       ❤️
                     </Emoji>
                     &nbsp;Zero-fee swaps
