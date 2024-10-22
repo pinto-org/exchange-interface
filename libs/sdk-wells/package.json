@@ -5,6 +5,10 @@
     "/dist",
     "README.md"
   ],
+  "main": "./dist/wells/wells.cjs.js",
+  "module": "./dist/wells/wells.esm.js",
+  "browser": "./dist/wells/wells.umd.js",
+  "typings": "./dist/types/index.d.ts",
   "packageManager": "yarn@4.1.0",
   "engines": {
     "node": ">=18"
@@ -18,7 +22,7 @@
     "clean": "yarn clean-generated && yarn clean-build",
     "dev": "tsc --noEmit --watch",
     "ts": "yarn clean-build && tsc && tsc-alias -p tsconfig.json",
-    "build": "echo '\nWELLS Build' && yarn ts && rimraf dist/js",
+    "build": "echo '\nWELLS Build' && yarn ts && rollup -c --bundleConfigAsCjs --silent && rimraf dist/js",
     "wells:build": "yarn generate && yarn build"
   },
   "peerDependencies": {
@@ -38,6 +42,10 @@
     "@graphql-codegen/typescript-graphql-request": "^4.5.6",
     "@graphql-codegen/typescript-operations": "^2.5.4",
     "@graphql-codegen/typescript-resolvers": "2.7.13",
+    "@rollup/plugin-commonjs": "23.0.7",
+    "@rollup/plugin-json": "5.0.2",
+    "@rollup/plugin-multi-entry": "6.0.1",
+    "@rollup/plugin-node-resolve": "15.2.3",
     "@typechain/ethers-v5": "^10.2.1",
     "@types/graphlib": "2.1.12",
     "@types/jest": "^29.5.12",
@@ -45,9 +53,22 @@
     "dotenv": "^16.4.5",
     "jest": "^29.2.0",
     "rimraf": "3.0.2",
+    "rollup": "3.29.4",
+    "rollup-plugin-alias": "2.2.0",
+    "rollup-plugin-exclude-dependencies-from-bundle": "1.1.23",
+    "rollup-plugin-sourcemaps": "0.6.3",
+    "rollup-plugin-typescript2": "0.36.0",
     "tsc-alias": "1.8.8",
     "tslib": "2.6.2",
     "typechain": "^8.1.0",
     "typescript": "5.3.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "module": "./dist/wells/wells.esm.js",
+      "default": "./dist/wells/wells.cjs.js",
+      "browser": "./dist/wells/wells.umd.js"
+    }
   }
 }

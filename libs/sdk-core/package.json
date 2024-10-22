@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Basen SDK Core",
   "license": "MIT",
-  "main": "./dist/core.cjs.js",
+  "main": "./dist/core/core.cjs.js",
+  "module": "./dist/core/core.esm.js",
+  "browser": "./dist/core/core.umd.js",
   "typings": "./dist/types/index.d.ts",
   "files": [
     "/dist",
