@@ -65,14 +65,11 @@ export class ERC20Token extends Token {
       .then((result) => TokenValue.fromBlockchain(result, this.decimals));
   }
 
-  public approve(
-    spenderContract: PromiseOrValue<string>,
-    amount: TokenValue | BigNumber
-  ): Promise<ContractTransaction> {
+  public approve(spender: PromiseOrValue<string>, amount: TokenValue | BigNumber): Promise<ContractTransaction> {
     if (!this.getContract().signer) {
       throw new Error(`A signer is required to call .approve() - ${this.symbol}`);
     }
 
-    return this.getContract().approve(spenderContract, amount instanceof TokenValue ? amount.toBigNumber() : amount);
+    return this.getContract().approve(spender, amount instanceof TokenValue ? amount.toBigNumber() : amount);
   }
 }
