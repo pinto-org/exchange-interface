@@ -1,4 +1,4 @@
-import { ChainId, ChainResolver } from '@basen/sdk-core';
+import { ChainId, ChainResolver } from '@exchange/sdk-core';
 import { ethers } from 'ethers';
 import { addresses } from 'src/constants/addresses';
 import { enumFromValue } from 'src/utils';
@@ -22,6 +22,9 @@ export class WellsSDK {
   public provider: Provider;
   public providerOrSigner: Signer | Provider;
   public Router = Router;
+
+  // For easy access
+  static addresses: typeof addresses = addresses;
 
   public readonly chainId: ChainId;
 

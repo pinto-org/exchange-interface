@@ -1,7 +1,7 @@
 import { Well } from '../src/lib/Well';
 import { getTestUtils } from './TestUtils/provider';
 import { BlockchainUtils } from './TestUtils';
-import { Token } from '@basen/sdk-core';
+import { Token } from '@exchange/sdk-core';
 import { WellsSDK } from '../src/lib/WellsSDK';
 import { Aquifer, Pump, WellFunction } from '../src';
 

@@ -1,4 +1,4 @@
-import { TokenValue } from '@basen/sdk-core';
+import { TokenValue } from '@exchange/sdk-core';
 import { Depot, Depot__factory, WETH9, WETH9__factory } from 'src/constants/generated';
 import { addresses } from 'src/constants/addresses';
 import { WellsSDK } from 'src/lib/WellsSDK';
@@ -18,11 +18,11 @@ export class AddLiquidityETH {
     this.sdk = sdk;
     this.weth9 = WETH9__factory.connect(
       addresses.WETH9.get(this.sdk.chainId),
-      this.sdk.providerOrSigner
+      this.sdk.providerOrSigner,
     );
     this.depot = Depot__factory.connect(
       addresses.DEPOT.get(this.sdk.chainId),
-      this.sdk.providerOrSigner
+      this.sdk.providerOrSigner,
     );
   }
 
@@ -84,13 +84,13 @@ export class AddLiquidityETH {
     amounts: TokenValue[],
     quote: TokenValue,
     account?: string,
-    overrides: TxOverrides = {}
+    overrides: TxOverrides = {},
   ): Promise<TokenValue> {
     const { steps, ethAmount } = this.generateSteps(
       well,
       amounts,
       quote,
-      account || this.ZERO_ADDRESS
+      account || this.ZERO_ADDRESS,
     );
     const overrideOptions = { ...overrides, value: ethAmount.toBigNumber() };
     const gas = await this.depot.estimateGas.farm(steps, overrideOptions);
@@ -103,7 +103,7 @@ export class AddLiquidityETH {
     quote: TokenValue,
     account: string,
     gasEstimate: TokenValue,
-    overrides: TxOverrides = {}
+    overrides: TxOverrides = {},
   ): Promise<ContractTransaction> {
     const { steps, ethAmount } = this.generateSteps(well, amounts, quote, account);
     const overrideOptions = {

@@ -1,4 +1,4 @@
-import { ERC20Token, TokenValue } from '@basen/sdk-core';
+import { ERC20Token, TokenValue } from '@exchange/sdk-core';
 import { Well } from '../../src/lib/Well';
 import { getTestUtils } from './provider';
 import { Aquifer } from '../../src/lib/Aquifer';
@@ -10,7 +10,7 @@ export const createWell = async (
   wellTokens: ERC20Token[],
   account: string,
   aquifer?: Aquifer,
-  liquidityAmounts?: TokenValue[]
+  liquidityAmounts?: TokenValue[],
 ) => {
   if (!aquifer) aquifer = await Aquifer.BuildAquifer(wellsSdk);
   if (!liquidityAmounts) liquidityAmounts = wellTokens.map((token) => token.amount(50_000_000));
@@ -22,7 +22,7 @@ export const createWell = async (
   await Promise.all(
     wellTokens.map(async (token, i) => {
       await utils.setBalance(token, account, liquidityAmounts![i]);
-    })
+    }),
   );
 
   await utils.mine();

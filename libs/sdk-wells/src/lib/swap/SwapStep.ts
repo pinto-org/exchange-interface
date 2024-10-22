@@ -1,4 +1,4 @@
-import { Token, TokenValue } from '@basen/sdk-core';
+import { Token, TokenValue } from '@exchange/sdk-core';
 import { Well as WellContract } from 'src/constants/generated';
 import { Well } from '../Well';
 import { Operation } from './Types';
@@ -58,7 +58,7 @@ export class SwapStep {
     amount: TokenValue,
     amountWithSlippage: TokenValue,
     recipient: string,
-    deadline: number
+    deadline: number,
   ): Operation {
     if (!this.hasQuoted) throw new Error('Must do a quote before swapping');
 
@@ -116,7 +116,7 @@ export class SwapStep {
     recipient: string,
     maxAmountIn: TokenValue,
     desiredAmount: TokenValue,
-    deadline: number
+    deadline: number,
   ): Operation {
     if (!this.hasQuoted) throw new Error('Must do a quote before swapping');
     if (this.direction !== Direction.REVERSE)

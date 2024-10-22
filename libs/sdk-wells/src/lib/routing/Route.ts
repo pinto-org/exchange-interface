@@ -1,4 +1,4 @@
-import { Token } from '@basen/sdk-core';
+import { Token } from '@exchange/sdk-core';
 import { Well } from '../Well';
 
 export type RouteLeg = {

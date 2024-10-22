@@ -10,7 +10,7 @@ import {
 } from './utils';
 import { WellsSDK } from './WellsSDK';
 import { WellFunction } from './WellFunction';
-import { ERC20Token } from '@basen/sdk-core';
+import { ERC20Token } from '@exchange/sdk-core';
 import { Pump } from './Pump';
 import { constants } from 'ethers';
 import { Well } from './Well';

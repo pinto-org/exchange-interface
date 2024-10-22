@@ -1,5 +1,6 @@
 {
-  "name": "@basen/sdk-wells",
+  "name": "@exchange/sdk-wells",
+  "description": "Pinto Exchange Wells SDK",
   "license": "MIT",
   "files": [
     "/dist",
@@ -29,7 +30,7 @@
     "ethers": "^5.0.0"
   },
   "dependencies": {
-    "@basen/sdk-core": "workspace:*",
+    "@exchange/sdk-core": "workspace:*",
     "ethers": "^5.0.0",
     "graphlib": "2.1.8",
     "graphql": "16.6.0",

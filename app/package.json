@@ -20,7 +20,7 @@
     "pre-commit": "lint-staged"
   },
   "dependencies": {
-    "@basen/sdk-wells": "workspace:*",
+    "@exchange/sdk-wells": "workspace:*",
     "@radix-ui/react-dialog": "1.0.5",
     "@radix-ui/react-dropdown-menu": "2.1.1",
     "@tanstack/react-query": "5.28.4",

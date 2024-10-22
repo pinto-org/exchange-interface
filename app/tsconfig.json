@@ -1,14 +1,12 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "noEmit": true,   
+    "noEmit": true,
     "declaration": false,
     "declarationMap": false,
     "paths": {
-      "src/*": [
-        "./src/*"
-      ]
+      "src/*": ["./src/*"]
     }
   }
 }

@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from 'ethers';
-import { Token, TokenValue } from '@basen/sdk-core';
+import { Token, TokenValue } from '@exchange/sdk-core';
 import { WellsSDK } from '../../src/lib/WellsSDK';
 
 export class BlockchainUtils {

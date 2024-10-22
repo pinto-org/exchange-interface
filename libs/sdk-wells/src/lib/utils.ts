@@ -1,4 +1,4 @@
-import { ERC20Token, Token, TokenValue } from '@basen/sdk-core';
+import { ERC20Token, Token, TokenValue } from '@exchange/sdk-core';
 import { ethers } from 'ethers';
 import { WellsSDK } from './WellsSDK';
 import { Call } from 'src/types';
@@ -16,7 +16,7 @@ export const loadToken = async (sdk: WellsSDK, address: string): Promise<ERC20To
       undefined,
       undefined,
       undefined,
-      sdk.providerOrSigner
+      sdk.providerOrSigner,
     );
     await token.loadFromChain();
   }
@@ -97,7 +97,7 @@ export function encodeWellImmutableData(
   _aquifer: string,
   _tokens: string[],
   _wellFunction: Call,
-  _pumps: Call[]
+  _pumps: Call[],
 ): Uint8Array {
   let packedPumps: Uint8Array[] = [];
   for (let i = 0; i < _pumps.length; i++) {
@@ -105,9 +105,9 @@ export function encodeWellImmutableData(
       ethers.utils.arrayify(
         ethers.utils.solidityPack(
           ['address', 'uint256', 'bytes'],
-          [_pumps[i].target, _pumps[i].data.length, _pumps[i].data]
-        )
-      )
+          [_pumps[i].target, _pumps[i].data.length, _pumps[i].data],
+        ),
+      ),
     );
   }
 
@@ -122,7 +122,7 @@ export function encodeWellImmutableData(
       _tokens,
       _wellFunction.data,
       ethers.utils.concat(packedPumps),
-    ]
+    ],
   );
 
   return ethers.utils.arrayify(immutableData);
@@ -130,7 +130,7 @@ export function encodeWellImmutableData(
 
 export async function encodeWellInitFunctionCall(
   name: string,
-  symbol: string
+  symbol: string,
 ): Promise<Uint8Array> {
   const wellInitInterface = new ethers.utils.Interface(['function init(string,string)']);
   const initFunctionCall = wellInitInterface.encodeFunctionData('init', [name, symbol]);

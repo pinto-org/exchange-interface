@@ -1,4 +1,4 @@
-import { Token } from '@basen/sdk-core';
+import { Token } from '@exchange/sdk-core';
 import { Graph as GraphLib, alg } from 'graphlib';
 import { Well } from '../Well';
 

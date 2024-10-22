@@ -1,4 +1,4 @@
-import { Address, ChainId } from '@basen/sdk-core';
+import { Address, ChainId } from '@exchange/sdk-core';
 
 export const addresses = {
   // Tokens

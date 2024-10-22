@@ -1,4 +1,4 @@
-import { Token } from '@basen/sdk-core';
+import { Token } from '@exchange/sdk-core';
 import { Router } from '../routing';
 import { Well } from '../Well';
 import { Quote } from './Quote';

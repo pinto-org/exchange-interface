@@ -1,5 +1,5 @@
 import { Well } from '../src/lib/Well';
-import { ERC20Token, Token, TokenValue } from '@basen/sdk-core';
+import { ERC20Token, Token, TokenValue } from '@exchange/sdk-core';
 import { getTestUtils } from './TestUtils/provider';
 import { QuoteResult, SwapBuilder, WellFunction } from '../src';
 import { createDex, createWell } from './TestUtils/setup';

@@ -1,7 +1,7 @@
 {
-  "name": "@basen/sdk-core",
+  "name": "@exchange/sdk-core",
   "version": "0.0.1",
-  "description": "Basen SDK Core",
+  "description": "Pinto Exchange SDK Core",
   "license": "MIT",
   "main": "./dist/core/core.cjs.js",
   "module": "./dist/core/core.esm.js",

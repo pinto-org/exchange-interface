@@ -1,4 +1,4 @@
-import { Token, ERC20Token, NativeToken } from '@basen/sdk-core';
+import { Token, ERC20Token, NativeToken } from '@exchange/sdk-core';
 import { WellsSDK } from './WellsSDK';
 
 export type TokenSTokensymbol = {
@@ -38,7 +38,7 @@ export class Tokens {
       18,
       'ETH',
       { name: 'Ether', displayDecimals: 4 },
-      provider
+      provider,
     );
     this.tokens.add(this.ETH);
 
@@ -54,7 +54,7 @@ export class Tokens {
         name: 'PINTO',
         displayDecimals: 2,
       },
-      provider
+      provider,
     );
     this.tokens.add(this.PINTO);
 
@@ -68,7 +68,7 @@ export class Tokens {
         name: 'Wrapped Ether',
         displayDecimals: 4,
       },
-      provider
+      provider,
     );
     this.tokens.add(this.WETH);
 
@@ -82,7 +82,7 @@ export class Tokens {
         name: 'Wrapped liquid staked Ether 2.0',
         displayDecimals: 4,
       },
-      provider
+      provider,
     );
 
     this.tokens.add(this.WSTETH);
@@ -97,7 +97,7 @@ export class Tokens {
         name: 'Wrapped eETH',
         displayDecimals: 4,
       },
-      provider
+      provider,
     );
 
     this.tokens.add(this.WEETH);
@@ -112,7 +112,7 @@ export class Tokens {
         name: 'Wrapped BTC',
         displayDecimals: 6,
       },
-      provider
+      provider,
     );
 
     this.tokens.add(this.WBTC);
@@ -127,7 +127,7 @@ export class Tokens {
         name: 'USD Coin',
         displayDecimals: 2,
       },
-      provider
+      provider,
     );
 
     this.tokens.add(this.USDC);
@@ -142,7 +142,7 @@ export class Tokens {
         name: 'Tether USD',
         displayDecimals: 2,
       },
-      provider
+      provider,
     );
 
     this.tokens.add(this.USDT);
@@ -157,7 +157,7 @@ export class Tokens {
         name: 'Dai Stablecoin',
         displayDecimals: 4,
       },
-      provider
+      provider,
     );
 
     this.tokens.add(this.DAI);

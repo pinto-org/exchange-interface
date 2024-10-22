@@ -1,22 +1,22 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import BEANSTALK_ABI from "@beanstalk/protocol/abi/Beanstalk.json";
-import { multicall } from "@wagmi/core";
-import { BigNumber } from "ethers";
-import { ContractFunctionParameters, erc20Abi } from "viem";
-import { useAccount } from "wagmi";
+import BEANSTALK_ABI from '@beanstalk/protocol/abi/Beanstalk.json';
+import { multicall } from '@wagmi/core';
+import { BigNumber } from 'ethers';
+import { ContractFunctionParameters, erc20Abi } from 'viem';
+import { useAccount } from 'wagmi';
 
-import { BeanstalkSDK, Token, TokenValue } from "@beanstalk/sdk";
-import { Well } from "@beanstalk/sdk-wells";
+import { BeanstalkSDK, Token, TokenValue } from '@beanstalk/sdk';
+import { Well } from '@beanstalk/sdk-wells';
 
-import { Log } from "src/utils/logger";
-import { queryKeys } from "src/utils/query/queryKeys";
-import { useScopedQuery, useSetScopedQueryData } from "src/utils/query/useScopedQuery";
-import useSdk from "src/utils/sdk/useSdk";
-import { config } from "src/utils/wagmi/config";
+import { Log } from 'src/utils/logger';
+import { queryKeys } from 'src/utils/query/queryKeys';
+import { useScopedQuery, useSetScopedQueryData } from 'src/utils/query/useScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
+import { config } from 'src/utils/wagmi/config';
 
-import { useFarmerWellsSiloBalances } from "./useSiloBalance";
-import { useWellLPTokens } from "./useWellLPTokens";
+import { useFarmerWellsSiloBalances } from './useSiloBalance';
+import { useWellLPTokens } from './useWellLPTokens';
 
 type TokenBalanceCache = undefined | void | Record<string, TokenValue>;
 
@@ -36,26 +36,26 @@ type TokenMap<T> = { [tokenSymbol: string]: T };
 const makeMultiCall = (
   sdk: BeanstalkSDK,
   lpTokens: Token[],
-  account: `0x${string}` | undefined
+  account: `0x${string}` | undefined,
 ) => {
   const contractCalls: ContractFunctionParameters[] = [];
   if (!account) return contractCalls;
-  Log.module("useLPPositionSummary").debug(
-    `Fetching internal & external token balances for ${lpTokens.length} lp tokens for address ${account}`
+  Log.module('useLPPositionSummary').debug(
+    `Fetching internal & external token balances for ${lpTokens.length} lp tokens for address ${account}`,
   );
 
   for (const t of lpTokens) {
     contractCalls.push({
       address: t.address as `0x{string}`,
       abi: erc20Abi,
-      functionName: "balanceOf",
-      args: [account]
+      functionName: 'balanceOf',
+      args: [account],
     });
     contractCalls.push({
       address: sdk.contracts.beanstalk.address as `0x{string}`,
-      abi: BEANSTALK_ABI as Readonly<ContractFunctionParameters["abi"]>,
-      functionName: "getInternalBalance",
-      args: [account, t.address]
+      abi: BEANSTALK_ABI as Readonly<ContractFunctionParameters['abi']>,
+      functionName: 'getInternalBalance',
+      args: [account, t.address],
     });
   }
 
@@ -89,12 +89,12 @@ export const useLPPositionSummary = () => {
        * TODO: check if there are any cached balances.
        * If so, return those instead of fetching
        */
-      const balances: Record<string, Omit<LPBalanceSummary, "silo">> = {};
+      const balances: Record<string, Omit<LPBalanceSummary, 'silo'>> = {};
       if (!address || !lpTokens.length) return balances;
 
       const res = (await multicall(config, {
         contracts: makeMultiCall(sdk, lpTokens, address),
-        allowFailure: false
+        allowFailure: false,
       })) as unknown[] as BigNumber[];
 
       for (let i = 0; i < res.length; i++) {
@@ -104,7 +104,7 @@ export const useLPPositionSummary = () => {
         const lpToken = lpTokens[lpTokenIndex];
         let balance = balances?.[lpToken.address] || {
           external: TokenValue.ZERO,
-          internal: TokenValue.ZERO
+          internal: TokenValue.ZERO,
         };
 
         /// update the cache object & update useQuery cache
@@ -128,7 +128,7 @@ export const useLPPositionSummary = () => {
               (oldData: TokenBalanceCache) => {
                 if (!oldData) return { [lpToken.address]: balance.internal };
                 return { ...oldData, [lpToken.address]: balance.internal };
-              }
+              },
             );
           }
         }
@@ -149,7 +149,7 @@ export const useLPPositionSummary = () => {
     retry: false,
     refetchInterval: 1000 * 30,
     refetchIntervalInBackground: false,
-    refetchOnWindowFocus: "always"
+    refetchOnWindowFocus: 'always',
   });
 
   // Combine silo, internal & external balances & update state
@@ -162,14 +162,14 @@ export const useLPPositionSummary = () => {
       const siloBalance = siloBalances?.[curr.address] || TokenValue.ZERO;
       const internalExternal = balanceData?.[curr.address] || {
         external: TokenValue.ZERO,
-        internal: TokenValue.ZERO
+        internal: TokenValue.ZERO,
       };
 
       memo[curr.address] = {
         silo: siloBalance,
         internal: internalExternal.internal,
         external: internalExternal.external,
-        total: siloBalance.add(internalExternal.internal).add(internalExternal.external)
+        total: siloBalance.add(internalExternal.internal).add(internalExternal.external),
       };
 
       return memo;
@@ -193,7 +193,7 @@ export const useLPPositionSummary = () => {
       if (!well?.lpToken?.address) return undefined;
       return positions?.[well.lpToken.address];
     },
-    [positions]
+    [positions],
   );
 
   const hasPositions = useMemo(() => {
@@ -211,6 +211,6 @@ export const useLPPositionSummary = () => {
     refetch: refetch,
     isFetching: siloBalanceRest.isFetching || balanceRest.isFetching,
     getPositionWithWell,
-    hasPositions
+    hasPositions,
   };
 };
