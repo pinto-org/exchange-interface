@@ -1,4 +1,4 @@
-./src/generated
+./src/constants/generated
 node_modules
 dist
 package.json
