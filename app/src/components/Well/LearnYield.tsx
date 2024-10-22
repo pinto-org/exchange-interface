@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Token } from '@beanstalk/sdk';
+import { Token } from '@exchange/sdk-core';
 
 import { ExpandBox } from 'src/components/ExpandBox';
 import { FC } from 'src/types';

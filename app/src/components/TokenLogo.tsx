@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Token } from '@beanstalk/sdk';
+import { Token } from '@exchange/sdk-core';
 
 import { size } from 'src/breakpoints';
 import { useTokenImage } from 'src/tokens/useTokenMetadata';

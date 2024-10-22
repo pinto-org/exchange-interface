@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useChainId } from 'wagmi';
 
-import { TokenValue } from '@beanstalk/sdk';
+import { TokenValue } from '@exchange/sdk-core';
 
 import { mediaQuery, size } from 'src/breakpoints';
 import { Error } from 'src/components/Error';

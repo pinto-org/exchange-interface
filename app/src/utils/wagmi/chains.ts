@@ -1,12 +1,12 @@
 import { defineChain } from 'viem';
 
-import { ChainId } from '@beanstalk/sdk-core';
+import { ChainId } from '@exchange/sdk-core';
 
 import { getRpcUrl } from './urls';
 
 export const localFork = defineChain({
   id: ChainId.LOCALHOST,
-  name: 'localhost:8545 - arbitrum',
+  name: 'localhost:8545 - Base',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     default: { http: [getRpcUrl(ChainId.LOCALHOST)] }
@@ -26,57 +26,13 @@ export const localFork = defineChain({
   }
 });
 
-export const localForkMainnet = defineChain({
-  id: ChainId.LOCALHOST_ETH,
-  name: 'localhost:9545 - mainnet',
-  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-  rpcUrls: {
-    default: { http: [getRpcUrl(ChainId.LOCALHOST_ETH)] }
-  },
-  contracts: {
-    ensRegistry: {
-      address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
-    },
-    ensUniversalResolver: {
-      address: '0xE4Acdd618deED4e6d2f03b9bf62dc6118FC9A4da',
-      blockCreated: 16773775
-    },
-    multicall3: {
-      address: '0xca11bde05977b3631167028862be2a173976ca11',
-      blockCreated: 14353601
-    }
-  }
-});
-
-export const anvil1 = defineChain({
-  id: ChainId.ANVIL1,
-  name: 'anvil1.bean.money',
-  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-  rpcUrls: {
-    default: { http: [getRpcUrl(ChainId.ANVIL1)] }
-  },
-  contracts: {
-    ensRegistry: {
-      address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
-    },
-    ensUniversalResolver: {
-      address: '0xE4Acdd618deED4e6d2f03b9bf62dc6118FC9A4da',
-      blockCreated: 16773775
-    },
-    multicall3: {
-      address: '0xca11bde05977b3631167028862be2a173976ca11',
-      blockCreated: 14353601
-    }
-  }
-});
-
-export const ethMainnet = defineChain({
-  id: ChainId.ETH_MAINNET,
+export const baseMainnet = defineChain({
+  id: ChainId.BASE_MAINNET,
   name: 'Ethereum',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     default: {
-      http: [getRpcUrl(ChainId.ETH_MAINNET)]
+      http: [getRpcUrl(ChainId.BASE_MAINNET)]
     }
   },
   blockExplorers: {
@@ -101,13 +57,13 @@ export const ethMainnet = defineChain({
   }
 });
 
-export const arbitrum = defineChain({
-  id: ChainId.ARBITRUM_MAINNET,
-  name: 'Arbitrum One',
+export const testnet = defineChain({
+  id: ChainId.TESTNET,
+  name: 'Testnet',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     default: {
-      http: [getRpcUrl(ChainId.ARBITRUM_MAINNET)]
+      http: [getRpcUrl(ChainId.TESTNET)]
     }
   },
   blockExplorers: {
@@ -124,27 +80,3 @@ export const arbitrum = defineChain({
     }
   }
 });
-
-// export const testnet = defineChain({
-//   id: ChainId.TESTNET,
-//   name: "Testnet",
-//   nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-//   rpcUrls: {
-//     default: {
-//       http: [getRpcUrl(ChainId.TESTNET)]
-//     }
-//   },
-//   blockExplorers: {
-//     default: {
-//       name: "Arbiscan",
-//       url: "https://arbiscan.io",
-//       apiUrl: "https://api.arbiscan.io/api"
-//     }
-//   },
-//   contracts: {
-//     multicall3: {
-//       address: "0xca11bde05977b3631167028862be2a173976ca11",
-//       blockCreated: 7654707
-//     }
-//   }
-// });

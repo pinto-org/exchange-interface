@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi';
 
-import { ERC20Token } from '@beanstalk/sdk';
+import { ERC20Token } from '@exchange/sdk-core';
 
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useScopedQuery } from 'src/utils/query/useScopedQuery';

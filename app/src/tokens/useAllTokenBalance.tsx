@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import { ContractFunctionParameters } from 'viem';
 import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
 
 import { useTokens } from 'src/tokens/useTokens';
 import { Log } from 'src/utils/logger';

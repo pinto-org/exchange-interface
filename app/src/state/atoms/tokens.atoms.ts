@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-import { ERC20Token, NativeToken, Token } from '@beanstalk/sdk';
+import { ERC20Token, NativeToken, Token } from '@exchange/sdk-core';
 
 import { isDEV } from 'src/settings';
 import { wellsAtom, sdkAtom } from 'src/state/atoms';

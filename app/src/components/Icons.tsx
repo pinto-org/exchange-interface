@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ChainResolver } from '@beanstalk/sdk-core';
+import { ChainResolver } from '@exchange/sdk-core';
 
 import useSdk from 'src/utils/sdk/useSdk';
 

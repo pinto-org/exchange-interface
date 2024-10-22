@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-import { Aquifer } from '@beanstalk/sdk-wells';
+import { Aquifer } from '@exchange/sdk-wells';
 
 import { isDEV } from 'src/settings';
 

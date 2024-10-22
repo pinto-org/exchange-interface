@@ -57,8 +57,7 @@ function getNavigateUrl(toChainId: ChainId, location: ReturnType<typeof useLocat
 }
 
 const CHAIN_ID_TO_NAME = {
-  [ChainId.ETH_MAINNET]: 'Ethereum Mainnet',
-  [ChainId.ARBITRUM_MAINNET]: 'Arbitrum Mainnet'
+  [ChainId.BASE_MAINNET]: 'Base Mainnet'
 };
 
 export const ForceSupportedChainId = () => {

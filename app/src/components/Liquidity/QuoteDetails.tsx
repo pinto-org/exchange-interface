@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import styled from 'styled-components';
 
-import { ERC20Token, Token, TokenValue } from '@beanstalk/sdk';
+import { ERC20Token, Token, TokenValue } from '@exchange/sdk-core';
 
 import { size } from 'src/breakpoints';
 import { displayTokenSymbol } from 'src/utils/format';

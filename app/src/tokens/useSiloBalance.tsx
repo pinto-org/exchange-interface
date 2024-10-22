@@ -1,7 +1,6 @@
 import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from '@beanstalk/sdk';
-import { ChainResolver } from '@beanstalk/sdk-core';
+import { ChainResolver, Token, TokenValue } from '@exchange/sdk-core';
 
 import { getIsValidEthereumAddress } from 'src/utils/addresses';
 import { queryKeys } from 'src/utils/query/queryKeys';

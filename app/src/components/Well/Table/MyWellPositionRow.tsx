@@ -1,10 +1,10 @@
 import React, { FC, ReactNode } from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { TokenValue } from '@beanstalk/sdk';
+import { TokenValue } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import { mediaQuery, size } from 'src/breakpoints';
 import { Skeleton } from 'src/components/Skeleton';

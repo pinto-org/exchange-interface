@@ -1,7 +1,7 @@
 import { multicall } from '@wagmi/core';
 import { erc20Abi as abi } from 'viem';
 
-import { ERC20Token } from '@beanstalk/sdk';
+import { ERC20Token } from '@exchange/sdk-core';
 
 import { images } from 'src/assets/images/tokens';
 import { alchemy } from 'src/utils/alchemy';

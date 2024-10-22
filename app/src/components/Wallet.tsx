@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { MutationObserver } from '@tanstack/react-query';
 import { ConnectKitButton, useModal as useConnectKitModal } from 'connectkit';
 import { useAtom } from 'jotai';
 import styled from 'styled-components';

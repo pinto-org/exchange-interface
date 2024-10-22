@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
 import styled from 'styled-components';
 
-import { Token } from '@beanstalk/sdk';
+import { Token } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { FC } from 'src/types';

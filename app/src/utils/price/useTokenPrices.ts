@@ -1,5 +1,5 @@
-import { ERC20Token, TokenValue } from '@beanstalk/sdk';
-import { Well } from '@beanstalk/sdk-wells';
+import { ERC20Token, TokenValue } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import { AddressMap } from 'src/types';
 import { Log } from 'src/utils/logger';

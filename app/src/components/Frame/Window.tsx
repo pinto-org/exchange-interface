@@ -1,9 +1,10 @@
-import React, { RefCallback, useCallback, useRef, useState } from 'react';
+import React, { RefCallback, useCallback, useState } from 'react';
 
 import styled from 'styled-components';
 
 import { Grid } from 'src/components/Frame/Grid/Grid';
 import { FC } from 'src/types';
+
 export const Window: FC<{}> = ({ children }) => {
   const [contentElement, setContentElement] = useState<HTMLDivElement>();
 

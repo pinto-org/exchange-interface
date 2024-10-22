@@ -1,9 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
+
 import styled from 'styled-components';
 
-import { TokenValue } from '@beanstalk/sdk';
+import { TokenValue } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { LoadingTemplate } from 'src/components/LoadingTemplate';

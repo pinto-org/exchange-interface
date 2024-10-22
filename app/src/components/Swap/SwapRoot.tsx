@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Quote, QuoteResult } from '@beanstalk/sdk/Wells';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
+import { Quote, QuoteResult } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { ActionWalletButtonWrapper } from 'src/components/Wallet';

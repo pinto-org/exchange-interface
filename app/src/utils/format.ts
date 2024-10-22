@@ -1,4 +1,4 @@
-import { Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
 
 type NumberPrimitive = string | number | TokenValue | undefined | null;
 

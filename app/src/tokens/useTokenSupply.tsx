@@ -1,4 +1,4 @@
-import { ERC20Token } from '@beanstalk/sdk-core';
+import { ERC20Token } from '@exchange/sdk-core';
 
 import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
 import useSdk from 'src/utils/sdk/useSdk';

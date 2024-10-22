@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
 import styled from 'styled-components';
 
-import { TokenValue } from '@beanstalk/sdk';
+import { TokenValue } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import { mediaQuery } from 'src/breakpoints';
 import { Info } from 'src/components/Icons';

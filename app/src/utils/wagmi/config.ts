@@ -2,16 +2,13 @@ import { getDefaultConfig } from 'connectkit';
 import { Chain, Transport } from 'viem';
 import { http, createConfig } from 'wagmi';
 
-import { ChainId } from '@beanstalk/sdk-core';
+import { ChainId } from '@exchange/sdk-core';
 
 import { isPROD } from 'src/settings';
 
 import {
   localFork,
-  anvil1,
-  localForkMainnet,
-  ethMainnet,
-  arbitrum
+  baseMainnet
   // testnet
 } from './chains';
 import { getRpcUrl } from './urls';
@@ -26,22 +23,15 @@ if (!WALLET_CONNECT_PROJECT_ID) {
   throw new Error('VITE_WALLETCONNECT_PROJECT_ID is not set');
 }
 
-const chains: ChainsConfig = isPROD
-  ? [ethMainnet, arbitrum]
-  : [localFork, localForkMainnet, anvil1, ethMainnet, arbitrum];
+const chains: ChainsConfig = isPROD ? [baseMainnet] : [localFork, baseMainnet];
 
 const transports: TransportsConfig = isPROD
   ? {
-      [ethMainnet.id]: http(getRpcUrl(ChainId.ETH_MAINNET)),
-      [arbitrum.id]: http(getRpcUrl(ChainId.ARBITRUM_MAINNET))
+      [baseMainnet.id]: http(getRpcUrl(ChainId.BASE_MAINNET))
     }
   : {
       [localFork.id]: http(localFork.rpcUrls.default.http[0]),
-      [localForkMainnet.id]: http(localForkMainnet.rpcUrls.default.http[0]),
-      [anvil1.id]: http(anvil1.rpcUrls.default.http[0]),
-      [ethMainnet.id]: http(ethMainnet.rpcUrls.default.http[0]),
-      [arbitrum.id]: http(arbitrum.rpcUrls.default.http[0])
-      // [testnet.id]: http(testnet.rpcUrls.default.http[0])
+      [baseMainnet.id]: http(getRpcUrl(ChainId.BASE_MAINNET))
     };
 
 const configObject = {

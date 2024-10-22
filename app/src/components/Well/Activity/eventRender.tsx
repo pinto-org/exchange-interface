@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
 import styled from 'styled-components';
 
-import { TokenValue } from '@beanstalk/sdk';
+import { TokenValue } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { explorerUrl } from 'src/utils/chain';
@@ -80,7 +80,7 @@ export const renderEvent = (event: WellEvent, well: Well, prices: (TokenValue | 
   return (
     <Row key={event.tx}>
       <Td>
-        <Action href={`${explorerUrl(well.sdk.chainId)}/tx/${event.tx}`} target='_blank' rel='noopener noreferrer'>
+        <Action href={`${explorerUrl()}/tx/${event.tx}`} target='_blank' rel='noopener noreferrer'>
           {action}
         </Action>
       </Td>

@@ -225,8 +225,8 @@ export const CreateWellProvider = ({ children }: { children: React.ReactNode }) 
     const existing = pumps.find((p) => p.address.toLowerCase() === pumpAddress.toLowerCase());
     if (existing) return existing;
 
-    return pumpData ? new Pump(sdk.wells, pumpAddress, pumpData) : undefined;
-  }, [sdk.wells, pumps, pumpAddress, pumpData]);
+    return pumpData ? new Pump(sdk, pumpAddress, pumpData) : undefined;
+  }, [sdk, pumps, pumpAddress, pumpData]);
 
   /// ----- Callbacks -----
   const deployWell: CreateWellContext['deployWell'] = useCallback(

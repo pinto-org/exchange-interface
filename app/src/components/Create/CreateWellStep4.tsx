@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { ERC20Token, TokenValue } from '@beanstalk/sdk';
 import { Control, Controller, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
+
+import { ERC20Token, TokenValue } from '@exchange/sdk-core';
 
 import { StyledForm, SwitchField, TextInputField } from 'src/components/Form';
 import { Box, Divider, Flex, FlexCard } from 'src/components/Layout';

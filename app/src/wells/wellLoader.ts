@@ -3,8 +3,7 @@ import { BigNumber } from 'ethers';
 import memoize from 'lodash/memoize';
 import { Abi, ContractFunctionParameters, erc20Abi } from 'viem';
 
-import { ChainId } from '@exchange/sdk-core';
-import { ChainResolver, ERC20Token } from '@exchange/sdk-core';
+import { ChainResolver, ERC20Token, ChainId } from '@exchange/sdk-core';
 import { Aquifer, Well, WellsSDK } from '@exchange/sdk-wells';
 
 import { GetWellAddressesDocument } from 'src/generated/graph/graphql';

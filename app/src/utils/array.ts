@@ -1,4 +1,4 @@
-import { TokenValue } from '@beanstalk/sdk-core';
+import { TokenValue } from '@exchange/sdk-core';
 
 export function chunkArray<T>(array: T[], chunkSize: number): T[][] {
   // use TV here to avoid floating point errors

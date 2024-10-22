@@ -1,7 +1,6 @@
-import { GetWellChartDataDocument, GetWellChartDataQuery } from 'src/generated/graph/graphql';
-
 import { Well, WellsSDK } from '@exchange/sdk-wells';
 
+import { GetWellChartDataDocument, GetWellChartDataQuery } from 'src/generated/graph/graphql';
 import { Log } from 'src/utils/logger';
 
 import { fetchFromSubgraphRequest } from './subgraphFetch';

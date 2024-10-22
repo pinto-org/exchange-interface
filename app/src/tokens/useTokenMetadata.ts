@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { TokenMetadataResponse } from 'alchemy-sdk';
 
-import { ERC20Token, Token } from '@beanstalk/sdk';
+import { ERC20Token, Token } from '@exchange/sdk-core';
 
 import { images } from 'src/assets/images/tokens';
 import tokenMetadataJson from 'src/token-metadata.json';

@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
+
 import { multicall } from '@wagmi/core';
 
-import { Well } from '@exchange/sdk-wells';
 import { TokenValue } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import MULTI_PUMP_ABI from 'src/abi/MULTI_PUMP_ABI.json';
 import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';

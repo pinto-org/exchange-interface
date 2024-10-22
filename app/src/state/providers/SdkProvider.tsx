@@ -4,7 +4,8 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
 import { useAtom, useSetAtom } from 'jotai';
 
-import { BeanstalkSDK, ChainId, DataSource } from '@beanstalk/sdk';
+import { ChainId } from '@exchange/sdk-core';
+import { WellsSDK } from '@exchange/sdk-wells';
 
 import { isDEV } from 'src/settings';
 import { Log } from 'src/utils/logger';
@@ -14,10 +15,10 @@ import { getRpcUrl } from 'src/utils/wagmi/urls';
 import { aquiferAtom, sdkAtom } from '../atoms';
 
 const getSDK = (provider?: JsonRpcProvider, signer?: Signer, chainId?: number) => {
-  const sdk = new BeanstalkSDK({
+  const sdk = new WellsSDK({
     rpcUrl: getRpcUrl(chainId as ChainId),
     signer: signer,
-    source: DataSource.LEDGER,
+    // source: DataSource.LEDGER,
     provider: provider,
     DEBUG: isDEV
   });

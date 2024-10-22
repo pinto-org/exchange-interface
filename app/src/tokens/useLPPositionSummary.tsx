@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import BEANSTALK_ABI from '@beanstalk/protocol/abi/Beanstalk.json';
+import BEANSTALK_ABI from '@exchange/protocol/abi/Beanstalk.json';
 import { multicall } from '@wagmi/core';
 import { BigNumber } from 'ethers';
-import { ContractFunctionParameters, erc20Abi } from 'viem';
+import { ContractFunctionParameters, ContractFunctionParameters, erc20Abi } from 'viem';
 import { useAccount } from 'wagmi';
 
-import { BeanstalkSDK, Token, TokenValue } from '@beanstalk/sdk';
-import { Well } from '@beanstalk/sdk-wells';
+import { Token, TokenValue } from '@exchange/sdk-core';
+import { Well, WellsSDK } from '@exchange/sdk-wells';
 
 import { Log } from 'src/utils/logger';
 import { queryKeys } from 'src/utils/query/queryKeys';
@@ -33,7 +33,7 @@ type TokenMap<T> = { [tokenSymbol: string]: T };
  * Contract calls to fetch internal & external balances
  * Only fetch balances for wells with a defined LP Token
  */
-const makeMultiCall = (sdk: BeanstalkSDK, lpTokens: Token[], account: `0x${string}` | undefined) => {
+const makeMultiCall = (sdk: WellsSDK, lpTokens: Token[], account: `0x${string}` | undefined) => {
   const contractCalls: ContractFunctionParameters[] = [];
   if (!account) return contractCalls;
   Log.module('useLPPositionSummary').debug(

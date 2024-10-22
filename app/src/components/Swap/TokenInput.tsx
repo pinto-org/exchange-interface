@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import styled, { keyframes } from 'styled-components';
 
-import { Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
 
 import { size } from 'src/breakpoints';
 import { useTokenBalance } from 'src/tokens/useTokenBalance';

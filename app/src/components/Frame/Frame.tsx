@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useChainId } from 'wagmi';
 
 import buildIcon from 'src/assets/images/navbar/build.svg';
 import swapIcon from 'src/assets/images/navbar/swap.svg';

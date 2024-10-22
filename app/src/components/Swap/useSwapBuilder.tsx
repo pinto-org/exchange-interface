@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Token } from '@beanstalk/sdk';
-import { SwapBuilder } from '@beanstalk/sdk-wells';
+import { Token } from '@exchange/sdk-core';
+import { SwapBuilder } from '@exchange/sdk-wells';
 
 import useSdk from 'src/utils/sdk/useSdk';
 import { useWells } from 'src/wells/useWells';
@@ -15,7 +15,7 @@ export const useSwapBuilder = () => {
   useEffect(() => {
     if (!wells) return;
     const tokenMap: Record<string, Token> = {};
-    const b = sdk.wells.swapBuilder;
+    const b = sdk.swapBuilder;
 
     for (const well of wells) {
       // only include wells with reserves
@@ -34,7 +34,7 @@ export const useSwapBuilder = () => {
     }
 
     setTokens([...Object.values(tokenMap), sdk.tokens.ETH]);
-  }, [wells, sdk.wells.swapBuilder, sdk.signer, sdk.tokens.ETH]);
+  }, [wells, sdk.swapBuilder, sdk.signer, sdk.tokens.ETH]);
 
   return [builder, tokens] as const;
 };

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
-import { BeanstalkSDK, TokenValue } from '@beanstalk/sdk';
-import { Well } from '@beanstalk/sdk-wells';
+import { TokenValue } from '@exchange/sdk-core';
+import { Well, WellsSDK, WellsSDK } from '@exchange/sdk-wells';
 
 import { mediaQuery, size } from 'src/breakpoints';
 import { Error } from 'src/components/Error';
@@ -154,7 +154,7 @@ export const Wells = () => {
 };
 
 const makeTableData = (
-  sdk: BeanstalkSDK,
+  sdk: WellsSDK,
   wells?: Well[],
   stats?: BasinAPIResponse[],
   tokenPrices?: Record<string, TokenValue>
@@ -239,7 +239,7 @@ const makeTableData = (
 };
 
 const getSortByWhitelisted =
-  (sdk: BeanstalkSDK) =>
+  (sdk: WellsSDK) =>
   <T extends { well: Well }>(a: T, b: T) => {
     const aWhitelisted = a.well.lpToken && sdk.tokens.getIsWhitelistedWellLPToken(a.well.lpToken);
     const bWhitelisted = b.well.lpToken && sdk.tokens.getIsWhitelistedWellLPToken(b.well.lpToken);

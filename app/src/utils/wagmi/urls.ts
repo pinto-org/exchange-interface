@@ -1,4 +1,4 @@
-import { ChainId } from '@beanstalk/sdk-core';
+import { ChainId } from '@exchange/sdk-core';
 
 const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
 
@@ -7,11 +7,8 @@ if (!apiKey) {
 }
 
 const RPC_URLS: Record<number, string> = {
-  [ChainId.ETH_MAINNET]: `https://eth-mainnet.g.alchemy.com/v2/${apiKey}`,
-  [ChainId.ARBITRUM_MAINNET]: `https://arb-mainnet.g.alchemy.com/v2/${apiKey}`,
   [ChainId.LOCALHOST]: 'http://localhost:8545',
-  [ChainId.LOCALHOST_ETH]: 'http://localhost:9545',
-  [ChainId.ANVIL1]: 'https://anvil1.bean.money:443',
+  [ChainId.BASE_MAINNET]: `https://base-mainnet.g.alchemy.com/v2/${apiKey}`,
   [ChainId.TESTNET]: ''
 };
 

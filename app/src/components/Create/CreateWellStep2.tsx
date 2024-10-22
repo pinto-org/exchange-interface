@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { ERC20Token } from '@beanstalk/sdk';
 import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import styled from 'styled-components';
+
+import { ERC20Token } from '@exchange/sdk-core';
 
 import { images } from 'src/assets/images/tokens';
 import { Dropdown } from 'src/components/Dropdown';
@@ -266,7 +267,7 @@ const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSe
   }, [counterFormErrMessage, formErrMessage, counterPath, clearErrors]);
 
   const options = useMemo(
-    () => [sdk.tokens.BEAN, sdk.tokens.DAI, sdk.tokens.USDC, sdk.tokens.USDT, sdk.tokens.WETH],
+    () => [sdk.tokens.PINTO, sdk.tokens.DAI, sdk.tokens.USDC, sdk.tokens.USDT, sdk.tokens.WETH],
     [sdk]
   );
 

@@ -1,5 +1,6 @@
-import { BeanstalkSDK, ChainId, TokenValue } from '@beanstalk/sdk';
-import { ChainResolver } from '@beanstalk/sdk-core';
+import { ChainId, TokenValue } from '@exchange/sdk-core';
+import { ChainResolver } from '@exchange/sdk-core';
+import { WellsSDK } from '@exchange/sdk-wells';
 
 import { PriceContract__factory } from 'src/generated/types';
 import { memoize } from 'src/utils/memoize';
@@ -16,7 +17,7 @@ import { Log } from '../logger';
  */
 
 const FEEDS: Record<number, Record<string, string>> = {
-  [ChainId.ETH_MAINNET]: {
+  [ChainId.BASE_MAINNET]: {
     /// BTC Feeds
     WBTC_BTC: '0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23',
 
@@ -40,23 +41,12 @@ const FEEDS: Record<number, Record<string, string>> = {
     LUSD_USD: '0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0',
     STETH_USD: '0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8',
     UNI_USD: '0x553303d460EE0afB37EdFf9bE42922D8FF63220e'
-  },
-  [ChainId.ARBITRUM_MAINNET]: {
-    DAI_USD: '0xc5C8E77B397E531B8EC06BFb0048328B30E9eCfB',
-    ETH_USD: '0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612',
-    WBTC_USD: '0xd0C7101eACbB49F3deCcCc166d238410D6D46d57',
-    BTC_USD: '0x6ce185860a4963106506C203335A2910413708e9',
-    WBTC_BTC: '0x0017abAc5b6f291F9164e35B1234CA1D697f9CF4',
-    USDC_USD: '0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3',
-    USDT_USD: '0x3f3f5dF88dC9F13eac63DF89EC16ef6e7E25DdE7',
-    wstETH_ETH: '0xb523AE262D20A936BC152e6023996e46FDC2A95D',
-    weETH_ETH: '0xE141425bc1594b8039De6390db1cDaf4397EA22b'
   }
 };
 
 type FeedId = keyof (typeof FEEDS)[keyof typeof FEEDS];
 
-const chainlinkLookup = (feed: FeedId) => async (sdk: BeanstalkSDK) => {
+const chainlinkLookup = (feed: FeedId) => async (sdk: WellsSDK) => {
   const chainId = ChainResolver.resolveToMainnetChainId(sdk.chainId);
   const chainFeed = FEEDS[chainId];
   const address = chainFeed[feed as unknown as keyof typeof chainFeed];
@@ -72,7 +62,7 @@ const chainlinkLookup = (feed: FeedId) => async (sdk: BeanstalkSDK) => {
   return TokenValue.fromBlockchain(answer, decimals);
 };
 
-const multiChainlinkLookup = (from: FeedId, to: FeedId) => async (sdk: BeanstalkSDK) => {
+const multiChainlinkLookup = (from: FeedId, to: FeedId) => async (sdk: WellsSDK) => {
   const [fromPrice, toPrice] = await Promise.all([chainlinkLookup(from)(sdk), chainlinkLookup(to)(sdk)]);
 
   if (fromPrice && toPrice) {
@@ -83,14 +73,14 @@ const multiChainlinkLookup = (from: FeedId, to: FeedId) => async (sdk: Beanstalk
 };
 
 const chainLinkWithCallback =
-  (from: FeedId, getMultiplier: (sdk: BeanstalkSDK) => Promise<(value: TokenValue) => TokenValue>) =>
-  async (sdk: BeanstalkSDK) => {
+  (from: FeedId, getMultiplier: (sdk: WellsSDK) => Promise<(value: TokenValue) => TokenValue>) =>
+  async (sdk: WellsSDK) => {
     const [fromPrice, calculate] = await Promise.all([chainlinkLookup(from)(sdk), getMultiplier(sdk)]);
 
     return calculate(fromPrice || TokenValue.ZERO);
   };
 
-const getWstETHWithSteth = async (sdk: BeanstalkSDK) => {
+const getWstETHWithSteth = async (sdk: WellsSDK) => {
   const amt = sdk.tokens.STETH.fromHuman('1');
   const divisor = await sdk.contracts.lido.wsteth.getWstETHByStETH(amt.toBigNumber());
 
@@ -103,22 +93,22 @@ const getWstETHWithSteth = async (sdk: BeanstalkSDK) => {
   };
 };
 
-const BEAN = async (sdk: BeanstalkSDK) => {
+const BEAN = async (sdk: WellsSDK) => {
   Log.module('price').debug('Fetching BEAN price');
-  return sdk.bean.getPrice();
+  return sdk.pinto.getPrice();
 };
 
-const WSTETH = async (sdk: BeanstalkSDK) => {
+const WSTETH = async (sdk: WellsSDK) => {
   const chainId = ChainResolver.resolveToMainnetChainId(sdk.chainId);
-  if (ChainResolver.isL1Chain(chainId)) {
+  if (!ChainResolver.isL2Chain(chainId)) {
     return chainLinkWithCallback('STETH_USD', getWstETHWithSteth)(sdk);
   }
   return multiChainlinkLookup('wstETH_ETH', 'ETH_USD')(sdk);
 };
 
-const WBTC = async (sdk: BeanstalkSDK) => {
+const WBTC = async (sdk: WellsSDK) => {
   const chainId = ChainResolver.resolveToMainnetChainId(sdk.chainId);
-  if (ChainResolver.isL1Chain(chainId)) {
+  if (!ChainResolver.isL2Chain(chainId)) {
     return multiChainlinkLookup('WBTC_BTC', 'BTC_USD')(sdk);
   }
 
@@ -128,7 +118,7 @@ const WBTC = async (sdk: BeanstalkSDK) => {
 const PRICE_EXPIRY_TIMEOUT = 60 * 5; // 5 minute cache
 
 // cache should automatically update when sdk instance is updated
-export const PriceLookups: Record<string, (sdk: BeanstalkSDK) => Promise<TokenValue>> = {
+export const PriceLookups: Record<string, (sdk: WellsSDK) => Promise<TokenValue>> = {
   BEAN: memoize(BEAN, PRICE_EXPIRY_TIMEOUT),
   ETH: memoize(chainlinkLookup('ETH_USD')),
   WETH: memoize(chainlinkLookup('ETH_USD'), PRICE_EXPIRY_TIMEOUT),

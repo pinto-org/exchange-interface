@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useAccount, useChainId } from 'wagmi';
 
-import { ERC20Token, Token, TokenValue } from '@beanstalk/sdk';
-import { AddLiquidityETH, Well } from '@beanstalk/sdk-wells';
+import { ERC20Token, Token, TokenValue } from '@exchange/sdk-core';
+import { AddLiquidityETH, Well } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { LoadingTemplate } from 'src/components/LoadingTemplate';
@@ -212,7 +212,7 @@ const AddLiquidityContent = ({
 
         if (allTokensHaveMinAllowance && tokenAllowance.length) {
           if (useNativeETH) {
-            const addLiq = new AddLiquidityETH(sdk.wells);
+            const addLiq = new AddLiquidityETH(sdk);
             estimate = await addLiq.doGasEstimate(well, inputs, quote, address);
           } else {
             estimate = await well.addLiquidityGasEstimate(inputs, quote, address);
@@ -246,7 +246,7 @@ const AddLiquidityContent = ({
         const quoteAmountLessSlippage = quote.quote.subSlippage(slippage);
         let addLiquidityTxn;
         if (useNativeETH) {
-          const addLiquidityNativeETH = new AddLiquidityETH(sdk.wells);
+          const addLiquidityNativeETH = new AddLiquidityETH(sdk);
           addLiquidityTxn = await addLiquidityNativeETH.addLiquidity(
             well,
             inputs,
@@ -281,7 +281,7 @@ const AddLiquidityContent = ({
     address,
     slippage,
     well,
-    sdk.wells,
+    sdk,
     inputs,
     useNativeETH,
     resetAmounts,

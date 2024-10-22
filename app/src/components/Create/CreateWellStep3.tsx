@@ -22,7 +22,7 @@ const useWellDetailsDefaultValues = () => {
   const { wellImplementation, wellTokens, wellFunction } = useCreateWell();
   const sdk = useSdk();
 
-  const wellDotSolL2 = sdk.wells.addresses.WELL_DOT_SOL.ARBITRUM_MAINNET;
+  const wellDotSolL2 = sdk.addresses.WELL_DOT_SOL.BASE_MAINNET;
 
   const wellName = wellFunction?.name;
   const wellSymbol = wellFunction?.symbol;

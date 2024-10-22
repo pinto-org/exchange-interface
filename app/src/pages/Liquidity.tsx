@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useChainId } from 'wagmi';
 
+import { TokenValue } from '@exchange/sdk-core';
+
 import { mediaQuery, size } from 'src/breakpoints';
 import { Error } from 'src/components/Error';
 import { ChevronDown } from 'src/components/Icons';
@@ -22,7 +24,6 @@ import { LearnYield } from 'src/components/Well/LearnYield';
 import { LiquidityBox } from 'src/components/Well/LiquidityBox';
 import { Log } from 'src/utils/logger';
 import { useWellWithParams } from 'src/wells/useWellWithParams';
-import { TokenValue } from '@exchange/sdk-core';
 
 export const Liquidity = () => {
   const { well, loading, error } = useWellWithParams();

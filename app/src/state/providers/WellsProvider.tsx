@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useSetAtom } from 'jotai';
 
-import { Well } from '@beanstalk/sdk-wells';
+import { Well } from '@exchange/sdk-wells';
 
 import { images } from 'src/assets/images/tokens';
 import { Error } from 'src/components/Error';
@@ -40,7 +40,7 @@ export const useWellsQuery = () => {
         return [];
       }
     },
-    enabled: !!sdk && !!aquifer && !!sdk.wells,
+    enabled: !!sdk && !!aquifer,
     retry: false,
     staleTime: Infinity
   });

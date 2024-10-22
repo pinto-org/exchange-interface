@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
 
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useScopedQuery, useSetScopedQueryData } from 'src/utils/query/useScopedQuery';

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Well } from '@beanstalk/sdk/Wells';
 import styled from 'styled-components';
 
-import { TokenValue } from '@beanstalk/sdk';
+import { TokenValue } from '@exchange/sdk-core';
 
 import { mediaQuery, size } from 'src/breakpoints';
 import { BottomDrawer } from 'src/components/BottomDrawer';

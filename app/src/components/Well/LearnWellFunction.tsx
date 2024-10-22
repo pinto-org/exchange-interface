@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
-import { Well } from '@beanstalk/sdk-wells';
+import { Well } from '@exchange/sdk-wells';
 
 import { ExpandBox } from 'src/components/ExpandBox';
 import { FC } from 'src/types';

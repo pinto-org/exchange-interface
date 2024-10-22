@@ -1,4 +1,4 @@
-import { ERC20Token, Token, TokenValue } from '@beanstalk/sdk-core';
+import { ERC20Token, Token, TokenValue } from '@exchange/sdk-core';
 
 import { Log } from 'src/utils/logger';
 

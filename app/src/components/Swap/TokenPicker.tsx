@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import styled, { keyframes } from 'styled-components';
 
-import { Token } from '@beanstalk/sdk';
+import { Token } from '@exchange/sdk-core';
 
 import x from 'src/assets/images/x.svg';
 import { size } from 'src/breakpoints';

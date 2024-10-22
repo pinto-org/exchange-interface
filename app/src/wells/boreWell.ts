@@ -27,7 +27,6 @@ const prepareBoreWellParameters = async (
     wellFunction,
     Array.isArray(pumps) ? pumps : [pumps]
   );
-  q;
 
   const initFunctionCall = await Aquifer.getEncodedWellInitFunctionData(name, symbol);
 

@@ -172,7 +172,7 @@ type WellComponentMap<T> = {
 };
 
 const getComponentWithUpdateLinks = (wellComponent: WellComponentInfo, chainId: ChainId, address: string) => {
-  const explorer = explorerUrl(chainId) + `/address/${address}`;
+  const explorer = explorerUrl() + `/address/${address}`;
 
   return {
     ...wellComponent,
@@ -196,17 +196,17 @@ export const useWhitelistedWellComponents = () => {
     const wellDotSol = getComponentWithUpdateLinks(
       WellDotSol,
       sdk.chainId,
-      sdk.wells.addresses.WELL_DOT_SOL.get(sdk.chainId)
+      sdk.addresses.WELL_DOT_SOL.get(sdk.chainId)
     );
     const multiFlow = getComponentWithUpdateLinks(
       MultiFlowPump,
       sdk.chainId,
-      sdk.wells.addresses.MULTI_FLOW_PUMP_V1_1.get(sdk.chainId)
+      sdk.addresses.MULTI_FLOW_PUMP.get(sdk.chainId)
     );
     const cp2 = getComponentWithUpdateLinks(
       ConstantProduct2,
       sdk.chainId,
-      sdk.wells.addresses.CONSTANT_PRODUCT_2_V2.get(sdk.chainId)
+      sdk.addresses.CONSTANT_PRODUCT_2.get(sdk.chainId)
     );
 
     return {

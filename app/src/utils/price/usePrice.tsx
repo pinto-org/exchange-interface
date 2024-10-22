@@ -1,9 +1,10 @@
-import { BeanstalkSDK, Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
+import { WellsSDK } from '@exchange/sdk-wells';
 
 import { PriceLookups } from './priceLookups';
 import { Log } from '../logger';
 
-export const getPrice = async (token: Token, sdk: BeanstalkSDK): Promise<TokenValue | null> => {
+export const getPrice = async (token: Token, sdk: WellsSDK): Promise<TokenValue | null> => {
   try {
     if (!token.symbol) {
       throw new Error(`No token symbol for token: ${token}`);

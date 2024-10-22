@@ -2,11 +2,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Well } from '@beanstalk/sdk/Wells';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
-import { Token, TokenValue } from '@beanstalk/sdk';
+import { Token, TokenValue } from '@exchange/sdk-core';
+import { Well } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { TokenInput } from 'src/components/Swap/TokenInput';
