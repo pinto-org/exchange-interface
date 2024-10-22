@@ -19,3 +19,6 @@ export { WETH9__factory } from "src/constants/generated";
 
 // Add Liquidity
 export { AddLiquidityETH } from "./lib/liquidity/AddLiquidityETH";
+
+// Utils
+export { getTokenIndex, getTokenSymbolIndex } from './lib/utils';

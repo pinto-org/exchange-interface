@@ -23,12 +23,13 @@
     "dev": "tsc --noEmit --watch",
     "ts": "yarn clean-build && tsc && tsc-alias -p tsconfig.json",
     "build": "echo '\nCORE Build' && yarn ts && rollup -c --bundleConfigAsCjs --silent && rimraf dist/js",
+    "core:generate": "yarn generate",
     "core:build": "yarn generate && yarn build"
   },
-  "dependencies": {
+  "peerDependencies": {
     "ethers": "^5.0.0"
   },
-  "peerDependencies": {
+  "dependencies": {
     "ethers": "^5.0.0"
   },
   "devDependencies": {

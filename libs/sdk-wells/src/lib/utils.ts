@@ -1,4 +1,4 @@
-import { ERC20Token, Token, TokenValue } from '@exchange/sdk-core';
+import { ERC20Token, NativeToken, Token, TokenValue } from '@exchange/sdk-core';
 import { ethers } from 'ethers';
 import { WellsSDK } from './WellsSDK';
 import { Call } from 'src/types';
@@ -150,4 +150,16 @@ export function makeCallObject<T extends { data: string; address: string }>(para
     target: params.address,
     data: ethers.utils.arrayify(params.data),
   } satisfies Call;
+}
+
+export function getTokenIndex(token: Token) {
+  if (token instanceof NativeToken) {
+    return token.symbol.toLowerCase();
+  }
+
+  return token.address.toLowerCase();
+}
+
+export function getTokenSymbolIndex(token: Token) {
+  return token.symbol.toLowerCase();
 }

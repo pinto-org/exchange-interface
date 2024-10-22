@@ -1,5 +1,6 @@
 import { Token, ERC20Token, NativeToken } from '@exchange/sdk-core';
 import { WellsSDK } from './WellsSDK';
+import { getTokenIndex, getTokenSymbolIndex } from './utils';
 
 export type TokenSTokensymbol = {
   [symbol: string]: Token;
@@ -12,17 +13,25 @@ export class Tokens {
 
   private tokenMap = new Map<string, Token>();
 
+  private symbol2Index: { [symbol: string]: string };
+
   readonly erc20Tokens = new Map<string, ERC20Token>();
+
+  PINTO: ERC20Token;
+
+  CBBTC: ERC20Token;
 
   ETH: NativeToken;
   WETH: ERC20Token;
-  PINTO: ERC20Token;
-  USDC: ERC20Token;
-  DAI: ERC20Token;
-  USDT: ERC20Token;
+  CBETH: ERC20Token;
   WSTETH: ERC20Token;
   WEETH: ERC20Token;
-  WBTC: ERC20Token;
+  RETH: ERC20Token;
+
+  USDC: ERC20Token;
+  USDT: ERC20Token;
+  DAI: ERC20Token;
+  ZRO: ERC20Token;
 
   constructor(sdk: WellsSDK) {
     Tokens.sdk = sdk;
@@ -58,6 +67,22 @@ export class Tokens {
     );
     this.tokens.add(this.PINTO);
 
+    //////////// BTC ////////////
+    // cbBTC
+    this.CBBTC = new ERC20Token(
+      cid,
+      sdk.addresses.CBBTC.get(cid),
+      8,
+      'cbBTC',
+      {
+        name: 'Coinbase Wrapped BTC',
+        displayDecimals: 6,
+      },
+      provider,
+    );
+    this.tokens.add(this.CBBTC);
+
+    //////////// ETH ////////////
     // WETH
     this.WETH = new ERC20Token(
       cid,
@@ -72,20 +97,20 @@ export class Tokens {
     );
     this.tokens.add(this.WETH);
 
-    // WSTETH
-    this.WSTETH = new ERC20Token(
+    //////////// ETH-LSD ////////////
+    // cbETH
+    this.CBETH = new ERC20Token(
       cid,
-      sdk.addresses.WSTETH.get(),
+      sdk.addresses.CBETH.get(cid),
       18,
-      'wstETH',
+      'cbETH',
       {
-        name: 'Wrapped liquid staked Ether 2.0',
+        name: 'Coinbase Wrapped Staked ETH',
         displayDecimals: 4,
       },
       provider,
     );
-
-    this.tokens.add(this.WSTETH);
+    this.tokens.add(this.CBETH);
 
     // weETH
     this.WEETH = new ERC20Token(
@@ -99,23 +124,37 @@ export class Tokens {
       },
       provider,
     );
-
     this.tokens.add(this.WEETH);
 
-    // WBTC
-    this.WBTC = new ERC20Token(
+    // wstETH
+    this.WSTETH = new ERC20Token(
       cid,
-      sdk.addresses.WBTC.get(cid),
-      8,
-      'WBTC',
+      sdk.addresses.WSTETH.get(),
+      18,
+      'wstETH',
       {
-        name: 'Wrapped BTC',
-        displayDecimals: 6,
+        name: 'Wrapped liquid staked Ether 2.0',
+        displayDecimals: 4,
       },
       provider,
     );
+    this.tokens.add(this.WSTETH);
 
-    this.tokens.add(this.WBTC);
+    // rETH
+    this.RETH = new ERC20Token(
+      cid,
+      sdk.addresses.RETH.get(cid),
+      18,
+      'rETH',
+      {
+        name: 'Rocket Pool ETH',
+        displayDecimals: 4,
+      },
+      provider,
+    );
+    this.tokens.add(this.RETH);
+
+    //////////// STABLECOINS ////////////
 
     // USDC
     this.USDC = new ERC20Token(
@@ -129,7 +168,6 @@ export class Tokens {
       },
       provider,
     );
-
     this.tokens.add(this.USDC);
 
     // USDT
@@ -144,7 +182,6 @@ export class Tokens {
       },
       provider,
     );
-
     this.tokens.add(this.USDT);
 
     // DAI
@@ -159,16 +196,35 @@ export class Tokens {
       },
       provider,
     );
-
     this.tokens.add(this.DAI);
+
+    // ZRO
+    this.ZRO = new ERC20Token(
+      cid,
+      sdk.addresses.ZRO.get(cid),
+      18,
+      'ZRO',
+      {
+        name: 'LayerZero',
+        displayDecimals: 4,
+      },
+      provider,
+    );
+    this.tokens.add(this.ZRO);
 
     this.tokenMap = new Map();
     this.erc20Tokens = new Map();
 
+    this.symbol2Index = {};
+
     this.tokens.forEach((token) => {
-      this.tokenMap.set(token.address.toLowerCase(), token);
+      const tokenIndex = getTokenIndex(token);
+
+      this.tokenMap.set(tokenIndex, token);
+      this.symbol2Index[getTokenSymbolIndex(token)] = tokenIndex;
+
       if (token instanceof ERC20Token) {
-        this.erc20Tokens.set(token.address.toLowerCase(), token);
+        this.erc20Tokens.set(tokenIndex, token);
       }
     });
   }
@@ -184,9 +240,7 @@ export class Tokens {
    * Find a Token by symbol
    */
   findBySymbol(symbol: string): Token | undefined {
-    for (const token of this.tokens) {
-      if (token.symbol === symbol) return token;
-    }
-    return;
+    const index = this.symbol2Index[symbol.toLowerCase()];
+    return this.tokenMap.get(index);
   }
 }

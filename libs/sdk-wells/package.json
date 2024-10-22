@@ -24,6 +24,7 @@
     "dev": "tsc --noEmit --watch",
     "ts": "yarn clean-build && tsc && tsc-alias -p tsconfig.json",
     "build": "echo '\nWELLS Build' && yarn ts && rollup -c --bundleConfigAsCjs --silent && rimraf dist/js",
+    "wells:generate": "yarn generate",
     "wells:build": "yarn generate && yarn build"
   },
   "peerDependencies": {

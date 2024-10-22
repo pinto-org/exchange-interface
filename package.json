@@ -11,8 +11,7 @@
     "libs/*"
   ],
   "scripts": {
-    "sdk-core:build": "yarn core:build",
-    "sdk-wells:build": "yarn wells:build",
-    "sdks:build": "yarn sdk-core:build && yarn sdk-wells:build"
+    "sdks:build": "yarn core:build && yarn wells:build",
+    "generate": "yarn core:generate && yarn wells:generate"
   }
 }
