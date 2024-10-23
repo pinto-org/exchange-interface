@@ -121,105 +121,76 @@ export class BlockchainUtils {
    * @param account
    * @param balance
    */
-  async setAllBalances(account: string, amount: string) {
+  async setAllBalances(account: string, amount: string, mockToken: boolean = false) {
     await Promise.allSettled([
       // NATIVE
-      this.setETHBalance(account, this.sdk.tokens.ETH.amount(amount)),
+      this.setETHBalance(account, this.sdk.tokens.ETH.amount(amount), mockToken),
       // ERC20
-      this.setPINTOBalance(account, this.sdk.tokens.PINTO.amount(amount)),
-      // LSD
-      this.setWETHBalance(account, this.sdk.tokens.WETH.amount(amount)),
-      this.setWSTETHBalance(account, this.sdk.tokens.WSTETH.amount(amount)),
-      this.setWEETHBalance(account, this.sdk.tokens.WEETH.amount(amount)),
-      this.setCBETHBalance(account, this.sdk.tokens.CBETH.amount(amount)),
-      // BTC
-      this.setCBBTCBalance(account, this.sdk.tokens.CBBTC.amount(amount)),
-      // STABLE
-      this.setUSDCBalance(account, this.sdk.tokens.USDC.amount(amount)),
-      this.setDAIBalance(account, this.sdk.tokens.DAI.amount(amount)),
-      this.setUSDTBalance(account, this.sdk.tokens.USDT.amount(amount)),
-      // LP
-      this.setPINTOWETHBalance(account, this.sdk.tokens.PINTO_ETH_WELL_LP.amount(amount)),
-      this.setPINTOWSTETHBalance(account, this.sdk.tokens.PINTO_WSTETH_WELL_LP.amount(amount)),
-      this.setPINTOWEETHBalance(account, this.sdk.tokens.PINTO_WEETH_WELL_LP.amount(amount)),
-      this.setPINTOCBETHBalance(account, this.sdk.tokens.PINTO_CBETH_WELL_LP.amount(amount)),
-      this.setPINTOCBBTCBalance(account, this.sdk.tokens.PINTO_CBBTC_WELL_LP.amount(amount)),
-      this.setPINTOUSDCBalance(account, this.sdk.tokens.PINTO_USDC_WELL_LP.amount(amount))
+      this.setPINTOBalance(account, this.sdk.tokens.PINTO.amount(amount), mockToken),
+      this.setWETHBalance(account, this.sdk.tokens.WETH.amount(amount), mockToken),
+      this.setCBETHBalance(account, this.sdk.tokens.CBETH.amount(amount), mockToken),
+      this.setCBBTCBalance(account, this.sdk.tokens.CBBTC.amount(amount), mockToken),
+      this.setUSDCBalance(account, this.sdk.tokens.USDC.amount(amount), mockToken),
+      // ERC20 LP
+      this.setPINTOWETHBalance(account, this.sdk.tokens.PINTO_ETH_WELL_LP.amount(amount), mockToken),
+      this.setPINTOCBETHBalance(account, this.sdk.tokens.PINTO_CBETH_WELL_LP.amount(amount), mockToken),
+      this.setPINTOCBBTCBalance(account, this.sdk.tokens.PINTO_CBBTC_WELL_LP.amount(amount), mockToken),
+      this.setPINTOUSDCBalance(account, this.sdk.tokens.PINTO_USDC_WELL_LP.amount(amount), mockToken)
     ]);
   }
-  async setETHBalance(account: string, balance: TokenValue) {
+  async setETHBalance(account: string, balance: TokenValue, _mockToken: boolean = false) {
     return this.sdk.provider.send('hardhat_setBalance', [account, balance.toHex()]);
   }
-  async setPINTOBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.PINTO, account, balance);
+  async setPINTOBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.PINTO, account, balance, mockToken);
   }
-  async setWETHBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.WETH, account, balance);
+  async setWETHBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.WETH, account, balance, mockToken);
   }
-  async setWSTETHBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.WSTETH, account, balance);
+  async setCBETHBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.CBETH, account, balance, mockToken);
   }
-  async setWEETHBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.WEETH, account, balance);
+  async setCBBTCBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.CBBTC, account, balance, mockToken);
   }
-  async setCBETHBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.CBETH, account, balance);
+  async setUSDCBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.USDC, account, balance, mockToken);
   }
-  async setCBBTCBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.CBBTC, account, balance);
+  async setPINTOWETHBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.PINTO_ETH_WELL_LP, account, balance, mockToken);
   }
-  async setUSDCBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.USDC, account, balance);
+  async setPINTOCBETHBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.PINTO_CBETH_WELL_LP, account, balance, mockToken);
   }
-  async setUSDTBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.USDT, account, balance);
+  async setPINTOCBBTCBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.PINTO_CBBTC_WELL_LP, account, balance, mockToken);
   }
-  async setDAIBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.DAI, account, balance);
-  }
-  async setPINTOWETHBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.PINTO_ETH_WELL_LP, account, balance);
-  }
-  async setPINTOWSTETHBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.PINTO_WSTETH_WELL_LP, account, balance);
-  }
-  async setPINTOWEETHBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.PINTO_WEETH_WELL_LP, account, balance);
-  }
-  async setPINTOCBETHBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.PINTO_CBETH_WELL_LP, account, balance);
-  }
-  async setPINTOCBBTCBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.PINTO_CBBTC_WELL_LP, account, balance);
-  }
-  async setPINTOUSDCBalance(account: string, balance: TokenValue) {
-    return this.setBalance(this.sdk.tokens.PINTO_USDC_WELL_LP, account, balance);
+  async setPINTOUSDCBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.PINTO_USDC_WELL_LP, account, balance, mockToken);
   }
 
-  private getBalanceConfig(tokenAddress: string) {
-    const slotConfig = new Map();
+  private getBalanceConfig(tokenAddress: string, mockToken: boolean = false) {
+    const slotConfig = new Map<string, [slot: number, isReverse: boolean]>();
+    // ERC20
     slotConfig.set(this.sdk.tokens.PINTO.address, [0, false]);
-    slotConfig.set(this.sdk.tokens.WETH.address, [3, false]); // OnChain
-    slotConfig.set(this.sdk.tokens.WSTETH.address, [1, false]); // OnChain
-    slotConfig.set(this.sdk.tokens.WEETH.address, [51, false]); // OnChain
-    slotConfig.set(this.sdk.tokens.CBETH.address, [51, false]); // OnChain
-    slotConfig.set(this.sdk.tokens.CBBTC.address, [9, false]); // OnChain
-    slotConfig.set(this.sdk.tokens.USDC.address, [9, false]); // OnChain
-    slotConfig.set(this.sdk.tokens.USDT.address, [0, false]); // OnChain
-    slotConfig.set(this.sdk.tokens.DAI.address, [0, false]);
+    slotConfig.set(this.sdk.tokens.WETH.address, [mockToken ? 0 : 3, false]); // MOCK
+    slotConfig.set(this.sdk.tokens.CBETH.address, [mockToken ? 0 : 51, false]); // MOCK
+    slotConfig.set(this.sdk.tokens.CBBTC.address, [mockToken ? 0 : 9, false]); // MOCK
+    slotConfig.set(this.sdk.tokens.USDC.address, [mockToken ? 0 : 9, false]); // MOCK
+
+    // ERC20 LP
     slotConfig.set(this.sdk.tokens.PINTO_ETH_WELL_LP.address, [51, false]);
-    slotConfig.set(this.sdk.tokens.PINTO_WSTETH_WELL_LP.address, [51, false]);
-    slotConfig.set(this.sdk.tokens.PINTO_WEETH_WELL_LP.address, [51, false]);
     slotConfig.set(this.sdk.tokens.PINTO_CBBTC_WELL_LP.address, [51, false]);
     slotConfig.set(this.sdk.tokens.PINTO_CBETH_WELL_LP.address, [51, false]);
     slotConfig.set(this.sdk.tokens.PINTO_USDC_WELL_LP.address, [51, false]);
+
     return slotConfig.get(tokenAddress);
   }
 
   /**
    * Writes the new bean & 3crv balances to the evm storage
    */
-  async setBalance(token: Token | string, account: string, balance: TokenValue | number) {
+  async setBalance(token: Token | string, account: string, balance: TokenValue | number, mockToken: boolean) {
     const _token = token instanceof Token ? token : this.sdk.tokens.findByAddress(token);
     if (!_token) {
       throw new Error('token not found');
@@ -231,7 +202,12 @@ export class BlockchainUtils {
       return this.sdk.provider.send('hardhat_setBalance', [account, balanceAmount.toHexString()]);
     }
 
-    const [slot, isTokenReverse] = this.getBalanceConfig(_token.address);
+    const config = this.getBalanceConfig(_token.address, mockToken);
+    if (!config) {
+      throw new Error('balance config not found');
+    }
+
+    const [slot, isTokenReverse] = config;
     const values = [account, slot];
 
     if (isTokenReverse) values.reverse();
@@ -239,52 +215,6 @@ export class BlockchainUtils {
     const index = ethers.utils.solidityKeccak256(['uint256', 'uint256'], values);
     await this.setStorageAt(_token.address, index.toString(), this.toBytes32(balanceAmount).toString());
   }
-
-  // async setWellLiquidity(
-  //   lpToken: Token,
-  //   amounts: TokenValue[],
-  //   account = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266'
-  // ) {
-  //   const well = await this.sdk.pools.getWellByLPToken(lpToken.address);
-  //   if (!well) throw new Error('well not found');
-  //   const tokens = well.tokens;
-
-  //   for await (const [index, token] of (tokens || []).entries()) {
-  //     const amount = amounts[index];
-  //     await this.setBalance(token, account, amount);
-  //     await token.approve(well.address, amount);
-  //   }
-
-  //   const tx = await well.addLiquidity(amounts, TokenValue.ONE, account);
-  //   await tx.wait();
-  // }
-
-  /**
-   * DeltaB is currently over 0. We need to SELL beans to bring the price below 1
-   */
-  // async setPriceUnder1(multiplier = 1, account = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266') {
-  //   let deltaB = await this.sdk.bean.getDeltaB();
-  //   if (deltaB.lt(TokenValue.ZERO)) {
-  //     console.log('DeltaB already under zero, skipping');
-  //     return;
-  //   }
-  //   const op = this.sdk.swap.buildSwap(this.sdk.tokens.BEAN, this.sdk.tokens.WSTETH, account);
-  //   const amount = deltaB.abs().mul(multiplier);
-  //   console.log(`DeltaB is ${deltaB.toHuman()}. SELLING ${amount.toHuman()} BEANS (with a ${multiplier}x multiplier)`);
-
-  //   await this.setBalance(this.sdk.tokens.BEAN, account, amount);
-  //   const txa = await this.sdk.tokens.BEAN.approveBeanstalk(amount);
-  //   await txa.wait();
-
-  //   const tx = await op.execute(amount, 0.2);
-  //   await tx.wait();
-
-  //   deltaB = await this.sdk.bean.getDeltaB();
-
-  //   if (!deltaB.lt(TokenValue.ZERO)) {
-  //     throw new Error(`DeltaB is still over 0 after buying beans. deltaB: ${deltaB.toHuman()}`);
-  //   }
-  // }
 
   private async setStorageAt(address: string, index: string, value: string) {
     await this.sdk.provider.send('hardhat_setStorageAt', [address, index, value]);

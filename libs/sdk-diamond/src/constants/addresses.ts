@@ -72,22 +72,22 @@ export const addresses = {
   // Wells Contracts
   // ----------------------------------------
   PINTOETH_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e11002e8E77B77AC4AeDCD9dd251d207227F686'
+    [ChainId.BASE_MAINNET]: '0x3e110064EFC1915d24EC45f9c04591923d812233'
   }),
-  PINTOWSTETH_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e1111d74307ACc2FC12F3B5cbd7b5eDFee08C06'
-  }),
-  PINTOWEETH_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e1122552d8F42E8EaFc01E69D63aB3c60579a65'
-  }),
+  // PINTOWSTETH_WELL: Address.make({
+  //   [ChainId.BASE_MAINNET]: '0x3e1111d74307ACc2FC12F3B5cbd7b5eDFee08C06'
+  // }),
+  // PINTOWEETH_WELL: Address.make({
+  //   [ChainId.BASE_MAINNET]: '0x3e1122552d8F42E8EaFc01E69D63aB3c60579a65'
+  // }),
   PINTOCBETH_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e11339Ff6A111A2810974941624Da4e997D253A'
+    [ChainId.BASE_MAINNET]: '0x3e11110c4B8F9ece9dac99D220EF3CFfF03eD74f'
   }),
   PINTOCBBTC_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e11442481e80AB40717A5C7aec2139Feaaac14d'
+    [ChainId.BASE_MAINNET]: '0x3e1122f7D416aa21B394044eFFfebd976Bbb7a68'
   }),
   PINTOUSDC_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e115573f7F22029EdF4e6155d2DA0Ba379Dc45d'
+    [ChainId.BASE_MAINNET]: '0x3e1133FB8eF15e817203409b8379D99Fe968D254'
   }),
 
   // ----------------------------------------
@@ -96,12 +96,12 @@ export const addresses = {
   PINTOWETH_LSD_ORACLE: Address.make({
     [ChainId.BASE_MAINNET]: '0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70'
   }),
-  PINTOWSTETH_LSD_ORACLE: Address.make({
-    [ChainId.BASE_MAINNET]: '0x1CD1CD0a74C17F6943a661e26cC68d978e564635'
-  }),
-  PINTOWEETH_LSD_ORACLE: Address.make({
-    [ChainId.BASE_MAINNET]: '0x1CD1CD0a74C17F6943a661e26cC68d978e564635'
-  }),
+  // PINTOWSTETH_LSD_ORACLE: Address.make({
+  //   [ChainId.BASE_MAINNET]: '0x1CD1CD0a74C17F6943a661e26cC68d978e564635'
+  // }),
+  // PINTOWEETH_LSD_ORACLE: Address.make({
+  //   [ChainId.BASE_MAINNET]: '0x1CD1CD0a74C17F6943a661e26cC68d978e564635'
+  // }),
   PINTOCBETH_LSD_ORACLE: Address.make({
     [ChainId.BASE_MAINNET]: '0xd7818272B9e248357d13057AAb0B417aF31E817d'
   }),

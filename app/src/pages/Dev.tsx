@@ -9,11 +9,13 @@ import { ExchangeSDK, TestUtils } from '@exchange/sdk';
 import { Token, TokenValue } from '@exchange/sdk-core';
 
 
+import { Flex } from 'src/components/Layout';
 import { Page } from 'src/components/Page';
 import { Title } from 'src/components/PageComponents/Title';
 import { Button } from 'src/components/Swap/Button';
 import { TokenInput } from 'src/components/Swap/TokenInput';
 import { ToastAlert } from 'src/components/TxnToast/ToastAlert';
+import { Text } from 'src/components/Typography';
 import { useAllTokensBalance } from 'src/tokens/useAllTokenBalance';
 import { useTokensArr } from 'src/tokens/useTokens';
 import { useEthersProvider } from 'src/utils/wagmi/ethersAdapter';
@@ -40,7 +42,16 @@ export const Dev = () => {
   const goBalance = async (token: Token) => {
     const amount = amounts.get(token.symbol) || TokenValue.ZERO;
     const utils = new TestUtils.BlockchainUtils(sdk.diamondSDK);
-    await utils.setBalance(token, account.address || '', amount);
+    await utils.setBalance(token, account.address || '', amount, false);
+    await mine();
+    await refetchTokenBalances();
+    toast.success(<ToastAlert desc={`Set ${token.symbol} balance to  ${amount.toHuman('short')}`} />);
+  };
+
+  const setMockBalance = async (token: Token) => {
+    const amount = amounts.get(token.symbol) || TokenValue.ZERO;
+    const utils = new TestUtils.BlockchainUtils(sdk.diamondSDK);
+    await utils.setBalance(token, account.address || '', amount, true);
     await mine();
     await refetchTokenBalances();
     toast.success(<ToastAlert desc={`Set ${token.symbol} balance to  ${amount.toHuman('short')}`} />);
@@ -71,26 +82,42 @@ export const Dev = () => {
     }
     rows.push(
       <Row key={token.symbol}>
-        <TokenInput
-          token={token}
-          canChangeToken={false}
-          label='token'
-          loading={false}
-          amount={amounts.get(token.symbol)}
-          onAmountChange={(amount) => {
-            setAmounts(new Map(amounts.set(token.symbol, amount)));
-          }}
-        />
-
-        <Button
-          onClick={() => {
-            goBalance(token);
-          }}
-          label={'Set Balance'}
-          disabled={false}
-          loading={false}
-        />
-
+        <Flex $fullWidth $minWidth={300}>
+          <TokenInput
+            width='100%'
+            token={token}
+            canChangeToken={false}
+            label='token'
+            loading={false}
+            amount={amounts.get(token.symbol)}
+            onAmountChange={(amount) => {
+              setAmounts(new Map(amounts.set(token.symbol, amount)));
+            }}
+          />
+        </Flex>
+        <Flex $gap={0.5} $fullWidth $mt={1}>
+          <Text $variant='s' $weight='semi-bold'>
+            Set Balance
+          </Text>
+          <Flex $gap={1} $direction='row' $fullWidth>
+            <Button
+              onClick={() => {
+                goBalance(token);
+              }}
+              label={'Set Balance'}
+              disabled={false}
+              loading={false}
+            />
+            <Button
+              onClick={() => {
+                setMockBalance(token);
+              }}
+              label={'Set Balance (mock)'}
+              disabled={false}
+              loading={false}
+            />
+          </Flex>
+        </Flex>
         <Button
           secondary
           onClick={() => {
@@ -121,12 +148,13 @@ const Row = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
 `;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  width: 100%;
+  grid-gap: 10px;
 `;

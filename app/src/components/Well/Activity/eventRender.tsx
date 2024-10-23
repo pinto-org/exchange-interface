@@ -6,7 +6,7 @@ import { Well } from '@exchange/sdk';
 import { TokenValue } from '@exchange/sdk-core';
 
 import { size } from 'src/breakpoints';
-import { explorerUrl } from 'src/utils/chain';
+import { getChainExplorer } from 'src/utils/chain';
 import { AddEvent, EVENT_TYPE, RemoveEvent, ShiftEvent, SwapEvent, WellEvent } from 'src/wells/useWellHistory';
 
 import { Row, Td } from '../Table';
@@ -80,7 +80,7 @@ export const renderEvent = (event: WellEvent, well: Well, prices: (TokenValue | 
   return (
     <Row key={event.tx}>
       <Td>
-        <Action href={`${explorerUrl()}/tx/${event.tx}`} target='_blank' rel='noopener noreferrer'>
+        <Action href={getChainExplorer(well.sdk.chainId).tx(event.tx)} target='_blank' rel='noopener noreferrer'>
           {action}
         </Action>
       </Td>

@@ -18,10 +18,46 @@ export function useResolvedChainId() {
   return ChainResolver.resolveToMainnetChainId(sdkChainId);
 }
 
-export const explorerUrl = () => {
-  return 'https://basescan.io';
+export const useChainExplorer = () => {
+  const chainId = useResolvedChainId();
+
+  return getChainExplorer(chainId);
 };
 
-export const explorerName = () => {
-  return 'BaseScan';
+export const getChainExplorer = (chainId: ChainId) => {
+  const url = chain2ExplorerUrl(chainId);
+  const name = chain2ExplorerName(chainId);
+
+  return {
+    url,
+    name,
+    address: (address: string) => `${url}/address/${address}`,
+    tx: (tx: string) => `${url}/tx/${tx}`
+  };
+};
+
+export const chain2ExplorerName = (chainId: number) => {
+  switch (chainId) {
+    case ChainId.BASE_MAINNET:
+      return 'BaseScan';
+    case 42161:
+      return 'Arbiscan';
+    case 1:
+      return 'Etherscan';
+    default:
+      return 'BaseScan';
+  }
+};
+
+export const chain2ExplorerUrl = (chainId: number) => {
+  switch (chainId) {
+    case ChainId.BASE_MAINNET:
+      return 'https://basescan.org';
+    case 42161:
+      return 'https://arbiscan.io';
+    case 1:
+      return 'https://etherscan.io';
+    default:
+      return 'https://basescan.io';
+  }
 };

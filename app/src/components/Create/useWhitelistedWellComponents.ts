@@ -10,7 +10,7 @@ import CyrfinLogo from 'src/assets/images/cyrfin-logo.svg';
 import HalbornLogo from 'src/assets/images/halborn-logo.png';
 import { AddressMap } from 'src/types';
 import { toAddressMap } from 'src/utils/addresses';
-import { explorerUrl } from 'src/utils/chain';
+import { getChainExplorer } from 'src/utils/chain';
 import useSdk from 'src/utils/sdk/useSdk';
 import { usePumps } from 'src/wells/pump/usePumps';
 import { useWellImplementations } from 'src/wells/useWellImplementations';
@@ -172,14 +172,12 @@ type WellComponentMap<T> = {
 };
 
 const getComponentWithUpdateLinks = (wellComponent: WellComponentInfo, chainId: ChainId, address: string) => {
-  const explorer = explorerUrl() + `/address/${address}`;
-
   return {
     ...wellComponent,
     address,
     links: {
       ...wellComponent.links,
-      explorer
+      explorer: getChainExplorer(chainId).address(address)
     }
   };
 };

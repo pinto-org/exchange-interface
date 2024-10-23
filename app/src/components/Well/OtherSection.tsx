@@ -7,6 +7,7 @@ import { Token } from '@exchange/sdk-core';
 
 import { size } from 'src/breakpoints';
 import { FC } from 'src/types';
+import { useChainExplorer } from 'src/utils/chain';
 import { displayTokenSymbol } from 'src/utils/format';
 import { useIsMultiFlowPump } from 'src/wells/pump/utils';
 import { useWellImplementations } from 'src/wells/useWellImplementations';
@@ -81,6 +82,8 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
     setItems(data);
   }, [implementationAddress, pumpLookup, well, wellFunctionName, isMultiFlow]);
 
+  const { url: explorerUrl, address: explorerAddress } = useChainExplorer();
+
   return (
     <div>
       <Table width='100%'>
@@ -97,11 +100,11 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
               <Detail>{wellTokenDetail} Well</Detail>
             </Td>
             <DesktopTd align={'right'}>
-              <Link href={`https://arbiscan.io/address/${well.address}`}>{well.address}</Link>
+              <Link href={explorerAddress(well.address)}>{well.address}</Link>
             </DesktopTd>
             <MobileTd align={'right'}>
-              <Link href={`https://arbiscan.io/address/${well.address}`}>
-                {well.address.substr(0, 5) + '...' + well.address.substr(well.address.length - 5)}
+              <Link href={explorerAddress(well.address)}>
+                {well.address.slice(0, 5) + '...' + well.address.slice(well.address.length - 5)}
               </Link>
             </MobileTd>
           </Row>
@@ -110,11 +113,11 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
               <Detail>Well LP Token - {displayTokenSymbol(well.lpToken as Token)}</Detail>
             </Td>
             <DesktopTd align={'right'}>
-              <Link href={`https://arbiscan.io/address/${well.address}`}>{well.address}</Link>
+              <Link href={explorerAddress(well.address)}>{well.address}</Link>
             </DesktopTd>
             <MobileTd align={'right'}>
-              <Link href={`https://arbiscan.io/address/${well.address}`}>
-                {well.address.substr(0, 5) + '...' + well.address.substr(well.address.length - 5)}
+              <Link href={explorerAddress(well.address)}>
+                {well.address.slice(0, 5) + '...' + well.address.slice(well.address.length - 5)}
               </Link>
             </MobileTd>
           </Row>
@@ -126,7 +129,7 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
                 </Td>
                 <DesktopTd align='right'>
                   <Link
-                    href={token ? `https://arbiscan.io/address/${token.address}` : `https://arbiscan.io/`}
+                    href={token ? explorerAddress(token.address) : explorerUrl}
                     target='_blank'
                     rel='noopener noreferrer'
                   >
@@ -135,7 +138,7 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
                 </DesktopTd>
                 <MobileTd align={'right'}>
                   <Link
-                    href={token ? `https://arbiscan.io/address/${token.address}` : `https://arbiscan.io/`}
+                    href={token ? explorerAddress(token.address) : explorerUrl}
                     target='_blank'
                     rel='noopener noreferrer'
                   >

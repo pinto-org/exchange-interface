@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import styled from 'styled-components';
 
 import { ImageButton } from 'src/components/ImageButton';
-import { explorerName, explorerUrl } from 'src/utils/chain';
+import { useChainExplorer } from 'src/utils/chain';
 
 import { Copy, X } from '../Icons';
 import { BodyCaps, BodyS, LinksTextLink } from '../Typography';
@@ -31,14 +31,15 @@ export function ToastAlert({
   id?: any;
 }) {
   const handleClick = useCallback(() => (id !== null ? dismissErrors(id) : dismissErrors()), [id]);
+  const { url: explorerUrl, name: explorerName } = useChainExplorer();
 
   return (
     <Container>
       <Text>
         <Title>{desc}</Title>
         {hash && (
-          <Link href={`${explorerUrl()}/tx/${hash}`} target='_blank' rel='noreferrer'>
-            View on {explorerName()}
+          <Link href={`${explorerUrl}/tx/${hash}`} target='_blank' rel='noreferrer'>
+            View on {explorerName}
           </Link>
         )}
 

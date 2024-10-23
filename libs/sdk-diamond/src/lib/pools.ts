@@ -26,8 +26,8 @@ export class Pools {
     this.PINTO_ETH_WELL = new BasinWell(
       sdk,
       sdk.addresses.PINTOETH_WELL.get(sdk.chainId),
-      sdk.tokens.PINTO_WEETH_WELL_LP,
-      [sdk.tokens.PINTO, sdk.tokens.WEETH],
+      sdk.tokens.PINTO_ETH_WELL_LP,
+      [sdk.tokens.PINTO, sdk.tokens.WETH],
       {
         name: 'PINTO:ETH Well LP',
         logo: '',
@@ -44,30 +44,6 @@ export class Pools {
         name: 'PINTO:cbETH Well LP',
         logo: '',
         symbol: 'PINTO:cbETH',
-        color: '#ed9f9c'
-      }
-    );
-    this.PINTO_WSTETH_WELL = new BasinWell(
-      sdk,
-      sdk.addresses.PINTOWSTETH_WELL.get(sdk.chainId),
-      sdk.tokens.PINTO_WSTETH_WELL_LP,
-      [sdk.tokens.PINTO, sdk.tokens.WSTETH],
-      {
-        name: 'PINTO:wstETH Well LP',
-        logo: '',
-        symbol: 'BEAN:wstETH',
-        color: '#ed9f9c'
-      }
-    );
-    this.PINTO_WEETH_WELL = new BasinWell(
-      sdk,
-      sdk.addresses.PINTOWEETH_WELL.get(sdk.chainId),
-      sdk.tokens.PINTO_WEETH_WELL_LP,
-      [sdk.tokens.PINTO, sdk.tokens.WEETH],
-      {
-        name: 'PINTO:weETH Well LP',
-        logo: '',
-        symbol: 'PINTO:weETH',
         color: '#ed9f9c'
       }
     );
@@ -97,8 +73,6 @@ export class Pools {
     );
 
     wells.add(this.PINTO_ETH_WELL);
-    wells.add(this.PINTO_WSTETH_WELL);
-    wells.add(this.PINTO_WEETH_WELL);
     wells.add(this.PINTO_CBETH_WELL);
     wells.add(this.PINTO_CBBTC_WELL);
     wells.add(this.PINTO_USDC_WELL);

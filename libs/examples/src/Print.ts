@@ -64,6 +64,10 @@ class Logger {
     this.maxDepth = maxDepth;
   }
 
+  label(...args: any[]): void {
+    this.log(chalk.green(...args));
+  }
+
   shallow(...args: any[]): void {
     const processedArgs = args.map((arg) => {
       if (typeof arg === 'object' && arg !== null) {

@@ -10,26 +10,26 @@ describe("TestUtils", () => {
   beforeAll(async () => {
     await utils.resetFork();
   });
-  it("Hack DAI balance", async () => {
-    const DAI = sdk.tokens.DAI;
-    await utils.setDAIBalance(account, DAI.amount(30000));
+  it('Hack DAI balance', async () => {
+    const token = sdk.tokens.CBBTC;
+    await utils.setCBBTCBalance(account, token.amount(3));
     await pause(DELAY);
-    const bal = await DAI.getBalance(account);
-    expect(bal.toHuman()).toBe("30000");
+    const bal = await token.getBalance(account);
+    expect(bal.toHuman()).toBe('3');
   });
-  it("Hack USDC balance", async () => {
+  it('Hack USDC balance', async () => {
     const USDC = sdk.tokens.USDC;
     await utils.setUSDCBalance(account, USDC.amount(30000));
     await pause(DELAY);
     const bal = await USDC.getBalance(account);
-    expect(bal.toHuman()).toBe("30000");
+    expect(bal.toHuman()).toBe('30000');
   });
-  it("Hack USDT balance", async () => {
-    const USDT = sdk.tokens.USDT;
-    await utils.setUSDTBalance(account, USDT.amount(30000));
+  it('Hack USDT balance', async () => {
+    const token = sdk.tokens.CBETH;
+    await utils.setCBETHBalance(account, token.amount(30));
     await pause(DELAY);
-    const bal = await USDT.getBalance(account);
-    expect(bal.toHuman()).toBe("30000");
+    const bal = await token.getBalance(account);
+    expect(bal.toHuman()).toBe('30');
   });
   it("Hack WETH balance", async () => {
     const WETH = sdk.tokens.WETH;

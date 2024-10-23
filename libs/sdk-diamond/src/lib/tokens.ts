@@ -23,27 +23,17 @@ export class Tokens {
   private sdk: DiamondSDK;
 
   // Native
-  public readonly PINTO: ERC20Token;
+  public readonly ETH: NativeToken;
 
   // ERC-20
+  public readonly PINTO: ERC20Token;
   public readonly CBBTC: ERC20Token;
-
-  public readonly ETH: NativeToken;
   public readonly WETH: ERC20Token;
   public readonly CBETH: ERC20Token;
-  public readonly WSTETH: ERC20Token;
-  public readonly WEETH: ERC20Token;
-  public readonly RETH: ERC20Token;
-
   public readonly USDC: ERC20Token;
-  public readonly USDT: ERC20Token;
-  public readonly DAI: ERC20Token;
-  public readonly ZRO: ERC20Token;
 
   // Well LP
   public readonly PINTO_ETH_WELL_LP: ERC20Token;
-  public readonly PINTO_WSTETH_WELL_LP: ERC20Token;
-  public readonly PINTO_WEETH_WELL_LP: ERC20Token;
   public readonly PINTO_CBETH_WELL_LP: ERC20Token;
   public readonly PINTO_CBBTC_WELL_LP: ERC20Token;
   public readonly PINTO_USDC_WELL_LP: ERC20Token;
@@ -55,6 +45,7 @@ export class Tokens {
 
   public readonly tokens: Set<Token>;
 
+  public readonly wellUnderlying: Set<ERC20Token>;
   public readonly erc20Tokens: Set<ERC20Token>;
   public readonly balanceTokens: Set<Token>;
   public readonly systemTokens: Set<SystemToken>;
@@ -146,31 +137,6 @@ export class Tokens {
       },
       providerOrSigner
     );
-    this.PINTO_WSTETH_WELL_LP = new ERC20Token(
-      chainId,
-      addresses.PINTOWSTETH_WELL.get(chainId),
-      18,
-      'PINTOwstETH',
-      {
-        name: 'PINTO:wstETH LP',
-        displayName: 'PINTO:wstETH LP',
-        isLP: true
-      },
-      providerOrSigner
-    );
-    this.PINTO_WEETH_WELL_LP = new ERC20Token(
-      chainId,
-      addresses.PINTOWEETH_WELL.get(chainId),
-      18,
-      'PINTOweETH',
-      {
-        name: 'PINTO:weETH LP',
-        displayName: 'PINTO:weETH Well LP',
-        isLP: true,
-        displayDecimals: 2
-      },
-      providerOrSigner
-    );
     this.PINTO_CBETH_WELL_LP = new ERC20Token(
       chainId,
       addresses.PINTOCBETH_WELL.get(chainId),
@@ -212,13 +178,11 @@ export class Tokens {
     );
 
     map.set(getTokenIndex(this.PINTO_ETH_WELL_LP), this.PINTO_ETH_WELL_LP);
-    map.set(getTokenIndex(this.PINTO_WSTETH_WELL_LP), this.PINTO_WSTETH_WELL_LP);
-    map.set(getTokenIndex(this.PINTO_WEETH_WELL_LP), this.PINTO_WEETH_WELL_LP);
     map.set(getTokenIndex(this.PINTO_CBETH_WELL_LP), this.PINTO_CBETH_WELL_LP);
     map.set(getTokenIndex(this.PINTO_CBBTC_WELL_LP), this.PINTO_CBBTC_WELL_LP);
     map.set(getTokenIndex(this.PINTO_USDC_WELL_LP), this.PINTO_USDC_WELL_LP);
 
-    // ////////// Common ERC-20 Tokens //////////
+    // ////////// ERC-20 Tokens //////////
 
     // ---------- PINTO ----------
     this.PINTO = new ERC20Token(
@@ -280,48 +244,6 @@ export class Tokens {
     );
     map.set(getTokenIndex(this.CBETH), this.CBETH);
 
-    // weETH
-    this.WEETH = new ERC20Token(
-      chainId,
-      addresses.WEETH.get(chainId),
-      18,
-      'weETH',
-      {
-        name: 'Wrapped eETH',
-        displayDecimals: 4
-      },
-      providerOrSigner
-    );
-    map.set(getTokenIndex(this.WEETH), this.WEETH);
-
-    // wstETH
-    this.WSTETH = new ERC20Token(
-      chainId,
-      addresses.WSTETH.get(chainId),
-      18,
-      'wstETH',
-      {
-        name: 'Wrapped liquid staked Ether 2.0',
-        displayDecimals: 4
-      },
-      providerOrSigner
-    );
-    map.set(getTokenIndex(this.WSTETH), this.WSTETH);
-
-    // rETH
-    this.RETH = new ERC20Token(
-      chainId,
-      addresses.RETH.get(chainId),
-      18,
-      'rETH',
-      {
-        name: 'Rocket Pool ETH',
-        displayDecimals: 4
-      },
-      providerOrSigner
-    );
-    map.set(getTokenIndex(this.RETH), this.RETH);
-
     //////////// STABLECOINS ////////////
 
     // USDC
@@ -337,48 +259,6 @@ export class Tokens {
       providerOrSigner
     );
     map.set(getTokenIndex(this.USDC), this.USDC);
-
-    // USDT
-    this.USDT = new ERC20Token(
-      chainId,
-      addresses.USDT.get(chainId),
-      6,
-      'USDT',
-      {
-        name: 'Tether USD',
-        displayDecimals: 2
-      },
-      providerOrSigner
-    );
-    map.set(getTokenIndex(this.USDT), this.USDT);
-
-    // DAI
-    this.DAI = new ERC20Token(
-      chainId,
-      addresses.DAI.get(chainId),
-      18,
-      'DAI',
-      {
-        name: 'Dai Stablecoin',
-        displayDecimals: 4
-      },
-      providerOrSigner
-    );
-    map.set(getTokenIndex(this.DAI), this.DAI);
-
-    // ZRO
-    this.ZRO = new ERC20Token(
-      chainId,
-      addresses.ZRO.get(chainId),
-      18,
-      'ZRO',
-      {
-        name: 'LayerZero',
-        displayDecimals: 4
-      },
-      providerOrSigner
-    );
-    map.set(getTokenIndex(this.ZRO), this.ZRO);
 
     const balanceTokens = new Set<ERC20Token | NativeToken>();
     const erc20Tokens = new Set<ERC20Token>();
@@ -398,8 +278,6 @@ export class Tokens {
 
     const wellLP = [
       this.PINTO_ETH_WELL_LP,
-      this.PINTO_WSTETH_WELL_LP,
-      this.PINTO_WEETH_WELL_LP,
       this.PINTO_CBETH_WELL_LP,
       this.PINTO_CBBTC_WELL_LP,
       this.PINTO_USDC_WELL_LP
@@ -416,6 +294,7 @@ export class Tokens {
 
     this.erc20Tokens = erc20Tokens;
     this.balanceTokens = new Set([this.ETH, ...this.erc20Tokens]);
+    this.wellUnderlying = new Set([this.WETH, this.CBETH, this.CBBTC, this.USDC]);
   }
 
   getERC20(address: string) {
@@ -552,3 +431,88 @@ export class Tokens {
     return balances;
   }
 }
+
+
+
+// weETH
+// this.WEETH = new ERC20Token(
+//   chainId,
+//   addresses.WEETH.get(chainId),
+//   18,
+//   'weETH',
+//   {
+//     name: 'Wrapped eETH',
+//     displayDecimals: 4
+//   },
+//   providerOrSigner
+// );
+// map.set(getTokenIndex(this.WEETH), this.WEETH);
+
+// // wstETH
+// this.WSTETH = new ERC20Token(
+//   chainId,
+//   addresses.WSTETH.get(chainId),
+//   18,
+//   'wstETH',
+//   {
+//     name: 'Wrapped liquid staked Ether 2.0',
+//     displayDecimals: 4
+//   },
+//   providerOrSigner
+// );
+// map.set(getTokenIndex(this.WSTETH), this.WSTETH);
+
+// rETH
+// this.RETH = new ERC20Token(
+//   chainId,
+//   addresses.RETH.get(chainId),
+//   18,
+//   'rETH',
+//   {
+//     name: 'Rocket Pool ETH',
+//     displayDecimals: 4
+//   },
+//   providerOrSigner
+// );
+// map.set(getTokenIndex(this.RETH), this.RETH);
+// USDT
+// this.USDT = new ERC20Token(
+//   chainId,
+//   addresses.USDT.get(chainId),
+//   6,
+//   'USDT',
+//   {
+//     name: 'Tether USD',
+//     displayDecimals: 2
+//   },
+//   providerOrSigner
+// );
+// map.set(getTokenIndex(this.USDT), this.USDT);
+
+// DAI
+// this.DAI = new ERC20Token(
+//   chainId,
+//   addresses.DAI.get(chainId),
+//   18,
+//   'DAI',
+//   {
+//     name: 'Dai Stablecoin',
+//     displayDecimals: 4
+//   },
+//   providerOrSigner
+// );
+// map.set(getTokenIndex(this.DAI), this.DAI);
+
+// ZRO
+// this.ZRO = new ERC20Token(
+//   chainId,
+//   addresses.ZRO.get(chainId),
+//   18,
+//   'ZRO',
+//   {
+//     name: 'LayerZero',
+//     displayDecimals: 4
+//   },
+//   providerOrSigner
+// );
+// map.set(getTokenIndex(this.ZRO), this.ZRO);

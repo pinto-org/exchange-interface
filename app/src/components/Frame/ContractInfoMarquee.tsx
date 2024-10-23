@@ -3,8 +3,9 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { ExchangeSDK } from '@exchange/sdk';
+import { ChainId } from '@exchange/sdk-core';
 
-import { explorerUrl } from 'src/utils/chain';
+import { getChainExplorer } from 'src/utils/chain';
 
 type ContractMarqueeInfo = Record<string, { display: string; to?: string; url?: string }[]>;
 
@@ -12,7 +13,7 @@ const CarouselData: ContractMarqueeInfo = {
   ADDRESS: [
     {
       display: ExchangeSDK.addresses.AQUIFER.BASE_MAINNET,
-      url: `${explorerUrl()}/address/${ExchangeSDK.addresses.AQUIFER.BASE_MAINNET}`
+      url: getChainExplorer(ChainId.BASE_MAINNET).address(ExchangeSDK.addresses.AQUIFER.BASE_MAINNET)
     }
   ],
   AUDIT: [

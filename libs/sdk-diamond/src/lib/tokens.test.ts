@@ -77,7 +77,7 @@ describe('Function: getBalances', function () {
       sdk.tokens.CBETH
     ]);
     expect(result.has(sdk.tokens.PINTO)).toBe(true);
-    expect(result.has(sdk.tokens.DAI)).toBe(false);
+    expect(result.has(sdk.tokens.CBBTC)).toBe(false);
     expect(result.has(sdk.tokens.USDC)).toBe(true);
     expect(result.has(sdk.tokens.CBBTC)).toBe(true);
     expect(result.has(sdk.tokens.CBETH)).toBe(true);
