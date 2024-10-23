@@ -2,16 +2,6 @@
 
 interface ImportMetaEnv {
   /**
-   * aquifer address for arbitrum mainnet
-   */
-  readonly VITE_AQUIFER_ADDRESS_ARBITRUM: string;
-
-  /**
-   * aquifer address for eth mainnet
-   */
-  readonly VITE_AQUIFER_ADDRESS_ETH: string;
-
-  /**
    * API key for alchemy
    */
   readonly VITE_ALCHEMY_API_KEY: string;

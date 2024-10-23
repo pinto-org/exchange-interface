@@ -4,7 +4,7 @@
   "exclude": ["./src/generated/**/*", "dist"],
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "dist/wells",
+    "outDir": "dist/js",
     "declaration": true,
     "declarationDir": "dist/types",
     "isolatedModules": true,

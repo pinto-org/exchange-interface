@@ -60,9 +60,9 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "module": "./dist/wells/wells.esm.js",
-      "default": "./dist/wells/wells.cjs.js",
-      "browser": "./dist/wells/wells.umd.js"
+      "module": "./dist/sdk/sdk.esm.js",
+      "default": "./dist/sdk/sdk.cjs.js",
+      "browser": "./dist/sdk/sdk.umd.js"
     }
   }
 }

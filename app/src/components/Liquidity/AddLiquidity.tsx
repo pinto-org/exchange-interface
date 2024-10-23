@@ -20,10 +20,10 @@ import { useWellReserves } from 'src/wells/useWellReserves';
 import { ensureAllowance, hasMinimumAllowance } from './allowance';
 import QuoteDetails from './QuoteDetails';
 import { LIQUIDITY_OPERATION_TYPE, LiquidityAmounts } from './types';
-import { TokenInput } from '../../components/Swap/TokenInput';
 import { Log } from '../../utils/logger';
 import { Checkbox } from '../Checkbox';
 import { Button } from '../Swap/Button';
+import { TokenInput } from '../Swap/TokenInput';
 import { TransactionToast } from '../TxnToast/TransactionToast';
 
 type BaseAddLiquidityProps = {

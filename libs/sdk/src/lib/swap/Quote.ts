@@ -1,4 +1,4 @@
-import { Token, TokenValue } from '@exchange/sdk-core';
+import { ChainId, Token, TokenValue } from '@exchange/sdk-core';
 import { Route } from 'src/lib/routing';
 import { Direction, SwapStep } from 'src/lib/swap/SwapStep';
 import {
@@ -19,7 +19,7 @@ import { Clipboard } from 'src/lib/clipboard/clipboard';
 import { UnWrapEthStep } from './UnWrapStep';
 
 const DEFAULT_DEADLINE = 60 * 5; // in seconds
-const UNWRAP_AND_SEND_ETH = addresses.UNWRAP_AND_SEND_ETH.get(1);
+// const UNWRAP_AND_SEND_ETH = addresses.UNWRAP_AND_SEND_ETH.get(ChainId.BASE_MAINNET);
 
 export type QuotePrepareResult = {
   doSwap: (overrides?: TxOverrides) => Promise<ContractTransaction>;
@@ -242,7 +242,8 @@ export class Quote {
       let nextRecipient = steps[i + 1]?.well.contract.address ?? recipient;
 
       // If this is a swap that ends in ETH, we need to send the amount of the last swap (which should be WETH) to the Unwrap and Send ETH Junction
-      if (i === steps.length - 1 && this.toToken.symbol === 'ETH') nextRecipient = UNWRAP_AND_SEND_ETH;
+      if (i === steps.length - 1 && this.toToken.symbol === 'ETH')
+        nextRecipient = addresses.UNWRAP_AND_SEND_ETH.get(this.sdk.chainId);
 
       const { contract, method, parameters } = step.swapMany(nextRecipient, step.quoteResultWithSlippage!);
 
@@ -385,7 +386,8 @@ export class Quote {
       let nextRecipient = i === steps.length - 1 ? recipient : pipelineAddress;
 
       // If this is a swap that ends in ETH, we need to send the amount of the last swap (which should be WETH) to the Unwrap and Send ETH Junction
-      if (i === steps.length - 1 && this.toToken.symbol === 'ETH') nextRecipient = UNWRAP_AND_SEND_ETH;
+      if (i === steps.length - 1 && this.toToken.symbol === 'ETH')
+        nextRecipient = addresses.UNWRAP_AND_SEND_ETH.get(this.sdk.chainId);
 
       const amountWithSlippage = step.quoteResultWithSlippage!;
       const maxAmountOut = amountWithSlippage;

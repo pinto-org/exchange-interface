@@ -4,26 +4,10 @@ import { useAtom } from 'jotai';
 import { useChainId } from 'wagmi';
 
 import { Aquifer } from '@exchange/sdk';
-import { ChainResolver } from '@exchange/sdk-core';
 
 import useSdk from 'src/utils/sdk/useSdk';
 
 import { aquiferAtom } from '../atoms';
-
-const arbitrumAquiferAddress = import.meta.env.VITE_AQUIFER_ADDRESS_ARBITRUM as string;
-const ethereumAquiferAddress = import.meta.env.VITE_AQUIFER_ADDRESS_ETH as string;
-
-if (!arbitrumAquiferAddress) {
-  throw new Error('Missing Arbitrum Aquifer addresses env var');
-}
-
-if (!ethereumAquiferAddress) {
-  throw new Error('Missing Ethereum Aquifer addresses env var');
-}
-
-export const getAquiferAddress = (chainId: number) => {
-  return ChainResolver.isL2Chain(chainId) ? arbitrumAquiferAddress : ethereumAquiferAddress;
-};
 
 const useSetAquifer = () => {
   const [aquifer, setAquifer] = useAtom(aquiferAtom);
@@ -32,7 +16,7 @@ const useSetAquifer = () => {
   const chainId = useChainId();
 
   useEffect(() => {
-    const aquiferAddress = getAquiferAddress(chainId);
+    const aquiferAddress = sdk.addresses.AQUIFER.get(sdk.chainId);
     setAquifer(new Aquifer(sdk, aquiferAddress));
   }, [sdk, chainId, setAquifer]);
 

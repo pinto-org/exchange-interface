@@ -22,3 +22,4 @@ export { AddLiquidityETH } from './lib/liquidity/AddLiquidityETH';
 
 // Utils
 export { getTokenIndex, getTokenSymbolIndex } from './lib/utils';
+export * from './lib/Diamond';

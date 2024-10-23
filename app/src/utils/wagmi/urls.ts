@@ -8,8 +8,8 @@ if (!apiKey) {
 
 const RPC_URLS: Record<number, string> = {
   [ChainId.LOCALHOST]: 'http://localhost:8545',
-  [ChainId.BASE_MAINNET]: `https://base-mainnet.g.alchemy.com/v2/${apiKey}`,
-  [ChainId.TESTNET]: ''
+  [ChainId.BASE_MAINNET]: `https://base-mainnet.g.alchemy.com/v2/${apiKey}`
+  // [ChainId.TESTNET]: ''
 };
 
 export const getRpcUrl = (chainId: ChainId) => {

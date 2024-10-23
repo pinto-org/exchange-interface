@@ -27,7 +27,7 @@ export default config;
 
 function makeEntry(inputFile, name) {
   const outRoot = 'dist';
-  const typesPath = `./${outRoot}/types/${name === 'sdk' ? 'index' : name}.d.ts`;
+  const typesPath = `./${outRoot}/types/${name === 'diamond' ? 'index' : name}.d.ts`;
   const esmPath = `./${outRoot}/${name}/${name}.esm.js`;
   const cjsPath = `./${outRoot}/${name}/${name}.cjs.js`;
   const udmPath = `./${outRoot}/${name}/${name}.umd.js`;
@@ -62,7 +62,7 @@ function makeEntry(inputFile, name) {
   };
 
   pkg.exports = pkg.exports || {};
-  const key = name === 'dia' ? '.' : `./${name}`;
+  const key = name === 'diamond' ? '.' : `./${name}`;
   pkg.exports[key] = pkgExport;
 
   // Write back to package.json !!!!

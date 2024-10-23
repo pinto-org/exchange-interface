@@ -69,6 +69,8 @@ export class DiamondSDK {
 
     // Ecosystem
     this.swap = new Swap(this);
+
+    this.lastRefreshTimestamp = Date.now();
   }
 
   debug(...args: any[]) {

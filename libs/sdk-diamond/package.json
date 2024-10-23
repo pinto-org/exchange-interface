@@ -67,7 +67,7 @@
   },
   "packageManager": "yarn@4.1.0",
   "exports": {
-    "./diamond": {
+    ".": {
       "types": "./dist/types/diamond.d.ts",
       "module": "./dist/diamond/diamond.esm.js",
       "default": "./dist/diamond/diamond.cjs.js",

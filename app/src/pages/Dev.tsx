@@ -5,9 +5,9 @@ import toast from 'react-hot-toast';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
-import { ExchangeSDK } from '@exchange/sdk';
+import { ExchangeSDK, TestUtils } from '@exchange/sdk';
 import { Token, TokenValue } from '@exchange/sdk-core';
-import { TestUtils } from '@exchange/sdk-diamond';
+
 
 import { Page } from 'src/components/Page';
 import { Title } from 'src/components/PageComponents/Title';

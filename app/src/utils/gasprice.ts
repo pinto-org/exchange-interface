@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers';
 import { formatEther } from 'ethers/lib/utils.js';
 
-import { ExchangeSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk';
 
 import { getPrice } from './price/usePrice';
 

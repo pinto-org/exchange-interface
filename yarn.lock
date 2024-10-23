@@ -7734,6 +7734,7 @@ __metadata:
   dependencies:
     "@exchange/sdk": "workspace:*"
     "@exchange/sdk-core": "workspace:*"
+    "@exchange/sdk-diamond": "workspace:*"
     "@graphql-codegen/cli": "npm:3.2.2"
     "@graphql-codegen/client-preset": "npm:2.1.1"
     "@graphql-codegen/typescript-react-query": "npm:4.1.0"

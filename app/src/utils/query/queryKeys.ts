@@ -1,4 +1,4 @@
-import { ExchangeSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk';
 
 export const queryKeys = {
   // wells

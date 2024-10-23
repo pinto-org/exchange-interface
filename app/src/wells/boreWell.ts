@@ -1,8 +1,8 @@
 import { BigNumber, ethers } from 'ethers';
 
 import { Aquifer, WellFunction, Pump, Well, ExchangeSDK } from '@exchange/sdk';
+import { FarmFromMode, FarmToMode } from '@exchange/sdk';
 import { ERC20Token, TokenValue } from '@exchange/sdk-core';
-import { FarmFromMode, FarmToMode } from '@exchange/sdk-diamond';
 
 import { TransactionToast } from 'src/components/TxnToast/TransactionToast';
 import { getBytesHexString } from 'src/utils/bytes';

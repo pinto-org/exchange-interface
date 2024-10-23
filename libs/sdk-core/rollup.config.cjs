@@ -25,7 +25,7 @@ const config = [
   makeEntry('dist/js/Decimal.js', 'Decimal'),
   makeEntry('dist/js/TokenValue.js', 'TokenValue'),
   makeEntry('dist/js/Token.js', 'Token'),
-  makeEntry('dist/js/Address.js', 'Address'),
+  makeEntry('dist/js/Address.js', 'Address')
 ];
 
 export default config;

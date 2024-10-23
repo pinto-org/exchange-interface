@@ -33,6 +33,7 @@ export class ExchangeSDK {
   public readonly addresses: typeof addresses;
   public readonly tokens: DiamondSDK['tokens'];
   public readonly swapBuilder: SwapBuilder;
+  private readonly lastRefreshTimestamp: number;
 
   constructor(config?: SDKConfig) {
     this.handleConfig(config);
@@ -46,6 +47,7 @@ export class ExchangeSDK {
     // this.tokens = new Tokens(this);
 
     this.swapBuilder = new SwapBuilder(this);
+    this.lastRefreshTimestamp = Date.now();
   }
 
   /**
@@ -116,5 +118,33 @@ export class ExchangeSDK {
     const account = await this.signer.getAddress();
     if (!account) throw new Error('Failed to get account from signer');
     return account.toLowerCase();
+  }
+
+  /**
+   * This methods helps serialize the SDK object. When used in a react
+   * dependency array, the signer and provider objects have circular references
+   * which cause errors. This overrides the result and allows using the sdk
+   * in dependency arrays (which use .toJSON under the hood)
+   * @returns
+   */
+  toJSON() {
+    return {
+      chainId: this.chainId,
+      lastRefreshTimestamp: this.lastRefreshTimestamp,
+      provider: {
+        url: this.provider?.connection?.url,
+        network: this.provider?._network
+      },
+      signer: this.signer
+        ? {
+            provider: {
+              // @ts-ignore
+              network: this.signer?.provider?._network
+            },
+            // @ts-ignore
+            address: this.signer?._address
+          }
+        : undefined
+    };
   }
 }
