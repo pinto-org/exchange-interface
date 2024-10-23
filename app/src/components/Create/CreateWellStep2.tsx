@@ -267,7 +267,7 @@ const TokenAddressInputWithSearch = ({ path, setToken }: TokenAddressInputWithSe
   }, [counterFormErrMessage, formErrMessage, counterPath, clearErrors]);
 
   const options = useMemo(
-    () => [sdk.tokens.PINTO, sdk.tokens.DAI, sdk.tokens.USDC, sdk.tokens.USDT, sdk.tokens.WETH],
+    () => [sdk.tokens.PINTO, sdk.tokens.WETH, sdk.tokens.CBETH, sdk.tokens.CBBTC, sdk.tokens.USDC],
     [sdk]
   );
 

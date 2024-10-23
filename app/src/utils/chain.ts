@@ -49,7 +49,8 @@ export const chain2ExplorerName = (chainId: number) => {
   }
 };
 
-export const chain2ExplorerUrl = (chainId: number) => {
+export const chain2ExplorerUrl = (_chainId: number) => {
+  const chainId = ChainResolver.resolveToMainnetChainId(_chainId) as number;
   switch (chainId) {
     case ChainId.BASE_MAINNET:
       return 'https://basescan.org';
@@ -58,6 +59,6 @@ export const chain2ExplorerUrl = (chainId: number) => {
     case 1:
       return 'https://etherscan.io';
     default:
-      return 'https://basescan.io';
+      return 'https://basescan.org';
   }
 };

@@ -85,7 +85,7 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
             <InfoBox.Row>
               <InfoBox.Key>
                 <TooltipContainer>
-                  In the Beanstalk Silo
+                  In the Pinto Silo
                   <Tooltip
                     content={
                       <div className='tooltip-content'>
@@ -96,7 +96,7 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
                           target='_blank'
                           rel='noopener noreferrer'
                         >
-                          Beanstalk Silo
+                          Pinto Silo
                         </a>
                         &nbsp;for yield.
                       </div>
@@ -117,7 +117,7 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
             <InfoBox.Row>
               <InfoBox.Key>
                 <TooltipContainer>
-                  In my Beanstalk Farm Balance
+                  In my Pinto Farm Balance
                   <Tooltip
                     content={
                       <div className='tooltip-content'>
@@ -129,8 +129,8 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
                         >
                           Farm Balances
                         </a>
-                        &nbsp;allow Beanstalk users to hold assets in the protocol on their behalf. Using Farm Balances
-                        can reduce gas costs and facilitate efficient movement of assets within Beanstalk.
+                        &nbsp;allow Pinto users to hold assets in the protocol on their behalf. Using Farm Balances can
+                        reduce gas costs and facilitate efficient movement of assets within Pinto.
                       </div>
                     }
                     offsetX={-40}

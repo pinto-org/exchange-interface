@@ -18,7 +18,12 @@ import { fetchFromSubgraphRequest } from './subgraphFetch';
 type WellAddresses = string[];
 
 const WELL_BLACKLIST: Record<number, WellAddresses> = {
-  [ChainId.BASE_MAINNET]: []
+  [ChainId.BASE_MAINNET]: [
+    '0x9f708dcb228a77a24fc6bf907d2eeb26a7cd066e'.toLowerCase(), // PintoWETH duplicate
+    '0xed585572ae87a28115f1be294ac239f7ecde9c70'.toLowerCase(), // PintocbETH duplicate
+    '0x8515a8f4b38bd11df64083758d5a42ea4320d937'.toLowerCase(), // pintocbBTC duplicate
+    '0xafa2b82e7f0d41117a16c1c19e4a82f0e13b01e5'.toLowerCase() // pintousdc duplicate
+  ]
 };
 
 const loadFromChain = async (sdk: ExchangeSDK, aquifer: Aquifer): Promise<WellAddresses> => {
@@ -36,9 +41,9 @@ const loadFromChain = async (sdk: ExchangeSDK, aquifer: Aquifer): Promise<WellAd
     const addresses = events
       .map((e) => {
         const data = e.decode?.(e.data);
-        return data.well;
+        return data.well.toLowerCase();
       })
-      .filter((addr) => !blacklist.includes(addr.toLowerCase()));
+      .filter((addr) => !blacklist.includes(addr));
 
     return addresses;
   } catch (e) {
@@ -87,7 +92,10 @@ export const findWells = memoize(
     ]);
 
     const resultAddresses = result.map((r) => r.toLowerCase());
-    const addresses = new Set(resultAddresses);
+    const addresses = new Set([
+      ...resultAddresses,
+      ...[...sdk.diamondSDK.tokens.wellLP].map((t) => t.address.toLowerCase())
+    ]);
 
     // Remove empty string
     addresses.delete('');

@@ -32,7 +32,10 @@ export const Frame: FC<{}> = ({ children }) => {
           <BrandContainer onClick={() => setMobileMenuOpen(false)}>
             <Brand>
               <Link to={'/'}>
-                <Logo /> <BasinText>BASIN</BasinText>
+                <LogoContainer>
+                  <Logo />
+                </LogoContainer>
+                <BasinText>PINTO EXCHANGE</BasinText>
               </Link>
             </Brand>
           </BrandContainer>
@@ -227,6 +230,7 @@ const BrandContainer = styled.div`
 `;
 
 const BasinText = styled.div`
+  word-wrap: no-wrap;
   margin-bottom: -4px;
 `;
 
@@ -234,6 +238,8 @@ const Brand = styled.div`
   display: flex;
   flex-direction: row;
   padding-left: 16px;
+  max-width: 250px;
+  width: 100%;
 
   a {
     display: flex;
@@ -253,6 +259,13 @@ const Brand = styled.div`
     justify-self: flex-start;
     padding-left: 48px;
   }
+`;
+
+const LogoContainer = styled.div`
+  min-width: 24px;
+  min-height: 24px;
+  max-width: 24px;
+  max-height: 24px;
 `;
 
 const StyledConnectContainer = styled.div`

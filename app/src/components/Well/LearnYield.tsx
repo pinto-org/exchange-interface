@@ -17,14 +17,10 @@ function YieldDetails({ token }: Props) {
   return (
     <TextContainer>
       <div>
-        Liquidity providers can earn yield by depositing {token?.symbol} LP in the Beanstalk Silo. You can add liquidity
-        and deposit the LP token in the Silo in a single transaction on the{' '}
-        <StyledLink
-          href='https://app.bean.money/#/silo/0xbea0e11282e2bb5893bece110cf199501e872bad'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Beanstalk UI.
+        Liquidity providers can earn yield by depositing {token?.symbol} LP in the Pinto Silo. You can add liquidity and
+        deposit the LP token in the Silo in a single transaction on the{' '}
+        <StyledLink href='https://app.pinto.money/#/silo' target='_blank' rel='noopener noreferrer'>
+          Pinto UI.
         </StyledLink>
       </div>
     </TextContainer>

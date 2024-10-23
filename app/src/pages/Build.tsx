@@ -68,7 +68,7 @@ const ActionBanner = styled(Flex).attrs({
 const NavigateButton = styled(ButtonPrimary)`
   white-space: nowrap;
 
-  /* ${theme.media.query.sm.only} { */
+  ${theme.media.query.sm.only} {
   @media (max-width: 500px) {
     align-self: flex-end;
     width: 100%;

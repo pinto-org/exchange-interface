@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 
 import { ChainId } from '@exchange/sdk-core';
 
-import BeanstalkFarmsLogo from 'src/assets/images/beanstalk-farms.png';
-import BrendanTwitterPFP from 'src/assets/images/brendan-twitter-pfp.png';
 import ClockIcon from 'src/assets/images/clock-icon.svg';
 import Code4renaLogo from 'src/assets/images/code4rena-logo.png';
 import CyrfinLogo from 'src/assets/images/cyrfin-logo.svg';
@@ -98,7 +96,6 @@ const WellDotSol: WellComponentInfo = {
     url: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/Well.sol'
   },
   info: [
-    { label: 'Deployed By', value: 'Beanstalk Farms', imgSrc: BeanstalkFarmsLogo },
     { label: 'Block Deployed', value: '17977943' },
     { label: 'Audited by', value: basinAuditInfo }
   ],
@@ -125,12 +122,6 @@ const MultiFlowPump: WellComponentInfo = {
     }
   },
   info: [
-    {
-      label: 'Deployed By',
-      value: 'Brendan Sanderson',
-      imgSrc: BrendanTwitterPFP,
-      url: 'https://github.com/BrendanSanderson'
-    },
     { label: 'Deployed Block', value: '17977942' },
     { label: 'Audited by', value: basinAuditInfo }
   ],
@@ -155,7 +146,6 @@ const ConstantProduct2: WellComponentInfo = {
     usedBy: 0
   },
   info: [
-    { label: 'Deployed By', value: 'Beanstalk Farms', imgSrc: BeanstalkFarmsLogo },
     { label: 'Deployed Block', value: '17977906' },
     { label: 'Audited by', value: basinAuditInfo }
   ],

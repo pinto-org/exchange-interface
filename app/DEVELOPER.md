@@ -10,7 +10,7 @@ We're making heavy use of [React Query](https://tanstack.com/query/v4/docs/react
 
 Wagmi doesn't immediately read the status from metamask, which means the site first loads with wagmi in an unconnected, no user, no network, nothing known state. Then, it enters a known state of either connected or not. If WAGMI is not connected, we use a default provider so the site is still functional in a read-only mode; you can run quotes and list wells, etc... Once a wallet is connected, WAGMI updates again with the user data. So WAGMI goes from LOADIN > UNCONNECTED > CONNECTED (or directly to CONNECTED if use has previously connected).
 
-The Beanstalk SDK needs a provider or a signer to be initialized, so because of WAGMI, it too gets initialized first with a default provider, aka readonly, then with a signer once wagmi is connected.
+The Exchange SDK needs a provider or a signer to be initialized, so because of WAGMI, it too gets initialized first with a default provider, aka readonly, then with a signer once wagmi is connected.
 
 It's important to keep this in mind, because there are SDK components that can work with EITHER a provider or a signer, in a readonly or read and write mode. For example:
 

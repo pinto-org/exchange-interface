@@ -84,6 +84,8 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
 
   const { url: explorerUrl, address: explorerAddress } = useChainExplorer();
 
+  console.log(well);
+
   return (
     <div>
       <Table width='100%'>
@@ -155,11 +157,11 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
                   <Detail>{tableItem.name}</Detail>
                 </Td>
                 <DesktopTd align={'right'}>
-                  <Link href={`https://arbiscan.io/address/${tableItem.address}`}>{tableItem.address}</Link>
+                  <Link href={explorerAddress(tableItem.address)}>{tableItem.address}</Link>
                 </DesktopTd>
                 <MobileTd align={'right'}>
-                  <Link href={`https://arbiscan.io/address/${tableItem.address}`}>
-                    {tableItem.address.substr(0, 5) + '...' + tableItem.address.substr(tableItem.address.length - 5)}
+                  <Link href={explorerAddress(tableItem.address)}>
+                    {tableItem.address.slice(0, 5) + '...' + tableItem.address.slice(tableItem.address.length - 5)}
                   </Link>
                 </MobileTd>
               </Row>

@@ -5,9 +5,8 @@ import toast from 'react-hot-toast';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
-import { ExchangeSDK, TestUtils } from '@exchange/sdk';
+import { ExchangeSDK, getTokenIndex, TestUtils } from '@exchange/sdk';
 import { Token, TokenValue } from '@exchange/sdk-core';
-
 
 import { Flex } from 'src/components/Layout';
 import { Page } from 'src/components/Page';
@@ -77,7 +76,7 @@ export const Dev = () => {
   };
 
   for (let token of tokens) {
-    if (!sdk.tokens.findByAddress(token.address)) {
+    if (!sdk.tokens.findByAddress(getTokenIndex(token))) {
       continue;
     }
     rows.push(

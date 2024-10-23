@@ -1,11 +1,5 @@
 import * as React from 'react';
 
-import { ChainResolver } from '@exchange/sdk-core';
-
-import useSdk from 'src/utils/sdk/useSdk';
-
-import { TokenLogo } from './TokenLogo';
-
 export type SVGProps = {
   color?: string;
   width?: number;
@@ -52,13 +46,6 @@ export const Github = ({ color = '#000', width, height }: SVGProps) => (
 );
 
 export const ChainExplorerIcon = ({ color = '#000', width, height }: SVGProps) => {
-  const sdk = useSdk();
-
-  if (ChainResolver.isL2Chain(sdk.chainId)) {
-    // PINTOTODO: Add BASE icon
-    return <TokenLogo token={sdk.tokens.ETH} size={width || height || 16} />;
-  }
-
   return <Etherscan color={color} width={width} height={height} />;
 };
 

@@ -27,7 +27,7 @@ const getSDK = (provider?: JsonRpcProvider, signer?: Signer, chainId?: number) =
   return sdk;
 };
 
-function BeanstalkSdkSetter({ children }: { children: React.ReactNode }) {
+function SdkSetter({ children }: { children: React.ReactNode }) {
   const signer = useEthersSigner();
   const provider = useEthersProvider();
   const chainId = provider.network.chainId;
@@ -53,6 +53,6 @@ function BeanstalkSdkSetter({ children }: { children: React.ReactNode }) {
 
 export const SdkProvider = React.memo(({ children }: { children: React.ReactNode }) => (
   <>
-    <BeanstalkSdkSetter>{children}</BeanstalkSdkSetter>
+    <SdkSetter>{children}</SdkSetter>
   </>
 ));

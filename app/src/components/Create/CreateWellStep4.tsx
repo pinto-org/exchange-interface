@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Control, Controller, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAccount } from 'wagmi';
+import { useAccount, useChainId } from 'wagmi';
 
 import { ERC20Token, TokenValue } from '@exchange/sdk-core';
 
@@ -13,6 +13,7 @@ import { SelectCard } from 'src/components/Selectable';
 import { TokenInput } from 'src/components/Swap/TokenInput';
 import { Text } from 'src/components/Typography';
 import { useTokenAllowance } from 'src/tokens/useTokenAllowance';
+import { useSdkChainId } from 'src/utils/chain';
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useInvalidateQueries } from 'src/utils/query/useInvalidateQueries';
 import useSdk from 'src/utils/sdk/useSdk';
@@ -48,6 +49,7 @@ const FormContent = ({ token1, token2, salt, liquidity, deploying, setStep4, dep
   const [deployedWellAddress, setDeployedWellAddress] = useState<string>('');
   const [deployErr, setDeployErr] = useState<Error | undefined>();
   const navigate = useNavigate();
+  const chainId = useSdkChainId();
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -102,7 +104,7 @@ const FormContent = ({ token1, token2, salt, liquidity, deploying, setStep4, dep
     const result = await deployWell(saltValue, liquidity);
     if ('wellAddress' in result) {
       setDeployedWellAddress(result.wellAddress);
-      navigate(`/wells/${result.wellAddress}`);
+      navigate(`/wells/${chainId}/${result.wellAddress}`);
     } else {
       setDeployErr(result);
     }

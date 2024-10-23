@@ -1,12 +1,12 @@
 <img src="https://github.com/BeanstalkFarms/Beanstalk-Brand-Assets/blob/main/BEAN/bean-128x128.png" alt="Beanstalk logo" align="right" width="120" />
 
-# Beanstalk SDK
+# Exchange-pinto SDK
 
-This is a JavaScript SDK for the [ExchangeSDK](https://pinto.money/) web app.
+This is a JavaScript SDK for the [Exchange-pinto](https://pinto.money/) web app.
 
-The current version of the Beanstalk SDK is considered a beta release. The codebase is novel and has not been tested in the "real world" prior to use by Root and Paradox. Use of the Beanstalk SDK could result in loss of funds, whether due to bugs or misuse.
+The current version of the Exchange-pinto SDK is considered a beta release. The codebase is novel and has not been tested in the "real world" prior to use by Root and Paradox. Use of the Exchange-pinto SDK could result in loss of funds, whether due to bugs or misuse.
 
-The SDK is dependent on Beanstalk, and therefore inherits all of the risks associated with Beanstalk. The security of Beanstalk is assumed. For an exhaustive list, consult the [Beanstalk whitepaper](https://bean.money/docs/beanstalk.pdf) and [Beanstalk DAO Disclosures](https://docs.bean.money/disclosures).
+The SDK is dependent on Exchange-pinto, and therefore inherits all of the risks associated with Exchange-pinto. The security of Exchange-pinto is assumed. For an exhaustive list, consult the [Pinto whitepaper](https://pinto.money/docs/exchange-pinto.pdf) and [Exchange-pinto DAO Disclosures](https://docs.pinto.money/).
 
 ## Using the SDK
 
@@ -31,11 +31,6 @@ const options = {
   // rpcUrl
   rpcUrl,
 
-  // Data source for balances. Optional, either
-  //  - DataSource.LEDGER (default)
-  //  - DataSource.SUBGRAPH
-  source,
-
   // bool, print debug output. default `false`
   DEBUG
 };
@@ -51,16 +46,15 @@ The following objects are available for import from the library:
 
 ```javascript
 import {
-  BeanstalkSDK,
+  ExchangeSDK,
   Utils,
   TokenValue
   Token,
   NativeToken,
-  ERC20Token,
-  BeanstalkToken,
+  ERC20Token,,
   Address,
   ChainID
-} from "@beanstalk/sdk";
+} from "@exchange/sdk";
 ```
 
 ## Example
@@ -85,6 +79,3 @@ const txr = await swap.execute(amount, slippage);
 await txr.wait();
 ```
 
-## API Docs
-
-View full API [documentation](https://github.com/BeanstalkFarms/Beanstalk-SDK/blob/main/docs/README.md)
