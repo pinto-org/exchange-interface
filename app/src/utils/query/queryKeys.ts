@@ -1,8 +1,8 @@
-import { WellsSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk-wells';
 
 export const queryKeys = {
   // wells
-  wells: (sdk: WellsSDK) => ['wells', sdk.toJSON().provider.url],
+  wells: (sdk: ExchangeSDK) => ['wells', sdk.toJSON().provider.url],
   wellTokens: ['wells', 'tokens'],
 
   erc20TokenWithAddress: (address: string) => ['token', 'erc20', address],

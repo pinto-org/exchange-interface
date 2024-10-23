@@ -1,6 +1,6 @@
 import { ChainId, TokenValue } from '@exchange/sdk-core';
 import { ChainResolver } from '@exchange/sdk-core';
-import { WellsSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk-wells';
 
 import { PriceContract__factory } from 'src/generated/types';
 import { memoize } from 'src/utils/memoize';
@@ -46,7 +46,7 @@ const FEEDS: Record<number, Record<string, string>> = {
 
 type FeedId = keyof (typeof FEEDS)[keyof typeof FEEDS];
 
-const chainlinkLookup = (feed: FeedId) => async (sdk: WellsSDK) => {
+const chainlinkLookup = (feed: FeedId) => async (sdk: ExchangeSDK) => {
   const chainId = ChainResolver.resolveToMainnetChainId(sdk.chainId);
   const chainFeed = FEEDS[chainId];
   const address = chainFeed[feed as unknown as keyof typeof chainFeed];
@@ -62,7 +62,7 @@ const chainlinkLookup = (feed: FeedId) => async (sdk: WellsSDK) => {
   return TokenValue.fromBlockchain(answer, decimals);
 };
 
-const multiChainlinkLookup = (from: FeedId, to: FeedId) => async (sdk: WellsSDK) => {
+const multiChainlinkLookup = (from: FeedId, to: FeedId) => async (sdk: ExchangeSDK) => {
   const [fromPrice, toPrice] = await Promise.all([chainlinkLookup(from)(sdk), chainlinkLookup(to)(sdk)]);
 
   if (fromPrice && toPrice) {
@@ -73,14 +73,14 @@ const multiChainlinkLookup = (from: FeedId, to: FeedId) => async (sdk: WellsSDK)
 };
 
 const chainLinkWithCallback =
-  (from: FeedId, getMultiplier: (sdk: WellsSDK) => Promise<(value: TokenValue) => TokenValue>) =>
-  async (sdk: WellsSDK) => {
+  (from: FeedId, getMultiplier: (sdk: ExchangeSDK) => Promise<(value: TokenValue) => TokenValue>) =>
+  async (sdk: ExchangeSDK) => {
     const [fromPrice, calculate] = await Promise.all([chainlinkLookup(from)(sdk), getMultiplier(sdk)]);
 
     return calculate(fromPrice || TokenValue.ZERO);
   };
 
-const getWstETHWithSteth = async (sdk: WellsSDK) => {
+const getWstETHWithSteth = async (sdk: ExchangeSDK) => {
   const amt = sdk.tokens.STETH.fromHuman('1');
   const divisor = await sdk.contracts.lido.wsteth.getWstETHByStETH(amt.toBigNumber());
 
@@ -93,12 +93,12 @@ const getWstETHWithSteth = async (sdk: WellsSDK) => {
   };
 };
 
-const BEAN = async (sdk: WellsSDK) => {
+const BEAN = async (sdk: ExchangeSDK) => {
   Log.module('price').debug('Fetching BEAN price');
   return sdk.pinto.getPrice();
 };
 
-const WSTETH = async (sdk: WellsSDK) => {
+const WSTETH = async (sdk: ExchangeSDK) => {
   const chainId = ChainResolver.resolveToMainnetChainId(sdk.chainId);
   if (!ChainResolver.isL2Chain(chainId)) {
     return chainLinkWithCallback('STETH_USD', getWstETHWithSteth)(sdk);
@@ -106,7 +106,7 @@ const WSTETH = async (sdk: WellsSDK) => {
   return multiChainlinkLookup('wstETH_ETH', 'ETH_USD')(sdk);
 };
 
-const WBTC = async (sdk: WellsSDK) => {
+const WBTC = async (sdk: ExchangeSDK) => {
   const chainId = ChainResolver.resolveToMainnetChainId(sdk.chainId);
   if (!ChainResolver.isL2Chain(chainId)) {
     return multiChainlinkLookup('WBTC_BTC', 'BTC_USD')(sdk);
@@ -118,7 +118,7 @@ const WBTC = async (sdk: WellsSDK) => {
 const PRICE_EXPIRY_TIMEOUT = 60 * 5; // 5 minute cache
 
 // cache should automatically update when sdk instance is updated
-export const PriceLookups: Record<string, (sdk: WellsSDK) => Promise<TokenValue>> = {
+export const PriceLookups: Record<string, (sdk: ExchangeSDK) => Promise<TokenValue>> = {
   BEAN: memoize(BEAN, PRICE_EXPIRY_TIMEOUT),
   ETH: memoize(chainlinkLookup('ETH_USD')),
   WETH: memoize(chainlinkLookup('ETH_USD'), PRICE_EXPIRY_TIMEOUT),

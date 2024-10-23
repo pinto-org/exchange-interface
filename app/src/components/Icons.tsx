@@ -55,7 +55,8 @@ export const ChainExplorerIcon = ({ color = '#000', width, height }: SVGProps) =
   const sdk = useSdk();
 
   if (ChainResolver.isL2Chain(sdk.chainId)) {
-    return <TokenLogo token={sdk.tokens.ARB} size={width || height || 16} />;
+    // PINTOTODO: Add BASE icon
+    return <TokenLogo token={sdk.tokens.ETH} size={width || height || 16} />;
   }
 
   return <Etherscan color={color} width={width} height={height} />;

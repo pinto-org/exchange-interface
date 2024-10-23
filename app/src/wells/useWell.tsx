@@ -9,11 +9,7 @@ export const useWell = (address: string) => {
 
   const { data, isLoading, error } = useChainScopedQuery({
     queryKey: ['well', sdk, address],
-
-    queryFn: async () => {
-      return sdk.wells.getWell(address);
-    },
-
+    queryFn: () => sdk.getWell(address),
     placeholderData: () => {
       const cachedWell = getQueryData<Well[]>(['wells', !!sdk.signer])?.find((well) => well.address === address);
       return cachedWell;

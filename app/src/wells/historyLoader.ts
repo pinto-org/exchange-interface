@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers';
 import isEqual from 'lodash/isEqual';
 
-import { Well, WellsSDK } from '@exchange/sdk-wells';
+import { Well, ExchangeSDK } from '@exchange/sdk-wells';
 
 import { GetWellEventsDocument } from 'src/generated/graph/graphql';
 import { Settings } from 'src/settings';
@@ -15,7 +15,7 @@ const HISTORY_DAYS_AGO_BLOCK_TIMESTAMP = Math.floor(
   new Date(Date.now() - HISTORY_DAYS * 24 * 60 * 60 * 1000).getTime() / 1000
 );
 
-const loadFromChain = async (sdk: WellsSDK, well: Well): Promise<any[]> => {
+const loadFromChain = async (sdk: ExchangeSDK, well: Well): Promise<any[]> => {
   Log.module('history').debug('Loading history from blockchain');
   const contract = well.contract;
   const swapFilter = contract.filters.Swap();
@@ -117,7 +117,7 @@ const loadFromChain = async (sdk: WellsSDK, well: Well): Promise<any[]> => {
   });
 };
 
-const loadFromGraph = async (sdk: WellsSDK, well: Well) => {
+const loadFromGraph = async (sdk: ExchangeSDK, well: Well) => {
   Log.module('history').debug('Loading history from Graph');
 
   if (!well.lpToken) await well.getLPToken();
@@ -192,7 +192,7 @@ const sortEventsDescByTimestamp = (a: any, b: any) => {
  *
  * In production, use the Graph but failover to blockchain if there's an error
  */
-export const loadHistory = async (sdk: WellsSDK, well: Well): Promise<WellEvent[]> => {
+export const loadHistory = async (sdk: ExchangeSDK, well: Well): Promise<WellEvent[]> => {
   if (import.meta.env.DEV && !Settings.LOAD_HISTORY_FROM_GRAPH) {
     return loadFromChain(sdk, well);
   }

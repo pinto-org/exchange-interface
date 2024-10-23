@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import BEANSTALK_ABI from '@exchange/protocol/abi/Beanstalk.json';
 import { multicall } from '@wagmi/core';
 import { BigNumber } from 'ethers';
-import { ContractFunctionParameters, ContractFunctionParameters, erc20Abi } from 'viem';
+import { ContractFunctionParameters, erc20Abi } from 'viem';
 import { useAccount } from 'wagmi';
 
 import { Token, TokenValue } from '@exchange/sdk-core';
@@ -29,6 +28,33 @@ export type LPBalanceSummary = {
 
 type TokenMap<T> = { [tokenSymbol: string]: T };
 
+const INTERNAL_BALANCE_ABI = [
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address'
+      },
+      {
+        internalType: 'contract IERC20',
+        name: 'token',
+        type: 'address'
+      }
+    ],
+    name: 'getInternalBalance',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'balance',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  }
+] as const;
+
 /**
  * Contract calls to fetch internal & external balances
  * Only fetch balances for wells with a defined LP Token
@@ -42,14 +68,14 @@ const makeMultiCall = (sdk: WellsSDK, lpTokens: Token[], account: `0x${string}` 
 
   for (const t of lpTokens) {
     contractCalls.push({
-      address: t.address as `0x{string}`,
+      address: t.address as `0x${string}`,
       abi: erc20Abi,
       functionName: 'balanceOf',
       args: [account]
     });
     contractCalls.push({
-      address: sdk.contracts.beanstalk.address as `0x{string}`,
-      abi: BEANSTALK_ABI as Readonly<ContractFunctionParameters['abi']>,
+      address: WellsSDK.addresses.PINTO_DIAMOND.BASE_MAINNET as `0x${string}`,
+      abi: INTERNAL_BALANCE_ABI as Readonly<ContractFunctionParameters['abi']>,
       functionName: 'getInternalBalance',
       args: [account, t.address]
     });

@@ -1,5 +1,5 @@
 import { TokenValue } from '@exchange/sdk-core';
-import { WellsSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk-wells';
 
 import { BeanstalkSiloLatestApyDocument } from 'src/generated/graph/graphql';
 import { Log } from 'src/utils/logger';
@@ -25,7 +25,7 @@ const normalise = (data: string | number) => {
 };
 
 // BS3TODO: use correct subgraph
-const fetchAPYFromSubgraph = async (sdk: WellsSDK) => {
+const fetchAPYFromSubgraph = async (sdk: ExchangeSDK) => {
   Log.module('SiloAPYData').debug('Loading APY data from Graph');
   const fetch = await fetchFromSubgraphRequest(BeanstalkSiloLatestApyDocument, undefined, sdk.chainId, {
     useBeanstalkSubgraph: true
@@ -64,6 +64,6 @@ const fetchAPYFromSubgraph = async (sdk: WellsSDK) => {
   return result;
 };
 
-export const loadSiloAPYData = async (sdk: WellsSDK) => {
+export const loadSiloAPYData = async (sdk: ExchangeSDK) => {
   return fetchAPYFromSubgraph(sdk);
 };

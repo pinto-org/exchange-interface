@@ -1,11 +1,11 @@
 import { BigNumber } from 'ethers';
 import { formatEther } from 'ethers/lib/utils.js';
 
-import { WellsSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk-wells';
 
 import { getPrice } from './price/usePrice';
 
-export const getGasInUsd = async (sdk: WellsSDK, value: BigNumber) => {
+export const getGasInUsd = async (sdk: ExchangeSDK, value: BigNumber) => {
   const feeData = await sdk.provider.getFeeData();
   const ethPrice = await getPrice(sdk.tokens.ETH, sdk);
 

@@ -1,10 +1,10 @@
 import { useAtomValue } from 'jotai';
 
-import { WellsSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk-wells';
 
 import { sdkAtom } from 'src/state/atoms';
 
-export default function useSdk(): WellsSDK {
+export default function useSdk(): ExchangeSDK {
   const sdk = useAtomValue(sdkAtom);
   if (!sdk) {
     throw new Error('Expected sdk to be used within BeanstalkSDK context');

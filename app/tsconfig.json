@@ -2,13 +2,18 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
+    "lib": ["dom", "dom.iterable", "ESNext"],
+    "types": ["vite/client"],
+    "module": "esnext",
     "noEmit": true,
     "declaration": false,
     "declarationMap": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
     "paths": {
       "src/*": ["./src/*"]
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/generated"]
 }

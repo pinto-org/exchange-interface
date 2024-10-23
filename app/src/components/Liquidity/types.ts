@@ -1,4 +1,4 @@
-import { TokenValue } from '@beanstalk/sdk';
+import { TokenValue } from '@exchange/sdk-core';
 
 export enum REMOVE_LIQUIDITY_MODE {
   Balanced,

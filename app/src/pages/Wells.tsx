@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { TokenValue } from '@exchange/sdk-core';
-import { Well, WellsSDK, WellsSDK } from '@exchange/sdk-wells';
+import { Well, WellsSDK } from '@exchange/sdk-wells';
 
 import { mediaQuery, size } from 'src/breakpoints';
 import { Error } from 'src/components/Error';

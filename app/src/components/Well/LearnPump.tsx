@@ -14,7 +14,7 @@ type Props = {
 };
 
 function PumpDetails({ well }: Props) {
-  const { isMultiFlow, isV1_1 } = useIsMultiFlowPump(well);
+  const { isMultiFlow } = useIsMultiFlowPump(well);
 
   return (
     <TextContainer>
@@ -26,7 +26,7 @@ function PumpDetails({ well }: Props) {
         <div>
           The{' '}
           <StyledLink href='https://basin.exchange/multi-flow-pump.pdf' target='_blank' rel='noopener'>
-            {`Multi Flow Pump${isV1_1 ? ' v1.1' : ''}`}
+            Multi Flow Pumpv1.1
           </StyledLink>{' '}
           is attached to {well?.tokens ? `the ${formatWellTokenSymbols(well)} Well` : 'this well'}.
         </div>

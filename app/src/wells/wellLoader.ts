@@ -4,7 +4,7 @@ import memoize from 'lodash/memoize';
 import { Abi, ContractFunctionParameters, erc20Abi } from 'viem';
 
 import { ChainResolver, ERC20Token, ChainId } from '@exchange/sdk-core';
-import { Aquifer, Well, WellsSDK } from '@exchange/sdk-wells';
+import { Aquifer, Well, ExchangeSDK } from '@exchange/sdk-wells';
 
 import { GetWellAddressesDocument } from 'src/generated/graph/graphql';
 import { Settings } from 'src/settings';
@@ -21,7 +21,7 @@ const WELL_BLACKLIST: Record<number, WellAddresses> = {
   [ChainId.BASE_MAINNET]: []
 };
 
-const loadFromChain = async (sdk: WellsSDK, aquifer: Aquifer): Promise<WellAddresses> => {
+const loadFromChain = async (sdk: ExchangeSDK, aquifer: Aquifer): Promise<WellAddresses> => {
   try {
     const chainId = ChainResolver.resolveToMainnetChainId(sdk.chainId);
 
@@ -62,7 +62,7 @@ const loadFromGraph = async (_chainId: ChainId): Promise<WellAddresses> => {
 // ---------- Fetch Well Addresses ----------
 
 export const findWells = memoize(
-  async (sdk: WellsSDK, aquifer: Aquifer): Promise<WellAddresses> => {
+  async (sdk: ExchangeSDK, aquifer: Aquifer): Promise<WellAddresses> => {
     const result = await Promise.any([
       loadFromChain(sdk, aquifer)
         .then((res) => {
@@ -107,7 +107,7 @@ export const findWells = memoize(
 
 const MAX_PER_CALL = 21;
 
-export const fetchWellsWithAddresses = async (sdk: WellsSDK, addresses: string[]) => {
+export const fetchWellsWithAddresses = async (sdk: ExchangeSDK, addresses: string[]) => {
   const toLower = addresses.map((a) => a.toLowerCase());
   const wellAddresses = new Set([...toLower]);
 
@@ -178,7 +178,7 @@ type WellsMultiCallResult = [
 
 type WellContractCall = ContractFunctionParameters<typeof wellsABI>;
 
-const fetchWellsWithMulticall = async (sdk: WellsSDK, wellAddresses: string[]) => {
+const fetchWellsWithMulticall = async (sdk: ExchangeSDK, wellAddresses: string[]) => {
   const tokensToFetch = new Set([...wellAddresses]);
   const wellCalls = makeWellContractCalls(wellAddresses);
 
@@ -195,7 +195,7 @@ const fetchWellsWithMulticall = async (sdk: WellsSDK, wellAddresses: string[]) =
       if (!data?.data) return;
 
       const wellDatas = data.data[1];
-      // If token is not defined in WellsSDK. We need to fetch it from on Chain.
+      // If token is not defined in ExchangeSDK. We need to fetch it from on Chain.
       for (const token of wellDatas[0]) {
         if (sdk.tokens.erc20Tokens.has(token.toLowerCase())) continue;
         tokensToFetch.add(token.toLowerCase());
@@ -252,7 +252,7 @@ type StandardERC20Call = ContractFunctionParameters<typeof standardErc20Abi>;
 type NonStandardERC20Call = ContractFunctionParameters<typeof nonStandardERC20ABI>;
 
 const fetchTokensWithMulticall = async (
-  sdk: WellsSDK,
+  sdk: ExchangeSDK,
   tokenAddresses: string[],
   wellAddresses: Set<string>,
   refetchFailed: boolean = false

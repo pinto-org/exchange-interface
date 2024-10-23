@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Pump } from '@beanstalk/sdk-wells';
+import { Pump } from '@exchange/sdk-wells';
 
 import { useWells } from 'src/wells/useWells';
 

@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { multicall } from '@wagmi/core';
 import { BigNumber } from 'ethers';
 
-import { WellsSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk-wells';
 import { WellFunction } from '@exchange/sdk-wells';
 
 import { queryKeys } from 'src/utils/query/queryKeys';
@@ -43,7 +43,7 @@ const getWellFunctionCalls = (wellFunction: WellFunction) => {
 };
 
 const validateWellFunction = async (
-  sdk: WellsSDK,
+  sdk: ExchangeSDK,
   knownWellFunctions: WellFunction[],
   params: { address?: string; data?: string; wellFunction?: WellFunction }
 ) => {

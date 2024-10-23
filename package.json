@@ -11,12 +11,14 @@
     "libs/*"
   ],
   "scripts": {
-    "sdks:generate": "yarn core:generate && yarn sdk-wells:generate",
+    "sdks:generate": "yarn core:generate && yarn sdk:generate",
+    "pinto:generate": "yarn workspace @exchange/sdk-pinto generate",
     "core:generate": "yarn workspace @exchange/sdk-core generate",
-    "wells:generate": "yarn workspace @exchange/sdk-wells generate",
+    "sdk:generate": "yarn workspace @exchange/sdk generate",
     "core:build": "yarn workspace @exchange/sdk-core build",
-    "wells:build": "yarn workspace @exchange/sdk-wells build",
-    "sdks:build": "yarn core:build && yarn wells:build",
+    "pinto:build": "yarn workspace @exchange/sdk-pinto build",
+    "sdk:build": "yarn workspace @exchange/sdk build",
+    "sdks:build": "yarn core:build && yarn sdk:build",
     "format:prettier": "prettier --write \"**/*.{ts,tsx,json}\""
   },
   "devDependencies": {

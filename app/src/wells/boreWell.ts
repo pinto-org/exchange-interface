@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from 'ethers';
 
 import { ERC20Token, FarmFromMode, FarmToMode, TokenValue } from '@exchange/sdk-core';
-import { Aquifer, WellFunction, Pump, Well, WellsSDK } from '@exchange/sdk-wells';
+import { Aquifer, WellFunction, Pump, Well, ExchangeSDK } from '@exchange/sdk-wells';
 
 import { TransactionToast } from 'src/components/TxnToast/TransactionToast';
 import { getBytesHexString } from 'src/utils/bytes';
@@ -38,7 +38,7 @@ const prepareBoreWellParameters = async (
 /**
  * Decode the result of a boreWell wrapped in a advancedPipe callto get the well address
  */
-const decodeBoreWellPipeCall = (sdk: WellsSDK, aquifer: Aquifer, pipeResult: string[]) => {
+const decodeBoreWellPipeCall = (sdk: ExchangeSDK, aquifer: Aquifer, pipeResult: string[]) => {
   if (!pipeResult.length) return;
   const pipeDecoded = sdk.contracts.pipeline.interface.decodeFunctionResult('advancedPipe', pipeResult[0]);
 
@@ -59,7 +59,7 @@ const decodeBoreWellPipeCall = (sdk: WellsSDK, aquifer: Aquifer, pipeResult: str
  *
  * TODO: do this with wStETH
  */
-const prepareTokenOrderForBoreWell = (sdk: WellsSDK, tokens: ERC20Token[]) => {
+const prepareTokenOrderForBoreWell = (sdk: ExchangeSDK, tokens: ERC20Token[]) => {
   if (tokens.length < 2) {
     throw new Error('2 Tokens are required');
   }
@@ -80,7 +80,7 @@ const prepareTokenOrderForBoreWell = (sdk: WellsSDK, tokens: ERC20Token[]) => {
  * function to bore well
  */
 const boreWell = async (
-  sdk: WellsSDK,
+  sdk: ExchangeSDK,
   aquifer: Aquifer,
   account: string,
   implementation: string,

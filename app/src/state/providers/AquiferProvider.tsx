@@ -33,7 +33,7 @@ const useSetAquifer = () => {
 
   useEffect(() => {
     const aquiferAddress = getAquiferAddress(chainId);
-    setAquifer(new Aquifer(sdk.wells, aquiferAddress));
+    setAquifer(new Aquifer(sdk, aquiferAddress));
   }, [sdk, chainId, setAquifer]);
 
   return aquifer;

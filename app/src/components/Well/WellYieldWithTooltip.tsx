@@ -26,7 +26,7 @@ type Props = {
 export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, returnNullOnNoAPY = false }) => {
   const sdk = useSdk();
 
-  const bean = sdk.tokens.BEAN;
+  const pinto = sdk.tokens.PINTO;
   const isMobile = useIsMobile();
 
   const { getSiloAPYWithWell } = useBeanstalkSiloAPYs();
@@ -55,7 +55,7 @@ export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, retu
               <div className='label-value'>
                 <div className='label'>
                   <div className='logo-wrapper'>
-                    <TokenLogo token={bean} size={16} />
+                    <TokenLogo token={pinto} size={16} />
                   </div>
                   Bean vAPY
                 </div>
