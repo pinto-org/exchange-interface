@@ -1723,7 +1723,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@exchange/sdk-diamond@workspace:libs/sdk-diamond":
+"@exchange/sdk-diamond@workspace:*, @exchange/sdk-diamond@workspace:libs/sdk-diamond":
   version: 0.0.0-use.local
   resolution: "@exchange/sdk-diamond@workspace:libs/sdk-diamond"
   dependencies:
@@ -1774,6 +1774,7 @@ __metadata:
   resolution: "@exchange/sdk@workspace:libs/sdk"
   dependencies:
     "@exchange/sdk-core": "workspace:*"
+    "@exchange/sdk-diamond": "workspace:*"
     "@rollup/plugin-commonjs": "npm:23.0.7"
     "@rollup/plugin-json": "npm:5.0.2"
     "@rollup/plugin-multi-entry": "npm:6.0.1"

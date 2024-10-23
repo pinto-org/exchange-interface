@@ -30,8 +30,9 @@ export class DiamondSDK {
   public providerOrSigner: Signer | Provider;
   public lastRefreshTimestamp: number;
 
+  public static addresses: typeof addresses = addresses;
+
   public readonly chainId: ChainId;
-  public readonly addresses: typeof addresses;
   public readonly contracts: Contracts;
   public readonly tokens: Tokens;
   public readonly pools: Pools;
@@ -43,16 +44,19 @@ export class DiamondSDK {
   public readonly swap: Swap;
   public readonly pinto: Pinto;
 
+  get addresses() {
+    return DiamondSDK.addresses;
+  }
+
   constructor(config?: BeanstalkConfig) {
     this.handleConfig(config);
 
     this.chainId = this.deriveChainId();
 
-    // Beanstalk
+    // Pinto
     this.pinto = new Pinto(this);
 
     // Globals
-    this.addresses = addresses;
     this.contracts = new Contracts(this);
     this.tokens = new Tokens(this);
     this.pools = new Pools(this);

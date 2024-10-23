@@ -1,10 +1,10 @@
 import { ChainId, ChainResolver } from '@exchange/sdk-core';
+import { DiamondSDK } from '@exchange/sdk-diamond';
 import { ethers } from 'ethers';
 import { addresses } from 'src/constants/addresses';
 import { enumFromValue } from 'src/utils';
 import { Router } from './routing';
 import { SwapBuilder } from './swap/SwapBuilder';
-import { Tokens } from './tokens';
 import { PreloadOptions, Well } from './Well';
 
 export type Provider = ethers.providers.JsonRpcProvider;
@@ -14,6 +14,7 @@ export type SDKConfig = Partial<{
   signer: Signer;
   rpcUrl: string;
   DEBUG: boolean;
+  zeroXApiKey?: string;
 }>;
 
 export class ExchangeSDK {
@@ -22,6 +23,7 @@ export class ExchangeSDK {
   public provider: Provider;
   public providerOrSigner: Signer | Provider;
   public Router = Router;
+  public diamondSDK: DiamondSDK;
 
   // For easy access
   static addresses: typeof addresses = addresses;
@@ -29,17 +31,19 @@ export class ExchangeSDK {
   public readonly chainId: ChainId;
 
   public readonly addresses: typeof addresses;
-  public readonly tokens: Tokens;
+  public readonly tokens: DiamondSDK['tokens'];
   public readonly swapBuilder: SwapBuilder;
 
   constructor(config?: SDKConfig) {
     this.handleConfig(config);
 
     this.chainId = this.deriveChainId(config?.provider);
+    this.addresses = addresses;
 
     // Globals
-    this.addresses = addresses;
-    this.tokens = new Tokens(this);
+    this.diamondSDK = new DiamondSDK(config);
+    this.tokens = this.diamondSDK.tokens;
+    // this.tokens = new Tokens(this);
 
     this.swapBuilder = new SwapBuilder(this);
   }

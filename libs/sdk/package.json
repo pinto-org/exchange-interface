@@ -31,8 +31,8 @@
     "ethers": "^5.0.0"
   },
   "dependencies": {
-    "@exchange/sdk-diamond": "workspace:*",
     "@exchange/sdk-core": "workspace:*",
+    "@exchange/sdk-diamond": "workspace:*",
     "ethers": "^5.0.0",
     "graphlib": "2.1.8"
   },
@@ -61,9 +61,9 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "module": "./dist/exchange/exchange.esm.js",
-      "default": "./dist/exchange/exchange.cjs.js",
-      "browser": "./dist/exchange/exchange.umd.js"
+      "module": "./dist/wells/wells.esm.js",
+      "default": "./dist/wells/wells.cjs.js",
+      "browser": "./dist/wells/wells.umd.js"
     }
   }
 }

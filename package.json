@@ -11,14 +11,16 @@
     "libs/*"
   ],
   "scripts": {
-    "sdks:generate": "yarn core:generate && yarn sdk:generate",
-    "pinto:generate": "yarn workspace @exchange/sdk-pinto generate",
-    "core:generate": "yarn workspace @exchange/sdk-core generate",
     "sdk:generate": "yarn workspace @exchange/sdk generate",
-    "core:build": "yarn workspace @exchange/sdk-core build",
-    "pinto:build": "yarn workspace @exchange/sdk-pinto build",
     "sdk:build": "yarn workspace @exchange/sdk build",
-    "sdks:build": "yarn core:build && yarn sdk:build",
+    "core:generate": "yarn workspace @exchange/sdk-core generate",
+    "core:build": "yarn workspace @exchange/sdk-core build",
+    "diamond:generate": "yarn workspace @exchange/sdk-diamond generate",
+    "diamond:build": "yarn workspace @exchange/sdk-diamond build",
+    "all:generate": "yarn core:generate && yarn diamond:generate && yarn sdk:generate",
+    "all:build": "yarn core:build && yarn diamond:build && yarn sdk:build",
+    "generate": "yarn all:generate",
+    "build": "yarn generate && yarn all:build",
     "format:prettier": "prettier --write \"**/*.{ts,tsx,json}\""
   },
   "devDependencies": {

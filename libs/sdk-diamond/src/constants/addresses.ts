@@ -26,6 +26,9 @@ export const addresses = {
   UNWRAP_AND_SEND_ETH: Address.make({
     [ChainId.BASE_MAINNET]: '0xfE8ecCF700aA85f84eA7fE7207E165D1721b9572'
   }),
+  LSD_CHAINLINK_ORACLE: Address.make({
+    [ChainId.BASE_MAINNET]: '0x1CD1CD0a74C17F6943a661e26cC68d978e564635'
+  }),
 
   // ----------------------------------------
   // ERC-20 Tokens
