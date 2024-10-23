@@ -4,8 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
+import { Quote, QuoteResult } from '@exchange/sdk';
 import { Token, TokenValue } from '@exchange/sdk-core';
-import { Quote, QuoteResult } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { ActionWalletButtonWrapper } from 'src/components/Wallet';

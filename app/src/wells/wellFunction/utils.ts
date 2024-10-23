@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Well, WellFunction } from '@exchange/sdk-wells';
+import { Well, WellFunction } from '@exchange/sdk';
 
 import useSdk from 'src/utils/sdk/useSdk';
 import { stringEqual } from 'src/utils/string';

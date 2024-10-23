@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { SwapBuilder } from '@exchange/sdk';
 import { Token } from '@exchange/sdk-core';
-import { SwapBuilder } from '@exchange/sdk-wells';
 
 import useSdk from 'src/utils/sdk/useSdk';
 import { useWells } from 'src/wells/useWells';

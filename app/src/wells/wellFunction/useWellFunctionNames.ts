@@ -1,7 +1,7 @@
 import { multicall } from '@wagmi/core';
 import { ContractFunctionParameters, MulticallReturnType } from 'viem';
 
-import { Well, WellFunction } from '@exchange/sdk-wells';
+import { Well, WellFunction } from '@exchange/sdk';
 
 import { AddressMap } from 'src/types';
 import { Log } from 'src/utils/logger';

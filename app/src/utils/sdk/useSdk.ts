@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 
-import { ExchangeSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk';
 
 import { sdkAtom } from 'src/state/atoms';
 

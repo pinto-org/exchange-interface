@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
+import { Well } from '@exchange/sdk';
 import { Token } from '@exchange/sdk-core';
-import { Well } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { FC } from 'src/types';

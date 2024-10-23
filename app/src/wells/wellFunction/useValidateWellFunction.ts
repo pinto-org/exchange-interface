@@ -3,8 +3,7 @@ import { useCallback } from 'react';
 import { multicall } from '@wagmi/core';
 import { BigNumber } from 'ethers';
 
-import { ExchangeSDK } from '@exchange/sdk-wells';
-import { WellFunction } from '@exchange/sdk-wells';
+import { ExchangeSDK, WellFunction } from '@exchange/sdk';
 
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useGetChainScopedQueryData, useSetChainScopedQueryData } from 'src/utils/query/useChainScopedQuery';

@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
+import { Well } from '@exchange/sdk';
 import { TokenValue } from '@exchange/sdk-core';
-import { Well } from '@exchange/sdk-wells';
 
 import { mediaQuery, size } from 'src/breakpoints';
 import { BottomDrawer } from 'src/components/BottomDrawer';

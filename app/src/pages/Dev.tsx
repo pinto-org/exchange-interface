@@ -5,7 +5,9 @@ import toast from 'react-hot-toast';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
+import { ExchangeSDK } from '@exchange/sdk';
 import { Token, TokenValue } from '@exchange/sdk-core';
+import { TestUtils } from '@exchange/sdk-diamond';
 
 import { Page } from 'src/components/Page';
 import { Title } from 'src/components/PageComponents/Title';
@@ -26,7 +28,7 @@ export const Dev = () => {
 
   const [amounts, setAmounts] = useState<Map<string, TokenValue>>(new Map());
   const { refetch: refetchTokenBalances } = useAllTokensBalance();
-  const sdk = new BeanstalkSDK({ provider: provider as ethers.providers.JsonRpcProvider });
+  const sdk = new ExchangeSDK({ provider: provider as ethers.providers.JsonRpcProvider });
   const [tokens, setTokens] = useState<Set<Token>>(new Set(data || []));
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export const Dev = () => {
 
   const goBalance = async (token: Token) => {
     const amount = amounts.get(token.symbol) || TokenValue.ZERO;
-    const utils = new TestUtils.BlockchainUtils(sdk);
+    const utils = new TestUtils.BlockchainUtils(sdk.diamondSDK);
     await utils.setBalance(token, account.address || '', amount);
     await mine();
     await refetchTokenBalances();
@@ -58,13 +60,13 @@ export const Dev = () => {
   };
 
   const mine = async () => {
-    const utils = new TestUtils.BlockchainUtils(sdk);
+    const utils = new TestUtils.BlockchainUtils(sdk.diamondSDK);
     await utils.mine();
     toast.success(<ToastAlert desc={`Mined a new block`} />);
   };
 
   for (let token of tokens) {
-    if (!sdk.wells.tokens.findByAddress(token.address)) {
+    if (!sdk.tokens.findByAddress(token.address)) {
       continue;
     }
     rows.push(

@@ -1,7 +1,8 @@
 import { BigNumber, ethers } from 'ethers';
 
-import { ERC20Token, FarmFromMode, FarmToMode, TokenValue } from '@exchange/sdk-core';
-import { Aquifer, WellFunction, Pump, Well, ExchangeSDK } from '@exchange/sdk-wells';
+import { Aquifer, WellFunction, Pump, Well, ExchangeSDK } from '@exchange/sdk';
+import { ERC20Token, TokenValue } from '@exchange/sdk-core';
+import { FarmFromMode, FarmToMode } from '@exchange/sdk-diamond';
 
 import { TransactionToast } from 'src/components/TxnToast/TransactionToast';
 import { getBytesHexString } from 'src/utils/bytes';
@@ -40,7 +41,7 @@ const prepareBoreWellParameters = async (
  */
 const decodeBoreWellPipeCall = (sdk: ExchangeSDK, aquifer: Aquifer, pipeResult: string[]) => {
   if (!pipeResult.length) return;
-  const pipeDecoded = sdk.contracts.pipeline.interface.decodeFunctionResult('advancedPipe', pipeResult[0]);
+  const pipeDecoded = sdk.diamondSDK.contracts.pipeline.interface.decodeFunctionResult('advancedPipe', pipeResult[0]);
 
   if (!pipeDecoded?.length || !pipeDecoded[0]?.length) return;
   const boreWellDecoded = aquifer.contract.interface.decodeFunctionResult('boreWell', pipeDecoded[0][0]);
@@ -120,9 +121,9 @@ const boreWell = async (
 
   let wellAddress: string = '';
 
-  const staticFarm = sdk.farm.createAdvancedFarm('static-farm');
-  const advancedFarm = sdk.farm.createAdvancedFarm('adv-farm');
-  const advancedPipe = sdk.farm.createAdvancedPipe('adv-pipe');
+  const staticFarm = sdk.diamondSDK.farm.createAdvancedFarm('static-farm');
+  const advancedFarm = sdk.diamondSDK.farm.createAdvancedFarm('adv-farm');
+  const advancedPipe = sdk.diamondSDK.farm.createAdvancedPipe('adv-pipe');
 
   advancedPipe.add(makeBoreWellStep(aquifer, callData));
 
@@ -146,7 +147,12 @@ const boreWell = async (
       onlyLocal: true
     });
     advancedFarm.add(
-      new sdk.farm.actions.TransferToken(token1.address, well.address, FarmFromMode.EXTERNAL, FarmToMode.EXTERNAL)
+      new sdk.diamondSDK.farm.actions.TransferToken(
+        token1.address,
+        well.address,
+        FarmFromMode.EXTERNAL,
+        FarmToMode.EXTERNAL
+      )
     );
 
     // add transfer token2 to the undeployed well address
@@ -154,7 +160,12 @@ const boreWell = async (
       onlyLocal: true
     });
     advancedFarm.add(
-      new sdk.farm.actions.TransferToken(token2.address, well.address, FarmFromMode.EXTERNAL, FarmToMode.EXTERNAL)
+      new sdk.diamondSDK.farm.actions.TransferToken(
+        token2.address,
+        well.address,
+        FarmFromMode.EXTERNAL,
+        FarmToMode.EXTERNAL
+      )
     );
 
     advancedPipe.add(

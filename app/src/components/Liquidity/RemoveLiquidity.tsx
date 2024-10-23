@@ -5,8 +5,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
+import { Well } from '@exchange/sdk';
 import { Token, TokenValue } from '@exchange/sdk-core';
-import { Well } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { TokenInput } from 'src/components/Swap/TokenInput';

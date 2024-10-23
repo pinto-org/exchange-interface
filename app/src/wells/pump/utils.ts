@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { Well, ExchangeSDK } from '@exchange/sdk-wells';
+import { Well, ExchangeSDK } from '@exchange/sdk';
 
 import { useSdkChainId } from 'src/utils/chain';
 import { stringEqual } from 'src/utils/string';

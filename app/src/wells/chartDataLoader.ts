@@ -1,4 +1,4 @@
-import { Well, ExchangeSDK } from '@exchange/sdk-wells';
+import { Well, ExchangeSDK } from '@exchange/sdk';
 
 import { GetWellChartDataDocument, GetWellChartDataQuery } from 'src/generated/graph/graphql';
 import { Log } from 'src/utils/logger';

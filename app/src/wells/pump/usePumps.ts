@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Pump } from '@exchange/sdk-wells';
+import { Pump } from '@exchange/sdk';
 
 import { useWells } from 'src/wells/useWells';
 

@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useAccount, useChainId } from 'wagmi';
 
+import { AddLiquidityETH, Well } from '@exchange/sdk';
 import { ERC20Token, Token, TokenValue } from '@exchange/sdk-core';
-import { AddLiquidityETH, Well } from '@exchange/sdk-wells';
 
 import { size } from 'src/breakpoints';
 import { LoadingTemplate } from 'src/components/LoadingTemplate';

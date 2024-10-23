@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 
 import { useAccount } from 'wagmi';
 
+import { Well } from '@exchange/sdk';
 import { Token, TokenValue } from '@exchange/sdk-core';
-import { Well } from '@exchange/sdk-wells';
 
 import { REMOVE_LIQUIDITY_MODE } from 'src/components/Liquidity/types';
 import { Log } from 'src/utils/logger';

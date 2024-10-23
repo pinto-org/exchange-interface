@@ -263,8 +263,8 @@ const AllowanceButtons = ({
 
   const invalidateQueries = useInvalidateQueries();
 
-  const { data: token1Allowance } = useTokenAllowance(token1, sdk.contracts.beanstalk.address);
-  const { data: token2Allowance } = useTokenAllowance(token2, sdk.contracts.beanstalk.address);
+  const { data: token1Allowance } = useTokenAllowance(token1, sdk.diamondSDK.contracts.diamond.address);
+  const { data: token2Allowance } = useTokenAllowance(token2, sdk.diamondSDK.contracts.diamond.address);
 
   const amount1 = useWatch({ control, name: 'token1Amount' });
   const amount2 = useWatch({ control, name: 'token2Amount' });
@@ -274,8 +274,8 @@ const AllowanceButtons = ({
 
   const approveToken = async (token: ERC20Token, amount: TokenValue) => {
     if (!address) return;
-    await ensureAllowance(address, sdk.contracts.beanstalk.address, token, amount);
-    invalidateQueries(queryKeys.tokenAllowance(token.address, sdk.contracts.beanstalk.address));
+    await ensureAllowance(address, sdk.diamondSDK.contracts.diamond.address, token, amount);
+    invalidateQueries(queryKeys.tokenAllowance(token.address, sdk.diamondSDK.contracts.diamond.address));
   };
 
   useEffect(() => {

@@ -65,7 +65,7 @@ export class Tokens {
   public readonly whitelist: Set<Token>;
   public readonly whitelistAddresses: string[];
 
-  private readonly map: Map<string, Token>;
+  public readonly tokenMap: Map<string, Token>;
 
   private symbol2Index: { [symbol: string]: string };
 
@@ -407,7 +407,7 @@ export class Tokens {
 
     const siloWhitelist = [this.PINTO, ...wellLP];
 
-    this.map = map;
+    this.tokenMap = map;
     this.wellLP = new Set(wellLP);
     this.wellLPAddresses = wellLP.map((t) => t.address);
 
@@ -416,6 +416,14 @@ export class Tokens {
 
     this.erc20Tokens = erc20Tokens;
     this.balanceTokens = new Set([this.ETH, ...this.erc20Tokens]);
+  }
+
+  getERC20(address: string) {
+    const token = this.tokenMap.get(address.toLowerCase());
+    if (!token || !(token instanceof ERC20Token)) {
+      return undefined;
+    }
+    return token;
   }
 
   isWhitelisted(token: Token) {
@@ -428,14 +436,14 @@ export class Tokens {
 
   // TODO: why do we need this?
   getMap(): Readonly<Map<string, Token>> {
-    return Object.freeze(new Map(this.map));
+    return Object.freeze(new Map(this.tokenMap));
   }
 
   /**
    * Get a Token by address
    */
   findByAddress(address: string): Token | undefined {
-    return this.map.get(address.toLowerCase());
+    return this.tokenMap.get(address.toLowerCase());
   }
 
   /**
@@ -443,7 +451,7 @@ export class Tokens {
    */
   findBySymbol(symbol: string): Token | undefined {
     const tokenIndex = this.symbol2Index[symbol.toLowerCase()];
-    return this.map.get(tokenIndex);
+    return this.tokenMap.get(tokenIndex);
   }
 
   /**

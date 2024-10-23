@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { useChainId } from 'wagmi';
 
+import { Aquifer } from '@exchange/sdk';
 import { ChainResolver } from '@exchange/sdk-core';
-import { Aquifer } from '@exchange/sdk-wells';
 
 import useSdk from 'src/utils/sdk/useSdk';
 

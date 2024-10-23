@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-import { Well } from '@exchange/sdk-wells';
+import { Well } from '@exchange/sdk';
 
 import { isDEV } from 'src/settings';
 import { AddressMap } from 'src/types';

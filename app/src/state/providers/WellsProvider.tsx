@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useSetAtom } from 'jotai';
 
-import { Well } from '@exchange/sdk-wells';
+import { Well } from '@exchange/sdk';
 
 import { images } from 'src/assets/images/tokens';
 import { Error } from 'src/components/Error';

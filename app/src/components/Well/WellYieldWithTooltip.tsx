@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 
 import styled from 'styled-components';
 
+import { Well } from '@exchange/sdk';
 import { TokenValue } from '@exchange/sdk-core';
-import { Well } from '@exchange/sdk-wells';
 
 import StartSparkle from 'src/assets/images/start-sparkle.svg';
 import { mediaQuery } from 'src/breakpoints';

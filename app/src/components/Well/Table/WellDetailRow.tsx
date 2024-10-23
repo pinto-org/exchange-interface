@@ -3,8 +3,8 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Well } from '@exchange/sdk';
 import { TokenValue } from '@exchange/sdk-core';
-import { Well } from '@exchange/sdk-wells';
 
 import { mediaQuery, size } from 'src/breakpoints';
 import { Item } from 'src/components/Layout';

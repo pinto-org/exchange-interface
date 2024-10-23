@@ -3,8 +3,8 @@ import { BigNumber } from 'ethers';
 import memoize from 'lodash/memoize';
 import { Abi, ContractFunctionParameters, erc20Abi } from 'viem';
 
+import { Aquifer, Well, ExchangeSDK } from '@exchange/sdk';
 import { ChainResolver, ERC20Token, ChainId } from '@exchange/sdk-core';
-import { Aquifer, Well, ExchangeSDK } from '@exchange/sdk-wells';
 
 import { GetWellAddressesDocument } from 'src/generated/graph/graphql';
 import { Settings } from 'src/settings';
@@ -124,10 +124,10 @@ export const fetchWellsWithAddresses = async (sdk: ExchangeSDK, addresses: strin
 
     const wellTokens = tokens.map((t) => {
       const tokenAddress = t.toString().toLowerCase();
-      return sdk.tokens.erc20Tokens.get(tokenAddress) || tokenMap[tokenAddress];
+      return sdk.tokens.getERC20(tokenAddress) || tokenMap[tokenAddress];
     });
     const wellReserves = reserves.map(BigNumber.from);
-    const wellLPToken = sdk.tokens.erc20Tokens.get(address) || tokenMap[address];
+    const wellLPToken = sdk.tokens.getERC20(address) || tokenMap[address];
 
     if (!wellTokens.every((t) => !!t) || !wellLPToken) {
       return;
@@ -197,7 +197,7 @@ const fetchWellsWithMulticall = async (sdk: ExchangeSDK, wellAddresses: string[]
       const wellDatas = data.data[1];
       // If token is not defined in ExchangeSDK. We need to fetch it from on Chain.
       for (const token of wellDatas[0]) {
-        if (sdk.tokens.erc20Tokens.has(token.toLowerCase())) continue;
+        if (sdk.tokens.getERC20(token.toLowerCase())) continue;
         tokensToFetch.add(token.toLowerCase());
       }
     });

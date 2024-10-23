@@ -4,8 +4,8 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
 import { useAtom, useSetAtom } from 'jotai';
 
+import { ExchangeSDK } from '@exchange/sdk';
 import { ChainId } from '@exchange/sdk-core';
-import { WellsSDK } from '@exchange/sdk-wells';
 
 import { isDEV } from 'src/settings';
 import { Log } from 'src/utils/logger';
@@ -15,7 +15,7 @@ import { getRpcUrl } from 'src/utils/wagmi/urls';
 import { aquiferAtom, sdkAtom } from '../atoms';
 
 const getSDK = (provider?: JsonRpcProvider, signer?: Signer, chainId?: number) => {
-  const sdk = new WellsSDK({
+  const sdk = new ExchangeSDK({
     rpcUrl: getRpcUrl(chainId as ChainId),
     signer: signer,
     // source: DataSource.LEDGER,

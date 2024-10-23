@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
+import { Well } from '@exchange/sdk';
 import { ERC20Token, TokenValue } from '@exchange/sdk-core';
-import { Well } from '@exchange/sdk-wells';
 
 import { useTokenSupplyMany } from 'src/tokens/useTokenSupply';
 import { AddressMap } from 'src/types';

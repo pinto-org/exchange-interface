@@ -20,7 +20,7 @@ export const useSiloBalance = (token: Token) => {
         balance = TokenValue.ZERO;
       } else {
         const sdkLPToken = sdk.tokens.findByAddress(token.address);
-        const result = await sdk.silo.getBalance(sdkLPToken!, address);
+        const result = await sdk.diamondSDK.silo.getBalance(sdkLPToken!, address);
         balance = result.amount;
       }
       return balance;
@@ -45,14 +45,14 @@ export const useFarmerWellsSiloBalances = () => {
     queryKey: queryKeys.siloBalancesAll(wellTokens),
     queryFn: async () => {
       // Silo balances are not available on L1
-      if (ChainResolver.isL1Chain(sdk.chainId)) {
+      if (!ChainResolver.isL2Chain(sdk.chainId)) {
         return {};
       }
       try {
         const resultMap: Record<string, TokenValue> = {};
         if (!address) return resultMap;
 
-        const results = await sdk.silo.getBalances(address);
+        const results = await sdk.diamondSDK.silo.getBalances(address);
 
         results.forEach((val, token) => {
           resultMap[token.address] = val.amount;

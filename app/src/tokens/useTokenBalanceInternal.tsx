@@ -14,7 +14,7 @@ export default function useTokenBalanceInternal(token: Token | undefined) {
   const { address } = useAccount();
   const sdk = useSdk();
 
-  const beanstalk = sdk.contracts.beanstalk;
+  const beanstalk = sdk.diamondSDK.contracts.diamond;
 
   const { data, isLoading, error, refetch, isFetching } = useScopedQuery({
     queryKey: ['token', 'internalBalance', sdk, token?.address || emptyAddress],

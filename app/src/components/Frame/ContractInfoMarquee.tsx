@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled, { keyframes } from 'styled-components';
 
-import { WellsSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk';
 
 import { explorerUrl } from 'src/utils/chain';
 
@@ -11,8 +11,8 @@ type ContractMarqueeInfo = Record<string, { display: string; to?: string; url?: 
 const CarouselData: ContractMarqueeInfo = {
   ADDRESS: [
     {
-      display: WellsSDK.addresses.AQUIFER.BASE_MAINNET,
-      url: `${explorerUrl()}/address/${WellsSDK.addresses.AQUIFER.BASE_MAINNET}`
+      display: ExchangeSDK.addresses.AQUIFER.BASE_MAINNET,
+      url: `${explorerUrl()}/address/${ExchangeSDK.addresses.AQUIFER.BASE_MAINNET}`
     }
   ],
   AUDIT: [

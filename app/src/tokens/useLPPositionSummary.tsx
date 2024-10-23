@@ -5,8 +5,8 @@ import { BigNumber } from 'ethers';
 import { ContractFunctionParameters, erc20Abi } from 'viem';
 import { useAccount } from 'wagmi';
 
+import { Well, ExchangeSDK } from '@exchange/sdk';
 import { Token, TokenValue } from '@exchange/sdk-core';
-import { Well, WellsSDK } from '@exchange/sdk-wells';
 
 import { Log } from 'src/utils/logger';
 import { queryKeys } from 'src/utils/query/queryKeys';
@@ -59,7 +59,7 @@ const INTERNAL_BALANCE_ABI = [
  * Contract calls to fetch internal & external balances
  * Only fetch balances for wells with a defined LP Token
  */
-const makeMultiCall = (sdk: WellsSDK, lpTokens: Token[], account: `0x${string}` | undefined) => {
+const makeMultiCall = (sdk: ExchangeSDK, lpTokens: Token[], account: `0x${string}` | undefined) => {
   const contractCalls: ContractFunctionParameters[] = [];
   if (!account) return contractCalls;
   Log.module('useLPPositionSummary').debug(
@@ -74,7 +74,7 @@ const makeMultiCall = (sdk: WellsSDK, lpTokens: Token[], account: `0x${string}` 
       args: [account]
     });
     contractCalls.push({
-      address: WellsSDK.addresses.PINTO_DIAMOND.BASE_MAINNET as `0x${string}`,
+      address: ExchangeSDK.addresses.PINTO_DIAMOND.BASE_MAINNET as `0x${string}`,
       abi: INTERNAL_BALANCE_ABI as Readonly<ContractFunctionParameters['abi']>,
       functionName: 'getInternalBalance',
       args: [account, t.address]

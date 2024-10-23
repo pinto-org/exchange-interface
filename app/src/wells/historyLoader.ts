@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers';
 import isEqual from 'lodash/isEqual';
 
-import { Well, ExchangeSDK } from '@exchange/sdk-wells';
+import { Well, ExchangeSDK } from '@exchange/sdk';
 
 import { GetWellEventsDocument } from 'src/generated/graph/graphql';
 import { Settings } from 'src/settings';

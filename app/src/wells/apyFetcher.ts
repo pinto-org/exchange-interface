@@ -1,5 +1,5 @@
+import { ExchangeSDK } from '@exchange/sdk';
 import { TokenValue } from '@exchange/sdk-core';
-import { ExchangeSDK } from '@exchange/sdk-wells';
 
 import { BeanstalkSiloLatestApyDocument } from 'src/generated/graph/graphql';
 import { Log } from 'src/utils/logger';

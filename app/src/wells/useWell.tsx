@@ -1,4 +1,4 @@
-import { Well } from '@exchange/sdk-wells';
+import { Well } from '@exchange/sdk';
 
 import { useChainScopedQuery, useGetChainScopedQueryData } from 'src/utils/query/useChainScopedQuery';
 import useSdk from 'src/utils/sdk/useSdk';

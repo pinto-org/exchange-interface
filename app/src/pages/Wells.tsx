@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
+import { Well, ExchangeSDK } from '@exchange/sdk';
 import { TokenValue } from '@exchange/sdk-core';
-import { Well, WellsSDK } from '@exchange/sdk-wells';
 
 import { mediaQuery, size } from 'src/breakpoints';
 import { Error } from 'src/components/Error';
@@ -154,7 +154,7 @@ export const Wells = () => {
 };
 
 const makeTableData = (
-  sdk: WellsSDK,
+  sdk: ExchangeSDK,
   wells?: Well[],
   stats?: BasinAPIResponse[],
   tokenPrices?: Record<string, TokenValue>
@@ -239,10 +239,10 @@ const makeTableData = (
 };
 
 const getSortByWhitelisted =
-  (sdk: WellsSDK) =>
+  (sdk: ExchangeSDK) =>
   <T extends { well: Well }>(a: T, b: T) => {
-    const aWhitelisted = a.well.lpToken && sdk.tokens.getIsWhitelistedWellLPToken(a.well.lpToken);
-    const bWhitelisted = b.well.lpToken && sdk.tokens.getIsWhitelistedWellLPToken(b.well.lpToken);
+    const aWhitelisted = a.well.lpToken && sdk.tokens.isWhitelisted(a.well.lpToken);
+    const bWhitelisted = b.well.lpToken && sdk.tokens.isWhitelisted(b.well.lpToken);
 
     if (aWhitelisted) return -1;
     if (bWhitelisted) return 1;

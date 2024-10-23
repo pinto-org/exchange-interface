@@ -34,7 +34,7 @@ function YieldDetails({ token }: Props) {
 export const LearnYield: FC<Props> = ({ token }) => {
   const sdk = useSdk();
   const sdkToken = token ? sdk.tokens.findByAddress(token.address) : undefined;
-  const isWhitelisted = sdkToken && sdk.tokens.siloWhitelist.has(sdkToken);
+  const isWhitelisted = sdkToken && sdk.tokens.whitelist.has(sdkToken);
   if (!isWhitelisted) return null;
 
   return (

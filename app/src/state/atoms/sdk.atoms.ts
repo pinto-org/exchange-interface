@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-import { ExchangeSDK } from '@exchange/sdk-wells';
+import { ExchangeSDK } from '@exchange/sdk';
 
 import { isDEV } from 'src/settings';
 
