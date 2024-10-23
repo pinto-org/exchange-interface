@@ -16,7 +16,7 @@ import { Flex } from '../Layout';
 import { Modal } from '../Modal';
 import { LinksNav, Text } from '../Typography';
 
-const UNSUPPORTED_CHAIN_ID = -1;
+const UNSUPPORTED_CHAIN_ID = 1;
 
 /**
  *

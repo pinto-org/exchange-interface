@@ -87,7 +87,7 @@ export const findWells = memoize(
     ]);
 
     const resultAddresses = result.map((r) => r.toLowerCase());
-    const addresses = new Set(...resultAddresses);
+    const addresses = new Set(resultAddresses);
 
     // Remove empty string
     addresses.delete('');

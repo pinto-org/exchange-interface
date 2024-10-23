@@ -54,6 +54,7 @@ export const useWellsQuery = () => {
 
 const WellsProvider = React.memo(({ children }: { children: React.ReactNode }) => {
   const query = useWellsQuery();
+
   if (!query.data?.length) {
     return null;
   }

@@ -40,7 +40,7 @@ export const SwapRoot = () => {
     fromToken ? (tokens[fromToken] ? tokens[fromToken] : tokens['ETH']) : tokens['ETH']
   );
   const [outToken, setOutToken] = useState<Token>(
-    toToken ? (tokens[toToken] ? tokens[toToken] : tokens['BEAN']) : tokens['BEAN']
+    toToken ? (tokens[toToken] ? tokens[toToken] : tokens['PINTO']) : tokens['PINTO']
   );
   const [outAmount, setOutAmount] = useState<TokenValue>();
   const [slippage, setSlippage] = useState<number>(0.1);
