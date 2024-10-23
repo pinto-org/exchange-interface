@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "dex-app",
   "description": "A user interface for Pinto.Exchange",
   "private": true,
   "version": "1.0.0",
