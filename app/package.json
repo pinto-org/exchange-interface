@@ -31,6 +31,7 @@
     "alchemy-sdk": "3.3.1",
     "connectkit": "1.7.2",
     "ethers": "^5.7.2",
+    "graphql": "^16.5.0",
     "graphql-request": "5.2.0",
     "jotai": "2.9.3",
     "lightweight-charts": "4.1.3",

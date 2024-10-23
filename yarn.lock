@@ -6132,56 +6132,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"app@workspace:app":
-  version: 0.0.0-use.local
-  resolution: "app@workspace:app"
-  dependencies:
-    "@exchange/sdk": "workspace:*"
-    "@exchange/sdk-core": "workspace:*"
-    "@graphql-codegen/cli": "npm:3.2.2"
-    "@graphql-codegen/client-preset": "npm:2.1.1"
-    "@graphql-codegen/typescript-react-query": "npm:4.1.0"
-    "@radix-ui/react-dialog": "npm:1.0.5"
-    "@radix-ui/react-dropdown-menu": "npm:2.1.1"
-    "@tanstack/react-query": "npm:5.28.4"
-    "@tanstack/react-query-devtools": "npm:5.28.4"
-    "@typechain/ethers-v5": "npm:10.2.1"
-    "@types/lodash": "npm:4.17.12"
-    "@types/react": "npm:^18.2.57"
-    "@types/react-dom": "npm:^18.2.19"
-    "@types/styled-components": "npm:^5.1.34"
-    "@typescript-eslint/eslint-plugin": "npm:7.1.0"
-    "@typescript-eslint/parser": "npm:7.1.0"
-    "@vitejs/plugin-react": "npm:4.2.1"
-    alchemy-sdk: "npm:3.3.1"
-    connectkit: "npm:1.7.2"
-    eslint: "npm:8.57.0"
-    eslint-import-resolver-typescript: "npm:3.6.3"
-    eslint-plugin-import: "npm:2.29.1"
-    eslint-plugin-jsx-a11y: "npm:6.8.0"
-    eslint-plugin-react: "npm:7.34.0"
-    eslint-plugin-react-hooks: "npm:4.6.0"
-    ethers: "npm:^5.7.2"
-    graphql-request: "npm:5.2.0"
-    jotai: "npm:2.9.3"
-    lightweight-charts: "npm:4.1.3"
-    lodash: "npm:4.17.21"
-    prettier: "npm:3.2.5"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
-    react-hook-form: "npm:7.51.5"
-    react-hot-toast: "npm:2.4.1"
-    react-jazzicon: "npm:1.0.4"
-    react-router-dom: "npm:^6.22.1"
-    styled-components: "npm:5.3.11"
-    typechain: "npm:8.1.1"
-    typescript: "npm:5.3.3"
-    viem: "npm:2.7.18"
-    vite: "npm:5.1.4"
-    wagmi: "npm:2.5.7"
-  languageName: unknown
-  linkType: soft
-
 "arg@npm:^4.1.0":
   version: 4.1.3
   resolution: "arg@npm:4.1.3"
@@ -7777,6 +7727,57 @@ __metadata:
   checksum: 10/e46307d7264644975b71c104b9f028ed1d3d34b83a15b8a22373640ce5ea630e5640b1078b8ea15f202b54641da71e4aa7597093bd4b91f113db520a26a37449
   languageName: node
   linkType: hard
+
+"dex-app@workspace:app":
+  version: 0.0.0-use.local
+  resolution: "dex-app@workspace:app"
+  dependencies:
+    "@exchange/sdk": "workspace:*"
+    "@exchange/sdk-core": "workspace:*"
+    "@graphql-codegen/cli": "npm:3.2.2"
+    "@graphql-codegen/client-preset": "npm:2.1.1"
+    "@graphql-codegen/typescript-react-query": "npm:4.1.0"
+    "@radix-ui/react-dialog": "npm:1.0.5"
+    "@radix-ui/react-dropdown-menu": "npm:2.1.1"
+    "@tanstack/react-query": "npm:5.28.4"
+    "@tanstack/react-query-devtools": "npm:5.28.4"
+    "@typechain/ethers-v5": "npm:10.2.1"
+    "@types/lodash": "npm:4.17.12"
+    "@types/react": "npm:^18.2.57"
+    "@types/react-dom": "npm:^18.2.19"
+    "@types/styled-components": "npm:^5.1.34"
+    "@typescript-eslint/eslint-plugin": "npm:7.1.0"
+    "@typescript-eslint/parser": "npm:7.1.0"
+    "@vitejs/plugin-react": "npm:4.2.1"
+    alchemy-sdk: "npm:3.3.1"
+    connectkit: "npm:1.7.2"
+    eslint: "npm:8.57.0"
+    eslint-import-resolver-typescript: "npm:3.6.3"
+    eslint-plugin-import: "npm:2.29.1"
+    eslint-plugin-jsx-a11y: "npm:6.8.0"
+    eslint-plugin-react: "npm:7.34.0"
+    eslint-plugin-react-hooks: "npm:4.6.0"
+    ethers: "npm:^5.7.2"
+    graphql: "npm:^16.5.0"
+    graphql-request: "npm:5.2.0"
+    jotai: "npm:2.9.3"
+    lightweight-charts: "npm:4.1.3"
+    lodash: "npm:4.17.21"
+    prettier: "npm:3.2.5"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    react-hook-form: "npm:7.51.5"
+    react-hot-toast: "npm:2.4.1"
+    react-jazzicon: "npm:1.0.4"
+    react-router-dom: "npm:^6.22.1"
+    styled-components: "npm:5.3.11"
+    typechain: "npm:8.1.1"
+    typescript: "npm:5.3.3"
+    viem: "npm:2.7.18"
+    vite: "npm:5.1.4"
+    wagmi: "npm:2.5.7"
+  languageName: unknown
+  linkType: soft
 
 "diff-sequences@npm:^29.6.3":
   version: 29.6.3
@@ -9605,6 +9606,13 @@ __metadata:
   peerDependencies:
     graphql: ">=0.11 <=16"
   checksum: 10/69749881a11f85f70b69e2e5ef2cd509d6605d3181830bb0fcb782fb97ba02b6bd49269df444c4443450716f7f1364bc4ef59e31399b94a697dcbd79e40f54e7
+  languageName: node
+  linkType: hard
+
+"graphql@npm:^16.5.0":
+  version: 16.9.0
+  resolution: "graphql@npm:16.9.0"
+  checksum: 10/5833f82bb6c31bec120bbf9cd400eda873e1bb7ef5c17974fa262cd82dc68728fda5d4cb859dc8aaa4c4fe4f6fe1103a9c47efc01a12c02ae5cb581d8e4029e2
   languageName: node
   linkType: hard
 
