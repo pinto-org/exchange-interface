@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 bs_root=$PROJECT_CWD
-ui_root=$bs_root/projects/dex-ui
+ui_root=$bs_root/app
 
 cd $ui_root
 
