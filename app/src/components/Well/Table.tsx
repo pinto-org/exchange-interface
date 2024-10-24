@@ -5,6 +5,7 @@
 import styled from 'styled-components';
 
 import { size } from 'src/breakpoints';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { BodyCaps, BodyS, BodyXS } from '../Typography';
 
@@ -20,7 +21,7 @@ export const Row = styled.tr`
 
   :hover {
     cursor: pointer;
-    background-color: #f0fdf4;
+    background-color: ${THEME_COLORS.primaryLight};
   }
 `;
 export const THead = styled.thead`

@@ -51,7 +51,7 @@ export interface DexSettings extends SubgraphDexSettings, EnvDexSettings {
 
 export const isDeployPreview = netlifyContext === 'deploy-preview';
 
-const envSettings: EnvDexSettings = netlifyContext === 'production' || isDeployPreview ? ProdSettings : DevSettings;
+const envSettings: EnvDexSettings = netlifyContext === 'production' ? ProdSettings : DevSettings;
 
 const subgraphSettings: SubgraphDexSettings = {
   SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/basin`,

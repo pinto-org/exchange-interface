@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { mediaQuery, size } from 'src/breakpoints';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { BeanstalkLogoBlack, Discord, Github, Twitter } from '../Icons';
 
@@ -65,7 +66,7 @@ const Box = styled.a`
   color: black;
   gap: 16px;
   :hover {
-    background-color: #f0fdf4;
+    background-color: ${THEME_COLORS.primaryLight};
   }
   :first-child {
     border-left: none;
@@ -89,7 +90,7 @@ const SmallBox = styled.a`
   justify-content: center;
   align-items: center;
   :hover {
-    background-color: #f0fdf4;
+    background-color: ${THEME_COLORS.primaryLight};
   }
 `;
 

@@ -31,6 +31,7 @@ import { WellYieldWithTooltip } from 'src/components/Well/WellYieldWithTooltip';
 import { useChainErrExists } from 'src/state/atoms/chain.atoms';
 import { getPrice } from 'src/utils/price/usePrice';
 import useSdk from 'src/utils/sdk/useSdk';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 import { useIsMobile } from 'src/utils/ui/useIsMobile';
 import { useLagLoading } from 'src/utils/ui/useLagLoading';
 import { useBeanstalkSiloAPYs } from 'src/wells/useBeanstalkSiloAPYs';
@@ -279,7 +280,7 @@ export const Well = () => {
                 onClick={toggle}
                 padding='0px'
                 alt='Click to expand and learn how to earn yield'
-                color={'#46B955'}
+                color={THEME_COLORS.primary}
               />
             </LearnMoreText>
             <LearnMoreLine />
@@ -542,7 +543,7 @@ const LearnMoreText = styled.div`
   gap: 8px;
   align-items: center;
   width: 195px;
-  color: #46b955;
+  color: ${THEME_COLORS.primary};
   padding-right: 8px;
   padding-left: 8px;
   ${BodyXS}

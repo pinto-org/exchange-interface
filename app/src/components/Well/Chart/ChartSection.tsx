@@ -10,6 +10,7 @@ import { BottomDrawer } from 'src/components/BottomDrawer';
 import { LoadingTemplate } from 'src/components/LoadingTemplate';
 import { TabButton } from 'src/components/TabButton';
 import { FC } from 'src/types';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 import { IWellHourlySnapshot } from 'src/wells/chartDataLoader';
 import useWellChartData from 'src/wells/useWellChartData';
 
@@ -97,7 +98,7 @@ const ChartSectionContent: FC<{ well: Well }> = ({ well }) => {
     refetch,
     error,
     isLoading: chartDataLoading,
-    isRefetching
+    isRefetching: _refetching
   } = useWellChartData(well, timePeriod);
 
   const [liquidityData, setLiquidityData] = useState<IChartDataItem[]>([]);
@@ -372,7 +373,7 @@ const FilterButton = styled.div`
   outline-offset: -0.5px;
   cursor: pointer;
   :hover {
-    background-color: #f0fdf4;
+    background-color: ${THEME_COLORS.primaryLight};
   }
   @media (max-width: ${size.mobile}) {
     height: 40px;

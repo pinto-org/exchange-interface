@@ -341,7 +341,7 @@ const RemoveLiquidityContent = ({
                     <Checkbox
                       checked={removeLiquidityMode === REMOVE_LIQUIDITY_MODE.OneToken}
                       mode={'checkOnly'}
-                      checkboxColor='#46b955'
+                      checkboxColor='#0052FF'
                     />
                     <TabLabel onClick={() => handleSwitchRemoveMode(REMOVE_LIQUIDITY_MODE.OneToken)}>
                       Single Token
@@ -357,7 +357,7 @@ const RemoveLiquidityContent = ({
                     <Checkbox
                       checked={removeLiquidityMode !== REMOVE_LIQUIDITY_MODE.OneToken}
                       mode={'checkOnly'}
-                      checkboxColor='#46b955'
+                      checkboxColor='#0052FF'
                     />
                     <TabLabel onClick={() => handleSwitchRemoveMode(REMOVE_LIQUIDITY_MODE.Balanced)}>
                       Multiple Tokens
@@ -397,7 +397,7 @@ const RemoveLiquidityContent = ({
                 {well.tokens!.map((token: Token, index: number) => (
                   <ContainerSingleTokenRow key={`token${index}`} onClick={() => handleSwitchSingleToken(index)}>
                     <ReadOnlyTokenValueRow selected={singleTokenIndex === index}>
-                      <Checkbox checked={singleTokenIndex === index} mode={'checkOnly'} checkboxColor='#46b955' />
+                      <Checkbox checked={singleTokenIndex === index} mode={'checkOnly'} checkboxColor='#0052FF' />
                       <SmallTokenLogo src={token.logo} />
                       <TokenSymbol>{token.symbol}</TokenSymbol>
                       {singleTokenIndex === index ? (

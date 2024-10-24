@@ -101,7 +101,7 @@ const InputContainer = styled.div`
   padding-right: 12px;
   margin-bottom: 8px;
   &:focus-within {
-    border: 0.5px solid #46b955;
+    border: 0.5px solid #0052ff;
   }
 `;
 const InputAdornment = styled.div``;

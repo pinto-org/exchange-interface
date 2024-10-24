@@ -4,13 +4,13 @@ import styled, { keyframes } from 'styled-components';
 
 import { images } from 'src/assets/images/tokens';
 import { size } from 'src/breakpoints';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { Image } from '../Image';
 
 const randomKey = () => Math.random().toString(36).substring(2, 7);
 
-// only use BEAN & WETH for the Marquee. We can add more as the wells become deeper in liquidity.
-const marqueeSymbols = ['BEAN', 'WETH'];
+const marqueeSymbols = ['PINTO', 'WETH', 'cbETH', 'cbBTC', 'USDC'];
 
 export const TokenMarquee = () => {
   // we need distinct keys for these, so we return a function so the key can be set later
@@ -108,7 +108,7 @@ const Circle = () => {
       cx='12'
       cy='12'
       r='11.75'
-      fill='#F0FDF4'
+      fill={THEME_COLORS.primaryLight}
       stroke='#14532D'
       strokeWidth='0.5'
       strokeLinecap='round'

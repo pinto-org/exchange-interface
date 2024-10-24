@@ -12,6 +12,7 @@ import { TokenLogo } from 'src/components/TokenLogo';
 import { Tooltip, TooltipProps } from 'src/components/Tooltip';
 import { BodyS } from 'src/components/Typography';
 import { formatNum } from 'src/utils/format';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 export const MultiFlowPumpTooltip: FC<{
   well: Well;
@@ -102,7 +103,7 @@ export const MultiFlowPumpTooltip: FC<{
       width={370}
       {...tooltipProps}
     >
-      {children ? children : <Info color='#9CA3AF' width={14} height={14} />}
+      {children ? children : <Info color={THEME_COLORS.lightGray} width={14} height={14} />}
     </Tooltip>
   );
 };
@@ -131,10 +132,10 @@ const TitleAndContentContainer = styled(Item)`
   }
 
   .content {
-    color: '#4B556';
+    color: ${THEME_COLORS.darkGray};
 
     .content-link {
-      color: #46b955;
+      color: ${THEME_COLORS.primary};
       cursor: pointer;
       text-decoration: none;
 
@@ -158,7 +159,7 @@ const ReserveData = styled(Item)`
   .reserve-type {
     ${BodyS}
     font-weight: 400;
-    color: '#4B556';
+    color: ${THEME_COLORS.darkGray};
   }
 
   .reserve-token-container {

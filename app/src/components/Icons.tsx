@@ -167,7 +167,7 @@ export const Info = ({ color = '#000', width = 16, height = 16 }: SVGProps) => (
 
 export const Logo = ({ width = 24, height = 24 }: SVGProps) => (
   <svg xmlns='http://www.w3.org/2000/svg' width={width} height={height} fill='none'>
-    <circle cx={12} cy={12} r={12} fill='#F9F8F6' />
+    <circle cx={12} cy={12} r={12} fill='#F0F5FF' /> {/* Changed to light blue */}
     <g clipPath='url(#a)'>
       <mask
         id='b'
@@ -186,9 +186,9 @@ export const Logo = ({ width = 24, height = 24 }: SVGProps) => (
         />
       </mask>
       <g mask='url(#b)'>
-        <path fill='#46B955' d='M1.72 23.499h22.463V.817H1.719V23.5Z' />
+        <path fill='#0052FF' d='M1.72 23.499h22.463V.817H1.719V23.5Z' /> {/* Primary blue */}
         <path
-          fill='#29A334'
+          fill='#0047E0' /* Darker blue, similar contrast as #29A334 was to green */
           d='M22.415 10.756c-3.346-.396-6.165-2.907-7.959-4.658-2.105-2.055-4.896-3.017-6.37-2.42-1.016.412-1.281 1.72-.533 2.755.747 1.035 1.338 4.606.539 6.47-.913 2.128-3.554 2.276-3.554 6.163v5.608h20.526V10.756h-2.65Z'
         />
         <path
@@ -200,7 +200,7 @@ export const Logo = ({ width = 24, height = 24 }: SVGProps) => (
           }}
         />
         <path
-          fill='#1B8E21'
+          fill='#003CC0' /* Darker blue, similar contrast as #1B8E21 was to green */
           d='M8.525 21.482s-2.863-1.914-2.35-3.093c.562-1.292 2.389-.967 3.668-2.054 1.296-1.1.995-2.932.332-4.54-.902-2.188-1.852-4.301-.303-6.108.911-1.063 2.796-.766 3.853.928 1.018 1.632 2.396 3.848 4.085 3.94 1.217.065 3.165.486 4.974 3.078h2.227v10.809H8.525v-2.96Z'
         />
         <path
@@ -212,7 +212,7 @@ export const Logo = ({ width = 24, height = 24 }: SVGProps) => (
           }}
         />
         <path
-          fill='#0C720E'
+          fill='#0031A0' /* Darkest blue, similar contrast as #0C720E was to green */
           d='M9.795 22.567c-1.208-3.277.954-3.621 2.02-3.988 1.065-.366 2.154-.979 2.17-2.451.017-1.553-.968-2.03-1.718-3.084-.75-1.054-2.69-2.588-1.328-3.806 1.096-.98 2.99 1.519 4.75 1.519 1.76 0 5.63 1.2 6.195 2.148l1.567.282v9.38H9.795Z'
         />
         <path

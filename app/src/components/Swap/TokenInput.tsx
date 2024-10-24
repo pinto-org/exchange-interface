@@ -9,6 +9,7 @@ import { size } from 'src/breakpoints';
 import { useTokenBalance } from 'src/tokens/useTokenBalance';
 import { getTokenIndex } from 'src/tokens/utils';
 import { FC } from 'src/types';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { BasicInput } from './BasicInput';
 import { TokenPicker, TokenPickerProps } from './TokenPicker';
@@ -185,10 +186,10 @@ const Container = styled.div<ContainerProps>`
 
   cursor: text;
   :focus-within {
-    outline: 0.5px solid #46b955;
+    outline: 0.5px solid ${THEME_COLORS.primary};
   }
   :hover {
-    outline: 2px solid #46b955;
+    outline: 2px solid ${THEME_COLORS.primary};
   }
   @media (max-width: ${size.mobile}) {
     height: ${(props) => (props.showBalance ? `72px` : `48px`)};

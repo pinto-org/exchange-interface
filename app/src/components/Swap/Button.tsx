@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { size } from 'src/breakpoints';
 import { FC } from 'src/types';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { Spinner } from '../Spinner';
 import { BodyXS } from '../Typography';
@@ -72,11 +73,11 @@ const StyledButton = styled.button<ButtonProps>`
   cursor: pointer;
 
   :hover {
-    outline: ${({ disabled }) => (disabled ? '0.5px solid #D1D5DB' : '2px solid #46b955')};
+    outline: ${({ disabled }) => (disabled ? '0.5px solid #D1D5DB' : `2px solid ${THEME_COLORS.primary}`)};
   }
 
   :focus {
-    outline: 2px solid #46b955;
+    outline: 2px solid ${THEME_COLORS.primary};
   }
 
   @media (max-width: ${size.mobile}) {

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { size } from 'src/breakpoints';
 import { FC } from 'src/types';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { BottomDrawer } from './BottomDrawer';
 import { ChevronDown } from './Icons';
@@ -67,11 +68,11 @@ const Container = styled.div<Props>`
   border-bottom: ${(p) => (p.open ? '0.5px' : '0px')} solid #9caeaf;
   cursor: pointer;
   :hover {
-    border-top: 0.5px solid #46b955;
-    border-left: 0.5px solid #46b955;
-    border-right: 0.5px solid #46b955;
-    border-bottom: ${(p) => (p.open ? '0.5px' : '0px')} solid #46b955;
-    outline: 0.5px solid #46b955;
+    border-top: 0.5px solid ${THEME_COLORS.primary};
+    border-left: 0.5px solid ${THEME_COLORS.primary};
+    border-right: 0.5px solid ${THEME_COLORS.primary};
+    border-bottom: ${(p) => (p.open ? '0.5px' : '0px')} solid ${THEME_COLORS.primary};
+    outline: 0.5px solid ${THEME_COLORS.primary};
   }
 `;
 const Header = styled.div<Props>`
@@ -83,7 +84,7 @@ const Header = styled.div<Props>`
   justify-content: space-between;
   align-items: center;
   :hover {
-    border-bottom: 0.5px solid ${(p) => (!p.open ? '#46b955' : '#9ca3af')};
+    border-bottom: 0.5px solid ${(p) => (!p.open ? THEME_COLORS.primary : '#9ca3af')};
   }
 
   @media (max-width: ${size.mobile}) {

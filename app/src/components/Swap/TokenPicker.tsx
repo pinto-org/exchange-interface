@@ -12,6 +12,7 @@ import { useTokens } from 'src/tokens/useTokens';
 import { displayTokenName, getTokenIndex } from 'src/tokens/utils';
 import { FC } from 'src/types';
 import { displayTokenSymbol } from 'src/utils/format';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { BottomDrawer } from '../BottomDrawer';
 import { ChevronDown } from '../Icons';
@@ -47,7 +48,7 @@ export const TokenPicker: FC<TokenPickerProps> = ({
   const {
     data: balances,
     isLoading: balancesLoading,
-    error: balancesError,
+    error: _balancesError,
     refetch,
     isFetching
   } = useAllTokensBalance();
@@ -123,18 +124,18 @@ export const TokenPicker: FC<TokenPickerProps> = ({
           {connectorFor === 'input-amount' && (
             <InConnector>
               <svg xmlns='http://www.w3.org/2000/svg' width={48} height={6} fill='none'>
-                <path id='line' stroke='#46B955' d='M0 3h47.5' />
+                <path id='line' stroke={THEME_COLORS.primary} d='M0 3h47.5' />
                 <path fill='#F9F8F6' stroke='#3E404B' d='M48.5 5.45a2.5 2.5 0 0 1 0-4.9v4.9Z' />
-                <path fill='#F9F8F6' stroke='#46B955' d='M0 .55a2.5 2.5 0 0 1 0 4.9V.55Z' />
+                <path fill='#F9F8F6' stroke={THEME_COLORS.primary} d='M0 .55a2.5 2.5 0 0 1 0 4.9V.55Z' />
               </svg>
             </InConnector>
           )}
           {connectorFor === 'output-amount' && (
             <OutConnector>
               <svg xmlns='http://www.w3.org/2000/svg' width={48} height={184} fill='none'>
-                <path id='line' stroke='#46B955' d='M-1 171H21a3 3 0 0 0 3-3V5a3 3 0 0 1 3-3h20.5' />
+                <path id='line' stroke={THEME_COLORS.primary} d='M-1 171H21a3 3 0 0 0 3-3V5a3 3 0 0 1 3-3h20.5' />
                 <path fill='#F9F8F6' stroke='#3E404B' d='M48.5 5.45a2.5 2.5 0 0 1 0-4.9v4.9Z' />
-                <path fill='#F9F8F6' stroke='#46B955' d='M0 167.55a2.502 2.502 0 0 1 0 4.9v-4.9Z' />
+                <path fill='#F9F8F6' stroke={THEME_COLORS.primary} d='M0 167.55a2.502 2.502 0 0 1 0 4.9v-4.9Z' />
               </svg>
             </OutConnector>
           )}
@@ -212,7 +213,7 @@ const TokenRow = styled.li`
 
   :hover {
     background: rgba(70, 185, 85, 0.1);
-    outline: 0.5px solid #46b955;
+    outline: 0.5px solid ${THEME_COLORS.primary};
   }
 `;
 const Details = styled.div`

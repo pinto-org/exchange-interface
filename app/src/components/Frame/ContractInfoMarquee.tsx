@@ -121,7 +121,7 @@ const InfoText = styled.div`
 `;
 
 const TextLink = styled.a`
-  color: #46b955;
+  color: #0052ff;
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;

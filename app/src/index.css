@@ -77,7 +77,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 :focus {
-  outline: 1px solid #46b955;
+  outline: 1px solid #0052FF;
   box-sizing: border-box;
 }
 

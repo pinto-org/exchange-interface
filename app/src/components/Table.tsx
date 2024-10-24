@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { mediaQuery, size } from 'src/breakpoints';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 export const Table = styled.table`
   border: 0.5px solid #9ca3af;
@@ -17,9 +18,11 @@ export const Row = styled.tr`
 
   :hover {
     cursor: pointer;
-    background-color: #f0fdf4;
+    background-color: ${THEME_COLORS.primaryLight};
   }
 `;
+
+
 export const Th = styled.th`
   padding: 16px;
   color: #4b5563;

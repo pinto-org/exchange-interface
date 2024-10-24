@@ -7,6 +7,7 @@ import shapesIcons from 'src/assets/images/home-banner.svg';
 import { mediaQuery } from 'src/breakpoints';
 import { ContractInfoMarquee } from 'src/components/Frame/ContractInfoMarquee';
 import { BodyL } from 'src/components/Typography';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 const copy = {
   build: 'Use DEX components written, audited and deployed by other developers for your custom liquidity pool.',
@@ -198,11 +199,11 @@ const GetStarted = styled.div`
   cursor: pointer;
 
   :hover {
-    outline: 2px solid #46b955;
+    outline: 2px solid ${THEME_COLORS.primary};
   }
 
   :focus {
-    outline: 2px solid #46b955;
+    outline: 2px solid ${THEME_COLORS.primary};
   }
 `;
 
@@ -269,7 +270,7 @@ const WhitepaperLink = styled.a`
   font-size: 14px;
   line-height: 22px;
   text-align: center;
-  color: #46b955;
+  color: ${THEME_COLORS.primary};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -342,8 +343,8 @@ const AccordionItem = styled.a`
   text-decoration: none;
 
   &:hover {
-    border: 1.5px solid #46b955;
-    background-color: #f0fdf4;
+    border: 1.5px solid ${THEME_COLORS.primary};
+    background-color: ${THEME_COLORS.primaryLight};
     outline: 0.5px solid transparent;
     max-height: 250px; // Adjust as needed for your content
   }

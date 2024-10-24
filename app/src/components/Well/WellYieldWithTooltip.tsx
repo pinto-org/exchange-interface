@@ -8,6 +8,7 @@ import { TokenValue } from '@exchange/sdk-core';
 import StartSparkle from 'src/assets/images/start-sparkle.svg';
 import { mediaQuery } from 'src/breakpoints';
 import useSdk from 'src/utils/sdk/useSdk';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 import { useIsMobile } from 'src/utils/ui/useIsMobile';
 import { useBeanstalkSiloAPYs } from 'src/wells/useBeanstalkSiloAPYs';
 
@@ -135,7 +136,7 @@ const TitleContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     ${BodyS}
-    color: #46b955;
+    color: ${THEME_COLORS.primary};
     font-weight: 600;
 
     .logo-wrapper {
@@ -180,7 +181,7 @@ const ChildContainer = styled.div`
   gap: 4px;
   background: #edf8ee;
   padding: 4px;
-  color: #46b955;
+  color: ${THEME_COLORS.primary};
   width: max-content;
   border-radius: 4px;
 

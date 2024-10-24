@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Control, Controller, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAccount, useChainId } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 import { ERC20Token, TokenValue } from '@exchange/sdk-core';
 

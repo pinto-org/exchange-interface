@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ToastBar, Toaster } from 'react-hot-toast';
 
 import { size } from 'src/breakpoints';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { Error, Success } from '../Icons';
 
@@ -42,7 +43,7 @@ export default function CustomToaster() {
           duration: 4000,
           icon: (
             <div>
-              <Success color='#46b955' width={16} height={16} />
+              <Success color={THEME_COLORS.primary} width={16} height={16} />
             </div>
           )
         },

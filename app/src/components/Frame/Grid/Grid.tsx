@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 import { FC } from 'src/types';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 import { useWiggle } from './useWiggle';
 
@@ -76,7 +77,7 @@ export const Grid: FC<Grid> = ({ gridSize = 24, bigGrid = false, content, color 
           ref={pathRef}
           style={{
             strokeWidth: '2.5px',
-            stroke: 'rgb(70 185 85 / 70%)'
+            stroke: THEME_COLORS.primary
           }}
           d=''
           fill='none'

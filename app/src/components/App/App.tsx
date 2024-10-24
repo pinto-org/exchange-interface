@@ -17,7 +17,7 @@ import { Settings } from 'src/settings';
 import { ForceSupportedChainId } from './ForceSupportedChainId';
 
 export const App = ({}) => {
-  const isNotProd = !Settings.PRODUCTION && false;
+  const isNotProd = !Settings.PRODUCTION;
 
   return (
     <>

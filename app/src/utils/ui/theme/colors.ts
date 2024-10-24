@@ -13,9 +13,13 @@ export type ThemeColor =
   | 'stone'
   | 'stoneLight';
 
+const BASE_BLUE = '#0052FF';
+
+const BASE_BLUE_LIGHT = '#F0F5FF';
+
 export const THEME_COLORS: Record<ThemeColor, string> = {
-  primary: '#46b955',
-  primaryLight: '#F0FDF4',
+  primary: BASE_BLUE,
+  primaryLight: BASE_BLUE_LIGHT,
   black: '#000',
   white: '#fff',
   gray: '#4B5563',

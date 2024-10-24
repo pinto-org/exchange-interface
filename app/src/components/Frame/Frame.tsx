@@ -10,7 +10,7 @@ import { WalletButton } from 'src/components/Wallet';
 import { Settings } from 'src/settings';
 import { FC } from 'src/types';
 import { useSdkChainId } from 'src/utils/chain';
-import { theme } from 'src/utils/ui/theme';
+import { theme, THEME_COLORS } from 'src/utils/ui/theme';
 
 import { Footer } from './Footer';
 import { TokenMarquee } from './TokenMarquee';
@@ -200,7 +200,7 @@ const NavLink = styled(Link)<NavLinkProps>`
     outline: none !important;
   }
   :hover {
-    background-color: #f0fdf4;
+    background-color: ${THEME_COLORS.primaryLight};
   }
   &:last-child {
     border-right: 0.5px solid black;

@@ -63,7 +63,7 @@ const getButtonBgColor = (props: BaseButtonProps) => {
 const getButtonOutline = (props: BaseButtonProps) => {
   if (props.disabled) return theme.colors.disabled;
   if (props.$variant === 'outlined') {
-    return props.$secondary ? theme.colors.lightGray : theme.colors.black;
+    return props.$secondary ? theme.colors.lightGray : theme.colors.primary;
   }
   return theme.colors.black;
 };

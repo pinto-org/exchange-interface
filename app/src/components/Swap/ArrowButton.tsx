@@ -4,6 +4,7 @@ import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
 import { FC } from 'src/types';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 
 type ArrowButtonType = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -43,12 +44,12 @@ const Button = styled.button`
 
   :hover {
     background-color: #f1efec;
-    outline: 2px solid #46b955;
+    outline: 2px solid ${THEME_COLORS.primary};
     cursor: pointer;
   }
 
   :focus {
-    outline: 0.5px solid #46b955;
+    outline: 0.5px solid ${THEME_COLORS.primary};
     outline-offset: -0.5px;
   }
 `;

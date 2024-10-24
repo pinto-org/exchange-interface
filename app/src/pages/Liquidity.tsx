@@ -23,6 +23,7 @@ import { LearnWellFunction } from 'src/components/Well/LearnWellFunction';
 import { LearnYield } from 'src/components/Well/LearnYield';
 import { LiquidityBox } from 'src/components/Well/LiquidityBox';
 import { Log } from 'src/utils/logger';
+import { THEME_COLORS } from 'src/utils/ui/theme';
 import { useWellWithParams } from 'src/wells/useWellWithParams';
 
 export const Liquidity = () => {
@@ -84,7 +85,7 @@ export const Liquidity = () => {
                   onClick={toggle}
                   padding='0px'
                   alt='Click to expand and learn how to earn yield'
-                  color={'#46B955'}
+                  color={THEME_COLORS.primary}
                 />
               </LearnMoreText>
               <LearnMoreLine />
@@ -245,7 +246,7 @@ const LearnMoreText = styled.div`
   gap: 8px;
   align-items: center;
   width: 195px;
-  color: #46b955;
+  color: ${THEME_COLORS.primary};
   padding-right: 8px;
   padding-left: 8px;
   ${BodyXS}

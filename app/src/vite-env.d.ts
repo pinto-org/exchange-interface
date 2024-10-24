@@ -30,6 +30,11 @@ interface ImportMetaEnv {
    *
    */
   readonly VITE_LOAD_HISTORY_FROM_GRAPH: string;
+
+  /**
+   * VNET RPC URL for the network
+   */
+  readonly VITE_VNET_RPC_URL?: string;
 }
 
 interface ImportMeta {

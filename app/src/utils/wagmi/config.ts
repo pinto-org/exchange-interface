@@ -4,11 +4,12 @@ import { http, createConfig } from 'wagmi';
 
 import { ChainId } from '@exchange/sdk-core';
 
-import { isPROD } from 'src/settings';
+import { isDeployPreview, isDEV, isPROD } from 'src/settings';
 
 import {
   localFork,
-  baseMainnet
+  baseMainnet,
+  baseTestnet
   // testnet
 } from './chains';
 import { getRpcUrl } from './urls';
@@ -23,16 +24,31 @@ if (!WALLET_CONNECT_PROJECT_ID) {
   throw new Error('VITE_WALLETCONNECT_PROJECT_ID is not set');
 }
 
-const chains: ChainsConfig = isPROD ? [baseMainnet] : [localFork, baseMainnet];
+const chains: ChainsConfig = (() => {
+  if (isPROD) {
+    return [baseMainnet];
+  }
+  if (isDeployPreview) {
+    return [baseTestnet];
+  }
+  return [localFork, baseTestnet, baseMainnet];
+})();
 
-const transports: TransportsConfig = isPROD
-  ? {
-      [baseMainnet.id]: http(getRpcUrl(ChainId.BASE_MAINNET))
-    }
-  : {
-      [localFork.id]: http(localFork.rpcUrls.default.http[0]),
-      [baseMainnet.id]: http(getRpcUrl(ChainId.BASE_MAINNET))
-    };
+const transports: TransportsConfig = (() => {
+  const config = {} as TransportsConfig;
+
+  if (isDEV && !isDeployPreview) {
+    config[localFork.id] = http(localFork.rpcUrls.default.http[0]);
+  }
+
+  if (isDeployPreview) {
+    config[baseTestnet.id] = http(getRpcUrl(ChainId.TESTNET));
+  }
+
+  config[baseMainnet.id] = http(getRpcUrl(ChainId.BASE_MAINNET));
+
+  return config;
+})();
 
 const configObject = {
   chains,
