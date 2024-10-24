@@ -301,7 +301,6 @@ const AddLiquidityContent = ({
     (index: number) => (amount: TokenValue) => {
       if (!canFetchPrices || !prices) {
         setAmounts({ ...amounts, [index]: amount });
-        console.log('inbalanced mode...');
         return;
       }
       const amountInUSD = amount.mul(prices[index] || TokenValue.ZERO);

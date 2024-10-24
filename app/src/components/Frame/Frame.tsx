@@ -19,108 +19,116 @@ import { BurgerMenuIcon, Discord, Github, Logo, Twitter, X, BeanstalkLogoBlack }
 import CustomToaster from '../TxnToast/CustomToaster';
 import { LinksNav } from '../Typography';
 
+const isNotProd = !Settings.PRODUCTION;
+
 export const Frame: FC<{}> = ({ children }) => {
-  const isNotProd = !Settings.PRODUCTION;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const resolvedcid = useSdkChainId();
 
   return (
-    <Container id='frame'>
-      {/* Desktop */}
-      <NavContainer>
-        <NavGrid>
-          <BrandContainer onClick={() => setMobileMenuOpen(false)}>
-            <Brand>
-              <Link to={'/'}>
-                <LogoContainer>
-                  <Logo />
-                </LogoContainer>
-                <BasinText>PINTO EXCHANGE</BasinText>
-              </Link>
-            </Brand>
-          </BrandContainer>
-          <LinksContainer>
-            <NavLinks>
-              <NavLink to='/build' hovericon={buildIcon}>
+    <>
+      <Container id='frame'>
+        {/* Desktop */}
+        <NavContainer>
+          <NavGrid>
+            <BrandContainer onClick={() => setMobileMenuOpen(false)}>
+              <Brand>
+                <Link to={'/'}>
+                  <LogoContainer>
+                    <Logo />
+                  </LogoContainer>
+                  <BasinText>PINTO EXCHANGE</BasinText>
+                </Link>
+              </Brand>
+            </BrandContainer>
+            {/* <NavLinkWrapper> */}
+            <NavLinksGrid>
+              <NavLink className='desktop-nav-item' to='/build' hovericon={buildIcon}>
                 Build
               </NavLink>
-              <NavLink to={`/wells/${resolvedcid}`} hovericon={wellsIcon}>
+              <NavLink className='desktop-nav-item' to={`/wells/${resolvedcid}`} hovericon={wellsIcon}>
                 Liquidity
               </NavLink>
-              <NavLink to='/swap' hovericon={swapIcon}>
+              <NavLink className='desktop-nav-item' to='/swap' hovericon={swapIcon}>
                 Swap
               </NavLink>
-              {(isNotProd || false) && <NavLink to='/dev'>Dev</NavLink>}
-            </NavLinks>
-          </LinksContainer>
-          <StyledConnectContainer>
-            <WalletButton />
-          </StyledConnectContainer>
-          <DropdownMenu open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X /> : <BurgerMenuIcon />}
-          </DropdownMenu>
-        </NavGrid>
-      </NavContainer>
-      <TokenMarquee />
-      <Window>
-        <CustomToaster />
-        <BurgerMenu open={mobileMenuOpen}>
-          <MobileNavLinkContainer>
-            <MobileNavLink $bold to='/swap' onClick={() => setMobileMenuOpen(false)}>
-              Swap
-            </MobileNavLink>
-            <MobileNavLink $bold to={`/wells/${resolvedcid}`} onClick={() => setMobileMenuOpen(false)}>
-              Wells
-            </MobileNavLink>
-            <MobileNavLink $bold to='/build' onClick={() => setMobileMenuOpen(false)}>
-              Build
-            </MobileNavLink>
-            {isNotProd && (
-              <MobileNavLink $bold to='/dev' onClick={() => setMobileMenuOpen(false)}>
-                Dev
+              {isNotProd && (
+                <NavLink className='desktop-nav-item' to='/dev'>
+                  Dev
+                </NavLink>
+              )}
+            </NavLinksGrid>
+            {/* </NavLinkWrapper> */}
+            <StyledConnectContainer>
+              <WalletButton />
+            </StyledConnectContainer>
+          </NavGrid>
+        </NavContainer>
+        <TokenMarquee />
+        <Window>
+          <CustomToaster />
+          <BurgerMenu open={mobileMenuOpen}>
+            <MobileNavLinkContainer>
+              <MobileNavLink $bold to='/swap' onClick={() => setMobileMenuOpen(false)}>
+                Swap
               </MobileNavLink>
-            )}
-            <MobileLargeNavRow onClick={() => setMobileMenuOpen(false)}>
-              <Box href='https://basin.exchange/discord' rel='noopener noreferrer' target='_blank'>
-                <Discord width={20} />
-              </Box>
-              <Box href='https://twitter.com/basinexchange' rel='noopener noreferrer' target='_blank'>
-                <Twitter width={20} />
-              </Box>
-              <Box href='https://github.com/BeanstalkFarms/Basin' rel='noopener noreferrer' target='_blank'>
-                <Github width={20} />
-              </Box>
-              <Box href='https://bean.money' rel='noopener noreferrer' target='_blank'>
-                <BeanstalkLogoBlack width={20} />
-              </Box>
-            </MobileLargeNavRow>
-            <MobileNavRow
-              href='https://immunefi.com/bounty/beanstalk/'
-              rel='noopener noreferrer'
-              target='_blank'
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Bug Bounty Program
-            </MobileNavRow>
-            <MobileNavRow
-              href='https://docs.basin.exchange/'
-              rel='noopener noreferrer'
-              target='_blank'
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Documentation
-            </MobileNavRow>
-          </MobileNavLinkContainer>
-          <MobileConnectContainer>
-            <WalletButton />
-          </MobileConnectContainer>
-        </BurgerMenu>
-        {/* TODO Restore this */}
-        {/* {chain?.unsupported ? <Title title="Unsupported Chain" /> : children} */}
-        {children}
-      </Window>
-      <Footer />
-    </Container>
+              <MobileNavLink $bold to={`/wells/${resolvedcid}`} onClick={() => setMobileMenuOpen(false)}>
+                Wells
+              </MobileNavLink>
+              <MobileNavLink $bold to='/build' onClick={() => setMobileMenuOpen(false)}>
+                Build
+              </MobileNavLink>
+              {isNotProd && (
+                <MobileNavLink $bold to='/dev' onClick={() => setMobileMenuOpen(false)}>
+                  Dev
+                </MobileNavLink>
+              )}
+              <MobileLargeNavRow onClick={() => setMobileMenuOpen(false)}>
+                <Box href='https://basin.exchange/discord' rel='noopener noreferrer' target='_blank'>
+                  <Discord width={20} />
+                </Box>
+                <Box href='https://twitter.com/basinexchange' rel='noopener noreferrer' target='_blank'>
+                  <Twitter width={20} />
+                </Box>
+                <Box href='https://github.com/BeanstalkFarms/Basin' rel='noopener noreferrer' target='_blank'>
+                  <Github width={20} />
+                </Box>
+                <Box href='https://bean.money' rel='noopener noreferrer' target='_blank'>
+                  <BeanstalkLogoBlack width={20} />
+                </Box>
+              </MobileLargeNavRow>
+              <MobileNavRow
+                href='https://immunefi.com/bounty/beanstalk/'
+                rel='noopener noreferrer'
+                target='_blank'
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Bug Bounty Program
+              </MobileNavRow>
+              <MobileNavRow
+                href='https://docs.basin.exchange/'
+                rel='noopener noreferrer'
+                target='_blank'
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Documentation
+              </MobileNavRow>
+            </MobileNavLinkContainer>
+            <MobileConnectContainer>
+              <WalletButton />
+            </MobileConnectContainer>
+          </BurgerMenu>
+          {/* TODO Restore this */}
+          {/* {chain?.unsupported ? <Title title="Unsupported Chain" /> : children} */}
+          {children}
+        </Window>
+        <Footer />
+      </Container>
+
+      <DropdownMenu open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        {mobileMenuOpen ? <X /> : <BurgerMenuIcon />}
+      </DropdownMenu>
+    </>
   );
 };
 
@@ -159,7 +167,7 @@ const NavContainer = styled.nav`
 
 const NavGrid = styled.div`
   display: grid;
-  grid-template-columns: 178px 1fr 192px;
+  grid-template-columns: 280px 1fr 280px;
   align-items: center;
   height: 100%;
   width: 100%;
@@ -167,33 +175,56 @@ const NavGrid = styled.div`
   ${theme.media.query.md.down} {
     grid-template-columns: 1fr 1fr;
   }
-`;
 
-const NavLinks = styled.div`
-  display: none;
   ${theme.media.query.md.up} {
-    display: flex;
-    align-self: stretch;
-    align-items: center;
+    & > *:nth-child(2) {
+      justify-self: center; // Centers horizontally
+      align-self: center; // Centers vertically
+    }
   }
 `;
+
+const NavLinksGrid = styled.div`
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(${isNotProd ? 4 : 3}, minmax(150px, 192px));
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  justify-content: center;
+
+  align-self: center;
+
+  .desktop-nav-item {
+    border-left: 0.5px solid black;
+    outline: none;
+  }
+
+  .desktop-nav-item:last-child {
+    border-right: 0.5px solid black;
+  }
+
+  ${theme.media.query.md.down} {
+    display: none;
+  }
+`;
+
 const NavLink = styled(Link)<NavLinkProps>`
-  border-left: 0.5px solid black;
   box-sizing: border-box;
   display: flex;
-  width: 192px;
   align-self: stretch;
   align-items: center;
   justify-content: center;
-
   text-decoration: none;
   text-transform: uppercase;
+  height: 100%;
+  width: 100%;
+  min-width: 150px;
 
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
   color: black;
-  outline: none !important;
   cursor: ${(props) => (props.hovericon ? `url(${props.hovericon}), auto` : 'pointer')};
 
   :focus {
@@ -204,16 +235,6 @@ const NavLink = styled(Link)<NavLinkProps>`
   }
   &:last-child {
     border-right: 0.5px solid black;
-  }
-`;
-const LinksContainer = styled.div`
-  display: flex;
-  justify-self: center;
-  flex-direction: row;
-  align-self: stretch;
-
-  ${theme.media.query.md.down} {
-    display: none;
   }
 `;
 
@@ -230,7 +251,7 @@ const BrandContainer = styled.div`
 `;
 
 const BasinText = styled.div`
-  word-wrap: no-wrap;
+  white-space: nowrap;
   margin-bottom: -4px;
 `;
 
@@ -275,7 +296,8 @@ const StyledConnectContainer = styled.div`
     direction: row;
     width: 192px;
     align-self: stretch;
-    align-items: center;
+    align-items: flex-end;
+    justify-self: flex-end;
     justify-content: center;
     border-left: 0.5px solid black;
     box-sizing: border-box;
