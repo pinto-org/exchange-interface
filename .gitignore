@@ -7,7 +7,14 @@ cache
 yarn-error.log
 temp
 
-.DS_Store
+.yarn/*
+.yarn/install-state.gz
+!.yarn/patches1
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # netlify
 .netlify
+.DS_Store
