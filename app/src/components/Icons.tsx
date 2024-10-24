@@ -325,3 +325,15 @@ export const XIcon = ({ color = '#000', width = 16, height = 16 }: SVGProps) => 
     <path d='M1 9L9 1' stroke={color} strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
   </svg>
 );
+
+
+export const PintoLogoBlack = ({ width = 24, height = 24 }: SVGProps) => (
+  <svg width={width} height={height} viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <path
+      fillRule='evenodd'
+      clipRule='evenodd'
+      fill='black'
+      d='M24 48C37.2548 48 48 37.2548 48 24C48 10.7452 37.2548 0 24 0C10.7452 0 0 10.7452 0 24C0 37.2548 10.7452 48 24 48ZM12.542 19.714V12.184H20C20 16.343 16.661 19.714 12.542 19.714ZM11.458 19.714V12.184H4C4 16.343 7.339 19.714 11.458 19.714ZM17.65 6H12.515V11.185C15.351 11.185 17.65 8.864 17.65 6ZM11.458 11.185V6H6.323C6.323 8.864 8.623 11.185 11.458 11.185Z'
+    />
+  </svg>
+);

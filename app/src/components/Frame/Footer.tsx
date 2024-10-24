@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { mediaQuery, size } from 'src/breakpoints';
 import { THEME_COLORS } from 'src/utils/ui/theme';
 
-import { BeanstalkLogoBlack, Discord, Github, Twitter } from '../Icons';
+import { BeanstalkLogoBlack, Discord, Github, PintoLogoBlack, Twitter } from '../Icons';
 
 export const Footer = () => (
   <Container>
@@ -31,11 +31,11 @@ export const Footer = () => (
     <SmallBox href='https://twitter.com/basinexchange' rel='noopener noreferrer' target='_blank'>
       <Twitter width={20} />
     </SmallBox>
+    <SmallBox href='https://app.pinto.money' rel='noopener noreferrer' target='_blank'>
+      <PintoLogoBlack width={20} />
+    </SmallBox>
     <SmallBox href='https://github.com/BeanstalkFarms/Basin' rel='noopener noreferrer' target='_blank'>
       <Github width={20} />
-    </SmallBox>
-    <SmallBox href='https://app.pinto.money' rel='noopener noreferrer' target='_blank'>
-      <BeanstalkLogoBlack width={20} />
     </SmallBox>
   </Container>
 );
