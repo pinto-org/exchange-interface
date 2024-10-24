@@ -2,7 +2,7 @@ import { DiamondSDK } from 'src/lib/DiamondSDK';
 import { ethers } from 'ethers';
 import { TokenValue, Token } from '@exchange/sdk-core';
 import { TokenSiloBalance, Deposit } from './types';
-import { SiloGettersFacet } from 'src/constants/generated/Pinto';
+import { SiloGettersFacet } from 'src/constants/generated/Diamond';
 
 export function sortCrates(state: TokenSiloBalance) {
   state.deposits = state.deposits.sort(
