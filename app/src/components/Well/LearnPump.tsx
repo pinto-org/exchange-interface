@@ -26,7 +26,7 @@ function PumpDetails({ well }: Props) {
         <div>
           The{' '}
           <StyledLink href='https://basin.exchange/multi-flow-pump.pdf' target='_blank' rel='noopener'>
-            Multi Flow Pumpv1.1
+            Multi Flow Pump
           </StyledLink>{' '}
           is attached to {well?.tokens ? `the ${formatWellTokenSymbols(well)} Well` : 'this well'}.
         </div>

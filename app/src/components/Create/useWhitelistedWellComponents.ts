@@ -4,6 +4,7 @@ import { ChainId } from '@exchange/sdk-core';
 
 import ClockIcon from 'src/assets/images/clock-icon.svg';
 import Code4renaLogo from 'src/assets/images/code4rena-logo.png';
+import codeHawksLogo from 'src/assets/images/codehawks-logo.png';
 import CyrfinLogo from 'src/assets/images/cyrfin-logo.svg';
 import HalbornLogo from 'src/assets/images/halborn-logo.png';
 import { AddressMap } from 'src/types';
@@ -61,6 +62,9 @@ const halbornAuditLink =
 const cyfrinAuditLink =
   'https://github.com/BeanstalkFarms/Beanstalk-Audits/blob/main/ecosystem/06-16-23-basin-cyfrin-report.pdf';
 
+const codeHawksMFPAndCP2AuditLink =
+  'https://codehawks.cyfrin.io/c/2024-04-Beanstalk-DIB/results?lt=contest&page=1&sc=reward&sj=reward&t=report';
+
 const basinAuditInfo = [
   {
     value: 'Cyfrin',
@@ -76,6 +80,14 @@ const basinAuditInfo = [
     value: 'Code4rena',
     imgSrc: Code4renaLogo,
     url: code4ArenaAuditLink
+  }
+];
+
+const codehawksAuditInfo = [
+  {
+    value: 'CodeHawks',
+    imgSrc: codeHawksLogo,
+    url: codeHawksMFPAndCP2AuditLink
   }
 ];
 
@@ -96,7 +108,7 @@ const WellDotSol: WellComponentInfo = {
     url: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/Well.sol'
   },
   info: [
-    { label: 'Block Deployed', value: '17977943' },
+    { label: 'Block Deployed', value: '17562613' },
     { label: 'Audited by', value: basinAuditInfo }
   ],
   links: {
@@ -109,7 +121,7 @@ const MultiFlowPump: WellComponentInfo = {
   address: '',
   component: {
     name: 'Multi Flow',
-    fullName: 'Multi Flow Pump V1.1',
+    fullName: 'Multi Flow Pump',
     summary: 'An inter-block MEV manipulation resistant oracle implementation.',
     description: [
       'Comprehensive multi-block MEV manipulation-resistant oracle implementation which serves up Well pricing data with an EMA for instantaneous prices and a TWAP for weighted averages over time.'
@@ -122,8 +134,8 @@ const MultiFlowPump: WellComponentInfo = {
     }
   },
   info: [
-    { label: 'Deployed Block', value: '17977942' },
-    { label: 'Audited by', value: basinAuditInfo }
+    { label: 'Deployed Block', value: '21191372' },
+    { label: 'Audited by', value: [...basinAuditInfo, ...codehawksAuditInfo] }
   ],
   links: {
     github: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/pumps/MultiFlowPump.sol',
@@ -146,8 +158,8 @@ const ConstantProduct2: WellComponentInfo = {
     usedBy: 0
   },
   info: [
-    { label: 'Deployed Block', value: '17977906' },
-    { label: 'Audited by', value: basinAuditInfo }
+    { label: 'Deployed Block', value: '21191373' },
+    { label: 'Audited by', value: [...basinAuditInfo, ...codehawksAuditInfo] }
   ],
   links: {
     github: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/functions/ConstantProduct2.sol',

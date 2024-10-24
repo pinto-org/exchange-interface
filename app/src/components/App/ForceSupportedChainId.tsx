@@ -83,6 +83,7 @@ export const ForceSupportedChainId = () => {
   };
 
   useEffect(() => {
+    if (!urlChainId) return;
     if (chainId !== urlChainId) return;
     if (navLink) {
       const url = navLink;

@@ -22,15 +22,15 @@ const useWellDetailsDefaultValues = () => {
   const { wellImplementation, wellTokens, wellFunction } = useCreateWell();
   const sdk = useSdk();
 
-  const wellDotSolL2 = sdk.addresses.WELL_DOT_SOL.BASE_MAINNET;
+  const upgradableWell = sdk.addresses.WELL_UPGRADEABLE.get(sdk.chainId);
 
   const wellName = wellFunction?.name;
   const wellSymbol = wellFunction?.symbol;
   const token1 = wellTokens?.token1?.symbol;
   const token2 = wellTokens?.token2?.symbol;
 
-  const upgradeable = wellImplementation?.toLowerCase() === wellDotSolL2.toLowerCase();
-  const upgradeableNameFragment = upgradeable ? ' Upgradeable ' : '';
+  const upgradeable = wellImplementation?.toLowerCase() === upgradableWell.toLowerCase();
+  const upgradeableNameFragment = upgradeable ? ' Upgradeable ' : ' ';
   const upgradeableSymbolFragment = upgradeable ? 'U-' : '';
 
   const defaultName =
