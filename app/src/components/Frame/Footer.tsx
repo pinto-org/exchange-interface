@@ -31,11 +31,12 @@ export const Footer = () => (
     <SmallBox href='https://twitter.com/basinexchange' rel='noopener noreferrer' target='_blank'>
       <Twitter width={20} />
     </SmallBox>
-    <SmallBox href='https://app.pinto.money' rel='noopener noreferrer' target='_blank'>
-      <PintoLogoBlack width={20} />
-    </SmallBox>
     <SmallBox href='https://github.com/BeanstalkFarms/Basin' rel='noopener noreferrer' target='_blank'>
       <Github width={20} />
+    </SmallBox>
+    <SmallBox href='https://app.pinto.money' rel='noopener noreferrer' target='_blank'>
+      {/* FIX ME */}
+      <BeanstalkLogoBlack width={20} />
     </SmallBox>
   </Container>
 );
