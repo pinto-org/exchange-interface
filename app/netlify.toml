@@ -5,7 +5,7 @@
     cd app && \
     yarn build:netlify
   """
-  publish = "app/dist/"
+  publish = "dist/"
 
 # These build env vars are specific only to Netlify.
 [build.environment]
