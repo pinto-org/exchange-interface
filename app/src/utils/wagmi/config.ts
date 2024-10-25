@@ -29,7 +29,8 @@ const chains: ChainsConfig = (() => {
     return [baseMainnet];
   }
   if (isDeployPreview) {
-    return [baseTestnet];
+    return [baseMainnet];
+    // return [baseTestnet];
   }
   return [localFork, baseTestnet, baseMainnet];
 })();
@@ -41,11 +42,12 @@ const transports: TransportsConfig = (() => {
     config[localFork.id] = http(localFork.rpcUrls.default.http[0]);
   }
 
-  if (isDeployPreview) {
-    config[baseTestnet.id] = http(getRpcUrl(ChainId.TESTNET));
-  }
+  // if (isDeployPreview) {
+  //   config[baseTestnet.id] = http(getRpcUrl(ChainId.TESTNET));
+  // }
 
-  config[baseMainnet.id] = http(getRpcUrl(ChainId.BASE_MAINNET));
+  config[baseMainnet.id] = http(getRpcUrl(ChainId.TESTNET));
+  // config[baseMainnet.id] = http(getRpcUrl(ChainId.BASE_MAINNET));
 
   return config;
 })();

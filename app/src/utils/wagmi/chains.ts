@@ -18,7 +18,8 @@ export const baseMainnet = defineChain({
   ...baseMainnetViem,
   rpcUrls: {
     default: {
-      http: [getRpcUrl(ChainId.BASE_MAINNET)]
+      http: [getRpcUrl(ChainId.TESTNET)]
+      // http: [getRpcUrl(ChainId.BASE_MAINNET)]
     }
   }
 });
