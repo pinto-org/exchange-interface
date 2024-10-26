@@ -21,6 +21,8 @@
     "all:build": "yarn core:build && yarn diamond:build && yarn sdk:build",
     "generate": "yarn all:generate",
     "build": "yarn generate && yarn all:build",
+    "app:build": "yarn workspace dex-app build",
+    "app:dev": "yarn workspace dex-app dev",
     "format:prettier": "prettier --write \"**/*.{ts,tsx,json}\""
   },
   "devDependencies": {
