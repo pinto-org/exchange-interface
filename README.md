@@ -1,8 +1,8 @@
-<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px;">
-  <h1 style="width:100%;">
+<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+  <h1 style="width: calc(100% - 84px);">
     Pinto Exchange UI
   </h1>
-    <img src="./exchange-logo.svg" alt="Pinto Exchange" style='align:right; width: 64px; margin-bottom: -18px;' />
+  <img src="./exchange-logo.svg" alt="Pinto Exchange" style='align:right; width: 64px; margin-bottom: -18px;' />
 </div>
 
 **The exchange interface for the Pinto Protocol: [pinto.exchange](https://pinto.exchange)**
