@@ -17,11 +17,6 @@ interface ImportMetaEnv {
   readonly VITE_WALLETCONNECT_PROJECT_ID: string;
 
   /**
-   * Whether we are before the BS3 deploy
-   */
-  readonly VITE_BS3_DEPLOYED?: boolean;
-
-  /**
    *
    */
   readonly VITE_WELLS_ORIGIN_BLOCK: string;
