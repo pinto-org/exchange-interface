@@ -1,18 +1,13 @@
 import { getDefaultConfig } from 'connectkit';
 import { Chain, Transport } from 'viem';
-import { http, createConfig } from 'wagmi';
+import { http, createConfig, Config } from 'wagmi';
 
 import { ChainId } from '@exchange/sdk-core';
 
 import { isDeployPreview, isDEV, isPROD } from 'src/settings';
 
-import {
-  localFork,
-  baseMainnet,
-  baseTestnet
-  // testnet
-} from './chains';
-import { getRpcUrl } from './urls';
+import { localFork, baseMainnet, getBaseTestnet } from './chains';
+import { getRpcUrl, vnetRpcUrl } from './urls';
 
 type ChainsConfig = readonly [Chain, ...Chain[]];
 
@@ -24,47 +19,52 @@ if (!WALLET_CONNECT_PROJECT_ID) {
   throw new Error('VITE_WALLETCONNECT_PROJECT_ID is not set');
 }
 
-const chains: ChainsConfig = (() => {
-  if (isPROD) {
-    return [baseMainnet];
-  }
-  if (isDeployPreview) {
-    return [baseMainnet];
-    // return [baseTestnet];
-  }
-  return [localFork, baseTestnet, baseMainnet];
-})();
+export let config: Config<readonly [Chain, ...Chain[]], Record<number, Transport>>;
 
-const transports: TransportsConfig = (() => {
-  const config = {} as TransportsConfig;
+export function setWagmiConfig(testnetRpcUrl: string | undefined = vnetRpcUrl) {
+  const testnet = getBaseTestnet(testnetRpcUrl);
 
-  if (isDEV && !isDeployPreview) {
-    config[localFork.id] = http(localFork.rpcUrls.default.http[0]);
-  }
+  const chains: ChainsConfig = (() => {
+    if (isPROD) return [baseMainnet];
+    if (isDeployPreview) {
+      return testnet ? [testnet, baseMainnet] : [baseMainnet];
+    }
+    return testnet ? [testnet, localFork, baseMainnet] : [localFork, baseMainnet];
+  })();
 
-  // if (isDeployPreview) {
-  //   config[baseTestnet.id] = http(getRpcUrl(ChainId.TESTNET));
-  // }
+  const transports: TransportsConfig = (() => {
+    const transportsConfig = {} as TransportsConfig;
 
-  config[baseMainnet.id] = http(getRpcUrl(ChainId.TESTNET));
-  // config[baseMainnet.id] = http(getRpcUrl(ChainId.BASE_MAINNET));
+    transportsConfig[baseMainnet.id] = http(getRpcUrl(ChainId.TESTNET));
 
-  return config;
-})();
+    if (isPROD) return transportsConfig;
 
-const configObject = {
-  chains,
-  transports,
-  // Required App Info
-  appName: 'Basin',
-  // Optional App Info
-  appDescription: 'A Composable EVM-Native DEX',
-  appUrl: 'https://basin.exchange', // your app's url
-  appIcon: 'https://basin.exchange/favicon.svg', // your app's icon, no bigger than 1024x1024px (max. 1MB)
-  walletConnectProjectId: WALLET_CONNECT_PROJECT_ID
-};
+    // local fork
+    if (isDEV) {
+      transportsConfig[localFork.id] = http(localFork.rpcUrls.default.http[0]);
+    }
 
-// Add wallet connect if we have a project id env var
+    // Add testnet if we have a testnet rpc url
+    if (testnetRpcUrl && testnet) {
+      transportsConfig[testnet.id] = http(testnet.rpcUrls.default.http[0]);
+    }
 
-// Create the config object
-export const config = createConfig(getDefaultConfig(configObject));
+    return transportsConfig;
+  })();
+
+  const configProps = {
+    chains: chains,
+    transports: transports,
+    // Required App Info
+    appName: 'Basin',
+    // Optional App Info
+    appDescription: 'A Composable EVM-Native DEX',
+    appUrl: 'https://pinto.exchange', // your app's url
+    appIcon: 'https://pinto.exchange/favicon.svg', // your app's icon, no bigger than 1024x1024px (max. 1MB)
+    walletConnectProjectId: WALLET_CONNECT_PROJECT_ID
+  };
+
+  config = createConfig(getDefaultConfig(configProps));
+}
+
+setWagmiConfig();

@@ -2,7 +2,7 @@ import { ChainId } from '@exchange/sdk-core';
 
 const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
 
-const vnetRpcUrl = import.meta.env.VITE_VNET_RPC_URL;
+export const vnetRpcUrl = import.meta.env.VITE_VNET_RPC_URL;
 
 const LOCALHOST_RPC = 'http://localhost:8545';
 
