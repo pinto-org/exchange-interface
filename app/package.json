@@ -7,7 +7,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 2424",
-    "build": "yarn generate && tsc && vite build",
+    "app:build": "yarn generate && tsc && vite build",
+    "build": "yarn all:generate && yarn all:build && yarn app:build",
     "build:netlify": "./utils/build-netlify.sh",
     "generate:graphql": "graphql-codegen --config codegen.ts",
     "generate:typechain": "typechain --target=ethers-v5 --ts-nocheck --out-dir=./src/generated/types './src/abi/*.json'",
@@ -23,7 +24,6 @@
   "dependencies": {
     "@exchange/sdk": "workspace:*",
     "@exchange/sdk-core": "workspace:*",
-    "@exchange/sdk-diamond": "workspace:*",
     "@radix-ui/react-dialog": "1.0.5",
     "@radix-ui/react-dropdown-menu": "2.1.1",
     "@tanstack/react-query": "5.28.4",
