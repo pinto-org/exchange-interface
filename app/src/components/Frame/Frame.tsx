@@ -93,7 +93,7 @@ export const Frame: FC<{}> = ({ children }) => {
                 <Box href='https://github.com/BeanstalkFarms/Basin' rel='noopener noreferrer' target='_blank'>
                   <Github width={20} />
                 </Box>
-                <Box href='https://bean.money' rel='noopener noreferrer' target='_blank'>
+                <Box href='https://pinto.money' rel='noopener noreferrer' target='_blank'>
                   <BeanstalkLogoBlack width={20} />
                 </Box>
               </MobileLargeNavRow>

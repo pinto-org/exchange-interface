@@ -15,19 +15,19 @@ export const addresses = {
   // Ecosystem Contracts
   // ----------------------------------------
   DEPOT: Address.make({
-    [ChainId.BASE_MAINNET]: '0xDEb0f00B711f90e503D3035E890A19693ef27Db9'
+    [ChainId.BASE_MAINNET]: '0xDEb0f0328c86A1C13D3513C70b75A2cEC829E471'
   }),
   PIPELINE: Address.make({
-    [ChainId.BASE_MAINNET]: '0xb1bE000421A9d890cb51EBd9D593De9C0B199419'
+    [ChainId.BASE_MAINNET]: '0xb1bE000a5Dbf61dA9C4162A23958E7B28645c4f0'
   }),
   JUNCTION: Address.make({
-    [ChainId.BASE_MAINNET]: '0x5A5A5A5AF6db0CDA91d553fE3256dBa53Ce72Ee9'
+    [ChainId.BASE_MAINNET]: '0x5A5A5AF07D8a389472AdC1E60aA71BAC89Fcff8b'
   }),
   UNWRAP_AND_SEND_ETH: Address.make({
-    [ChainId.BASE_MAINNET]: '0xfE8ecCF700aA85f84eA7fE7207E165D1721b9572'
+    [ChainId.BASE_MAINNET]: '0x5E00369D669015750c8abb84039eB6B8af3DfC23'
   }),
   LSD_CHAINLINK_ORACLE: Address.make({
-    [ChainId.BASE_MAINNET]: '0x1CD1CD0a74C17F6943a661e26cC68d978e564635'
+    [ChainId.BASE_MAINNET]: '0x1CD1CD0f61A4fe185130FFd057b1Edf6A2ab442E'
   }),
 
   // ----------------------------------------
@@ -72,16 +72,16 @@ export const addresses = {
   // Wells Contracts
   // ----------------------------------------
   PINTOETH_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e110064EFC1915d24EC45f9c04591923d812233'
+    [ChainId.BASE_MAINNET]: '0x3e110022a76aEde1fA51E43913730FE3D4C3cCBC'
   }),
   PINTOCBETH_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e11110c4B8F9ece9dac99D220EF3CFfF03eD74f'
+    [ChainId.BASE_MAINNET]: '0x3e1111FF07062BbdaE1Af96fAF514133D9CE8Bfe'
   }),
   PINTOCBBTC_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e1122f7D416aa21B394044eFFfebd976Bbb7a68'
+    [ChainId.BASE_MAINNET]: '0x3e1122C27A21080546E9bca66421c078AF349Cd6'
   }),
   PINTOUSDC_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e1133FB8eF15e817203409b8379D99Fe968D254'
+    [ChainId.BASE_MAINNET]: '0x3e11334a0D56cA378cdE00a32f53C8cB0a7536b8'
   }),
 
   // ----------------------------------------

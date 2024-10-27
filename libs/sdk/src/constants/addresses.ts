@@ -7,34 +7,34 @@ export const addresses = {
 
   /////////////// Well Components ///////////////
   AQUIFER: Address.make({
-    [ChainId.BASE_MAINNET]: '0xBA51AAAb262240Dc643DbAEe69D1C6cE4a782Fc4'
+    [ChainId.BASE_MAINNET]: '0xBA51AAA7738dc08BC8d1F035ee3A2a8088658D1c'
   }),
 
   // Pumps
   MULTI_FLOW_PUMP: Address.make({
-    [ChainId.BASE_MAINNET]: '0xBA51AAA26459a4262C9fb32D12BE4590370D1D76'
+    [ChainId.BASE_MAINNET]: '0xBA51AA8474ff7ED83b6335288547B9271C6e4123'
   }),
 
   // Well Functions
   CONSTANT_PRODUCT_2: Address.make({
-    [ChainId.BASE_MAINNET]: '0xBA51CCDA01949F05eAd85435DbD78725262Ceaa2'
+    [ChainId.BASE_MAINNET]: '0xBA510C25b9F67D87Ee2D3246bc77fc49D1aC794B'
   }),
   STABLE2: Address.make({
-    [ChainId.BASE_MAINNET]: '0xBA51AA139613Ca485F5e139FE049B5B590211e7E'
+    [ChainId.BASE_MAINNET]: '0xBA51055c192789a72255C5203Ae0Ffb9b7FBbe15'
   }),
 
   // Well Implementations
   /** Upgradeable well implementation */
   WELL_UPGRADEABLE: Address.make({
-    [ChainId.BASE_MAINNET]: '0xBA51099EB68de5Ff86F6594e1B4052382946aefF'
+    [ChainId.BASE_MAINNET]: '0xBA510994430b55F7e4B943a22d9bF4cc5aF94A43'
   }),
   /** Immutable well implementation */
   WELL_DOT_SOL: Address.make({
-    [ChainId.BASE_MAINNET]: '0xBA510deDc07BAb13e6f8BEF3044D737D325c9Ce2'
+    [ChainId.BASE_MAINNET]: '0xBA5100B4A920c1Bc244d22d36C21766C14dcF550'
   }),
 
   STABLE2_LOOKUP: Address.make({
-    [ChainId.BASE_MAINNET]: '0xBA51055ee933ac6aB80Ad377e00a97226ED17223'
+    [ChainId.BASE_MAINNET]: '0xBA510A1347f56cBdfB24E3100b5d9aeedF367Cc9'
   }),
 
   /////////////// WETH9 ///////////////

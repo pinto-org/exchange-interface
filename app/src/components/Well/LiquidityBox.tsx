@@ -92,7 +92,7 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
                         {sdkToken?.symbol} LP token holders can Deposit their LP tokens in the{' '}
                         <a
                           className='underline'
-                          href='https://app.bean.money/#/silo'
+                          href='https://pinto.money/#/silo'
                           target='_blank'
                           rel='noopener noreferrer'
                         >
@@ -123,7 +123,7 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
                       <div className='tooltip-content'>
                         <a
                           className='underline'
-                          href='https://app.bean.money/#/balances'
+                          href='https://pinto.money/#/balances'
                           target='_blank'
                           rel='noopener noreferrer'
                         >
