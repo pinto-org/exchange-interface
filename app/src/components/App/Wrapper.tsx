@@ -15,16 +15,9 @@ import { OnLoad } from './OnLoad';
 
 export const Wrapper: FC<{}> = ({ children }) => {
   const queryClient = new QueryClient();
-
-  const wagmiConfig = config;
-
-  if (!wagmiConfig) {
-    return null;
-  }
-
   return (
     <HashRouter>
-      <WagmiProvider config={wagmiConfig}>
+      <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <ConnectKitProvider
             theme='minimal'

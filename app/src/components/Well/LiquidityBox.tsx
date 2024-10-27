@@ -16,7 +16,7 @@ import { useLPPositionSummary } from 'src/tokens/useLPPositionSummary';
 import { FC } from 'src/types';
 import { formatUSD } from 'src/utils/format';
 import useSdk from 'src/utils/sdk/useSdk';
-import { useBeanstalkSiloWhitelist } from 'src/wells/useBeanstalkSiloWhitelist';
+import { useSiloWhitelist } from 'src/wells/useSiloWhitelist';
 import { useWellLPTokenPrice } from 'src/wells/useWellLPTokenPrice';
 
 type Props = {
@@ -39,7 +39,7 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
   const sdk = useSdk();
 
   const { getPositionWithWell } = useLPPositionSummary();
-  const { getIsWhitelisted } = useBeanstalkSiloWhitelist();
+  const { getIsWhitelisted } = useSiloWhitelist();
 
   const position = getPositionWithWell(well);
   const isWhitelisted = getIsWhitelisted(well);
@@ -123,7 +123,7 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
                       <div className='tooltip-content'>
                         <a
                           className='underline'
-                          href='https://pinto.money/#/balances'
+                          href='https://app.bean.money/#/balances'
                           target='_blank'
                           rel='noopener noreferrer'
                         >
@@ -149,37 +149,39 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
           </>
         ) : null}
       </InfoBox.Body>
-      <InfoBox.Footer>
-        <USDWrapper>
-          <LoadingItem loading={loading} loadProps={{ height: 24, width: 100 }}>
-            {isWhitelisted ? (
-              <Tooltip
-                {...tooltipProps}
-                content={
-                  <Breakdown>
-                    <BreakdownRow>
-                      {'Wallet: '}
-                      <div>${externalUSD.toHuman('short')}</div>
-                    </BreakdownRow>
-                    <BreakdownRow>
-                      {'Silo Deposits: '}
-                      <div>${siloUSD.toHuman('short')}</div>
-                    </BreakdownRow>
-                    <BreakdownRow>
-                      {'Farm Balance: '}
-                      <div>${internalUSD.toHuman('short')}</div>
-                    </BreakdownRow>
-                  </Breakdown>
-                }
-              >
+      {USDTotal.gt(0) && (
+        <InfoBox.Footer>
+          <USDWrapper>
+            <LoadingItem loading={loading} loadProps={{ height: 24, width: 100 }}>
+              {isWhitelisted ? (
+                <Tooltip
+                  {...tooltipProps}
+                  content={
+                    <Breakdown>
+                      <BreakdownRow>
+                        {'Wallet: '}
+                        <div>${externalUSD.toHuman('short')}</div>
+                      </BreakdownRow>
+                      <BreakdownRow>
+                        {'Silo Deposits: '}
+                        <div>${siloUSD.toHuman('short')}</div>
+                      </BreakdownRow>
+                      <BreakdownRow>
+                        {'Farm Balance: '}
+                        <div>${internalUSD.toHuman('short')}</div>
+                      </BreakdownRow>
+                    </Breakdown>
+                  }
+                >
+                  <>USD TOTAL: {USDTotal.gt(0) ? formatUSD(USDTotal) : '$--'}</>
+                </Tooltip>
+              ) : (
                 <>USD TOTAL: {USDTotal.gt(0) ? formatUSD(USDTotal) : '$--'}</>
-              </Tooltip>
-            ) : (
-              <>USD TOTAL: {USDTotal.gt(0) ? formatUSD(USDTotal) : '$--'}</>
-            )}
-          </LoadingItem>
-        </USDWrapper>
-      </InfoBox.Footer>
+              )}
+            </LoadingItem>
+          </USDWrapper>
+        </InfoBox.Footer>
+      )}
     </InfoBox>
   );
 };

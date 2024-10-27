@@ -1,12 +1,3 @@
-[build]
-  base = "/"
-  command = """
-    yarn build && \
-    cd app && \
-    yarn build:netlify
-  """
-  publish = "dist/"
-
 # These build env vars are specific only to Netlify.
 [build.environment]
   YARN_VERSION = "4.1.0"

@@ -8,6 +8,7 @@ import { size } from 'src/breakpoints';
 import { displayTokenSymbol } from 'src/utils/format';
 import { getGasInUsd } from 'src/utils/gasprice';
 import useSdk from 'src/utils/sdk/useSdk';
+import { theme } from 'src/utils/ui/theme';
 
 import SlippagePanel from './SlippagePanel';
 import { LIQUIDITY_OPERATION_TYPE, REMOVE_LIQUIDITY_MODE } from './types';
@@ -273,10 +274,12 @@ const QuoteDetails = ({
         />
       </QuoteDetailLine>
       <AccordionContainer open={accordionOpen} isShort={type === 'FORWARD_SWAP' || type === 'REVERSE_SWAP'}>
-        <QuoteDetailLine>
-          <QuoteDetailLabel>USD Value</QuoteDetailLabel>
-          <QuoteDetailValue>{`$${tokenUSDValue.lte(0) ? '--' : tokenUSDValue.toHuman('short')}`}</QuoteDetailValue>
-        </QuoteDetailLine>
+        {tokenUSDValue?.gt(0) ? (
+          <QuoteDetailLine>
+            <QuoteDetailLabel>USD Value</QuoteDetailLabel>
+            <QuoteDetailValue>{`$${tokenUSDValue.toHuman('short')}`}</QuoteDetailValue>
+          </QuoteDetailLine>
+        ) : null}
         {type !== 'FORWARD_SWAP' && type !== 'REVERSE_SWAP' && (
           <QuoteDetailLine>
             <QuoteDetailLabel>Price Impact</QuoteDetailLabel>
@@ -292,7 +295,7 @@ const QuoteDetails = ({
                 content={
                   <>
                     <div>*PRICE IMPACT*</div>
-                    Change in Token price on this Well caused directly by this action.
+                    Change in token price on this Well caused directly by this action.
                   </>
                 }
               >
@@ -306,10 +309,12 @@ const QuoteDetails = ({
           <QuoteDetailValue>{`${slippage}%`}</QuoteDetailValue>
           <SlippagePanel slippageValue={slippage} handleSlippageValueChange={handleSlippageValueChange} />
         </QuoteDetailLine>
-        <QuoteDetailLine>
-          <QuoteDetailLabel>Estimated Gas Fee</QuoteDetailLabel>
-          <QuoteDetailValue>{`${gasFeeUsd}`}</QuoteDetailValue>
-        </QuoteDetailLine>
+        {gasFeeUsd && gasFeeUsd !== '~$0.00' && (
+          <QuoteDetailLine>
+            <QuoteDetailLabel>Estimated Gas Fee</QuoteDetailLabel>
+            <QuoteDetailValue>{`${gasFeeUsd}`}</QuoteDetailValue>
+          </QuoteDetailLine>
+        )}
       </AccordionContainer>
     </QuoteContainer>
   );
@@ -354,6 +359,10 @@ const QuoteDetailValue = styled.div<QuoteDetailProps>`
   width: 50%;
   font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
   color: ${(props) => (props.color ? props.color : '#9CA3AF')};
+
+  ${theme.media.query.sm.up} {
+    white-space: nowrap;
+  }
 `;
 
 const QuoteDetailLine = styled.div<QuoteDetailProps>`

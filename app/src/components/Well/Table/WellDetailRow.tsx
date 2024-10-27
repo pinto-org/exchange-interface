@@ -42,7 +42,7 @@ export const WellDetailRow: FC<{
   const renderTokenSymbols = () => {
     return tokens
       .map((token) => token.symbol)
-      .join('/')
+      .join(':')
       .toString();
   };
 
@@ -72,13 +72,13 @@ export const WellDetailRow: FC<{
         </Item>
       </DesktopContainer>
       <DesktopContainer align='right'>
-        <Amount>${liquidity ? liquidity.toHuman('short') : '-.--'}</Amount>
+        <Amount>${liquidity?.gt(0) ? liquidity.toHuman('short') : '0.00'}</Amount>
       </DesktopContainer>
       <DesktopContainer align='right'>
-        <Amount>${price && price.gt(0) ? price.toHuman('short') : '-.--'}</Amount>
+        <Amount>${price?.gt(0) ? price.toHuman('short') : 'N/A'}</Amount>
       </DesktopContainer>
       <DesktopContainer align='right'>
-        <Amount>${volume ? volume.toHuman('short') : '-.--'}</Amount>
+        <Amount>${volume?.gt(0) ? volume.toHuman('short') : '0.00'}</Amount>
       </DesktopContainer>
       <DesktopContainer align='right'>
         {tokens.map((token, i) => {

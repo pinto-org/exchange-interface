@@ -10,7 +10,7 @@ import { getChainExplorer } from 'src/utils/chain';
 type ContractMarqueeInfo = Record<string, { display: string; to?: string; url?: string }[]>;
 
 const CarouselData: ContractMarqueeInfo = {
-  ADDRESS: [
+  'AQUIFER ADDRESS': [
     {
       display: ExchangeSDK.addresses.AQUIFER.BASE_MAINNET,
       url: getChainExplorer(ChainId.BASE_MAINNET).address(ExchangeSDK.addresses.AQUIFER.BASE_MAINNET)
@@ -21,13 +21,13 @@ const CarouselData: ContractMarqueeInfo = {
     { display: 'CYFRIN', url: '/cyfrin-basin-audit.pdf' },
     { display: 'CODE4RENA', url: 'https://code4rena.com/reports/2023-07-basin' }
   ],
-  V1: [{ display: 'WHITEPAPER', url: '/basin.pdf' }]
+  WHITEPAPER: [{ display: 'WHITEPAPER', url: '/basin.pdf' }]
 };
 
 const speedPerItem = 16; // approx same speed as TokenMarque
 const itemGap = 24;
 const numItems = 4;
-const singleItemWidth = 1112.06;
+const singleItemWidth = 1146.52;
 
 export const ContractInfoMarquee = () => {
   const data = Object.entries(CarouselData);
@@ -48,20 +48,22 @@ export const ContractInfoMarquee = () => {
             .fill(null)
             .map((_, idx) => (
               <Container key={`single-item-${idx}`}>
-                {data.map(([key, data], idx) => (
-                  <RowContainer key={`${key}-${idx}`}>
-                    <InfoRow>
-                      <InfoText>{key.toUpperCase()}:</InfoText>
-                      {data.map(({ display, url }, i) => (
-                        <TextLink href={url} target='_blank' rel='noopener noreferrer' key={`${display}-${i}`}>
-                          {display}
-                          <span>{data.length > 1 && i + 1 < data.length ? <>{','}</> : ''}</span>
-                        </TextLink>
-                      ))}
-                    </InfoRow>
-                    <InfoText>/</InfoText>
-                  </RowContainer>
-                ))}
+                {data.map(([key, data], idx) => {
+                  return (
+                    <RowContainer key={`${key}-${idx}`}>
+                      <InfoRow>
+                        {key !== 'WHITEPAPER' && <InfoText>{key.toUpperCase()}:</InfoText>}
+                        {data.map(({ display, url }, i) => (
+                          <TextLink href={url} target='_blank' rel='noopener noreferrer' key={`${display}-${i}`}>
+                            {display}
+                            <span>{data.length > 1 && i + 1 < data.length ? <>{','}</> : ''}</span>
+                          </TextLink>
+                        ))}
+                      </InfoRow>
+                      <InfoText>/</InfoText>
+                    </RowContainer>
+                  );
+                })}
               </Container>
             ))}
         </>

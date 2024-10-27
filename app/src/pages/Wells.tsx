@@ -23,7 +23,7 @@ import useSdk from 'src/utils/sdk/useSdk';
 import { theme } from 'src/utils/ui/theme';
 import { useLagLoading } from 'src/utils/ui/useLagLoading';
 import useBasinStats from 'src/wells/useBasinStats';
-import { useBeanstalkSiloAPYs } from 'src/wells/useBeanstalkSiloAPYs';
+import { useSiloAPYs } from 'src/wells/useSiloAPYs';
 import { useWellLPTokenPrice } from 'src/wells/useWellLPTokenPrice';
 import { useWells } from 'src/wells/useWells';
 import { useWellFunctionNames } from 'src/wells/wellFunction/useWellFunctionNames';
@@ -38,7 +38,7 @@ export const Wells = () => {
 
   const { data: lpTokenPrices, isLoading: lpTokenPricesLoading } = useWellLPTokenPrice(wells);
   const { hasPositions, getPositionWithWell, isLoading: positionsLoading } = useLPPositionSummary();
-  const { isLoading: apysLoading } = useBeanstalkSiloAPYs();
+  const { isLoading: apysLoading } = useSiloAPYs();
   const { data: tokenPrices, isLoading: tokenPricesLoading } = useTokenPrices(wells);
 
   const { data: wellFnNames, isLoading: wellNamesLoading } = useWellFunctionNames(wells);

@@ -38,10 +38,7 @@ export const ComponentLibraryTable = () => {
                 <Text $color='text.secondary'>{component.summary}</Text>
               </TableData>
               <TableData>
-                <TextWrapper>
-                  {component.type.imgSrc && <IconImg src={component.type.imgSrc} />}
-                  <Text $variant='l'>{component.type.display}</Text>
-                </TextWrapper>
+                <Text $variant='l'>{component.type.display}</Text>
               </TableData>
             </StyledTr>
           );

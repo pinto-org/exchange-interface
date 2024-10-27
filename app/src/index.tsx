@@ -8,9 +8,9 @@ import { Wrapper } from 'src/components/App/Wrapper';
 import 'src/normalize.css';
 import 'src/theme.css';
 import 'src/index.css';
-import { basin } from './utils/useBasin';
+import { pintoAscii } from './utils/pintoAscii';
 
-basin();
+pintoAscii();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>

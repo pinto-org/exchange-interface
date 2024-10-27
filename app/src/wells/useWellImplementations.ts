@@ -1,7 +1,10 @@
 import { multicall } from '@wagmi/core';
 
+import { ExchangeSDK } from '@exchange/sdk';
+
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
+import useSdk from 'src/utils/sdk/useSdk';
 import { config } from 'src/utils/wagmi/config';
 
 import { useAquifer } from './aquifer/aquifer';
@@ -26,8 +29,11 @@ const getCallObjects = (aquiferAddress: string, addresses: string[]) => {
   }));
 };
 
+const zeroResult = '0x0000000000000000000000000000000000000000';
+
 export const useWellImplementations = () => {
   const { data: wells } = useWells();
+  const sdk = useSdk();
   const aquifer = useAquifer();
 
   const addresses = (wells || []).map((well) => well.address);
@@ -44,8 +50,14 @@ export const useWellImplementations = () => {
     select: (data) => {
       return addresses.reduce<Record<string, string>>((prev, curr, i) => {
         const result = data[i];
-        if (result.error) return prev;
+
+        if (sdk.diamondSDK.pools.getWellByLPToken(curr.toLowerCase())) if (result.error) return prev;
         if (result.result) {
+          const isWhitelisted = sdk.diamondSDK.pools.getWellByLPToken(curr.toLowerCase());
+          if (result.result === zeroResult && isWhitelisted) {
+            prev[curr.toLowerCase()] = ExchangeSDK.addresses.WELL_UPGRADEABLE.get().toLowerCase();
+            return prev;
+          }
           prev[curr.toLowerCase()] = result.result.toLowerCase() as string;
         }
         return prev;

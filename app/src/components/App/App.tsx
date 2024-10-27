@@ -13,11 +13,13 @@ import { Swap } from 'src/pages/Swap';
 import { Well } from 'src/pages/Well';
 import { Wells } from 'src/pages/Wells';
 import { Settings } from 'src/settings';
+import { useUpdateWindowDimensions } from 'src/utils/ui/useViewport';
 
 import { ForceSupportedChainId } from './ForceSupportedChainId';
 
 export const App = ({}) => {
   const isNotProd = !Settings.PRODUCTION;
+  useUpdateWindowDimensions();
 
   return (
     <>

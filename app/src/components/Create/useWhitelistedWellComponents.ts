@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 
 import { ChainId } from '@exchange/sdk-core';
 
-import ClockIcon from 'src/assets/images/clock-icon.svg';
 import Code4renaLogo from 'src/assets/images/code4rena-logo.png';
 import codeHawksLogo from 'src/assets/images/codehawks-logo.png';
 import CyrfinLogo from 'src/assets/images/cyrfin-logo.svg';
@@ -45,7 +44,6 @@ export type WellComponentInfo = {
     type: {
       type: WellComponentType;
       display: string;
-      imgSrc?: string;
     };
   };
   info: ComponentInfo[];
@@ -103,17 +101,17 @@ const WellDotSol: WellComponentInfo = {
     usedBy: 0,
     type: {
       type: WellComponentType.WellImplementation,
-      display: '💧 Well Implementation'
+      display: '🪣 Well Implementation'
     },
-    url: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/Well.sol'
+    url: 'https://github.com/pintomoney/exchange/blob/main/src/Well.sol'
   },
   info: [
     { label: 'Block Deployed', value: '17562613' },
     { label: 'Audited by', value: basinAuditInfo }
   ],
   links: {
-    github: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/Well.sol',
-    learnMore: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/Well.sol'
+    github: 'https://github.com/pintomoney/exchange/blob/main/src/Well.sol',
+    learnMore: 'https://github.com/pintomoney/exchange/blob/main/src/Well.sol'
   }
 };
 
@@ -127,7 +125,7 @@ const MultiFlowPump: WellComponentInfo = {
       'Comprehensive multi-block MEV manipulation-resistant oracle implementation which serves up Well pricing data with an EMA for instantaneous prices and a TWAP for weighted averages over time.'
     ],
     usedBy: 0,
-    url: 'https://docs.basin.exchange/implementations/multi-flow-pump',
+    url: 'https://docs.pinto.exchange/implementations/multi-flow-pump',
     type: {
       type: WellComponentType.Pump,
       display: '🔮 Pump'
@@ -138,8 +136,8 @@ const MultiFlowPump: WellComponentInfo = {
     { label: 'Audited by', value: [...basinAuditInfo, ...codehawksAuditInfo] }
   ],
   links: {
-    github: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/pumps/MultiFlowPump.sol',
-    learnMore: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/pumps/MultiFlowPump.sol'
+    github: 'https://github.com/pintomoney/exchange/blob/main/src/pumps/MultiFlowPump.sol',
+    learnMore: 'https://github.com/pintomoney/exchange/blob/main/src/pumps/MultiFlowPump.sol'
   }
 };
 
@@ -149,11 +147,10 @@ const ConstantProduct2: WellComponentInfo = {
     name: 'Constant Product 2',
     summary: 'A standard x*y = k token pricing function for two tokens.',
     description: ['A standard x*y = k token pricing function for two tokens.'],
-    url: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/functions/ConstantProduct2.sol',
+    url: 'https://github.com/pintomoney/exchange/blob/main/src/functions/ConstantProduct2.sol',
     type: {
       type: WellComponentType.WellFunction,
-      display: 'Well Function',
-      imgSrc: ClockIcon
+      display: ' 🏷️ Well Function'
     },
     usedBy: 0
   },
@@ -162,8 +159,8 @@ const ConstantProduct2: WellComponentInfo = {
     { label: 'Audited by', value: [...basinAuditInfo, ...codehawksAuditInfo] }
   ],
   links: {
-    github: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/functions/ConstantProduct2.sol',
-    learnMore: 'https://github.com/BeanstalkFarms/Basin/blob/master/src/functions/ConstantProduct2.sol'
+    github: 'https://github.com/pintomoney/exchange/blob/main/src/functions/ConstantProduct2.sol',
+    learnMore: 'https://github.com/pintomoney/exchange/blob/main/src/functions/ConstantProduct2.sol'
   }
 };
 

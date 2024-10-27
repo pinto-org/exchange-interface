@@ -4,13 +4,13 @@ export const size = {
   desktop: '1200px'
 };
 
-const mediaSizes = {
+export const mediaSizes = {
   mobile: 769,
   tablet: 1024,
   desktop: 1200
 };
 
-const BP_GAP = 0.05;
+export const BP_GAP = 0.05;
 
 /// we subtract 0.05px to some queries to prevent overlapping
 export const mediaQuery = {

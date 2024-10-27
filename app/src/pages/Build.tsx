@@ -23,7 +23,8 @@ export const Build = () => {
       <Flex $gap={0.5}>
         <Title title='Build' fontWeight={'600'} largeOnMobile />
         <Text $variant='l' $color='text.secondary'>
-          Basin has three unique components which can be composed together to create a custom liquidity pool, or Well.
+          Pinto Exchange has three unique components which can be composed together to create a custom liquidity pool,
+          or Well.
         </Text>
       </Flex>
       <ActionBanner>

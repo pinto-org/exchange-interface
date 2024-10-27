@@ -54,7 +54,7 @@ export const TokenInput: FC<TokenInput> = ({
   canChangeValue = true,
   debounceTime = 500,
   clamp = false,
-  balanceLabel = 'balance',
+  balanceLabel = 'Balance',
   /// TokenPickerProps
   excludeToken,
   tokenOptions

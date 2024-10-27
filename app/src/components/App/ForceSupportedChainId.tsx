@@ -121,14 +121,14 @@ export const ForceSupportedChainId = () => {
             <Flex $gap={2}>
               <Flex $direction='row' $gap={0.5} $alignItems='center'>
                 <Logo width={24} height={24} />
-                <Brand>BASIN</Brand>
+                <Brand>Pinto Exchange</Brand>
               </Flex>
               <Flex $direction='column' $gap={1}>
                 {chainIdErr === ChainIdError.INVALID ? (
                   <>
                     <Text $align='left'>This network is not supported</Text>
                     <Text $align='left' $variant='xs' $color='text.secondary'>
-                      Basin is currently only available on Ethereum and Arbitrum Mainnet.
+                      Pinto Exchange is currently only available on Base.
                     </Text>
                   </>
                 ) : null}

@@ -9,6 +9,8 @@ import { size } from 'src/breakpoints';
 import { FC } from 'src/types';
 import { useChainExplorer } from 'src/utils/chain';
 import { displayTokenSymbol } from 'src/utils/format';
+import useSdk from 'src/utils/sdk/useSdk';
+import { stringEqual } from 'src/utils/string';
 import { useIsMultiFlowPump } from 'src/wells/pump/utils';
 import { useWellImplementations } from 'src/wells/useWellImplementations';
 
@@ -24,6 +26,7 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
     lookup: { pumps: pumpLookup }
   } = useWhitelistedWellComponents();
   const { isMultiFlow } = useIsMultiFlowPump(well);
+  const sdk = useSdk();
 
   const [items, setItems] = useState<{ name: string; address: string }[]>([]);
   const [wellFunctionName, setWellFunctionName] = useState<string>('');
@@ -71,7 +74,9 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
       address: well.wellFunction?.address || '--'
     });
     data.push({
-      name: 'Well Implementation',
+      name: `${
+        stringEqual(implementationAddress ?? '--', sdk.addresses.WELL_UPGRADEABLE.get()) ? 'Upgradable ' : ''
+      }Well Implementation`,
       address: implementationAddress || '--'
     });
     data.push({
@@ -80,11 +85,9 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
     });
 
     setItems(data);
-  }, [implementationAddress, pumpLookup, well, wellFunctionName, isMultiFlow]);
+  }, [implementationAddress, pumpLookup, well, wellFunctionName, isMultiFlow, sdk]);
 
   const { url: explorerUrl, address: explorerAddress } = useChainExplorer();
-
-  console.log(well);
 
   return (
     <div>

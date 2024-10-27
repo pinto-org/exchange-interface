@@ -56,7 +56,7 @@ export function setWagmiConfig(testnetRpcUrl: string | undefined = vnetRpcUrl) {
     chains: chains,
     transports: transports,
     // Required App Info
-    appName: 'Basin',
+    appName: 'pinto exchange',
     // Optional App Info
     appDescription: 'A Composable EVM-Native DEX',
     appUrl: 'https://pinto.exchange', // your app's url

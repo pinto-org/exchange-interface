@@ -15,17 +15,9 @@ export interface SubgraphDexSettings {
    */
   SUBGRAPH_URL: string;
   /**
-   * Sugraph endpoint for Basin on Ethereum Mainnet
-   */
-  SUBGRAPH_URL_ETH: string;
-  /**
    * Subgraph endpoint for Beanstalk on Arbitrum Mainnet
    */
   BEANSTALK_SUBGRAPH_URL: string;
-  /**
-   * Subgraph endpoint for Beanstalk on Ethereum Mainnet
-   */
-  BEANSTALK_SUBGRAPH_URL_ETH: string;
 }
 
 export interface EnvDexSettings {
@@ -55,9 +47,7 @@ const envSettings: EnvDexSettings = netlifyContext === 'production' ? ProdSettin
 
 const subgraphSettings: SubgraphDexSettings = {
   SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/basin`,
-  SUBGRAPH_URL_ETH: `${BASE_SUBGRAPH_URL}/basin_eth`,
-  BEANSTALK_SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/beanstalk`,
-  BEANSTALK_SUBGRAPH_URL_ETH: `${BASE_SUBGRAPH_URL}/beanstalk_eth`
+  BEANSTALK_SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/beanstalk`
 };
 
 export const Settings = {

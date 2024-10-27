@@ -2,11 +2,10 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import { useChainId } from 'wagmi';
 
-import shapesIcons from 'src/assets/images/home-banner.svg';
 import { mediaQuery } from 'src/breakpoints';
 import { ContractInfoMarquee } from 'src/components/Frame/ContractInfoMarquee';
-import { BodyL } from 'src/components/Typography';
 import { THEME_COLORS } from 'src/utils/ui/theme';
 
 const copy = {
@@ -17,33 +16,19 @@ const copy = {
 
 const links = {
   multiFlowPump: '/multi-flow-pump.pdf',
-  whitepaper: '/basin.pdf',
-  docs: 'https://docs.basin.exchange/implementations/overview',
+  whitepaper: '/pinto-exchange.pdf',
+  docs: 'https://docs.pinto.exchange',
   wells: '/#/wells',
   swap: '/#/swap',
   build: '/#/build'
 };
 
 export const Home = () => {
+  const chainid = useChainId();
   return (
     <>
       <Container>
         <Content>
-          <MevBanner>
-            <MevBannerBG>
-              <MevInfo>
-                <MevTitle>Multi Flow Pump is here!</MevTitle>
-                <div>
-                  Explore the{' '}
-                  <span style={{ fontWeight: 600 }}>inter-block MEV manipulation resistant oracle implementation</span>{' '}
-                  used by the BEAN:WETH Well.
-                </div>
-              </MevInfo>
-              <GetStartedContainer href={links.multiFlowPump} target='_blank' rel='noopener noreferrer'>
-                <GetStarted>Read the whitepaper →</GetStarted>
-              </GetStartedContainer>
-            </MevBannerBG>
-          </MevBanner>
           <InfoContainer>
             <TitleSubtitleContainer>
               <Title>A Composable EVM-Native DEX </Title>
@@ -64,7 +49,7 @@ export const Home = () => {
                 </AccordionTitle>
                 <AccordionContent>{copy.build}</AccordionContent>
               </AccordionItem>
-              <AccordionItem href={links.wells}>
+              <AccordionItem href={`${links.wells}/${chainid}`}>
                 <AccordionTitle>
                   <div>
                     <Emoji role='img' aria-label='lightning'>
@@ -140,73 +125,6 @@ const Content = styled.div`
   }
 `;
 
-const MevBanner = styled.div`
-  background: #fff;
-  width: 100%;
-  border: 0.25px solid #9ca3af;
-  ${mediaQuery.sm.only} {
-    display: none;
-  }
-`;
-
-const MevBannerBG = styled.div`
-  background: url(${shapesIcons});
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: right;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  height: auto;
-  padding: 24px;
-  width: 100%;
-  box-sizing: border-box;
-`;
-
-const MevInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const MevTitle = styled.div`
-  ${BodyL}
-`;
-
-const GetStartedContainer = styled.a`
-  text-decoration: none;
-
-  :focus {
-    text-decoration: none;
-  }
-`;
-
-const GetStarted = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px;
-  background: #000;
-  outline: 0.5px solid #000;
-  color: #fff;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.32px;
-  white-space: nowrap;
-  cursor: pointer;
-
-  :hover {
-    outline: 2px solid ${THEME_COLORS.primary};
-  }
-
-  :focus {
-    outline: 2px solid ${THEME_COLORS.primary};
-  }
-`;
-
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -215,7 +133,7 @@ const InfoContainer = styled.div`
   height: 100%;
 
   ${mediaQuery.sm.up} {
-    padding-top: min(25%, 185px);
+    padding-top: min(25%, 250px);
     justify-content: flex-start;
     align-items: center;
     width: 100%;

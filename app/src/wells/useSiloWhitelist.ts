@@ -4,7 +4,7 @@ import { Well } from '@exchange/sdk';
 
 import useSdk from 'src/utils/sdk/useSdk';
 
-export const useBeanstalkSiloWhitelist = () => {
+export const useSiloWhitelist = () => {
   const sdk = useSdk();
 
   const getIsWhitelisted = useCallback(

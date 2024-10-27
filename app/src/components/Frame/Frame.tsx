@@ -16,6 +16,7 @@ import { Footer } from './Footer';
 import { TokenMarquee } from './TokenMarquee';
 import { Window } from './Window';
 import { BurgerMenuIcon, Discord, Github, Logo, Twitter, X, BeanstalkLogoBlack } from '../Icons';
+import { Flex } from '../Layout';
 import CustomToaster from '../TxnToast/CustomToaster';
 import { LinksNav } from '../Typography';
 
@@ -29,41 +30,43 @@ export const Frame: FC<{}> = ({ children }) => {
     <>
       <Container id='frame'>
         {/* Desktop */}
-        <NavContainer>
+        <Navbar>
           <NavGrid>
-            <BrandContainer onClick={() => setMobileMenuOpen(false)}>
+            <NavGridItem>
               <Brand>
                 <Link to={'/'}>
-                  <LogoContainer>
-                    <Logo />
-                  </LogoContainer>
-                  <BasinText>PINTO EXCHANGE</BasinText>
+                  <Logo /> <BrandText>PINTO EXCHANGE</BrandText>
                 </Link>
               </Brand>
-            </BrandContainer>
-            {/* <NavLinkWrapper> */}
-            <NavLinksGrid>
-              <NavLink className='desktop-nav-item' to='/build' hovericon={buildIcon}>
-                Build
-              </NavLink>
-              <NavLink className='desktop-nav-item' to={`/wells/${resolvedcid}`} hovericon={wellsIcon}>
-                Liquidity
-              </NavLink>
-              <NavLink className='desktop-nav-item' to='/swap' hovericon={swapIcon}>
-                Swap
-              </NavLink>
-              {isNotProd && (
-                <NavLink className='desktop-nav-item' to='/dev'>
-                  Dev
+            </NavGridItem>
+            <NavGridItem id='navbar-links'>
+              <NavLinksGrid>
+                <NavLink className='nav-link-grid-item' to='/build' hovericon={buildIcon}>
+                  BUILD
                 </NavLink>
-              )}
-            </NavLinksGrid>
-            {/* </NavLinkWrapper> */}
-            <StyledConnectContainer>
-              <WalletButton />
-            </StyledConnectContainer>
+                <NavLink className='nav-link-grid-item' to={`/wells/${resolvedcid}`} hovericon={wellsIcon}>
+                  LIQUIDITY
+                </NavLink>
+                <NavLink className='nav-link-grid-item' to='/swap' hovericon={swapIcon}>
+                  SWAP
+                </NavLink>
+                {isNotProd && (
+                  <NavLink className='nav-link-grid-item' to='/dev'>
+                    DEV
+                  </NavLink>
+                )}
+              </NavLinksGrid>
+            </NavGridItem>
+            <NavGridItem>
+              <WalletContainer>
+                <WalletButton />
+              </WalletContainer>
+              <DropdownMenu open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                {mobileMenuOpen ? <X /> : <BurgerMenuIcon />}
+              </DropdownMenu>
+            </NavGridItem>
           </NavGrid>
-        </NavContainer>
+        </Navbar>
         <TokenMarquee />
         <Window>
           <CustomToaster />
@@ -84,29 +87,21 @@ export const Frame: FC<{}> = ({ children }) => {
                 </MobileNavLink>
               )}
               <MobileLargeNavRow onClick={() => setMobileMenuOpen(false)}>
-                <Box href='https://basin.exchange/discord' rel='noopener noreferrer' target='_blank'>
+                <LinkBox href='https://pinto.exchange/discord' rel='noopener noreferrer' target='_blank'>
                   <Discord width={20} />
-                </Box>
-                <Box href='https://twitter.com/basinexchange' rel='noopener noreferrer' target='_blank'>
+                </LinkBox>
+                <LinkBox href='https://twitter.com/pintoexchange' rel='noopener noreferrer' target='_blank'>
                   <Twitter width={20} />
-                </Box>
-                <Box href='https://github.com/BeanstalkFarms/Basin' rel='noopener noreferrer' target='_blank'>
+                </LinkBox>
+                <LinkBox href='https://github.com/pintomoney/exchange' rel='noopener noreferrer' target='_blank'>
                   <Github width={20} />
-                </Box>
-                <Box href='https://pinto.money' rel='noopener noreferrer' target='_blank'>
+                </LinkBox>
+                <LinkBox href='https://pinto.money' rel='noopener noreferrer' target='_blank'>
                   <BeanstalkLogoBlack width={20} />
-                </Box>
+                </LinkBox>
               </MobileLargeNavRow>
               <MobileNavRow
-                href='https://immunefi.com/bounty/beanstalk/'
-                rel='noopener noreferrer'
-                target='_blank'
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Bug Bounty Program
-              </MobileNavRow>
-              <MobileNavRow
-                href='https://docs.basin.exchange/'
+                href='https://docs.pinto.exchange/'
                 rel='noopener noreferrer'
                 target='_blank'
                 onClick={() => setMobileMenuOpen(false)}
@@ -124,13 +119,11 @@ export const Frame: FC<{}> = ({ children }) => {
         </Window>
         <Footer />
       </Container>
-
-      <DropdownMenu open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-        {mobileMenuOpen ? <X /> : <BurgerMenuIcon />}
-      </DropdownMenu>
     </>
   );
 };
+
+/// ------------------------------------------------------------------------------------------------
 
 type NavLinkProps = {
   hovericon?: string;
@@ -150,7 +143,7 @@ const Container = styled.div`
   }
 `;
 
-const NavContainer = styled.nav`
+const Navbar = styled.nav`
   border-bottom: 0.5px solid black;
   display: flex;
   width: 100vw;
@@ -175,93 +168,31 @@ const NavGrid = styled.div`
   ${theme.media.query.md.down} {
     grid-template-columns: 1fr 1fr;
   }
+`;
 
-  ${theme.media.query.md.up} {
-    & > *:nth-child(2) {
-      justify-self: center; // Centers horizontally
-      align-self: center; // Centers vertically
+const NavGridItem = styled(Flex).attrs({
+  $direction: 'column',
+  $alignSelf: 'stretch',
+  $alignItems: 'center',
+  $justifyContent: 'center'
+})`
+  :last-child {
+    align-items: flex-end;
+  }
+
+  &#navbar-links {
+    ${theme.media.query.md.down} {
+      display: none;
     }
   }
 `;
 
-const NavLinksGrid = styled.div`
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: repeat(${isNotProd ? 4 : 3}, minmax(150px, 192px));
-  height: 100%;
-  width: 100%;
-  place-items: center;
-  justify-content: center;
-
-  align-self: center;
-
-  .desktop-nav-item {
-    border-left: 0.5px solid black;
-    outline: none;
-  }
-
-  .desktop-nav-item:last-child {
-    border-right: 0.5px solid black;
-  }
-
-  ${theme.media.query.md.down} {
-    display: none;
-  }
-`;
-
-const NavLink = styled(Link)<NavLinkProps>`
-  box-sizing: border-box;
-  display: flex;
-  align-self: stretch;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  height: 100%;
-  width: 100%;
-  min-width: 150px;
-
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: black;
-  cursor: ${(props) => (props.hovericon ? `url(${props.hovericon}), auto` : 'pointer')};
-
-  :focus {
-    outline: none !important;
-  }
-  :hover {
-    background-color: ${THEME_COLORS.primaryLight};
-  }
-  &:last-child {
-    border-right: 0.5px solid black;
-  }
-`;
-
-const BrandContainer = styled.div`
-  display: flex;
-  direction: row;
-  flex: 1;
-  align-self: stretch;
-  align-items: center;
-
-  ${theme.media.query.md.down} {
-    justify-self: flex-start;
-  }
-`;
-
-const BasinText = styled.div`
-  white-space: nowrap;
-  margin-bottom: -4px;
-`;
-
-const Brand = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-left: 16px;
-  max-width: 250px;
-  width: 100%;
-
+const Brand = styled(Flex).attrs({
+  $direction: 'row',
+  $pl: 2,
+  $maxWidth: '250px',
+  $alignSelf: 'stretch'
+})`
   a {
     display: flex;
     gap: 4px;
@@ -278,30 +209,69 @@ const Brand = styled.div`
 
   ${theme.media.query.md.up} {
     justify-self: flex-start;
-    padding-left: 48px;
+    padding-left: ${theme.spacing(6)};
   }
 `;
 
-const LogoContainer = styled.div`
-  min-width: 24px;
-  min-height: 24px;
-  max-width: 24px;
-  max-height: 24px;
+const NavLinksGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(${isNotProd ? 4 : 3}, minmax(100px, 192px));
+  grid-template-rows: 1fr;
+
+  justify-content: center;
+  align-self: stretch;
+  height: 100%;
 `;
 
-const StyledConnectContainer = styled.div`
-  display: none;
-  ${theme.media.query.md.up} {
-    display: flex;
-    direction: row;
-    width: 192px;
-    align-self: stretch;
-    align-items: flex-end;
-    justify-self: flex-end;
-    justify-content: center;
-    border-left: 0.5px solid black;
-    box-sizing: border-box;
+const NavLink = styled(Link)<NavLinkProps>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 0.5px solid black;
+  outline: none;
+
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: black;
+  cursor: ${(props) => (props.hovericon ? `url(${props.hovericon}), auto` : 'pointer')};
+
+  :hover {
+    background-color: ${THEME_COLORS.primaryLight};
   }
+
+  :last-child {
+    border-right: 0.5px solid black;
+  }
+`;
+
+const WalletContainer = styled(Flex).attrs({
+  $direction: 'row',
+  $width: '192px',
+  $height: '100%'
+})`
+  box-sizing: border-box;
+  border-left: 0.5px solid black;
+
+  :hover {
+    background: ${THEME_COLORS.primaryLight};
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  ${theme.media.query.md.down} {
+    display: none;
+  }
+`;
+
+const BrandText = styled.div`
+  white-space: nowrap;
+  margin-bottom: -4px;
 `;
 
 const DropdownMenu = styled.button<{ open?: boolean }>`
@@ -400,13 +370,17 @@ const MobileLargeNavRow = styled.div`
 const MobileConnectContainer = styled.div`
   display: flex;
   direction: row;
-  padding: 16px;
   align-self: stretch;
   justify-content: center;
   border-top: 0.5px solid black;
+  height: 52px;
+
+  ${theme.media.query.sm.up} {
+    margin-bottom: 120px;
+  }
 `;
 
-const Box = styled.a`
+const LinkBox = styled.a`
   display: flex;
   flex: 1;
   padding: 32px;

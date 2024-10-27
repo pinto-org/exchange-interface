@@ -4,6 +4,8 @@ import { ConnectKitButton, useModal as useConnectKitModal } from 'connectkit';
 import styled from 'styled-components';
 import { useAccount } from 'wagmi';
 
+import { THEME_COLORS } from 'src/utils/ui/theme';
+
 import { ButtonPrimary } from './Button';
 
 type ActionWalletButtonProps = {
@@ -69,7 +71,11 @@ const StyledConnectButton = styled.button`
   color: #000;
   background: #fff;
   :hover {
-    background-color: #f0fdf4;
+    background: ${THEME_COLORS.primaryLight};
+  }
+
+  :focus {
+    outline: none;
   }
 `;
 

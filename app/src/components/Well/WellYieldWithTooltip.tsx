@@ -10,7 +10,7 @@ import { mediaQuery } from 'src/breakpoints';
 import useSdk from 'src/utils/sdk/useSdk';
 import { THEME_COLORS } from 'src/utils/ui/theme';
 import { useIsMobile } from 'src/utils/ui/useIsMobile';
-import { useBeanstalkSiloAPYs } from 'src/wells/useBeanstalkSiloAPYs';
+import { useSiloAPYs } from 'src/wells/useSiloAPYs';
 
 import { TokenLogo } from '../TokenLogo';
 import { Tooltip, TooltipProps } from '../Tooltip';
@@ -30,7 +30,7 @@ export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, retu
   const pinto = sdk.tokens.PINTO;
   const isMobile = useIsMobile();
 
-  const { getSiloAPYWithWell } = useBeanstalkSiloAPYs();
+  const { getSiloAPYWithWell } = useSiloAPYs();
 
   const apy = useMemo(() => {
     const data = getSiloAPYWithWell(well);
@@ -65,9 +65,9 @@ export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, retu
             </TitleContainer>
             <ContentContainer>
               <div>
-                The Variable Bean APY (vAPY) uses historical data of Beans earned by{' '}
+                The Variable PINTO APY (vAPY) uses historical data of Beans earned by{' '}
                 <a
-                  href='https://docs.pinto.money/almanac/guides/silo/understand-silo-vapy'
+                  href='https://docs.bean.money/almanac/guides/silo/understand-silo-vapy'
                   target='_blank'
                   rel='noopener noreferrer'
                   className='underlined'
@@ -88,7 +88,7 @@ export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, retu
         width={tooltipWidth}
       >
         <ChildContainer>
-          <StyledImg src={StartSparkle} alt='basin-bean-vAPY' />
+          <StyledImg src={StartSparkle} alt='pinto-bean-vAPY' />
           <div>{apy} vAPY</div>
         </ChildContainer>
       </Tooltip>

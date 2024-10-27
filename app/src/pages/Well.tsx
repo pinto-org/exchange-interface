@@ -34,13 +34,13 @@ import useSdk from 'src/utils/sdk/useSdk';
 import { THEME_COLORS } from 'src/utils/ui/theme';
 import { useIsMobile } from 'src/utils/ui/useIsMobile';
 import { useLagLoading } from 'src/utils/ui/useLagLoading';
-import { useBeanstalkSiloAPYs } from 'src/wells/useBeanstalkSiloAPYs';
 import { useMultiFlowPumpTWAReserves } from 'src/wells/useMultiFlowPumpTWAReserves';
+import { useSiloAPYs } from 'src/wells/useSiloAPYs';
 import { useWellWithParams } from 'src/wells/useWellWithParams';
 
 export const Well = () => {
   const { well, loading: dataLoading, error } = useWellWithParams();
-  const { isLoading: apysLoading } = useBeanstalkSiloAPYs();
+  const { isLoading: apysLoading } = useSiloAPYs();
   const { isLoading: twaLoading, getTWAReservesWithWell } = useMultiFlowPumpTWAReserves();
   const chainIdErr = useChainErrExists();
   const chainId = useChainId();
@@ -82,7 +82,7 @@ export const Well = () => {
     run();
   }, [sdk, well, chainIdErr]);
 
-  const title = (well?.tokens ?? []).map((t) => t.symbol).join('/');
+  const title = (well?.tokens ?? []).map((t) => t.symbol).join(':');
   const logos: ReactNode[] = (well?.tokens || []).map((token) => (
     <TokenLogo token={token} size={48} mobileSize={24} key={token.symbol} />
   ));

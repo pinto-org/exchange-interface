@@ -8,7 +8,7 @@ import useSdk from 'src/utils/sdk/useSdk';
 
 import { loadSiloAPYData } from './apyFetcher';
 
-export const useBeanstalkSiloAPYs = () => {
+export const useSiloAPYs = () => {
   const sdk = useSdk();
 
   const query = useChainScopedQuery({

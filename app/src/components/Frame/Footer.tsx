@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { mediaQuery, size } from 'src/breakpoints';
 import { THEME_COLORS } from 'src/utils/ui/theme';
 
-import { BeanstalkLogoBlack, Discord, Github, PintoLogoBlack, Twitter } from '../Icons';
+import { BeanstalkLogoBlack, Discord, Github, Twitter } from '../Icons';
 
 export const Footer = () => (
   <Container>
-    <Box href='https://docs.basin.exchange' rel='noopener noreferrer' target='_blank'>
+    <Box href='https://docs.pinto.exchange' rel='noopener noreferrer' target='_blank'>
       <InfoText>
         <span role='img' aria-label='Documentation'>
           📃 Protocol Documentation
@@ -17,21 +17,13 @@ export const Footer = () => (
       </InfoText>
       <StyledLink>Visit the Docs →</StyledLink>
     </Box>
-    <Box href='https://immunefi.com/bounty/beanstalk/' rel='noopener noreferrer' target='_blank'>
-      <InfoText>
-        <span role='img' aria-label='Bug Bounty'>
-          👾 Basin Bug Bounty Program
-        </span>
-      </InfoText>
-      <StyledLink>Learn More →</StyledLink>
-    </Box>
-    <SmallBox href='https://basin.exchange/discord' rel='noopener noreferrer' target='_blank'>
+    <SmallBox href='https://pinto.exchange/discord' rel='noopener noreferrer' target='_blank'>
       <Discord width={20} />
     </SmallBox>
-    <SmallBox href='https://twitter.com/basinexchange' rel='noopener noreferrer' target='_blank'>
+    <SmallBox href='https://twitter.com/pintoexchange' rel='noopener noreferrer' target='_blank'>
       <Twitter width={20} />
     </SmallBox>
-    <SmallBox href='https://github.com/BeanstalkFarms/Basin' rel='noopener noreferrer' target='_blank'>
+    <SmallBox href='https://github.com/pintomoney/exchange-interface' rel='noopener noreferrer' target='_blank'>
       <Github width={20} />
     </SmallBox>
     <SmallBox href='https://app.pinto.money' rel='noopener noreferrer' target='_blank'>

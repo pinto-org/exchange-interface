@@ -12,9 +12,10 @@ import { Row, Td } from 'src/components/Table';
 import { TokenLogo } from 'src/components/TokenLogo';
 import { Tooltip } from 'src/components/Tooltip';
 import { LPBalanceSummary } from 'src/tokens/useLPPositionSummary';
+import { useSdkChainId } from 'src/utils/chain';
 import { displayTokenSymbol, formatNum, formatUSD } from 'src/utils/format';
 import { useIsMobile } from 'src/utils/ui/useIsMobile';
-import { useBeanstalkSiloWhitelist } from 'src/wells/useBeanstalkSiloWhitelist';
+import { useSiloWhitelist } from 'src/wells/useSiloWhitelist';
 import { useWellLPTokenPrice } from 'src/wells/useWellLPTokenPrice';
 
 const PositionBreakdown: React.FC<{
@@ -58,12 +59,12 @@ const PositionBreakdown: React.FC<{
             <span>{formatFn(items.external)}</span>
           </BreakdownRow>
           <BreakdownRow>
-            {'Silo Deposits:'}
-            <span>{formatFn(items.silo)}</span>
-          </BreakdownRow>
-          <BreakdownRow>
             {'Farm Balance:'}
             <span>{formatFn(items.internal)}</span>
+          </BreakdownRow>
+          <BreakdownRow>
+            {'Silo Deposits:'}
+            <span>{formatFn(items.silo)}</span>
           </BreakdownRow>
         </Breakdown>
       }
@@ -81,7 +82,8 @@ export const MyWellPositionRow: FC<{
   prices: ReturnType<typeof useWellLPTokenPrice>['data'];
 }> = ({ well, position, prices }) => {
   const navigate = useNavigate();
-  const { getIsWhitelisted } = useBeanstalkSiloWhitelist();
+  const { getIsWhitelisted } = useSiloWhitelist();
+  const chainId = useSdkChainId();
 
   const lpAddress = well?.lpToken?.address;
   const lpToken = well?.lpToken;
@@ -93,7 +95,7 @@ export const MyWellPositionRow: FC<{
   const tokens = well.tokens || [];
   const logos: ReactNode[] = [];
   const symbols: string[] = [];
-  const gotoWell = () => navigate(`/wells/${well.address}`);
+  const gotoWell = () => navigate(`/wells/${chainId}/${well.address}`);
 
   tokens.map((token: any) => {
     logos.push(<TokenLogo token={token} size={25} key={token.symbol} />);
@@ -115,7 +117,7 @@ export const MyWellPositionRow: FC<{
       <DesktopContainer>
         <WellDetail>
           <TokenLogos>{logos}</TokenLogos>
-          <TokenSymbols>{symbols.join('/')}</TokenSymbols>
+          <TokenSymbols>{symbols.join(':')}</TokenSymbols>
         </WellDetail>
       </DesktopContainer>
       <DesktopContainer align='right'>

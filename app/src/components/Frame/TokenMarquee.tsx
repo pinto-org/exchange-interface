@@ -10,20 +10,20 @@ import { Image } from '../Image';
 
 const randomKey = () => Math.random().toString(36).substring(2, 7);
 
-const marqueeSymbols = ['PINTO', 'WETH', 'cbETH', 'cbBTC', 'USDC'];
+const marqueeSymbols = ['PINTO', 'cbBTC', 'WETH', 'cbETH', 'USDC'];
 
 export const TokenMarquee = () => {
   // we need distinct keys for these, so we return a function so the key can be set later
-  const logos = marqueeSymbols.map((symbol) => (key: string) => (
-    <Image key={key} src={images[symbol]} height={24} width={24} alt={`${symbol} Logo`} />
+  const logos = [...marqueeSymbols, ...marqueeSymbols, ...marqueeSymbols].map((symbol, i) => (key: string) => (
+    <Image key={`${key}-${i}`} src={images[symbol]} height={24} width={24} alt={`${symbol} Logo`} />
   ));
 
   logos.push((key: string) => <Circle key={key} />);
 
   // a block is a logo + space to the right, so 24+64 pixels. Assuming a 2000px max screen
-  // width, that gives us about 22 blocks. So we loop through available logos until we use
-  // 22 of them
-  const blocks = 22;
+  // width, that gives us about 44 blocks. So we loop through available logos until we use
+  // 44 of them
+  const blocks = 44;
 
   // Time, in seconds, for how we want it to take to scroll one block, ie, one token over.
   const speedPerBlock = 5;
