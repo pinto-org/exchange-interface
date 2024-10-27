@@ -105,10 +105,12 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
               <Detail>{wellTokenDetail} Well</Detail>
             </Td>
             <DesktopTd align={'right'}>
-              <Link href={explorerAddress(well.address)}>{well.address}</Link>
+              <Link href={explorerAddress(well.address)} rel='noopener noreferrer' target='_blank'>
+                {well.address}
+              </Link>
             </DesktopTd>
             <MobileTd align={'right'}>
-              <Link href={explorerAddress(well.address)}>
+              <Link href={explorerAddress(well.address)} rel='noopener noreferrer' target='_blank'>
                 {well.address.slice(0, 5) + '...' + well.address.slice(well.address.length - 5)}
               </Link>
             </MobileTd>
@@ -118,10 +120,12 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
               <Detail>Well LP Token - {displayTokenSymbol(well.lpToken as Token)}</Detail>
             </Td>
             <DesktopTd align={'right'}>
-              <Link href={explorerAddress(well.address)}>{well.address}</Link>
+              <Link href={explorerAddress(well.address)} rel='noopener noreferrer' target='_blank'>
+                {well.address}
+              </Link>
             </DesktopTd>
             <MobileTd align={'right'}>
-              <Link href={explorerAddress(well.address)}>
+              <Link href={explorerAddress(well.address)} rel='noopener noreferrer' target='_blank'>
                 {well.address.slice(0, 5) + '...' + well.address.slice(well.address.length - 5)}
               </Link>
             </MobileTd>
@@ -160,10 +164,12 @@ const OtherSectionContent: FC<Props> = ({ well }) => {
                   <Detail>{tableItem.name}</Detail>
                 </Td>
                 <DesktopTd align={'right'}>
-                  <Link href={explorerAddress(tableItem.address)}>{tableItem.address}</Link>
+                  <Link href={explorerAddress(tableItem.address)} rel='noopener noreferrer' target='_blank'>
+                    {tableItem.address}
+                  </Link>
                 </DesktopTd>
                 <MobileTd align={'right'}>
-                  <Link href={explorerAddress(tableItem.address)}>
+                  <Link href={explorerAddress(tableItem.address)} rel='noopener noreferrer' target='_blank'>
                     {tableItem.address.slice(0, 5) + '...' + tableItem.address.slice(tableItem.address.length - 5)}
                   </Link>
                 </MobileTd>
@@ -230,6 +236,10 @@ const Link = styled.a`
 
   :link {
     color: black;
+  }
+
+  :focus {
+    outline: none;
   }
 `;
 

@@ -85,47 +85,16 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
             <InfoBox.Row>
               <InfoBox.Key>
                 <TooltipContainer>
-                  In the Pinto Silo
-                  <Tooltip
-                    content={
-                      <div className='tooltip-content'>
-                        {sdkToken?.symbol} LP token holders can Deposit their LP tokens in the{' '}
-                        <a
-                          className='underline'
-                          href='https://pinto.money/#/silo'
-                          target='_blank'
-                          rel='noopener noreferrer'
-                        >
-                          Pinto Silo
-                        </a>
-                        &nbsp;for yield.
-                      </div>
-                    }
-                    offsetX={-40}
-                    offsetY={350}
-                    side='bottom'
-                    arrowSize={0}
-                    arrowOffset={0}
-                    width={270}
-                  >
-                    <Info color='#4b5563' />
-                  </Tooltip>
-                </TooltipContainer>
-              </InfoBox.Key>
-              <InfoBox.Value>{displayTV(position?.silo)}</InfoBox.Value>
-            </InfoBox.Row>
-            <InfoBox.Row>
-              <InfoBox.Key>
-                <TooltipContainer>
                   In my Pinto Farm Balance
                   <Tooltip
                     content={
                       <div className='tooltip-content'>
                         <a
                           className='underline'
-                          href='https://app.bean.money/#/balances'
+                          href='https://pinto.money/#/balances'
                           target='_blank'
                           rel='noopener noreferrer'
+                          style={{ color: '#fff' }}
                         >
                           Farm Balances
                         </a>
@@ -145,6 +114,39 @@ export const LiquidityBox: FC<Props> = ({ well, loading }) => {
                 </TooltipContainer>
               </InfoBox.Key>
               <InfoBox.Value>{displayTV(position?.internal)}</InfoBox.Value>
+            </InfoBox.Row>
+            <InfoBox.Row>
+              <InfoBox.Key>
+                <TooltipContainer>
+                  In the Pinto Silo
+                  <Tooltip
+                    content={
+                      <div className='tooltip-content'>
+                        {sdkToken?.symbol} LP token holders can Deposit their LP tokens in the{' '}
+                        <a
+                          className='underline'
+                          href='https://pinto.money/#/silo'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          style={{ color: '#fff' }}
+                        >
+                          Pinto Silo
+                        </a>
+                        &nbsp;for yield.
+                      </div>
+                    }
+                    offsetX={-40}
+                    offsetY={210}
+                    side='bottom'
+                    arrowSize={0}
+                    arrowOffset={0}
+                    width={270}
+                  >
+                    <Info color='#4b5563' />
+                  </Tooltip>
+                </TooltipContainer>
+              </InfoBox.Key>
+              <InfoBox.Value>{displayTV(position?.silo)}</InfoBox.Value>
             </InfoBox.Row>
           </>
         ) : null}

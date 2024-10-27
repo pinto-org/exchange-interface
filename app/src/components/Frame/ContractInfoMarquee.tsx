@@ -21,7 +21,7 @@ const CarouselData: ContractMarqueeInfo = {
     { display: 'CYFRIN', url: '/cyfrin-basin-audit.pdf' },
     { display: 'CODE4RENA', url: 'https://code4rena.com/reports/2023-07-basin' }
   ],
-  WHITEPAPER: [{ display: 'WHITEPAPER', url: '/basin.pdf' }]
+  WHITEPAPER: [{ display: 'WHITEPAPER', url: '/pinto-exchange.pdf' }]
 };
 
 const speedPerItem = 16; // approx same speed as TokenMarque
