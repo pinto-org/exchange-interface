@@ -1,4 +1,4 @@
-<img src="./exchange-logo.svg" alt="Pinto Exchange" style='align:right; width: 64px; margin-bottom: -18px;' />
+<img src="./exchange-logo.svg" alt="Pinto Exchange" style='width: 120px;' />
 
 # Pinto Exchange UI 
 
