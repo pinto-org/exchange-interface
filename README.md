@@ -25,3 +25,7 @@ yarn app:dev
 # See ./app/src/.env.local.example for a full list of available variables
 VITE_ALCHEMY_API_KEY=[your alchemy api key] ...
 ```
+
+## License
+
+[MIT](https://github.com/pintomoney/exchange-interface/blob/main/LICENSE.txt)
