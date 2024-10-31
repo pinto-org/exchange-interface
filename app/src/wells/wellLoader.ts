@@ -37,7 +37,6 @@ const loadFromChain = async (sdk: ExchangeSDK, aquifer: Aquifer): Promise<WellAd
     const toBlock = 'latest';
     const events = await contract.queryFilter(eventFilter, fromBlock, toBlock);
     const blacklist = WELL_BLACKLIST[chainId];
-
     const addresses = events
       .map((e) => {
         const data = e.decode?.(e.data);
@@ -90,7 +89,7 @@ export const findWells = memoize(
       //     throw err;
       //   })
     ]);
-
+    console.log('result', result);
     const resultAddresses = result.map((r) => r.toLowerCase());
     const addresses = new Set([
       ...resultAddresses,

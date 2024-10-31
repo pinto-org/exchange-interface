@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import { useAtom } from 'jotai';
-import { useChainId } from 'wagmi';
 
 import { Aquifer } from '@exchange/sdk';
 
@@ -13,12 +12,11 @@ const useSetAquifer = () => {
   const [aquifer, setAquifer] = useAtom(aquiferAtom);
 
   const sdk = useSdk();
-  const chainId = useChainId();
 
   useEffect(() => {
     const aquiferAddress = sdk.addresses.AQUIFER.get(sdk.chainId);
     setAquifer(new Aquifer(sdk, aquiferAddress));
-  }, [sdk, chainId, setAquifer]);
+  }, [sdk, sdk.chainId, setAquifer]);
 
   return aquifer;
 };
