@@ -72,16 +72,16 @@ export const addresses = {
   // Wells Contracts
   // ----------------------------------------
   PINTOETH_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e110022a76aEde1fA51E43913730FE3D4C3cCBC'
+    [ChainId.BASE_MAINNET]: '0x3e11001CfbB6dE5737327c59E10afAB47B82B5d3'
   }),
   PINTOCBETH_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e1111FF07062BbdaE1Af96fAF514133D9CE8Bfe'
+    [ChainId.BASE_MAINNET]: '0x3e111115A82dF6190e36ADf0d552880663A4dBF1'
   }),
   PINTOCBBTC_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e1122C27A21080546E9bca66421c078AF349Cd6'
+    [ChainId.BASE_MAINNET]: '0x3e11226fe3d85142B734ABCe6e58918d5828d1b4'
   }),
   PINTOUSDC_WELL: Address.make({
-    [ChainId.BASE_MAINNET]: '0x3e11334a0D56cA378cdE00a32f53C8cB0a7536b8'
+    [ChainId.BASE_MAINNET]: '0x3e1133aC082716DDC3114bbEFEeD8B1731eA9cb1'
   }),
 
   // ----------------------------------------
