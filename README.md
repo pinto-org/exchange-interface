@@ -22,7 +22,7 @@ yarn app:dev
 ### Environment Variables
 ```bash
 # ./app/.env.local
-# See ./app/src/.env.local.example for a full list of available variables
+# See ./app/.env.local.example for a full list of available variables
 VITE_ALCHEMY_API_KEY=[your alchemy api key] ...
 ```
 

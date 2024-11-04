@@ -57,7 +57,7 @@ export const Dev = () => {
   };
 
   const clearApproval = async (token: Token) => {
-    await token.approve('0xDEb0f00071497a5cc9b4A6B96068277e57A82Ae2', TokenValue.ZERO); //depot
+    await token.approve('0xDEb0f04e5DC8875bf1Dc6087fF436Ef9873b8933', TokenValue.ZERO); //depot
     toast.success(<ToastAlert desc={`Revoked ${token.symbol} allowance for Depot`} />);
     for await (const well of wells || []) {
       const allowance = await token.getAllowance(account.address || '', well.address);
