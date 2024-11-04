@@ -15,11 +15,6 @@
     X-Content-Type-Options = "nosniff"
 
 [[redirects]]
-  from = "/discord"
-  to = "https://discord.gg/3QcnNe6ZBD"
-  status = 308
-
-[[redirects]]
   from = "/05-08-24-multi-flow-codehawks-report"
   to = "https://codehawks.cyfrin.io/c/2024-04-Beanstalk-DIB/results?lt=contest&page=1&sc=reward&sj=reward&t=report"
   status = 200
