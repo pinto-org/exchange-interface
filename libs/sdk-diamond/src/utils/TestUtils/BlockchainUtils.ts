@@ -131,11 +131,13 @@ export class BlockchainUtils {
       this.setCBETHBalance(account, this.sdk.tokens.CBETH.amount(amount), mockToken),
       this.setCBBTCBalance(account, this.sdk.tokens.CBBTC.amount(amount), mockToken),
       this.setUSDCBalance(account, this.sdk.tokens.USDC.amount(amount), mockToken),
+      this.setWSOLBalance(account, this.sdk.tokens.WSOL.amount(amount), mockToken),
       // ERC20 LP
       this.setPINTOWETHBalance(account, this.sdk.tokens.PINTO_ETH_WELL_LP.amount(amount), mockToken),
       this.setPINTOCBETHBalance(account, this.sdk.tokens.PINTO_CBETH_WELL_LP.amount(amount), mockToken),
       this.setPINTOCBBTCBalance(account, this.sdk.tokens.PINTO_CBBTC_WELL_LP.amount(amount), mockToken),
-      this.setPINTOUSDCBalance(account, this.sdk.tokens.PINTO_USDC_WELL_LP.amount(amount), mockToken)
+      this.setPINTOUSDCBalance(account, this.sdk.tokens.PINTO_USDC_WELL_LP.amount(amount), mockToken),
+      this.setPINTOWSOLBalance(account, this.sdk.tokens.PINTO_WSOL_WELL_LP.amount(amount), mockToken)
     ]);
   }
   async setETHBalance(account: string, balance: TokenValue, _mockToken: boolean = false) {
@@ -156,6 +158,9 @@ export class BlockchainUtils {
   async setUSDCBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
     return this.setBalance(this.sdk.tokens.USDC, account, balance, mockToken);
   }
+  async setWSOLBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.WSOL, account, balance, mockToken);
+  }
   async setPINTOWETHBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
     return this.setBalance(this.sdk.tokens.PINTO_ETH_WELL_LP, account, balance, mockToken);
   }
@@ -168,6 +173,10 @@ export class BlockchainUtils {
   async setPINTOUSDCBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
     return this.setBalance(this.sdk.tokens.PINTO_USDC_WELL_LP, account, balance, mockToken);
   }
+  async setPINTOWSOLBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
+    return this.setBalance(this.sdk.tokens.PINTO_WSOL_WELL_LP, account, balance, mockToken);
+  }
+  
 
   private getBalanceConfig(tokenAddress: string, mockToken: boolean = false) {
     const slotConfig = new Map<string, [slot: number, isReverse: boolean]>();
@@ -177,13 +186,13 @@ export class BlockchainUtils {
     slotConfig.set(this.sdk.tokens.CBETH.address, [mockToken ? 0 : 51, false]); // MOCK
     slotConfig.set(this.sdk.tokens.CBBTC.address, [mockToken ? 0 : 9, false]); // MOCK
     slotConfig.set(this.sdk.tokens.USDC.address, [mockToken ? 0 : 9, false]); // MOCK
-
+    slotConfig.set(this.sdk.tokens.WSOL.address, [mockToken ? 0 : 5, false]); // MOCK
     // ERC20 LP
     slotConfig.set(this.sdk.tokens.PINTO_ETH_WELL_LP.address, [51, false]);
     slotConfig.set(this.sdk.tokens.PINTO_CBBTC_WELL_LP.address, [51, false]);
     slotConfig.set(this.sdk.tokens.PINTO_CBETH_WELL_LP.address, [51, false]);
     slotConfig.set(this.sdk.tokens.PINTO_USDC_WELL_LP.address, [51, false]);
-
+    slotConfig.set(this.sdk.tokens.PINTO_WSOL_WELL_LP.address, [51, false]);
     return slotConfig.get(tokenAddress);
   }
 
