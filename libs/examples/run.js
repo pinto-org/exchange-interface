@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-require("dotenv").config();
-const { register } = require("@swc-node/register/register");
+require('dotenv').config();
+const { register } = require('@swc-node/register/register');
 
 // This script can be used for quick cli development without compilation steps.
 process.env.MM_DEV = 1;
@@ -23,32 +23,33 @@ process.env.MM_DEV = 1;
 register({
   jsc: {
     parser: {
-      syntax: "typescript"
+      syntax: 'typescript'
     },
     paths: {
-      "~sdk/*": ["../sdk/src/*"],
-      "~sdk-core/*": ["../sdk-core/src/*"]
+      '~sdk/*': ['../sdk/src/*'],
+      '~sdk-core/*': ['../sdk-core/src/*'],
+      '~sdk-diamond/*': ['../sdk-diamond/src/*']
     },
-    baseUrl: "."
+    baseUrl: '.'
   },
-  sourceMaps: "inline",
+  sourceMaps: 'inline',
   module: {
-    type: "commonjs"
+    type: 'commonjs'
   }
 });
 
 const arg = process.argv[2];
 if (!arg) {
-  console.log("Usage:");
-  console.log("yarn x [file in src folder]");
-  console.log("yarn x sdk.ts");
-  console.log("yarn x play/myfile.ts");
+  console.log('Usage:');
+  console.log('yarn x [file in src folder]');
+  console.log('yarn x sdk.ts');
+  console.log('yarn x play/myfile.ts');
 }
 let path;
 
-if (arg.startsWith("./src/")) {
+if (arg.startsWith('./src/')) {
   path = arg;
-} else if (arg.startsWith("src/")) {
+} else if (arg.startsWith('src/')) {
   path = `./${arg}`;
 } else {
   path = `./src/${arg}`;
@@ -57,8 +58,8 @@ if (arg.startsWith("./src/")) {
 try {
   require(path);
 } catch (err) {
-  if (err.code === "MODULE_NOT_FOUND") {
-    console.log("File not found: ", path);
+  if (err.code === 'MODULE_NOT_FOUND') {
+    console.log('File not found: ', path);
     console.log(err);
     process.exit(-1);
   }
