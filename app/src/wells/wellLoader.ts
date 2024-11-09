@@ -97,7 +97,6 @@ export const findWells = memoize(
       ...[...sdk.diamondSDK.tokens.wellLP].map((t) => t.address.toLowerCase())
     ]);
 
-0x3e11444c7650234c748D743D8d374fcE2eE5E6C9
     // Remove empty string
     addresses.delete('');
 
