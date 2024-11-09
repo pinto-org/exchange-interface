@@ -31,12 +31,14 @@ export class Tokens {
   public readonly WETH: ERC20Token;
   public readonly CBETH: ERC20Token;
   public readonly USDC: ERC20Token;
+  public readonly WSOL: ERC20Token;
 
   // Well LP
   public readonly PINTO_ETH_WELL_LP: ERC20Token;
   public readonly PINTO_CBETH_WELL_LP: ERC20Token;
   public readonly PINTO_CBBTC_WELL_LP: ERC20Token;
   public readonly PINTO_USDC_WELL_LP: ERC20Token;
+  public readonly PINTO_WSOL_WELL_LP: ERC20Token;
 
   // System
   public readonly STALK: SystemToken;
@@ -176,11 +178,24 @@ export class Tokens {
       },
       providerOrSigner
     );
-
+    this.PINTO_WSOL_WELL_LP = new ERC20Token(
+      chainId,
+      addresses.PINTOWSOL_WELL.get(chainId),
+      18,
+      'PINTOWSOL',
+      {
+        name: 'PINTO:WSOL LP',
+        displayName: 'PINTO:WSOL Well LP',
+        isLP: true,
+        displayDecimals: 2
+      },
+      providerOrSigner
+    );
     map.set(getTokenIndex(this.PINTO_ETH_WELL_LP), this.PINTO_ETH_WELL_LP);
     map.set(getTokenIndex(this.PINTO_CBETH_WELL_LP), this.PINTO_CBETH_WELL_LP);
     map.set(getTokenIndex(this.PINTO_CBBTC_WELL_LP), this.PINTO_CBBTC_WELL_LP);
     map.set(getTokenIndex(this.PINTO_USDC_WELL_LP), this.PINTO_USDC_WELL_LP);
+    map.set(getTokenIndex(this.PINTO_WSOL_WELL_LP), this.PINTO_WSOL_WELL_LP);
 
     // ////////// ERC-20 Tokens //////////
 
@@ -244,6 +259,20 @@ export class Tokens {
     );
     map.set(getTokenIndex(this.CBETH), this.CBETH);
 
+    //////////// SOL ////////////
+    this.WSOL = new ERC20Token(
+      chainId,
+      addresses.WSOL.get(chainId),
+      9,
+      'WSOL',
+      {
+        name: 'Wrapped SOL',
+        displayDecimals: 4
+      },
+      providerOrSigner
+    );
+    map.set(getTokenIndex(this.WSOL), this.WSOL);
+
     //////////// STABLECOINS ////////////
 
     // USDC
@@ -280,7 +309,8 @@ export class Tokens {
       this.PINTO_ETH_WELL_LP,
       this.PINTO_CBETH_WELL_LP,
       this.PINTO_CBBTC_WELL_LP,
-      this.PINTO_USDC_WELL_LP
+      this.PINTO_USDC_WELL_LP,
+      this.PINTO_WSOL_WELL_LP
     ];
 
     const siloWhitelist = [this.PINTO, ...wellLP];

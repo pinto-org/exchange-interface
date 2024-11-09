@@ -52,6 +52,9 @@ export const addresses = {
   WSTETH: Address.make({
     [ChainId.BASE_MAINNET]: '0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452'
   }),
+  WSOL: Address.make({
+    [ChainId.BASE_MAINNET]: '0x1C61629598e4a901136a81BC138E5828dc150d67'
+  }),
   RETH: Address.make({
     [ChainId.BASE_MAINNET]: '0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c'
   }),
@@ -83,6 +86,9 @@ export const addresses = {
   PINTOUSDC_WELL: Address.make({
     [ChainId.BASE_MAINNET]: '0x3e1133aC082716DDC3114bbEFEeD8B1731eA9cb1'
   }),
+  PINTOWSOL_WELL: Address.make({
+    [ChainId.BASE_MAINNET]: '0x3e11444c7650234c748D743D8d374fcE2eE5E6C9'
+  }),
 
   // ----------------------------------------
   // LSD Oracles
@@ -98,5 +104,8 @@ export const addresses = {
   }),
   PINTOUSDC_LSD_ORACLE: Address.make({
     [ChainId.BASE_MAINNET]: '0x7e860098F58bBFC8648a4311b374B1D669a2bc6B'
+  }),
+  PINTOWSOL_LSD_ORACLE: Address.make({
+    [ChainId.BASE_MAINNET]: '0x975043adBb80fc32276CbF9Bbcfd4A601a12462D'
   })
 };

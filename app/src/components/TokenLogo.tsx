@@ -42,7 +42,6 @@ const Container = styled.div<ContainerProps>`
   img {
     width: ${(props) => props.width}px;
     height: ${(props) => props.height}px;
-    border-radius: 50%;
   }
 
   @media (max-width: ${size.mobile}) {
@@ -51,7 +50,6 @@ const Container = styled.div<ContainerProps>`
     img {
       width: ${(props) => props.mobileWidth}px;
       height: ${(props) => props.mobileHeight}px;
-      border-radius: 50%;
     }
   }
 `;

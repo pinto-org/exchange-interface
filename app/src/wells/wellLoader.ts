@@ -90,12 +90,14 @@ export const findWells = memoize(
       //   })
     ]);
     console.log('result', result);
+    console.log("tokens: ", sdk.diamondSDK.tokens)
     const resultAddresses = result.map((r) => r.toLowerCase());
     const addresses = new Set([
       ...resultAddresses,
       ...[...sdk.diamondSDK.tokens.wellLP].map((t) => t.address.toLowerCase())
     ]);
 
+0x3e11444c7650234c748D743D8d374fcE2eE5E6C9
     // Remove empty string
     addresses.delete('');
 
