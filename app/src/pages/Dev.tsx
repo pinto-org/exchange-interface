@@ -41,7 +41,11 @@ export const Dev = () => {
   const goBalance = async (token: Token) => {
     const amount = amounts.get(token.symbol) || TokenValue.ZERO;
     const utils = new TestUtils.BlockchainUtils(sdk.diamondSDK);
-    await utils.setBalance(token, account.address || '', amount, false);
+    if (token.equals(sdk.tokens.ETH)) {
+      await utils.setETHBalance(account.address || '', amount, false);
+    } else {
+      await utils.setBalance(token, account.address || '', amount, false);
+    }
     await mine();
     await refetchTokenBalances();
     toast.success(<ToastAlert desc={`Set ${token.symbol} balance to  ${amount.toHuman('short')}`} />);

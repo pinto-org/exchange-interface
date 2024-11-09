@@ -2,7 +2,7 @@ import { ExchangeSDK, TestUtils } from '@exchange/sdk';
 import { getMockAccountAlias } from './accounts';
 import { impersonate, chain } from './setup';
 import { MayPromise } from './types.generics';
-import { print } from './print';
+import { print } from './Print';
 
 export interface ImpersonateWrapperCallbackParams {
   sdk: ExchangeSDK;
