@@ -29,7 +29,8 @@ const FEEDS: Record<number, Record<string, string>> = {
     ETH_USD: '0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70',
     DAI_USD: '0x591e79239a7d679378eC8c847e5038150364C78F',
     USDC_USD: '0x7e860098F58bBFC8648a4311b374B1D669a2bc6B',
-    USDT_USD: '0xf19d560eB8d2ADf07BD6D13ed03e1D11215721F9'
+    USDT_USD: '0xf19d560eB8d2ADf07BD6D13ed03e1D11215721F9',
+    SOL_USD: '0x975043adBb80fc32276CbF9Bbcfd4A601a12462D'
   }
 };
 
@@ -81,5 +82,6 @@ export const PriceLookups: Record<string, (sdk: ExchangeSDK) => Promise<TokenVal
   cbBTC: memoize(chainlinkLookup('cbBTC_USD'), PRICE_EXPIRY_TIMEOUT),
   cbETH: memoize(chainlinkLookup('cbETH_USD'), PRICE_EXPIRY_TIMEOUT),
   weETH: memoize(multiChainlinkLookup('weETH_ETH', 'ETH_USD'), PRICE_EXPIRY_TIMEOUT),
-  wstETH: memoize(multiChainlinkLookup('wstETH_ETH', 'ETH_USD'), PRICE_EXPIRY_TIMEOUT)
+  wstETH: memoize(multiChainlinkLookup('wstETH_ETH', 'ETH_USD'), PRICE_EXPIRY_TIMEOUT),
+  WSOL: memoize(chainlinkLookup('SOL_USD'), PRICE_EXPIRY_TIMEOUT)
 };
