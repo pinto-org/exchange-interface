@@ -12,6 +12,7 @@ export class Pools {
   public readonly PINTO_WSTETH_WELL: BasinWell;
   public readonly PINTO_CBBTC_WELL: BasinWell;
   public readonly PINTO_USDC_WELL: BasinWell;
+  public readonly PINTO_WSOL_WELL: BasinWell;
 
   public readonly wells: Set<BasinWell>;
 
@@ -71,12 +72,25 @@ export class Pools {
         color: '#ed9f9c'
       }
     );
+    this.PINTO_WSOL_WELL = new BasinWell(
+      sdk,
+      sdk.addresses.PINTOWSOL_WELL.get(sdk.chainId),
+      sdk.tokens.PINTO_WSOL_WELL_LP,
+      [sdk.tokens.PINTO, sdk.tokens.WSOL],
+      {
+        name: 'PINTO:WSOL Well LP',
+        logo: '',
+        symbol: 'PINTO:WSOL',
+        color: '#ed9f9c'
+      }
+    );
 
     wells.add(this.PINTO_ETH_WELL);
     wells.add(this.PINTO_CBETH_WELL);
     wells.add(this.PINTO_CBBTC_WELL);
     wells.add(this.PINTO_USDC_WELL);
-
+    wells.add(this.PINTO_WSOL_WELL);
+    
     this.wells = wells;
 
     this.wells.forEach((well) => {
