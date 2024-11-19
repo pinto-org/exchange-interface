@@ -46,8 +46,8 @@ export const isDeployPreview = netlifyContext === 'deploy-preview';
 const envSettings: EnvDexSettings = netlifyContext === 'production' ? ProdSettings : DevSettings;
 
 const subgraphSettings: SubgraphDexSettings = {
-  SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/basin`,
-  BEANSTALK_SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/beanstalk`
+  SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/exchange`,
+  BEANSTALK_SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/pintostalk`
 };
 
 export const Settings = {
