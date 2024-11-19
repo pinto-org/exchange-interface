@@ -40,7 +40,9 @@ export const Home = () => {
               </SubTitle>
             </TitleSubtitleContainer>
             <AccordionContainer>
-              <AccordionItem href={links.build}>
+              <AccordionItem
+              // href={links.build}
+              >
                 <AccordionTitle>
                   <Emoji role='img' aria-label='crystal ball'>
                     🔮

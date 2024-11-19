@@ -1,183 +1,136 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import buildIcon from "src/assets/images/navbar/build.svg";
-import swapIcon from "src/assets/images/navbar/swap.svg";
-import wellsIcon from "src/assets/images/navbar/wells.svg";
-import { WalletButton } from "src/components/Wallet";
-import { Settings } from "src/settings";
-import { FC } from "src/types";
-import { useSdkChainId } from "src/utils/chain";
-import { theme, THEME_COLORS } from "src/utils/ui/theme";
+import buildIcon from 'src/assets/images/navbar/build.svg';
+import swapIcon from 'src/assets/images/navbar/swap.svg';
+import wellsIcon from 'src/assets/images/navbar/wells.svg';
+import { WalletButton } from 'src/components/Wallet';
+import { Settings } from 'src/settings';
+import { FC } from 'src/types';
+import { useSdkChainId } from 'src/utils/chain';
+import { theme, THEME_COLORS } from 'src/utils/ui/theme';
 
-import { Footer } from "./Footer";
-import { TokenMarquee } from "./TokenMarquee";
-import { Window } from "./Window";
-import {
-	BurgerMenuIcon,
-	Discord,
-	Github,
-	Logo,
-	Twitter,
-	X,
-	BeanstalkLogoBlack,
-} from "../Icons";
-import { Flex } from "../Layout";
-import CustomToaster from "../TxnToast/CustomToaster";
-import { LinksNav } from "../Typography";
+import { Footer } from './Footer';
+import { TokenMarquee } from './TokenMarquee';
+import { Window } from './Window';
+import { BurgerMenuIcon, Discord, Github, Logo, Twitter, X, BeanstalkLogoBlack } from '../Icons';
+import { Flex } from '../Layout';
+import CustomToaster from '../TxnToast/CustomToaster';
+import { LinksNav } from '../Typography';
 
 const isNotProd = !Settings.PRODUCTION;
 
 export const Frame: FC<{}> = ({ children }) => {
-	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-	const resolvedcid = useSdkChainId();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const resolvedcid = useSdkChainId();
 
-	return (
-		<>
-			<Container id="frame">
-				{/* Desktop */}
-				<Navbar>
-					<NavGrid>
-						<NavGridItem>
-							<Brand>
-								<Link to={"/"}>
-									<Logo /> <BrandText>PINTO EXCHANGE</BrandText>
-								</Link>
-							</Brand>
-						</NavGridItem>
-						<NavGridItem id="navbar-links">
-							<NavLinksGrid>
-								{/* <NavLink className='nav-link-grid-item' to='/build' hovericon={buildIcon}>
+  return (
+    <>
+      <Container id='frame'>
+        {/* Desktop */}
+        <Navbar>
+          <NavGrid>
+            <NavGridItem>
+              <Brand>
+                <Link to={'/'}>
+                  <Logo /> <BrandText>PINTO EXCHANGE</BrandText>
+                </Link>
+              </Brand>
+            </NavGridItem>
+            <NavGridItem id='navbar-links'>
+              <NavLinksGrid>
+                {/* <NavLink className='nav-link-grid-item' to='/build' hovericon={buildIcon}>
                   BUILD
                 </NavLink> */}
-								<NavLink
-									className="nav-link-grid-item"
-									to={`/wells/${resolvedcid}`}
-									hovericon={wellsIcon}
-								>
-									LIQUIDITY
-								</NavLink>
-								<NavLink
-									className="nav-link-grid-item"
-									to="/swap"
-									hovericon={swapIcon}
-								>
-									SWAP
-								</NavLink>
-								{isNotProd && (
-									<NavLink className="nav-link-grid-item" to="/dev">
-										DEV
-									</NavLink>
-								)}
-							</NavLinksGrid>
-						</NavGridItem>
-						<NavGridItem>
-							<WalletContainer>
-								<WalletButton />
-							</WalletContainer>
-							<DropdownMenu
-								open={mobileMenuOpen}
-								onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-							>
-								{mobileMenuOpen ? <X /> : <BurgerMenuIcon />}
-							</DropdownMenu>
-						</NavGridItem>
-					</NavGrid>
-				</Navbar>
-				<TokenMarquee />
-				<Window>
-					<CustomToaster />
-					<BurgerMenu open={mobileMenuOpen}>
-						<MobileNavLinkContainer>
-							<MobileNavLink
-								$bold
-								to="/swap"
-								onClick={() => setMobileMenuOpen(false)}
-							>
-								Swap
-							</MobileNavLink>
-							<MobileNavLink
-								$bold
-								to={`/wells/${resolvedcid}`}
-								onClick={() => setMobileMenuOpen(false)}
-							>
-								Wells
-							</MobileNavLink>
-							<MobileNavLink
+                <NavLink className='nav-link-grid-item' to={`/wells/${resolvedcid}`} hovericon={wellsIcon}>
+                  LIQUIDITY
+                </NavLink>
+                <NavLink className='nav-link-grid-item' to='/swap' hovericon={swapIcon}>
+                  SWAP
+                </NavLink>
+                {isNotProd && (
+                  <NavLink className='nav-link-grid-item' to='/dev'>
+                    DEV
+                  </NavLink>
+                )}
+              </NavLinksGrid>
+            </NavGridItem>
+            <NavGridItem>
+              <WalletContainer>
+                <WalletButton />
+              </WalletContainer>
+              <DropdownMenu open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                {mobileMenuOpen ? <X /> : <BurgerMenuIcon />}
+              </DropdownMenu>
+            </NavGridItem>
+          </NavGrid>
+        </Navbar>
+        <TokenMarquee />
+        <Window>
+          <CustomToaster />
+          <BurgerMenu open={mobileMenuOpen}>
+            <MobileNavLinkContainer>
+              <MobileNavLink $bold to='/swap' onClick={() => setMobileMenuOpen(false)}>
+                Swap
+              </MobileNavLink>
+              <MobileNavLink $bold to={`/wells/${resolvedcid}`} onClick={() => setMobileMenuOpen(false)}>
+                Wells
+              </MobileNavLink>
+              {/* <MobileNavLink
 								$bold
 								to="/build"
 								onClick={() => setMobileMenuOpen(false)}
 							>
 								Build
-							</MobileNavLink>
-							{isNotProd && (
-								<MobileNavLink
-									$bold
-									to="/dev"
-									onClick={() => setMobileMenuOpen(false)}
-								>
-									Dev
-								</MobileNavLink>
-							)}
-							<MobileLargeNavRow onClick={() => setMobileMenuOpen(false)}>
-								<LinkBox
-									href="https://pinto.exchange/discord"
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									<Discord width={20} />
-								</LinkBox>
-								<LinkBox
-									href="https://twitter.com/pintoexchange"
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									<Twitter width={20} />
-								</LinkBox>
-								<LinkBox
-									href="https://github.com/pintomoney/exchange"
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									<Github width={20} />
-								</LinkBox>
-								<LinkBox
-									href="https://pinto.money"
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									<BeanstalkLogoBlack width={20} />
-								</LinkBox>
-							</MobileLargeNavRow>
-							<MobileNavRow
-								href="https://docs.pinto.exchange/"
-								rel="noopener noreferrer"
-								target="_blank"
-								onClick={() => setMobileMenuOpen(false)}
-							>
-								Documentation
-							</MobileNavRow>
-						</MobileNavLinkContainer>
-						<MobileConnectContainer>
-							<WalletButton />
-						</MobileConnectContainer>
-					</BurgerMenu>
-					{/* TODO Restore this */}
-					{/* {chain?.unsupported ? <Title title="Unsupported Chain" /> : children} */}
-					{children}
-				</Window>
-				<Footer />
-			</Container>
-		</>
-	);
+							</MobileNavLink> */}
+              {isNotProd && (
+                <MobileNavLink $bold to='/dev' onClick={() => setMobileMenuOpen(false)}>
+                  Dev
+                </MobileNavLink>
+              )}
+              <MobileLargeNavRow onClick={() => setMobileMenuOpen(false)}>
+                <LinkBox href='https://pinto.exchange/discord' rel='noopener noreferrer' target='_blank'>
+                  <Discord width={20} />
+                </LinkBox>
+                <LinkBox href='https://twitter.com/pintoexchange' rel='noopener noreferrer' target='_blank'>
+                  <Twitter width={20} />
+                </LinkBox>
+                <LinkBox href='https://github.com/pintomoney/exchange' rel='noopener noreferrer' target='_blank'>
+                  <Github width={20} />
+                </LinkBox>
+                <LinkBox href='https://pinto.money' rel='noopener noreferrer' target='_blank'>
+                  <BeanstalkLogoBlack width={20} />
+                </LinkBox>
+              </MobileLargeNavRow>
+              <MobileNavRow
+                href='https://docs.pinto.exchange/'
+                rel='noopener noreferrer'
+                target='_blank'
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Documentation
+              </MobileNavRow>
+            </MobileNavLinkContainer>
+            <MobileConnectContainer>
+              <WalletButton />
+            </MobileConnectContainer>
+          </BurgerMenu>
+          {/* TODO Restore this */}
+          {/* {chain?.unsupported ? <Title title="Unsupported Chain" /> : children} */}
+          {children}
+        </Window>
+        <Footer />
+      </Container>
+    </>
+  );
 };
 
 /// ------------------------------------------------------------------------------------------------
 
 type NavLinkProps = {
-	hovericon?: string;
+  hovericon?: string;
 };
 
 const Container = styled.div`
@@ -222,10 +175,10 @@ const NavGrid = styled.div`
 `;
 
 const NavGridItem = styled(Flex).attrs({
-	$direction: "column",
-	$alignSelf: "stretch",
-	$alignItems: "center",
-	$justifyContent: "center",
+  $direction: 'column',
+  $alignSelf: 'stretch',
+  $alignItems: 'center',
+  $justifyContent: 'center'
 })`
   :last-child {
     align-items: flex-end;
@@ -239,10 +192,10 @@ const NavGridItem = styled(Flex).attrs({
 `;
 
 const Brand = styled(Flex).attrs({
-	$direction: "row",
-	$pl: 2,
-	$maxWidth: "250px",
-	$alignSelf: "stretch",
+  $direction: 'row',
+  $pl: 2,
+  $maxWidth: '250px',
+  $alignSelf: 'stretch'
 })`
   a {
     display: flex;
@@ -288,7 +241,7 @@ const NavLink = styled(Link)<NavLinkProps>`
   font-size: 16px;
   line-height: 24px;
   color: black;
-  cursor: ${(props) => (props.hovericon ? `url(${props.hovericon}), auto` : "pointer")};
+  cursor: ${(props) => (props.hovericon ? `url(${props.hovericon}), auto` : 'pointer')};
 
   :hover {
     background-color: ${THEME_COLORS.primaryLight};
@@ -300,9 +253,9 @@ const NavLink = styled(Link)<NavLinkProps>`
 `;
 
 const WalletContainer = styled(Flex).attrs({
-	$direction: "row",
-	$width: "192px",
-	$height: "100%",
+  $direction: 'row',
+  $width: '192px',
+  $height: '100%'
 })`
   box-sizing: border-box;
   border-left: 0.5px solid black;
