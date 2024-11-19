@@ -7,7 +7,9 @@ const netlifyContext = import.meta.env.VITE_NETLIFY_CONTEXT;
 const netlifyCommitHash = import.meta.env.VITE_COMMIT_HASH;
 const netlifyBuildId = import.meta.env.VITE_NETLIFY_BUILD_ID;
 
-export const BASE_SUBGRAPH_URL = 'https://graph.bean.money';
+export const BASE_SUBGRAPH_URL = 'https://graph.pinto.money';
+
+const sgurl = 'https://graph.bean.money';
 
 export interface SubgraphDexSettings {
   /**
@@ -47,7 +49,7 @@ const envSettings: EnvDexSettings = netlifyContext === 'production' ? ProdSettin
 
 const subgraphSettings: SubgraphDexSettings = {
   SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/exchange`,
-  BEANSTALK_SUBGRAPH_URL: `${BASE_SUBGRAPH_URL}/pintostalk`
+  BEANSTALK_SUBGRAPH_URL: `${sgurl}/beanstalk`
 };
 
 export const Settings = {
