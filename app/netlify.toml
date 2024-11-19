@@ -4,15 +4,9 @@
   CI = "true"
 
 [[redirects]]
-  from = "/*"
-  to = "index.html"
-  status = 200
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
+  from = "/discord"
+  to = "https://discord.gg/WrNqZNDf"
+  status = 301
 
 [[redirects]]
   from = "/05-08-24-multi-flow-codehawks-report"
@@ -28,3 +22,15 @@
   from = "/06-16-23-halborn-report"
   to = "https://arweave.net/1IKi4iqRvu3qu_GdcLY4f3u9PgvOMvuRltU7AIXAEyA"
   status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+
