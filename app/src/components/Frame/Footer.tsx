@@ -1,36 +1,55 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { mediaQuery, size } from 'src/breakpoints';
-import { THEME_COLORS } from 'src/utils/ui/theme';
+import { mediaQuery, size } from "src/breakpoints";
+import { THEME_COLORS } from "src/utils/ui/theme";
 
-import { BeanstalkLogoBlack, Discord, Github, Twitter } from '../Icons';
+import { Discord, Github, PintoLogoBlack, Twitter } from "../Icons";
 
 export const Footer = () => (
-  <Container>
-    <Box href='https://docs.pinto.exchange' rel='noopener noreferrer' target='_blank'>
-      <InfoText>
-        <span role='img' aria-label='Documentation'>
-          📃 Protocol Documentation
-        </span>
-      </InfoText>
-      <StyledLink>Visit the Docs →</StyledLink>
-    </Box>
-    <SmallBox href='https://pinto.exchange/discord' rel='noopener noreferrer' target='_blank'>
-      <Discord width={20} />
-    </SmallBox>
-    <SmallBox href='https://twitter.com/pintoexchange' rel='noopener noreferrer' target='_blank'>
-      <Twitter width={20} />
-    </SmallBox>
-    <SmallBox href='https://github.com/pintomoney/exchange-interface' rel='noopener noreferrer' target='_blank'>
-      <Github width={20} />
-    </SmallBox>
-    <SmallBox href='https://app.pinto.money' rel='noopener noreferrer' target='_blank'>
-      {/* FIX ME */}
-      <BeanstalkLogoBlack width={20} />
-    </SmallBox>
-  </Container>
+	<Container>
+		<Box
+			href="https://docs.pinto.exchange"
+			rel="noopener noreferrer"
+			target="_blank"
+		>
+			<InfoText>
+				<span role="img" aria-label="Documentation">
+					📃 Protocol Documentation
+				</span>
+			</InfoText>
+			<StyledLink>Visit the Docs →</StyledLink>
+		</Box>
+		<SmallBox
+			href="https://pinto.money/discord"
+			rel="noopener noreferrer"
+			target="_blank"
+		>
+			<Discord width={20} />
+		</SmallBox>
+		<SmallBox
+			href="https://x.com/pintocommunity"
+			rel="noopener noreferrer"
+			target="_blank"
+		>
+			<Twitter width={20} />
+		</SmallBox>
+		<SmallBox
+			href="https://github.com/pinto-org/exchange"
+			rel="noopener noreferrer"
+			target="_blank"
+		>
+			<Github width={20} />
+		</SmallBox>
+		<SmallBox
+			href="https://pinto.money"
+			rel="noopener noreferrer"
+			target="_blank"
+		>
+			<PintoLogoBlack width={20} />
+		</SmallBox>
+	</Container>
 );
 
 const Container = styled.footer`
