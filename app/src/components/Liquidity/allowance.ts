@@ -32,7 +32,7 @@ const ensureAllowance = async (
     try {
       const approveTXN = await token
         .getContract()
-        .approve(spender, mininumAllowance.toBigNumber(), { gasLimit: 50000 });
+        .approve(spender, mininumAllowance.add(1).toBigNumber(), { gasLimit: 50000 });
       toast.confirming(approveTXN);
       const receipt = await approveTXN.wait();
       toast.success(receipt);
