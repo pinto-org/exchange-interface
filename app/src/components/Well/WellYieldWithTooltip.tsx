@@ -67,7 +67,7 @@ export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, retu
               <div>
                 The Variable PINTO APY (vAPY) uses historical data of Beans earned by{' '}
                 <a
-                  href='https://docs.bean.money/almanac/guides/silo/understand-silo-vapy'
+                  href='https://docs.pintobean.money/almanac/guides/silo/understand-silo-vapy'
                   target='_blank'
                   rel='noopener noreferrer'
                   className='underlined'
