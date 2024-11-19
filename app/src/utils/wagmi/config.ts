@@ -35,7 +35,7 @@ export function setWagmiConfig(testnetRpcUrl: string | undefined = vnetRpcUrl) {
   const transports: TransportsConfig = (() => {
     const transportsConfig = {} as TransportsConfig;
 
-    transportsConfig[baseMainnet.id] = http(getRpcUrl(ChainId.TESTNET));
+    transportsConfig[baseMainnet.id] = http(getRpcUrl(ChainId.BASE_MAINNET));
 
     if (isPROD) return transportsConfig;
 
