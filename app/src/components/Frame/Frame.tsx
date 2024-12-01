@@ -91,13 +91,13 @@ export const Frame: FC<{}> = ({ children }) => {
                 </MobileNavLink>
               )}
               <MobileLargeNavRow onClick={() => setMobileMenuOpen(false)}>
-                <LinkBox href='https://pinto.exchange/discord' rel='noopener noreferrer' target='_blank'>
+                <LinkBox href='https://pinto.money/discord' rel='noopener noreferrer' target='_blank'>
                   <Discord width={20} />
                 </LinkBox>
-                <LinkBox href='https://twitter.com/pintoexchange' rel='noopener noreferrer' target='_blank'>
+                <LinkBox href='https://x.com/pintocommunity' rel='noopener noreferrer' target='_blank'>
                   <Twitter width={20} />
                 </LinkBox>
-                <LinkBox href='https://github.com/pinto-org' rel='noopener noreferrer' target='_blank'>
+                <LinkBox href='https://github.com/pinto-org/exchange' rel='noopener noreferrer' target='_blank'>
                   <Github width={20} />
                 </LinkBox>
                 <LinkBox href='https://pinto.money' rel='noopener noreferrer' target='_blank'>
