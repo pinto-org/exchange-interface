@@ -15,7 +15,7 @@ import { theme, THEME_COLORS } from 'src/utils/ui/theme';
 import { Footer } from './Footer';
 import { TokenMarquee } from './TokenMarquee';
 import { Window } from './Window';
-import { BurgerMenuIcon, Discord, Github, Logo, Twitter, X, BeanstalkLogoBlack } from '../Icons';
+import { BurgerMenuIcon, Discord, Github, Logo, Twitter, X, PintoLogoBlack } from '../Icons';
 import { Flex } from '../Layout';
 import CustomToaster from '../TxnToast/CustomToaster';
 import { LinksNav } from '../Typography';
@@ -97,11 +97,11 @@ export const Frame: FC<{}> = ({ children }) => {
                 <LinkBox href='https://twitter.com/pintoexchange' rel='noopener noreferrer' target='_blank'>
                   <Twitter width={20} />
                 </LinkBox>
-                <LinkBox href='https://github.com/pintomoney/exchange' rel='noopener noreferrer' target='_blank'>
+                <LinkBox href='https://github.com/pinto-org' rel='noopener noreferrer' target='_blank'>
                   <Github width={20} />
                 </LinkBox>
                 <LinkBox href='https://pinto.money' rel='noopener noreferrer' target='_blank'>
-                  <BeanstalkLogoBlack width={20} />
+                  <PintoLogoBlack width={20} />
                 </LinkBox>
               </MobileLargeNavRow>
               <MobileNavRow
