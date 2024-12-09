@@ -59,15 +59,15 @@ export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, retu
                   <div className='logo-wrapper'>
                     <TokenLogo token={pinto} size={16} />
                   </div>
-                  Bean vAPY
+                  Pinto vAPY
                 </div>
                 {apy}
               </div>
             </TitleContainer>
             <ContentContainer>
               <div>
-                The Variable PINTO APY (vAPY) uses historical data of Beans earned by Silo Depositors to estimate future
-                returns.
+                The Variable Pinto APY (vAPY) uses historical data of Pinto earned by Silo Depositors over the previous
+                30 days to estimate future returns.
               </div>
             </ContentContainer>
           </Container>

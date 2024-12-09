@@ -4,7 +4,6 @@ import { Well } from '@exchange/sdk';
 
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
-import useSdk from 'src/utils/sdk/useSdk';
 
 export type EmaWindow = 24 | 168 | 720;
 
