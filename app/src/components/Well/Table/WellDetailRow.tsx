@@ -12,7 +12,7 @@ import { Skeleton } from 'src/components/Skeleton';
 import { Row, Td } from 'src/components/Table';
 import { TokenLogo } from 'src/components/TokenLogo';
 import { useResolvedChainId } from 'src/utils/chain';
-import { formatNum } from 'src/utils/format';
+import { formatNum, formatUSD } from 'src/utils/format';
 
 import { WellYieldWithTooltip } from '../WellYieldWithTooltip';
 
@@ -72,7 +72,7 @@ export const WellDetailRow: FC<{
         </Item>
       </DesktopContainer>
       <DesktopContainer align='right'>
-        <Amount>${liquidity?.gt(0) ? liquidity.toHuman('short') : '0.00'}</Amount>
+        <Amount>{formatUSD(liquidity)}</Amount>
       </DesktopContainer>
       <DesktopContainer align='right'>
         <Amount>${price?.gt(0) ? price.toHuman('short') : 'N/A'}</Amount>
