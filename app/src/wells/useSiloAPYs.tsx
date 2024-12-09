@@ -83,7 +83,7 @@ export const useSiloAPYs = () => {
       const lpToken = well?.lpToken;
       if (!query.data || !lpToken?.address) return undefined;
 
-      return query.data.yields[24][lpToken.address];
+      return query.data.yields?.[720]?.[lpToken.address];
     },
     [query.data]
   );
