@@ -175,36 +175,18 @@ const makeTableData = (
 
     const token1 = well.tokens?.[0];
     const token2 = well.tokens?.[1];
+    const wellIndex = well.address.toLowerCase();
 
-    if (token1 && token2) {
-      const basePrice = tokenPrices[token1.symbol] || TokenValue.ZERO;
-      const targetPrice = tokenPrices[token2.symbol] || TokenValue.ZERO;
+    const apiResult = statsByPoolId?.[wellIndex];
+    if (token1 && token2 && apiResult) {
+      const targetPrice = tokenPrices?.[token2.symbol] || TokenValue.ZERO;
+      const lastPrice = apiResult?.last_price || 0;
 
-      const reserve1 = well.reserves?.[0];
-      const reserve2 = well.reserves?.[1];
-      const reserve1USD = reserve1?.mul(basePrice);
-      const reserve2USD = reserve2?.mul(targetPrice);
-
-      if (reserve2USD && reserve1?.gt(0)) {
-        baseTokenPrice = reserve2USD.div(reserve1);
-      }
-      if (reserve1USD && reserve2USD?.gt(0)) {
-        liquidityUSD = reserve1USD.add(reserve2USD);
-      }
-
-      const baseVolume = token2.fromHuman(statsByPoolId[well.address.toLowerCase()]?.target_volume || 0);
+      baseTokenPrice = targetPrice.mul(lastPrice);
+      const baseVolume = token2.fromHuman(apiResult?.target_volume || 0);
       targetVolume = baseVolume.mul(targetPrice);
-
-      const bothPricesAvailable = !!(reserve1USD && reserve2USD);
-      const atLeastOnePriceAvailable = !!(reserve1USD || reserve1USD);
-
-      if (atLeastOnePriceAvailable && !bothPricesAvailable) {
-        // Since we don't have the other price, we assume reserves are balanced 50% - 50%
-        if (reserve1USD) liquidityUSDInferred = reserve1USD.mul(2);
-        if (reserve2USD) liquidityUSDInferred = reserve2USD.mul(2);
-      } else if (bothPricesAvailable) {
-        liquidityUSDInferred = liquidityUSD;
-      }
+      liquidityUSD = TokenValue.fromHuman(apiResult?.liquidity_in_usd, 0);
+      liquidityUSDInferred = liquidityUSD;
     }
 
     const hasReserves = well.reserves?.[0]?.gt(0) && well.reserves?.[1]?.gt(0);

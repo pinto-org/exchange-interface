@@ -8,7 +8,7 @@ const useBasinStats = () => {
     queryFn: async () => {
       let output: BasinAPIResponse[] = [];
       try {
-        const apiQuery = await fetch(`https://api.bean.money/basin/tickers`, {
+        const apiQuery = await fetch(`https://api.pinto.money/basin/tickers`, {
           headers: { accept: 'application/json' }
         });
 

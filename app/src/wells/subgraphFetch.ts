@@ -10,6 +10,13 @@ interface AdditionalSubgraphFetchOptions {
 }
 
 const getEndpoint = (chainId: ChainId, options?: AdditionalSubgraphFetchOptions) => {
+  if (options?.useBeanstalkSubgraph) {
+    return Settings.BEANSTALK_SUBGRAPH_URL;
+  }
+  if (chainId === ChainId.BASE_MAINNET) {
+    return Settings.SUBGRAPH_URL;
+  }
+
   const base = `${options?.useBeanstalkSubgraph ? 'BEANSTALK_' : ''}SUBGRAPH_URL`;
   const key = `${base}${ChainResolver.isL2Chain(chainId) ? '' : '_ETH'}`;
 

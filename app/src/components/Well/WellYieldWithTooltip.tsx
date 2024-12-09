@@ -36,7 +36,8 @@ export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, retu
     const data = getSiloAPYWithWell(well);
 
     if (!data) return undefined;
-    return `${data.mul(100).toHuman('short')}%`;
+    const apy = data.bean * 100;
+    return `${apy.toFixed(2)}%`;
   }, [well, getSiloAPYWithWell]);
 
   const tooltipWidth = isMobile ? 250 : 360;
@@ -65,16 +66,8 @@ export const WellYieldWithTooltip: React.FC<Props> = ({ tooltipProps, well, retu
             </TitleContainer>
             <ContentContainer>
               <div>
-                The Variable PINTO APY (vAPY) uses historical data of Beans earned by{' '}
-                <a
-                  href='https://docs.pintobean.money/almanac/guides/silo/understand-silo-vapy'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='underlined'
-                >
-                  Silo Depositors
-                </a>
-                &nbsp;to estimate future returns.
+                The Variable PINTO APY (vAPY) uses historical data of Beans earned by Silo Depositors to estimate future
+                returns.
               </div>
             </ContentContainer>
           </Container>
