@@ -6,6 +6,7 @@ import { Well } from '@exchange/sdk';
 
 import { ExpandBox } from 'src/components/ExpandBox';
 import { FC } from 'src/types';
+import { useChainScopedQuery } from 'src/utils/query/useChainScopedQuery';
 import { formatWellTokenSymbols } from 'src/wells/utils';
 import { useIsConstantProduct2 } from 'src/wells/wellFunction/utils';
 
@@ -62,17 +63,16 @@ function WellFunctionDetails({ well, functionName }: Props & { functionName?: st
 }
 
 export const LearnWellFunction: FC<Props> = ({ well }) => {
-  const [functionName, setFunctionName] = useState<string | undefined>(well?.wellFunction?.name);
+  const query = useChainScopedQuery({
+    queryKey: ['wells', 'wellFunction', well?.address],
+    queryFn: async () => {
+      const wellFn = await well?.getWellFunction();
+      const name = await wellFn?.getName();
+      return name;
+    }
+  });
 
-  useEffect(() => {
-    if (functionName) return;
-    const fetch = async () => {
-      const wellFunction = await well?.getWellFunction();
-      setFunctionName(wellFunction?.name);
-    };
-    fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [functionName]);
+  const functionName = query.data ?? '';
 
   const drawerHeaderText = well?.wellFunction?.name ? `What is ${functionName}?` : 'What is a Well Function?';
 
