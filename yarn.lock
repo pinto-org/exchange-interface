@@ -7489,9 +7489,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"connectkit@npm:1.7.2":
-  version: 1.7.2
-  resolution: "connectkit@npm:1.7.2"
+"connectkit@npm:1.8.2":
+  version: 1.8.2
+  resolution: "connectkit@npm:1.8.2"
   dependencies:
     buffer: "npm:^6.0.3"
     detect-browser: "npm:^5.3.0"
@@ -7507,7 +7507,7 @@ __metadata:
     react-dom: 17.x || 18.x
     viem: 2.x
     wagmi: 2.x
-  checksum: 10/0f2c21ee2813ffc1fa0d42bc4cf9c30a57de898c49050a02c5678aa7dae00f4e96c3045a2d307126d519307bf84660065102deeddf583ac5f6fbfb586d9f67c7
+  checksum: 10/f7fdebd735c2dd9bb6a2e38487451587878aa7f1e45d87136a3b2eee552a4fe7ef75d78eda3f06cb8b24ed58a0fabc3b1e4a5b4797cd90f6d71d1b2d58a871a0
   languageName: node
   linkType: hard
 
@@ -7974,7 +7974,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:7.1.0"
     "@vitejs/plugin-react": "npm:4.2.1"
     alchemy-sdk: "npm:3.3.1"
-    connectkit: "npm:1.7.2"
+    connectkit: "npm:1.8.2"
     eslint: "npm:8.57.0"
     eslint-import-resolver-typescript: "npm:3.6.3"
     eslint-plugin-import: "npm:2.29.1"
