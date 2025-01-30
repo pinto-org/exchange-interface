@@ -3,7 +3,7 @@ import isEqual from 'lodash/isEqual';
 
 import { Well, ExchangeSDK } from '@exchange/sdk';
 
-import { GetWellEventsDocument } from 'src/generated/graph/graphql';
+import { GetWellEventsDocument, TradeType } from 'src/generated/graph/graphql';
 import { Settings } from 'src/settings';
 import { Log } from 'src/utils/logger';
 
@@ -134,45 +134,30 @@ const loadFromGraph = async (sdk: ExchangeSDK, well: Well) => {
   const results = await data();
   Log.module('history').debug('Raw event data from subgraph: ', results);
 
-  const swapEvents = ((results.well ?? {}).swaps ?? []).map((e) => {
-    const fromToken = well.getTokenByAddress(e.fromToken.id)!;
-    const toToken = well.getTokenByAddress(e.toToken.id)!;
-    const event: SwapEvent = {
-      type: EVENT_TYPE.SWAP,
-      tx: e.hash,
-      timestamp: e.timestamp,
-      fromToken,
-      fromAmount: fromToken.fromBlockchain(e.amountIn),
-      toToken,
-      toAmount: toToken.fromBlockchain(e.amountOut)
-    };
-    return event;
+  const parsedEvents: WellEvent[] = ((results.well ?? {}).trades ?? []).map((e) => {
+    if (e.tradeType === TradeType.Swap) {
+      const fromToken = well.getTokenByAddress(e.swapFromToken!.id)!;
+      const toToken = well.getTokenByAddress(e.swapToToken!.id)!;
+      return {
+        type: EVENT_TYPE.SWAP,
+        fromToken,
+        fromAmount: fromToken.fromBlockchain(e.swapAmountIn!),
+        toToken,
+        toAmount: toToken.fromBlockchain(e.swapAmountOut!),
+        tx: e.hash,
+        timestamp: e.timestamp,
+      }
+    } else {
+      return {
+        type: e.tradeType === TradeType.AddLiquidity ? EVENT_TYPE.ADD_LIQUIDITY : EVENT_TYPE.REMOVE_LIQUIDITY,
+        lpAmount: well.lpToken!.fromBlockchain(e.liqLpTokenAmount),
+        tokenAmounts: e.liqReservesAmount!.map((bn: BigNumber, i: number) => well.tokens![i].fromBlockchain(bn)),
+        tx: e.hash,
+        timestamp: e.timestamp,
+      }
+    }
   });
-
-  const addEvents = ((results.well ?? {}).deposits ?? []).map((e) => {
-    const event: AddEvent = {
-      timestamp: e.timestamp,
-      type: EVENT_TYPE.ADD_LIQUIDITY,
-      tx: e.hash,
-      lpAmount: well.lpToken!.fromBlockchain(e.liquidity),
-      tokenAmounts: e.reserves.map((bn: BigNumber, i: number) => well.tokens![i].fromBlockchain(bn))
-    };
-    return event;
-  });
-
-  const removeEvents = ((results.well ?? {}).withdraws ?? []).map((e) => {
-    const event: AddEvent = {
-      timestamp: e.timestamp,
-      type: EVENT_TYPE.REMOVE_LIQUIDITY,
-      tx: e.hash,
-      lpAmount: well.lpToken!.fromBlockchain(e.liquidity),
-      tokenAmounts: e.reserves.map((bn: BigNumber, i: number) => well.tokens![i].fromBlockchain(bn))
-    };
-    return event;
-  });
-
-  const allEvents: WellEvent[] = [...swapEvents, ...addEvents, ...removeEvents];
-  return allEvents.sort(sortEventsDescByTimestamp);
+  return parsedEvents.sort(sortEventsDescByTimestamp);
 };
 
 const sortEventsDescByBlock = (a: any, b: any) => {

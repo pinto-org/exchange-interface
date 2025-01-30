@@ -3,9 +3,7 @@ import { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   overwrite: true,
   schema: [
-    'graphql.schema.json',
-    // beanstalk subgraph
-    'https://graph.bean.money/beanstalk'
+    'https://graph.pinto.money/exchange'
   ],
   documents: 'src/**/*.graphql',
   ignoreNoDocuments: true,
