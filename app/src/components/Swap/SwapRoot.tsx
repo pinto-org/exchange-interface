@@ -354,7 +354,7 @@ export const SwapRoot = () => {
     <Container>
       <WarningMessage>
         ⚠️ For potentially better slippage and pricing, consider using{' '}
-        <a href="https://pinto.money" target="_blank" rel="noopener noreferrer">
+        <a href="https://pinto.money/swap" target="_blank" rel="noopener noreferrer">
           pinto.money
         </a>{' '}
         which integrates with the 0x Swap Aggregator.
