@@ -352,13 +352,6 @@ export const SwapRoot = () => {
 
   return (
     <Container>
-      <WarningMessage>
-        ⚠️ For potentially better slippage and pricing, consider using{' '}
-        <a href="https://pinto.money/swap" target="_blank" rel="noopener noreferrer">
-          pinto.money
-        </a>{' '}
-        which integrates with the 0x Swap Aggregator.
-      </WarningMessage>
       <SwapInputContainer>
         <TokenInput
           id='input-amount'
@@ -414,6 +407,13 @@ export const SwapRoot = () => {
           />
         </ActionWalletButtonWrapper>
       </SwapButtonContainer>
+      <WarningMessage>
+        ⚠️ For potentially better slippage and pricing, consider using{' '}
+        <a href="https://pinto.money/swap" target="_blank" rel="noopener noreferrer">
+          pinto.money
+        </a>{' '}
+        which integrates with the 0x Swap Aggregator.
+      </WarningMessage>
     </Container>
   );
 };
