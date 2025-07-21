@@ -408,7 +408,7 @@ export const SwapRoot = () => {
         </ActionWalletButtonWrapper>
       </SwapButtonContainer>
       <WarningMessage>
-        ⚠️ For potentially better slippage and pricing, consider using{' '}
+        ⚠️ For better slippage and pricing, consider using{' '}
         <a href="https://pinto.money/swap" target="_blank" rel="noopener noreferrer">
           pinto.money
         </a>{' '}
