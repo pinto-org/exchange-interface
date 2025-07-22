@@ -407,6 +407,13 @@ export const SwapRoot = () => {
           />
         </ActionWalletButtonWrapper>
       </SwapButtonContainer>
+      <WarningMessage>
+        ⚠️ For better slippage and pricing, consider using{' '}
+        <a href="https://pinto.money/swap" target="_blank" rel="noopener noreferrer">
+          pinto.money
+        </a>{' '}
+        which integrates with the 0x Swap Aggregator.
+      </WarningMessage>
     </Container>
   );
 };
@@ -445,5 +452,29 @@ const SwapButtonContainer = styled.div`
     width: calc(100% - 24px);
     margin-bottom: 0;
     bottom: 12px;
+  }
+`;
+
+const WarningMessage = styled.div`
+  padding: 12px;
+  background-color: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #856404;
+  
+  a {
+    color: #0066cc;
+    text-decoration: underline;
+    
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  
+  @media (max-width: ${size.mobile}) {
+    font-size: 13px;
+    padding: 10px;
   }
 `;
