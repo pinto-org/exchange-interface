@@ -21,6 +21,5 @@ export const getRpcUrl = (chainId: ChainId) => {
   if (!url) {
     throw new Error(`No RPC URL for chainId: ${chainId}`);
   }
-  console.log('url: ', url);
   return url;
 };

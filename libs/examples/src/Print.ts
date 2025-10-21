@@ -1,5 +1,5 @@
 import { BasinWell } from '@exchange/sdk';
-import { TokenValue, Token } from '@exchange/sdk-core';
+import { Token, TokenValue } from '@exchange/sdk-core';
 import { ethers } from 'ethers';
 
 import type { Chalk } from 'chalk';
@@ -11,7 +11,7 @@ function wrapWithName(text: string, inner: string) {
   return lightGray(text + '(') + inner + lightGray(')');
 }
 
-function keyValues(vals: [key: string, value: any][]) {
+function keyValues(vals: [key: string, value: unknown][]) {
   const all = vals.map(([key, value], i) => {
     return chalk.green(`${key}: `) + chalk.yellow(value);
   });
@@ -43,7 +43,7 @@ Token.prototype[Symbol.for('nodejs.util.inspect.custom')] = function () {
   );
 };
 
-BasinWell.prototype[Symbol.for('nodejs.util.inspect.custom')] = function () {
+Token.prototype[Symbol.for('nodejs.util.inspect.custom')] = function () {
   return wrapWithName(
     this.constructor.name,
     keyValues([
@@ -53,10 +53,22 @@ BasinWell.prototype[Symbol.for('nodejs.util.inspect.custom')] = function () {
   );
 };
 
+BasinWell.prototype[Symbol.for('nodejs.util.inspect.custom')] = function () {
+  return wrapWithName(
+    this.constructor.name,
+    keyValues([
+      ['symbol', this.symbol],
+      ['address', this.address],
+      ['lpToken', this.lpToken.symbol],
+      ['tokens', this.tokens.map((t) => t.symbol)]
+    ])
+  );
+};
+
 class Logger {
   private maxDepth: number;
 
-  constructor(maxDepth: number = 4) {
+  constructor(maxDepth = 4) {
     this.maxDepth = maxDepth;
   }
 
@@ -64,10 +76,12 @@ class Logger {
     this.maxDepth = maxDepth;
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   label(...args: any[]): void {
     this.log(chalk.green(...args));
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   shallow(...args: any[]): void {
     const processedArgs = args.map((arg) => {
       if (typeof arg === 'object' && arg !== null) {
@@ -122,7 +136,7 @@ class Logger {
     console.log(...processedArgs);
   }
 
-  private stringify(obj: any, maxDepth: number, currentDepth: number = 0): string {
+  private stringify(obj: any, maxDepth: number, currentDepth = 0): string {
     if (currentDepth >= maxDepth) {
       return '[Object]';
     }
@@ -145,6 +159,10 @@ class Logger {
     });
 
     return `{ ${entries.join(', ')} }`;
+  }
+
+  error(...args: any[]) {
+    this.log(chalk.red(...args));
   }
 }
 

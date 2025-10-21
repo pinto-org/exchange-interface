@@ -1,19 +1,19 @@
-import { ExchangeSDK, TestUtils } from '@exchange/sdk';
-import { getMockAccountAlias } from './accounts';
-import { impersonate, chain } from './setup';
-import { MayPromise } from './types.generics';
+import { type ExchangeSDK, TestUtils } from '@exchange/sdk';
 import { print } from './Print';
+import { getMockAccountAlias } from './accounts';
+import { chain, impersonate } from './setup';
+import type { MayPromise } from './types.generics';
 
 export interface ImpersonateWrapperCallbackParams {
   sdk: ExchangeSDK;
   account: string;
 }
 
-export type ImpersonateWrapperCallback = (params: ImpersonateWrapperCallbackParams) => Promise<void | any>;
+export type ImpersonateWrapperCallback = (params: ImpersonateWrapperCallbackParams) => Promise<unknown>;
 
 const envPubKey = process.env.PUBKEY;
 
-export const impersonateCallback = async (address: string | undefined = envPubKey, useChain: boolean = true) => {
+export const impersonateCallback = async (address: string | undefined = envPubKey, useChain = true) => {
   if (!address) {
     throw new Error('address is required.');
   }
@@ -45,11 +45,12 @@ export const impersonateCallback = async (address: string | undefined = envPubKe
     callback: ImpersonateWrapperCallback,
     options?: {
       // runs before beforeCallback.
-      beforeBeforeCallback?: () => MayPromise<any>;
+      beforeBeforeCallback?: () => MayPromise<unknown>;
       beforeCallback?: ImpersonateWrapperCallback;
       debug?: boolean;
     }
   ) => {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     let snapshot: any;
 
     const { sdk, account, stop } = await getParams(options?.debug ?? false);
