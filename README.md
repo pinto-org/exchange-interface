@@ -26,6 +26,10 @@ yarn app:dev
 VITE_ALCHEMY_API_KEY=[your alchemy api key] ...
 ```
 
+## Code of Conduct
+
+This project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) to ensure a welcoming and inclusive environment for all contributors.
+
 ## License
 
 [MIT](https://github.com/pintomoney/exchange-interface/blob/main/LICENSE.txt)
