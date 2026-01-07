@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import buildIcon from 'src/assets/images/navbar/build.svg';
@@ -25,8 +25,6 @@ const isNotProd = !Settings.PRODUCTION;
 export const Frame: FC<{}> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const resolvedcid = useSdkChainId();
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
 
   return (
     <>
@@ -106,17 +104,19 @@ export const Frame: FC<{}> = ({ children }) => {
                   <PintoLogoBlack width={20} />
                 </LinkBox>
               </MobileLargeNavRow>
-              <MobileNavRow
-                href='https://docs.pinto.exchange/'
-                rel='noopener noreferrer'
-                target='_blank'
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Documentation
-              </MobileNavRow>
-              <MobileNetlifyRow href='https://www.netlify.com' rel='noopener noreferrer' target='_blank' onClick={() => setMobileMenuOpen(false)}>
-                <img src="https://www.netlify.com/assets/badges/netlify-badge-color-bg.svg" alt="Deploys by Netlify" />
-              </MobileNetlifyRow>
+              <MobileDocsRow>
+                <MobileNavRow
+                  href='https://pinto-exchange.gitbook.io/'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Documentation
+                </MobileNavRow>
+                <MobileNetlifyRow href='https://www.netlify.com' rel='noopener noreferrer' target='_blank' onClick={() => setMobileMenuOpen(false)}>
+                  <img src="https://www.netlify.com/assets/badges/netlify-badge-color-bg.svg" alt="Deploys by Netlify" />
+                </MobileNetlifyRow>
+              </MobileDocsRow>
             </MobileNavLinkContainer>
             <MobileConnectContainer>
               <WalletButton />
@@ -358,14 +358,17 @@ const MobileNavLink = styled(Link)<{ $bold?: boolean }>`
 `;
 
 const MobileNavRow = styled.a<{ $bold?: boolean }>`
-  width: 100%;
-  border-bottom: 0.5px solid black;
+  flex: 5;
+  border-right: 0.5px solid black;
   padding: 16px;
   text-transform: uppercase;
   text-decoration: none;
   color: black;
   font-weight: ${(props) => (props.$bold ? `600` : `normal`)};
   ${(props) => props.$bold && `letter-spacing: 0.96px;`}
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const MobileLargeNavRow = styled.div`
@@ -403,14 +406,30 @@ const LinkBox = styled.a`
   }
 `;
 
-const MobileNetlifyRow = styled.a`
+const MobileDocsRow = styled.div`
+  display: flex;
+  flex-direction: row;
   width: 100%;
+  border-bottom: 0.5px solid black;
+`;
+
+const MobileNetlifyRow = styled.a`
+  flex: 3;
+  margin-left: -10px;
   padding: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
   color: black;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+
+  &:active,
+  &:focus {
+    background-color: transparent;
+    outline: none;
+  }
 
   img {
     display: block;
