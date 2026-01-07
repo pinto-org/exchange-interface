@@ -15,7 +15,7 @@ export const Footer = () => {
 	return (
 		<Container>
 			<Box
-				href="https://docs.pinto.exchange"
+				href="https://pinto-exchange.gitbook.io/"
 				rel="noopener noreferrer"
 				target="_blank"
 			>
