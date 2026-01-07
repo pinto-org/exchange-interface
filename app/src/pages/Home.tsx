@@ -17,7 +17,7 @@ const copy = {
 const links = {
   multiFlowPump: '/multi-flow-pump.pdf',
   whitepaper: '/pinto-exchange.pdf',
-  docs: 'https://docs.pinto.exchange',
+  docs: 'https://pinto-exchange.gitbook.io/',
   wells: '/#/wells',
   swap: '/#/swap',
   build: '/#/build'
