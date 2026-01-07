@@ -1,0 +1,36 @@
+# These build env vars are specific only to Netlify.
+[build.environment]
+  YARN_VERSION = "4.1.0"
+  CI = "true"
+
+[[redirects]]
+  from = "/discord"
+  to = "https://discord.gg/MZVQaZPRry"
+  status = 301
+
+[[redirects]]
+  from = "/05-08-24-multi-flow-codehawks-report"
+  to = "https://codehawks.cyfrin.io/c/2024-04-Beanstalk-DIB/results?lt=contest&page=1&sc=reward&sj=reward&t=report"
+  status = 200
+
+[[redirects]]
+  from = "/06-16-23-cyfrin-report"
+  to = "https://arweave.net/usT3ClfjHwpX32OXnh5De1aH79csX1PMoXJCghXBaps"
+  status = 200
+
+[[redirects]]
+  from = "/06-16-23-halborn-report"
+  to = "https://arweave.net/1IKi4iqRvu3qu_GdcLY4f3u9PgvOMvuRltU7AIXAEyA"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+

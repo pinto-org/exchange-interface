@@ -1,0 +1,20 @@
+node_modules
+
+cache
+/coverage
+/dist
+.yarn/*
+yarn-error.log
+temp
+
+.yarn/*
+.yarn/install-state.gz
+!.yarn/patches1
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# netlify
+.netlify
+.DS_Store

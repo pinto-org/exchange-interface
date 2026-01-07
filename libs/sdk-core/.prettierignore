@@ -1,0 +1,6 @@
+./src/constants/generated
+node_modules
+dist
+package.json
+rollup.config.cjs
+tsconfig.json

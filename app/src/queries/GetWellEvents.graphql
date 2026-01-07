@@ -1,0 +1,24 @@
+query GetWellEvents($id: ID!, $searchTimestamp: BigInt) {
+  well: well(id: $id) {
+    trades(
+      where: { timestamp_gte: $searchTimestamp }
+      orderBy: timestamp
+      orderDirection: desc
+      first: 1000
+    ) {
+      tradeType
+      liqLpTokenAmount
+      liqReservesAmount
+      swapAmountIn
+      swapAmountOut
+      swapFromToken {
+        id
+      }
+      swapToToken {
+        id
+      }
+      hash
+      timestamp
+    }
+  }
+}

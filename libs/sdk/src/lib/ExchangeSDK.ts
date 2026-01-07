@@ -1,0 +1,150 @@
+import { ChainId, ChainResolver } from '@exchange/sdk-core';
+import { DiamondSDK } from '@exchange/sdk-diamond';
+import { ethers } from 'ethers';
+import { addresses } from 'src/constants/addresses';
+import { enumFromValue } from 'src/utils';
+import { Router } from './routing';
+import { SwapBuilder } from './swap/SwapBuilder';
+import { PreloadOptions, Well } from './Well';
+
+export type Provider = ethers.providers.JsonRpcProvider;
+export type Signer = ethers.Signer;
+export type SDKConfig = Partial<{
+  provider: Provider;
+  signer: Signer;
+  rpcUrl: string;
+  DEBUG: boolean;
+  zeroXApiKey?: string;
+}>;
+
+export class ExchangeSDK {
+  public DEBUG: boolean;
+  public signer?: Signer;
+  public provider: Provider;
+  public providerOrSigner: Signer | Provider;
+  public Router = Router;
+  public diamondSDK: DiamondSDK;
+
+  // For easy access
+  static addresses: typeof addresses = addresses;
+
+  public readonly chainId: ChainId;
+
+  public readonly addresses: typeof addresses;
+  public readonly tokens: DiamondSDK['tokens'];
+  public readonly swapBuilder: SwapBuilder;
+  private readonly lastRefreshTimestamp: number;
+
+  constructor(config?: SDKConfig) {
+    this.handleConfig(config);
+
+    this.chainId = this.deriveChainId(config?.provider);
+    this.addresses = addresses;
+
+    // Globals
+    this.diamondSDK = new DiamondSDK(config);
+    this.tokens = this.diamondSDK.tokens;
+    // this.tokens = new Tokens(this);
+
+    this.swapBuilder = new SwapBuilder(this);
+    this.lastRefreshTimestamp = Date.now();
+  }
+
+  /**
+   * Get a Well object from a well address.
+   *
+   * By default, this also pre-loads well details from the chain. What data
+   * is preloaded, or to avoid preloading, can be controlled via the preloadOptions
+   * object.
+   *
+   * @param address - address where well is deployed
+   * @param preloadOptions - What data to pre fetch. If undefined, all data will be
+   * prefetched, otherwise only the properties defined as true will be retrieved
+   *
+   *
+   * @returns Well object
+   */
+  async getWell(address: string, preloadOptions?: PreloadOptions): Promise<Well> {
+    const well = new Well(this, address);
+    await well.loadWell(preloadOptions);
+
+    return well;
+  }
+
+  debug(...args: any[]) {
+    if (!this.DEBUG) return;
+    console.debug(...args);
+  }
+
+  handleConfig(config: SDKConfig = {}) {
+    if (config.rpcUrl) {
+      config.provider = this.getProviderFromUrl(config.rpcUrl, config);
+    }
+
+    this.signer = config.signer;
+    if (!config.provider && !config.signer) {
+      console.log('WARNING: No provider or signer specified, using DefaultProvider.');
+      this.provider = ethers.getDefaultProvider() as Provider;
+    } else {
+      this.provider = (config.signer?.provider as Provider) ?? config.provider!;
+    }
+    this.providerOrSigner = config.signer ?? config.provider!;
+
+    this.DEBUG = config.DEBUG ?? false;
+  }
+
+  private getProviderFromUrl(url: string, config: SDKConfig): Provider {
+    const provider = config.signer ? (config.signer.provider as Provider) : config.provider;
+    const networkish = provider?._network || provider?.network || ChainResolver.defaultChainId;
+
+    if (url.startsWith('ws')) {
+      return new ethers.providers.WebSocketProvider(url, networkish);
+    }
+    if (url.startsWith('http')) {
+      return new ethers.providers.JsonRpcProvider(url, networkish);
+    }
+
+    throw new Error('Invalid rpcUrl');
+  }
+  private deriveChainId(provider?: SDKConfig['provider']) {
+    const providerChainId = provider?.network?.chainId || provider?._network?.chainId || ChainResolver.defaultChainId;
+
+    return enumFromValue(providerChainId, ChainId);
+  }
+
+  async getAccount(_account?: string): Promise<string> {
+    if (_account) return _account.toLowerCase();
+    if (!this.signer) throw new Error('Cannot get account without a signer');
+    const account = await this.signer.getAddress();
+    if (!account) throw new Error('Failed to get account from signer');
+    return account.toLowerCase();
+  }
+
+  /**
+   * This methods helps serialize the SDK object. When used in a react
+   * dependency array, the signer and provider objects have circular references
+   * which cause errors. This overrides the result and allows using the sdk
+   * in dependency arrays (which use .toJSON under the hood)
+   * @returns
+   */
+  toJSON() {
+    return {
+      chainId: this.chainId,
+      lastRefreshTimestamp: this.lastRefreshTimestamp,
+      provider: {
+        url: this.provider?.connection?.url,
+        network: this.provider?._network
+      },
+      signer: this.signer
+        ? {
+            provider: {
+              // @ts-ignore
+              network: this.signer?.provider?._network
+            },
+            // @ts-ignore
+            address: this.signer?._address
+          }
+        : undefined
+    };
+  }
+}

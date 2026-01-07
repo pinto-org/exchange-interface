@@ -1,0 +1,77 @@
+{
+  "name": "@exchange/sdk-diamond",
+  "version": "0.2.0",
+  "description": "A JavaScript framework for interacting with the Pinto Exchange protocol",
+  "license": "MIT",
+  "main": "./dist/diamond/diamond.cjs.js",
+  "module": "./dist/diamond/sdk.esm.js",
+  "browser": "./dist/diamond/diamond.udm.js",
+  "typings": "./dist/types/index.d.ts",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "generate": "echo '\nDIAMOND SDK Generate' && yarn generate:typechain",
+    "generate:typechain": "typechain --target=ethers-v5 --ts-nocheck --out-dir=./src/constants/generated/ ./src/constants/abi/**/*.json",
+    "clean:generated": "rimraf ./src/constants/generated && rimraf ./src/constants/generated-gql",
+    "clean:build": "rimraf dist",
+    "clean": "yarn clean:generated && yarn clean:build",
+    "dev": "tsc --noEmit --watch",
+    "ts": "yarn clean:build && tsc && tsc-alias -p tsconfig.json",
+    "build": "echo '\nDIAMOND SDK Build' && yarn ts && rollup -c --bundleConfigAsCjs --silent && rimraf dist/js",
+    "diamond:build": "yarn generate && yarn build"
+  },
+  "peerDependencies": {
+    "ethers": "5.6.8"
+  },
+  "dependencies": {
+    "@ethersproject/bytes": "5.7.0",
+    "@ethersproject/logger": "5.7.0",
+    "@exchange/sdk-core": "workspace:*",
+    "bn.js": "5.2.1",
+    "bottleneck": "2.19.5",
+    "graphlib": "2.1.8",
+    "lodash.flattendeep": "4.4.0"
+  },
+  "devDependencies": {
+    "@foundry-rs/hardhat-anvil": "^0.1.7",
+    "@jest/test-sequencer": "29.7.0",
+    "@nomiclabs/hardhat-ethers": "^2.1.1",
+    "@rollup/plugin-commonjs": "23.0.7",
+    "@rollup/plugin-json": "5.0.2",
+    "@rollup/plugin-multi-entry": "6.0.1",
+    "@rollup/plugin-node-resolve": "15.2.3",
+    "@typechain/ethers-v5": "^10.2.1",
+    "@types/bn.js": "^5.1.5",
+    "@types/chai": "^4.3.11",
+    "@types/eslint": "^8.56.2",
+    "@types/graphlib": "2.1.12",
+    "@types/jest": "^29.5.12",
+    "@types/lodash.flattendeep": "^4.4.9",
+    "@types/rimraf": "^3.0.2",
+    "chai": "4.4.1",
+    "dotenv": "^16.4.5",
+    "eslint": "8.56.0",
+    "jest": "^29.2.0",
+    "rimraf": "3.0.2",
+    "rollup": "3.29.4",
+    "rollup-plugin-alias": "2.2.0",
+    "rollup-plugin-exclude-dependencies-from-bundle": "1.1.23",
+    "rollup-plugin-typescript2": "0.36.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "10.9.2",
+    "tsc-alias": "1.8.8",
+    "tslib": "2.6.2",
+    "typechain": "^8.1.0",
+    "typescript": "5.3.3"
+  },
+  "packageManager": "yarn@4.1.0",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "module": "./dist/diamond/diamond.esm.js",
+      "default": "./dist/diamond/diamond.cjs.js",
+      "browser": "./dist/diamond/diamond.umd.js"
+    }
+  }
+}
