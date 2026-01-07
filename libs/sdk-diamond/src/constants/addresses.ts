@@ -89,6 +89,9 @@ export const addresses = {
   PINTOWSOL_WELL: Address.make({
     [ChainId.BASE_MAINNET]: '0x3e11444c7650234c748D743D8d374fcE2eE5E6C9'
   }),
+  PINTOWSTETH_WELL: Address.make({
+    [ChainId.BASE_MAINNET]: "0x3e1155245FF9a6a019Bc35827e801c6ED2CE91b9"
+  }),
 
   // ----------------------------------------
   // LSD Oracles
