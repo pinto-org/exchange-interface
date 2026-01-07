@@ -125,7 +125,7 @@ const MultiFlowPump: WellComponentInfo = {
       'Comprehensive multi-block MEV manipulation-resistant oracle implementation which serves up Well pricing data with an EMA for instantaneous prices and a TWAP for weighted averages over time.'
     ],
     usedBy: 0,
-    url: 'https://docs.pinto.exchange/implementations/multi-flow-pump',
+    url: 'https://pinto-exchange.gitbook.io/implementations/multi-flow-pump',
     type: {
       type: WellComponentType.Pump,
       display: '🔮 Pump'
