@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import buildIcon from 'src/assets/images/navbar/build.svg';
@@ -25,6 +25,8 @@ const isNotProd = !Settings.PRODUCTION;
 export const Frame: FC<{}> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const resolvedcid = useSdkChainId();
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   return (
     <>
@@ -112,6 +114,9 @@ export const Frame: FC<{}> = ({ children }) => {
               >
                 Documentation
               </MobileNavRow>
+              <MobileNetlifyRow href='https://www.netlify.com' rel='noopener noreferrer' target='_blank' onClick={() => setMobileMenuOpen(false)}>
+                <img src="https://www.netlify.com/assets/badges/netlify-badge-color-bg.svg" alt="Deploys by Netlify" />
+              </MobileNetlifyRow>
             </MobileNavLinkContainer>
             <MobileConnectContainer>
               <WalletButton />
@@ -395,5 +400,22 @@ const LinkBox = styled.a`
   color: black;
   :first-child {
     border-left: none;
+  }
+`;
+
+const MobileNetlifyRow = styled.a`
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+
+  img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-height: 40px;
   }
 `;
