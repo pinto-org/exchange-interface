@@ -54,7 +54,8 @@ export const Footer = () => {
 		>
 			<PintoLogoBlack width={20} />
 		</SmallBox>
-		{isHomePage && (
+    {/* Disabled until/unless reapplying to open source plan */}
+		{/* {isHomePage && (
 			<NetlifyBadgeBox
 				href="https://www.netlify.com"
 				rel="noopener noreferrer"
@@ -62,7 +63,7 @@ export const Footer = () => {
 			>
 				<img src="https://www.netlify.com/assets/badges/netlify-badge-color-bg.svg" alt="Deploys by Netlify" />
 			</NetlifyBadgeBox>
-		)}
+		)} */}
 	</Container>
 	);
 };
