@@ -113,9 +113,10 @@ export const Frame: FC<{}> = ({ children }) => {
                 >
                   Documentation
                 </MobileNavRow>
-                <MobileNetlifyRow href='https://www.netlify.com' rel='noopener noreferrer' target='_blank' onClick={() => setMobileMenuOpen(false)}>
+                {/* Disabled until/unless reapplying to open source plan */}
+                {/* <MobileNetlifyRow href='https://www.netlify.com' rel='noopener noreferrer' target='_blank' onClick={() => setMobileMenuOpen(false)}>
                   <img src="https://www.netlify.com/assets/badges/netlify-badge-color-bg.svg" alt="Deploys by Netlify" />
-                </MobileNetlifyRow>
+                </MobileNetlifyRow> */}
               </MobileDocsRow>
             </MobileNavLinkContainer>
             <MobileConnectContainer>
