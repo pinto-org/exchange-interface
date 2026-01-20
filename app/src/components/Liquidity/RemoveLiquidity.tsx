@@ -12,7 +12,6 @@ import { size } from 'src/breakpoints';
 import { TokenInput } from 'src/components/Swap/TokenInput';
 import { ActionWalletButtonWrapper } from 'src/components/Wallet';
 import { useLPPositionSummary } from 'src/tokens/useLPPositionSummary';
-import { displayTokenSymbol } from 'src/utils/format';
 import { getPrice } from 'src/utils/price/usePrice';
 import { queryKeys } from 'src/utils/query/queryKeys';
 import { useInvalidateQueries } from 'src/utils/query/useInvalidateQueries';
@@ -20,7 +19,6 @@ import useSdk from 'src/utils/sdk/useSdk';
 import { useLiquidityQuote } from 'src/wells/useLiquidityQuote';
 import { useWellReserves } from 'src/wells/useWellReserves';
 
-import { ensureAllowance, hasMinimumAllowance } from './allowance';
 import QuoteDetails from './QuoteDetails';
 import { LIQUIDITY_OPERATION_TYPE, REMOVE_LIQUIDITY_MODE } from './types';
 import { Log } from '../../utils/logger';
@@ -53,7 +51,6 @@ const RemoveLiquidityContent = ({
   const [singleTokenIndex, setSingleTokenIndex] = useState<number>(0);
   const [amounts, setAmounts] = useState<TokenValue[]>([]);
   const [prices, setPrices] = useState<(TokenValue | null)[]>();
-  const [tokenAllowance, setTokenAllowance] = useState<boolean>(false);
 
   const { getPositionWithWell, refetch: refetchLPSummary } = useLPPositionSummary();
   const position = getPositionWithWell(well);
@@ -232,8 +229,8 @@ const RemoveLiquidityContent = ({
   const lpTokenAmountNonZero = useMemo(() => lpTokenAmount && lpTokenAmount.gt(0), [lpTokenAmount]);
 
   const removeLiquidityButtonEnabled = useMemo(
-    () => address && tokenAllowance && lpTokenAmountNonZero && hasEnoughBalance,
-    [address, hasEnoughBalance, lpTokenAmountNonZero, tokenAllowance]
+    () => address && lpTokenAmountNonZero && hasEnoughBalance,
+    [address, hasEnoughBalance, lpTokenAmountNonZero]
   );
 
   const buttonLabel = useMemo(
@@ -242,47 +239,6 @@ const RemoveLiquidityContent = ({
     [hasEnoughBalance, lpTokenAmountNonZero]
   );
 
-  const checkMinAllowanceForLpToken = useCallback(async () => {
-    if (!address || !wellLpToken) {
-      return;
-    }
-
-    if (lpTokenAmount && lpTokenAmount.gt(0)) {
-      const tokenHasMinAllowance = await hasMinimumAllowance(address, well.address, wellLpToken, lpTokenAmount);
-      Log.module('addliquidity').debug(
-        `Token ${wellLpToken.symbol} with amount ${lpTokenAmount.toHuman()} has approval ${tokenHasMinAllowance}`
-      );
-      setTokenAllowance(tokenHasMinAllowance);
-    } else {
-      setTokenAllowance(false);
-    }
-  }, [address, lpTokenAmount, well.address, wellLpToken]);
-
-  const approveTokenButtonClickHandler = useCallback(async () => {
-    if (!address || !well.lpToken || !lpTokenAmount) {
-      return;
-    }
-
-    await ensureAllowance(address, well.address, well.lpToken, lpTokenAmount);
-    checkMinAllowanceForLpToken();
-  }, [address, well.lpToken, well.address, lpTokenAmount, checkMinAllowanceForLpToken]);
-
-  useEffect(() => {
-    if (!address) {
-      return;
-    }
-    if (!well.tokens) {
-      return;
-    }
-
-    if (!lpTokenAmount) {
-      return;
-    }
-
-    checkMinAllowanceForLpToken();
-  }, [well.tokens, address, lpTokenAmount, checkMinAllowanceForLpToken]);
-
-  const approveButtonDisabled = !tokenAllowance && !!lpTokenAmount && lpTokenAmount.lte(TokenValue.ZERO);
 
   const selectedQuote = useMemo(() => {
     if (removeLiquidityMode === REMOVE_LIQUIDITY_MODE.OneToken) {
@@ -444,16 +400,6 @@ const RemoveLiquidityContent = ({
             />
           )}
 
-          {!tokenAllowance && hasEnoughBalance && (
-            <ButtonWrapper>
-              <ApproveTokenButton
-                disabled={approveButtonDisabled}
-                loading={false}
-                label={`Approve ${displayTokenSymbol(wellLpToken)}`}
-                onClick={approveTokenButtonClickHandler}
-              />
-            </ButtonWrapper>
-          )}
           <ButtonWrapper>
             <ActionWalletButtonWrapper>
               <Button
@@ -540,8 +486,6 @@ const Tabs = styled.div`
   flex-direction: row;
   gap: 8px;
 `;
-
-const ApproveTokenButton = styled(Button)``;
 
 const ButtonWrapper = styled.div`
   display: flex;
