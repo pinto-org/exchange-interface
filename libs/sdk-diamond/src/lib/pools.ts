@@ -1,4 +1,3 @@
-import Pool from 'src/classes/Pool/Pool';
 import { BasinWell } from 'src/classes/Pool/BasinWell';
 import { DiamondSDK } from 'src/lib/DiamondSDK';
 import { Token } from '@exchange/sdk-core';
@@ -8,13 +7,13 @@ export class Pools {
 
   public readonly PINTO_ETH_WELL: BasinWell;
   public readonly PINTO_CBETH_WELL: BasinWell;
-  public readonly PINTO_WEETH_WELL: BasinWell;
   public readonly PINTO_WSTETH_WELL: BasinWell;
   public readonly PINTO_CBBTC_WELL: BasinWell;
   public readonly PINTO_USDC_WELL: BasinWell;
   public readonly PINTO_WSOL_WELL: BasinWell;
 
   public readonly wells: Set<BasinWell>;
+  public readonly whitelistedWells: Set<BasinWell>;
 
   private addressMap = new Map<string, BasinWell>();
 
@@ -84,14 +83,34 @@ export class Pools {
         color: '#ed9f9c'
       }
     );
+    this.PINTO_WSTETH_WELL = new BasinWell(
+      sdk,
+      sdk.addresses.PINTOWSTETH_WELL.get(sdk.chainId),
+      sdk.tokens.PINTO_WSTETH_WELL_LP,
+      [sdk.tokens.PINTO, sdk.tokens.WSTETH],
+      {
+        name: "PINTO:wstETH Well LP",
+        logo: "",
+        symbol: "PINTO:wstETH",
+        color: '00A3FF'
+      }
+    );
 
     wells.add(this.PINTO_ETH_WELL);
     wells.add(this.PINTO_CBETH_WELL);
     wells.add(this.PINTO_CBBTC_WELL);
     wells.add(this.PINTO_USDC_WELL);
     wells.add(this.PINTO_WSOL_WELL);
+    wells.add(this.PINTO_WSTETH_WELL);
+
+    const wl = new Set<BasinWell>();
+    wl.add(this.PINTO_CBETH_WELL);
+    wl.add(this.PINTO_CBBTC_WELL);
+    wl.add(this.PINTO_USDC_WELL);
+    wl.add(this.PINTO_WSTETH_WELL);
     
     this.wells = wells;
+    this.whitelistedWells = wl;
 
     this.wells.forEach((well) => {
       this.addressMap.set(this.getWellIndex(well), well);
@@ -102,7 +121,7 @@ export class Pools {
     const address = typeof well === 'string' ? well : well.address;
     try {
       const _well = this.deriveWell(address);
-      return this.wells.has(_well);
+      return this.whitelistedWells.has(_well);
     } catch (e) {
       return false;
     }

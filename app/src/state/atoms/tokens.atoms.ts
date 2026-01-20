@@ -17,6 +17,8 @@ export const underlyingTokenMapAtom = atom<TokenSymbolMap<Token>>((get) => {
   const eth = get(ethAtom);
   const wells = get(wellsAtom);
 
+  
+
   if (!eth || !wells.data.length) return {};
   const tokenMap = (wells.data || []).reduce<TokenSymbolMap<Token>>(
     (prev, well) => {
