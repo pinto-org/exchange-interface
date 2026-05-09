@@ -2,6 +2,16 @@ import { BigNumber, ethers } from 'ethers';
 import { Token, TokenValue } from '@exchange/sdk-core';
 import { ExchangeSDK } from '../../src/lib/ExchangeSDK';
 
+const getForkRpcUrl = () => {
+  const env = (globalThis as typeof globalThis & { process?: { env?: Record<string, string | undefined> } }).process
+    ?.env;
+  const rpcUrl = env?.ANVIL_FORK_RPC_URL ?? env?.ETH_MAINNET_RPC_URL;
+  if (!rpcUrl) {
+    throw new Error('ANVIL_FORK_RPC_URL or ETH_MAINNET_RPC_URL must be set to reset the fork');
+  }
+  return rpcUrl;
+};
+
 export class BlockchainUtils {
   sdk: ExchangeSDK;
   provider: ethers.providers.JsonRpcProvider;
@@ -15,7 +25,7 @@ export class BlockchainUtils {
     await this.sdk.provider.send('anvil_reset', [
       {
         forking: {
-          jsonRpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/f6piiDvMBMGRYvCOwLJFMD7cUjIvI1TP'
+          jsonRpcUrl: getForkRpcUrl()
         }
       }
     ]);

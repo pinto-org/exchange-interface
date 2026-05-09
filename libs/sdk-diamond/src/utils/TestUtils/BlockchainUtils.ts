@@ -5,6 +5,16 @@ import { ERC20Token, TokenValue, Token } from '@exchange/sdk-core';
 import * as addr from './addresses';
 import { logSiloBalance } from './log';
 
+const getForkRpcUrl = () => {
+  const env = (globalThis as typeof globalThis & { process?: { env?: Record<string, string | undefined> } }).process
+    ?.env;
+  const rpcUrl = env?.ANVIL_FORK_RPC_URL ?? env?.ETH_MAINNET_RPC_URL;
+  if (!rpcUrl) {
+    throw new Error('ANVIL_FORK_RPC_URL or ETH_MAINNET_RPC_URL must be set to reset the fork');
+  }
+  return rpcUrl;
+};
+
 export class BlockchainUtils {
   sdk: DiamondSDK;
   provider: ethers.providers.JsonRpcProvider;
@@ -86,7 +96,7 @@ export class BlockchainUtils {
     await this.sdk.provider.send('anvil_reset', [
       {
         forking: {
-          jsonRpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/f6piiDvMBMGRYvCOwLJFMD7cUjIvI1TP'
+          jsonRpcUrl: getForkRpcUrl()
         }
       }
     ]);
@@ -176,7 +186,6 @@ export class BlockchainUtils {
   async setPINTOWSOLBalance(account: string, balance: TokenValue, mockToken: boolean = false) {
     return this.setBalance(this.sdk.tokens.PINTO_WSOL_WELL_LP, account, balance, mockToken);
   }
-  
 
   private getBalanceConfig(tokenAddress: string, mockToken: boolean = false) {
     const slotConfig = new Map<string, [slot: number, isReverse: boolean]>();

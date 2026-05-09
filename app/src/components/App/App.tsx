@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 
@@ -6,7 +6,6 @@ import { Frame } from 'src/components/Frame/Frame';
 import { NotFound } from 'src/pages/404';
 import { Build } from 'src/pages/Build';
 import { Create } from 'src/pages/Create';
-import { Dev } from 'src/pages/Dev';
 import { Home } from 'src/pages/Home';
 import { Liquidity } from 'src/pages/Liquidity';
 import { Swap } from 'src/pages/Swap';
@@ -17,8 +16,11 @@ import { useUpdateWindowDimensions } from 'src/utils/ui/useViewport';
 
 import { ForceSupportedChainId } from './ForceSupportedChainId';
 
+const Dev = import.meta.env.DEV
+  ? React.lazy(() => import('src/pages/Dev').then((module) => ({ default: module.Dev })))
+  : null;
+
 export const App = ({}) => {
-  const isNotProd = !Settings.PRODUCTION;
   useUpdateWindowDimensions();
 
   return (
@@ -33,7 +35,16 @@ export const App = ({}) => {
           <Route path='/swap' element={<Swap />} />
           {/* <Route path='/build' element={<Build />} /> */}
           {/* <Route path="/create" element={<Create />} /> */}
-          {isNotProd && <Route path='/dev' element={<Dev />} />}
+          {Dev && (
+            <Route
+              path='/dev'
+              element={
+                <Suspense fallback={null}>
+                  <Dev />
+                </Suspense>
+              }
+            />
+          )}
           <Route path='*' element={<NotFound />} />
         </Routes>
       </Frame>
